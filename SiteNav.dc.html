@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rainbow Sanctuary Navigation</title>
+<meta name="description" content="Shared navigation for the Rainbow Sanctuary website.">
+<meta name="theme-color" content="#f5f5f5">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rainbow Sanctuary Navigation">
+<meta property="og:description" content="Shared navigation for the Rainbow Sanctuary website.">
+<link rel="icon" href="./assets/brand/favicon-lotus-64.png?v=20260717-final1" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="./assets/brand/apple-touch-icon.png?v=20260717-final1" sizes="180x180">
+<link rel="stylesheet" href="./site.css?v=20260714-spectrum1">
+<script src="./site-config.js"></script>
+<script src="./support.js"></script>
+<script src="./cta-effects.js?v=20260714-purple3" defer></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@300;400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; }
+</style>
+</helmet>
+<header onKeyDown="{{ onKeyDown }}" style="position:sticky;top:0;z-index:100;background:#f5f5f5;border-bottom:1px solid #e7e5e4;font-family:'Inter',sans-serif;">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;height:72px;display:flex;align-items:center;justify-content:space-between;gap:10px;">
+    <a class="rs-brand-link" href="Home.dc.html" aria-label="Rainbow Sanctuary home">
+      <img class="rs-brand-link__mark" src="./assets/brand/lotus-mark-header.png?v=20260717-final1" alt="" width="256" height="186" aria-hidden="true">
+      <span class="rs-brand-link__name">Rainbow Sanctuary</span>
+    </a>
+
+    <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+      <nav aria-label="Primary navigation" style="display:flex;align-items:center;gap:0;flex-shrink:0;">
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="7">
+          <div
+            style="position:relative;padding:12px 2px;flex-shrink:0;"
+            onMouseEnter="{{ item.onEnter }}"
+            onFocus="{{ item.onEnter }}"
+            onMouseLeave="{{ onLeave }}"
+          >
+            <a href="{{ item.href }}" style="{{ item.linkStyle }}">{{ item.label }}</a>
+            <sc-if value="{{ item.isOpen }}">
+              <div style="position:absolute;top:100%;left:0;min-width:280px;background:#ffffff;border:1px solid #e7e5e4;border-radius:16px;padding:8px;box-shadow:0 4px 16px rgba(0,0,0,0.08);">
+                <sc-for list="{{ item.children }}" as="sub" hint-placeholder-count="4">
+                  <a href="{{ sub.href }}" style="display:block;padding:10px 14px;border-radius:10px;font-size:15px;color:#0c0a09;text-decoration:none;font-weight:400;" style-hover="background:#f0efed;">{{ sub.label }}</a>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </nav>
+      <a class="rs-cta-interactive rs-cta-enter rs-cta-final" href="Book-Consultation.dc.html" style="background:var(--rs-cta);color:#ffffff;border-radius:9999px;padding:10px 18px;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap;flex-shrink:0;" style-hover="background:var(--rs-cta-hover);">Book a Call</a>
+    </sc-if>
+
+    <sc-if value="{{ !isDesktop }}" hint-placeholder-val="{{ false }}">
+      <button aria-label="{{ mobileMenuLabel }}" aria-expanded="{{ mobileOpen }}" aria-controls="mobile-navigation" onClick="{{ toggleMobile }}" style="background:none;border:none;padding:10px;cursor:pointer;display:flex;flex-direction:column;gap:5px;">
+        <span style="width:24px;height:2px;background:#0c0a09;display:block;"></span>
+        <span style="width:24px;height:2px;background:#0c0a09;display:block;"></span>
+        <span style="width:24px;height:2px;background:#0c0a09;display:block;"></span>
+      </button>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ mobileOpen }}" hint-placeholder-val="{{ false }}">
+    <nav id="mobile-navigation" aria-label="Mobile navigation" style="background:#ffffff;border-top:1px solid #e7e5e4;padding:8px 20px 24px;">
+      <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="7">
+        <div style="border-bottom:1px solid #e7e5e4;">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 4px;">
+            <a href="{{ item.href }}" style="font-size:17px;color:#0c0a09;text-decoration:none;font-weight:400;">{{ item.label }}</a>
+            <sc-if value="{{ item.hasChildren }}">
+              <button aria-label="{{ item.expandLabel }}" aria-expanded="{{ item.isOpen }}" onClick="{{ item.onToggle }}" style="background:none;border:none;color:#4e4e4e;font-size:18px;cursor:pointer;padding:8px 10px;">{{ item.expandGlyph }}</button>
+            </sc-if>
+          </div>
+          <sc-if value="{{ item.isOpen }}">
+            <div style="padding:0 4px 16px 16px;display:flex;flex-direction:column;gap:2px;">
+              <sc-for list="{{ item.children }}" as="sub" hint-placeholder-count="4">
+                <a href="{{ sub.href }}" style="padding:10px 0;font-size:15px;color:#4e4e4e;text-decoration:none;">{{ sub.label }}</a>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+      <a class="rs-cta-interactive rs-cta-enter rs-cta-final" href="Book-Consultation.dc.html" style="display:block;text-align:center;margin-top:20px;background:var(--rs-cta);color:#ffffff;border-radius:9999px;padding:14px 24px;font-size:15px;font-weight:500;text-decoration:none;">Book a Consultation</a>
+    </nav>
+  </sc-if>
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;activePage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;about&quot;,&quot;spiral&quot;,&quot;workshops&quot;,&quot;family&quot;,&quot;cert&quot;,&quot;vision&quot;,&quot;community&quot;]}}">
+const RAW_NAV = [
+  { key: 'about', label: 'About', href: 'About-Stephanie.dc.html', children: null },
+  { key: 'spiral', label: 'Spiral Journey', href: 'Spiral-Journey.dc.html', children: [
+    { label: 'Overview', href: 'Spiral-Journey.dc.html' },
+    { label: 'Spiral I — Foundations of Wellbeing', href: 'Spiral-I.dc.html' },
+    { label: 'Spiral II — Deep Emotional Transformation', href: 'Spiral-II.dc.html' },
+    { label: 'Spiral III — Consciousness & Purpose', href: 'Spiral-III.dc.html' },
+    { label: 'Spiral IV — Integrated Living & Leadership', href: 'Spiral-IV.dc.html' },
+  ]},
+  { key: 'workshops', label: 'Workshops', href: 'Workshops.dc.html', children: [
+    { label: 'Overview', href: 'Workshops.dc.html' },
+    { label: 'ReGeneration', href: 'ReGeneration.dc.html' },
+    { label: 'Earth Healer Training', href: 'Earth-Healer-Training.dc.html' },
+    { label: 'Rainbow Light Codes', href: 'Rainbow-Light-Codes.dc.html' },
+    { label: 'Crystal Healing', href: 'Crystal-Healing.dc.html' },
+    { label: 'Intuitive Perception Training', href: 'Intuitive-Perception-Training.dc.html' },
+    { label: 'Holographic Healing', href: 'Holographic-Healing.dc.html' },
+    { label: 'Adult Potential Development', href: 'Adult-Potential-Development.dc.html' },
+  ]},
+  { key: 'family', label: 'Family', href: 'Children-Family.dc.html', children: null },
+  { key: 'cert', label: 'Certification', href: 'Practitioner-Certification.dc.html', children: [
+    { label: 'Overview', href: 'Practitioner-Certification.dc.html' },
+    { label: 'Earth Healer Training', href: 'Earth-Healer-Training.dc.html' },
+    { label: "Children's Potential Coach Certification", href: 'Childrens-Potential-Coach-Certification.dc.html' },
+  ]},
+  { key: 'vision', label: 'Bigger Vision', href: 'Bigger-Vision.dc.html', children: null },
+  { key: 'community', label: 'Community', href: 'Community-Stories.dc.html', children: null },
+];
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { isDesktop: true, mobileOpen: false, openMenu: null, mobileExpanded: null };
+  }
+
+  componentDidMount() {
+    this.check = () => this.setState({ isDesktop: window.innerWidth >= 920 });
+    this.check();
+    window.addEventListener('resize', this.check);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.check);
+  }
+
+  renderVals() {
+    const active = this.props.activePage || '';
+    const openMenu = this.state.openMenu;
+    const mobileExpanded = this.state.mobileExpanded;
+    const isDesktop = this.state.isDesktop;
+
+    const navItems = RAW_NAV.map(item => {
+      const isCurrent = item.key === active;
+      const hasChildren = !!item.children;
+      const isOpen = hasChildren ? (isDesktop ? openMenu === item.key : mobileExpanded === item.key) : false;
+      return {
+        key: item.key,
+        label: item.label,
+        href: item.href,
+        children: item.children,
+        hasChildren,
+        isOpen,
+        linkStyle: 'font-size:13px;font-weight:500;text-decoration:none;padding:7px 7px;border-radius:9999px;white-space:nowrap;color:' + (isCurrent ? '#0c0a09' : '#4e4e4e') + ';background:' + (isCurrent ? '#f0efed' : 'transparent') + ';',
+        onEnter: () => this.setState({ openMenu: item.children ? item.key : null }),
+        onToggle: () => this.setState({ mobileExpanded: mobileExpanded === item.key ? null : item.key }),
+        expandLabel: (isOpen ? 'Collapse ' : 'Expand ') + item.label + ' submenu',
+        expandGlyph: mobileExpanded === item.key ? '\u2013' : '+',
+      };
+    });
+
+    return {
+      isDesktop,
+      mobileOpen: this.state.mobileOpen,
+      mobileMenuLabel: this.state.mobileOpen ? 'Close navigation menu' : 'Open navigation menu',
+      navItems,
+      onLeave: () => this.setState({ openMenu: null }),
+      onKeyDown: (e) => e.key === 'Escape' && this.setState({ openMenu: null, mobileOpen: false, mobileExpanded: null }),
+      toggleMobile: () => this.setState({ mobileOpen: !this.state.mobileOpen, openMenu: null }),
+    };
+  }
+}
+</script>
+</body>
+</html>

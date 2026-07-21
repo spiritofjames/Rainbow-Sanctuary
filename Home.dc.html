@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rainbow Sanctuary — Healing, Consciousness & Community</title>
+<meta name="description" content="A healing academy and global community for personal transformation, practitioner development, children and families, and the Planetary Symbiosis Network.">
+<meta name="theme-color" content="#f5f5f5">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rainbow Sanctuary — Healing, Consciousness &amp; Community">
+<meta property="og:description" content="A healing academy and global community for personal transformation, practitioner development, children and families, and the Planetary Symbiosis Network.">
+<link rel="icon" href="./assets/brand/favicon-lotus-64.png?v=20260717-final1" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="./assets/brand/apple-touch-icon.png?v=20260717-final1" sizes="180x180">
+<link rel="stylesheet" href="./site.css?v=20260714-spectrum1">
+<script src="./site-config.js"></script>
+<script src="./support.js"></script>
+<script src="./cta-effects.js?v=20260714-purple3" defer></script>
+<script src="./home-hero-video.js?v=2" defer></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@300;400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  body { margin: 0; background: #f5f5f5; }
+
+  .rs-pastel-hero {
+    position: relative;
+    display: flex;
+    min-height: max(640px, 100svh);
+    align-items: center;
+    overflow: hidden;
+    padding: 118px 20px 108px;
+    isolation: isolate;
+    background-color: #13211c;
+  }
+
+  .rs-home-hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    background: #13211c url("./assets/video/home-sanctuary-shore-v3-poster.jpg") center / cover no-repeat;
+  }
+
+  .rs-hero-video {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% center;
+    opacity: 1;
+    pointer-events: none;
+  }
+
+  .rs-home-hero__shade {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background:
+      radial-gradient(ellipse at center, rgba(7,18,14,.64) 0%, rgba(7,18,14,.38) 43%, transparent 72%),
+      linear-gradient(180deg, rgba(7,18,14,.40) 0%, rgba(7,18,14,.22) 43%, rgba(7,18,14,.82) 100%);
+    pointer-events: none;
+  }
+
+  .rs-home-hero__content {
+    position: relative;
+    z-index: 4;
+    width: min(1040px, 100%);
+    margin: 0 auto;
+  }
+
+  .rs-hero-copy {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    color: #fff;
+    text-align: center;
+  }
+
+  .rs-hero-eyebrow {
+    display: block;
+    margin: 0 0 18px;
+    color: rgba(255,255,255,.72);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    text-shadow: 0 2px 18px rgba(0,0,0,.45);
+  }
+
+  .rs-hero-title {
+    margin: 0 0 20px;
+    color: #fff;
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(29px, 8.4vw, 36px) !important;
+    font-weight: 300;
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+    overflow-wrap: normal;
+    text-shadow: 0 3px 28px rgba(0,0,0,.48);
+  }
+
+  .rs-hero-copy p {
+    max-width: 760px;
+    margin: 0 auto;
+    color: rgba(255,255,255,0.84);
+    font-size: 16px;
+    line-height: 1.65;
+    text-shadow: 0 2px 18px rgba(0,0,0,.56);
+  }
+
+  .rs-hero-motion-toggle {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    z-index: 5;
+    min-height: 44px;
+    padding: 10px 16px;
+    border: 1px solid rgba(255,255,255,0.28);
+    border-radius: 9999px;
+    background: rgba(8,20,16,0.58);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    color: #fff;
+    font: 500 12px/1 Inter, sans-serif;
+    cursor: pointer;
+    transition: background 180ms ease, transform 180ms ease;
+  }
+
+  .rs-hero-motion-toggle:hover {
+    background: rgba(8,20,16,0.76);
+    transform: translateY(-1px);
+  }
+
+  .rs-home-audience {
+    padding: 48px 20px 64px;
+    background:
+      radial-gradient(circle at 14% 10%, rgba(200,184,224,0.26), transparent 34%),
+      radial-gradient(circle at 88% 92%, rgba(167,229,211,0.24), transparent 32%),
+      #f5f5f5;
+  }
+
+  .rs-home-audience__grid {
+    display: grid;
+    gap: 16px;
+    width: min(1200px, 100%);
+    margin: 0 auto;
+  }
+
+  .rs-home-audience__card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border: 1px solid rgba(255,255,255,0.72);
+    border-radius: 24px;
+    padding: 30px 24px;
+    background: rgba(255,255,255,0.72);
+    box-shadow: 0 18px 60px rgba(41,37,36,0.06);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+  }
+
+  .rs-home-audience__card > span {
+    color: #6f6962;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .rs-home-audience__card p {
+    margin: 0 0 8px;
+    color: #4e4e4e;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 700px) {
+    .rs-hero-motion-toggle { right: 16px; bottom: 16px; }
+
+    .rs-home-hero__content {
+      width: calc(100vw - 16px);
+      transform: translateY(clamp(52px, 7vh, 68px));
+    }
+
+    .rs-hero-title {
+      white-space: nowrap;
+      font-size: clamp(23px, 7.2vw, 32px) !important;
+      letter-spacing: -0.045em;
+    }
+  }
+
+  @media (min-width: 760px) {
+    .rs-home-audience { padding: 64px 32px 80px; }
+    .rs-home-audience__grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 24px; }
+    .rs-home-audience__card { min-height: 270px; padding: 38px 36px; }
+  }
+
+  @media (min-width: 920px) {
+    .rs-pastel-hero {
+      display: flex;
+      min-height: max(760px, 100svh);
+      align-items: center;
+      padding: 132px 32px 104px;
+      background: #13211c;
+    }
+
+    .rs-home-hero__media {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      aspect-ratio: auto;
+    }
+
+    .rs-hero-video { object-position: 50% center; }
+
+    .rs-home-hero__shade {
+      background:
+        radial-gradient(ellipse at center, rgba(7,18,14,.64) 0%, rgba(7,18,14,.34) 43%, transparent 72%),
+        linear-gradient(180deg, rgba(7,18,14,.40), rgba(7,18,14,.18) 44%, rgba(7,18,14,.80));
+    }
+
+    .rs-home-hero__content {
+      width: min(1480px, 100%);
+      margin: 0 auto;
+      transform: translateY(clamp(70px, 8vh, 96px));
+    }
+
+    .rs-hero-copy {
+      max-width: 1480px;
+      padding: 0;
+      background: transparent;
+      text-align: center;
+    }
+
+    .rs-hero-title {
+      white-space: nowrap;
+      font-size: clamp(42px, 2.1vw, 44px) !important;
+    }
+
+    .rs-hero-eyebrow { font-size: 12px; }
+
+    .rs-hero-copy p { max-width: 900px; margin-inline: auto; font-size: 21px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rs-hero-video {
+      display: none;
+    }
+
+    .rs-pastel-hero[data-motion-override="true"] .rs-hero-video {
+      display: block;
+    }
+  }
+</style>
+</helmet>
+<a class="rs-skip-link" href="#main-content">Skip to content</a>
+
+<div style="font-family:'Inter',sans-serif;background:#f5f5f5;color:#0c0a09;">
+
+  <dc-import name="SiteNavCinematic" active-page="home" hint-size="100%,86px"></dc-import>
+
+  <main id="main-content">
+  <!-- CINEMATIC VIDEO HERO -->
+  <section class="rs-pastel-hero">
+    <div class="rs-home-hero__media">
+      <video class="rs-hero-video" data-home-hero-video autoplay muted playsinline preload="metadata" poster="./assets/video/home-sanctuary-shore-v3-poster.jpg" aria-hidden="true" tabindex="-1">
+        <source src="./assets/video/home-sanctuary-shore-v3-mobile.mp4" media="(max-width: 700px)" type="video/mp4" />
+        <source src="./assets/video/home-sanctuary-shore-v3-desktop.mp4" type="video/mp4" />
+      </video>
+      <div class="rs-home-hero__shade" aria-hidden="true"></div>
+      <button class="rs-hero-motion-toggle" data-home-hero-motion-toggle type="button" aria-label="Pause background motion"><span>Pause motion</span></button>
+    </div>
+    <div class="rs-home-hero__content">
+      <div class="rs-hero-copy">
+        <span class="rs-hero-eyebrow">Rainbow Sanctuary</span>
+        <h1 class="rs-hero-title">Home is where your heart feels peace.</h1>
+        <p>Rainbow Sanctuary is a high-frequency academy and global community for consciousness, holistic healing, and personal transformation — part of a larger movement to build the foundations of a new way of living, for one another and the Earth.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TWO AUDIENCE PATHS -->
+  <section class="rs-home-audience" aria-label="Choose your Rainbow Sanctuary pathway">
+    <div class="rs-home-audience__grid">
+      <article class="rs-home-audience__card">
+        <span>For Those Seeking Healing &amp; Renewal</span>
+        <p>For emotional overwhelm, chronic stress, life transitions, burnout, or feeling disconnected from yourself. Practical tools and immersive experiences for clarity, resilience, and a renewed connection with life.</p>
+        <a class="rs-cta-interactive rs-cta-enter rs-tone-spiral-1" href="Spiral-I.dc.html" style="display:inline-block;background:var(--rs-cta);color:#ffffff;border-radius:9999px;padding:14px 28px;font-size:15px;font-weight:500;text-decoration:none;align-self:flex-start;" style-hover="background:var(--rs-cta-hover);">Start with Spiral I</a>
+      </article>
+      <article class="rs-home-audience__card">
+        <span>For Conscious Practitioners &amp; Future Facilitators</span>
+        <p>For those already on a path of inner development who want deeper understanding, community, mentorship, and conscious leadership. Awakening does not have to be a solitary journey.</p>
+        <a class="rs-cta-interactive rs-cta-enter rs-tone-certification" href="Practitioner-Certification.dc.html" style="display:inline-block;background:var(--rs-cta);color:#ffffff;border-radius:9999px;padding:14px 28px;font-size:15px;font-weight:500;text-decoration:none;align-self:flex-start;" style-hover="background:var(--rs-cta-hover);">See the Certification Path</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- VERIFIED PARTICIPANT TRUST -->
+  <section class="rs-trust-strip" aria-label="Verified participant stories">
+    <div class="rs-trust-strip__inner">
+      <div class="rs-trust-strip__people" aria-hidden="true">
+        <span class="rs-trust-strip__person" data-image-key="testimonial-madley">MP</span>
+        <span class="rs-trust-strip__person" data-image-key="testimonial-irene">I</span>
+        <span class="rs-trust-strip__person" data-image-key="testimonial-leann">L</span>
+        <span class="rs-trust-strip__person" data-image-key="testimonial-jashley">J</span>
+      </div>
+      <p class="rs-trust-strip__copy"><strong>Real words from four parents and children.</strong> Shared after the Awaken the Supernatural Intelligence workshop, February–March 2025. <a href="Community-Stories.dc.html" style="color:#0c0a09;font-weight:500;">Read their stories&nbsp;&rarr;</a></p>
+    </div>
+  </section>
+
+  <!-- SIGNATURE MOMENTS (disclosed editorial imagery) -->
+  <section style="padding:0 32px 96px;">
+    <div style="max-width:1240px;margin:0 auto;">
+
+      <div style="position:relative;height:1px;background:#e7e5e4;margin-bottom:64px;">
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,#a7e5d3,#f4c5a8,#c8b8e0);"></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;">
+
+        <div style="position:relative;border-radius:24px;overflow:hidden;height:420px;">
+          <div data-image-key="home-spiral" id="home-photo-spiral" style="width:100%;height:100%;">
+            <img src="./assets/editorial/home-spiral-editorial.jpg" alt="Adults in a quiet reflective workshop" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover;object-position:52% 40%;" />
+          </div>
+          <div style="position:absolute;left:0;right:0;bottom:0;padding:20px 24px;background:linear-gradient(to top, rgba(12,10,9,0.62), rgba(12,10,9,0));pointer-events:none;">
+            <a href="Spiral-Journey.dc.html" style="pointer-events:auto;color:#ffffff;font-size:16px;font-weight:500;text-decoration:none;">The Spiral Journey &rarr;</a>
+          </div>
+        </div>
+
+        <div style="position:relative;border-radius:24px;overflow:hidden;height:420px;">
+          <div data-image-key="home-family" id="home-photo-family" style="width:100%;height:100%;">
+            <img src="./assets/editorial/home-family-editorial.jpg" alt="A parent accompanying a child in a creative activity" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover;object-position:50% 39%;" />
+          </div>
+          <div style="position:absolute;left:0;right:0;bottom:0;padding:20px 24px;background:linear-gradient(to top, rgba(12,10,9,0.62), rgba(12,10,9,0));pointer-events:none;">
+            <a href="Children-Family.dc.html" style="pointer-events:auto;color:#ffffff;font-size:16px;font-weight:500;text-decoration:none;">Children &amp; Family &rarr;</a>
+          </div>
+        </div>
+
+        <div style="position:relative;border-radius:24px;overflow:hidden;height:420px;">
+          <div data-image-key="home-community" id="home-photo-community" style="width:100%;height:100%;">
+            <img src="./assets/editorial/home-community-editorial.jpg" alt="Adults sharing tea at a small tropical gathering" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover;object-position:50% 45%;" />
+          </div>
+          <div style="position:absolute;left:0;right:0;bottom:0;padding:20px 24px;background:linear-gradient(to top, rgba(12,10,9,0.62), rgba(12,10,9,0));pointer-events:none;">
+            <a href="Community-Stories.dc.html" style="pointer-events:auto;color:#ffffff;font-size:16px;font-weight:500;text-decoration:none;">Community &amp; Stories &rarr;</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="position:relative;height:1px;background:#e7e5e4;margin-top:64px;">
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,#a8c8e8,#e8b8c4,#a7e5d3);"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PHILOSOPHY STRIP -->
+  <section style="background:#fafafa;border-top:1px solid #e7e5e4;border-bottom:1px solid #e7e5e4;padding:64px 32px;">
+    <div style="max-width:760px;margin:0 auto;text-align:center;">
+      <span style="font-size:12px;font-weight:600;letter-spacing:0.96px;color:#6f6962;text-transform:uppercase;">Information &rarr; Energy &rarr; Physical Reality</span>
+      <p style="font-family:'EB Garamond',serif;font-weight:300;font-size:28px;line-height:1.45;margin:20px 0 0;">We believe lasting change begins by transforming the patterns that shape perception, energy, habits, and everyday experience. We do not create fear. We do not promise instant transformation. We do not rely on spiritual sensationalism.</p>
+    </div>
+  </section>
+
+  <!-- SPIRAL JOURNEY PREVIEW -->
+  <section style="padding:96px 32px;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:48px;">
+        <span style="font-size:12px;font-weight:600;letter-spacing:0.96px;color:#6f6962;text-transform:uppercase;">The Spiral Journey</span>
+        <h2 style="font-family:'EB Garamond',serif;font-weight:300;font-size:36px;margin:16px 0 0;">A four-level path of transformation</h2>
+      </div>
+
+      <div style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;">
+        <div style="position:absolute;top:52px;left:6%;right:6%;height:1px;background:#e7e5e4;z-index:0;"></div>
+
+        <a href="Spiral-I.dc.html" style="position:relative;z-index:1;text-decoration:none;color:inherit;background:#f0efed;border:1px solid #e7e5e4;border-radius:16px;padding:32px 24px;display:flex;flex-direction:column;gap:8px;">
+          <span style="font-family:'EB Garamond',serif;font-weight:300;font-size:24px;">I</span>
+          <span style="font-size:16px;font-weight:500;">Foundations of Wellbeing</span>
+          <span style="font-size:14px;color:#4e4e4e;line-height:1.5;">Physical wellbeing, emotional balance, stress reduction, and energetic awareness.</span>
+        </a>
+        <a href="Spiral-II.dc.html" style="position:relative;z-index:1;text-decoration:none;color:inherit;background:#ffffff;border:1px solid #e7e5e4;border-radius:16px;padding:32px 24px;display:flex;flex-direction:column;gap:8px;">
+          <span style="font-family:'EB Garamond',serif;font-weight:300;font-size:24px;color:#0c0a09;">II</span>
+          <span style="font-size:16px;font-weight:500;">Deep Emotional Transformation</span>
+          <span style="font-size:14px;color:#4e4e4e;line-height:1.5;">Emotional conditioning, limiting beliefs, and relationship patterns.</span>
+        </a>
+        <a href="Spiral-III.dc.html" style="position:relative;z-index:1;text-decoration:none;color:inherit;background:#ffffff;border:1px solid #e7e5e4;border-radius:16px;padding:32px 24px;display:flex;flex-direction:column;gap:8px;">
+          <span style="font-family:'EB Garamond',serif;font-weight:300;font-size:24px;color:#0c0a09;">III</span>
+          <span style="font-size:16px;font-weight:500;">Consciousness &amp; Purpose</span>
+          <span style="font-size:14px;color:#4e4e4e;line-height:1.5;">Intuition, life purpose, creativity, and expanded awareness.</span>
+        </a>
+        <a href="Spiral-IV.dc.html" style="position:relative;z-index:1;text-decoration:none;color:inherit;background:#ffffff;border:1px solid #e7e5e4;border-radius:16px;padding:32px 24px;display:flex;flex-direction:column;gap:8px;">
+          <span style="font-family:'EB Garamond',serif;font-weight:300;font-size:24px;color:#0c0a09;">IV</span>
+          <span style="font-size:16px;font-weight:500;">Integrated Living &amp; Leadership</span>
+          <span style="font-size:14px;color:#4e4e4e;line-height:1.5;">A coherent way of living, creating, serving, and leading.</span>
+        </a>
+      </div>
+      <div style="text-align:center;margin-top:40px;">
+        <a href="Spiral-Journey.dc.html" style="font-size:15px;font-weight:500;color:#0c0a09;text-decoration:none;border-bottom:1px solid #0c0a09;padding-bottom:2px;">See the full Spiral Journey &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHILDREN & FAMILY PROOF STRIP -->
+  <section style="background:#fafafa;border-top:1px solid #e7e5e4;border-bottom:1px solid #e7e5e4;padding:96px 32px;">
+    <div style="max-width:1000px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:40px;">
+        <span style="font-size:12px;font-weight:600;letter-spacing:0.96px;color:#6f6962;text-transform:uppercase;">Children &amp; Family</span>
+        <h2 style="font-family:'EB Garamond',serif;font-weight:300;font-size:36px;margin:16px 0 0;">Help your child come alive again</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:24px;">
+        <div style="background:#ffffff;border:1px solid #e7e5e4;border-radius:16px;padding:32px;">
+          <p style="font-family:'EB Garamond',serif;font-weight:300;font-style:italic;font-size:20px;line-height:1.6;margin:0 0 16px;">"I noticed a shift in my daughter after she enrolled in the workshop, she's a lot more confident, positive and would often out of the blue says the wisest things that left me speechless for few seconds."</p>
+          <span style="font-size:14px;color:#6f6962;">— Madley Pondor, Parent</span>
+        </div>
+        <div style="background:#ffffff;border:1px solid #e7e5e4;border-radius:16px;padding:32px;">
+          <p style="font-family:'EB Garamond',serif;font-weight:300;font-style:italic;font-size:20px;line-height:1.6;margin:0 0 16px;">"My kids have become more intune with their bodies and mind. They are happier, more confident, more relaxed."</p>
+          <span style="font-size:14px;color:#6f6962;">— Irene, parent of Kalen, Leann, and Jordan</span>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:40px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a class="rs-cta-interactive rs-cta-enter rs-tone-family" href="Children-Family.dc.html" style="display:inline-block;background:var(--rs-cta);color:#ffffff;border-radius:9999px;padding:14px 28px;font-size:15px;font-weight:500;text-decoration:none;" style-hover="background:var(--rs-cta-hover);">Explore Children &amp; Family</a>
+        <a href="Community-Stories.dc.html" style="font-size:15px;font-weight:500;color:#0c0a09;text-decoration:none;border-bottom:1px solid #0c0a09;padding-bottom:2px;align-self:center;">Read more stories &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PSN MISSION BAND -->
+  <section id="planetary-vision" class="rs-home-vision">
+    <img class="rs-home-vision__image" src="./assets/editorial/psn-regenerative-future.jpg" alt="A regenerative tropical community with gardens, water systems, solar roofs, and people working together" width="1600" height="900" loading="lazy">
+    <div class="rs-home-vision__card">
+      <span class="rs-home-vision__kicker">Planetary Symbiosis Network</span>
+      <h2>Rainbow Sanctuary is part of a larger movement.</h2>
+      <p>The Earth is entering a time of profound transition. We're building a planetary network of regenerative communities, healing centers, and education hubs — the Planetary Symbiosis Network. This is not a vision of collapse. It is a call to regeneration.</p>
+      <a class="rs-home-vision__link" href="Bigger-Vision.dc.html">Explore the Bigger Vision</a>
+    </div>
+  </section>
+
+  <!-- CLOSING CTA -->
+  <section style="padding:96px 32px;">
+    <div style="max-width:700px;margin:0 auto;text-align:center;">
+      <p style="font-family:'EB Garamond',serif;font-weight:300;font-style:italic;font-size:28px;line-height:1.5;margin:0 0 12px;">"Let's get together. It's going to take us to come together to create a new timeline and a new reality."</p>
+      <span style="font-size:15px;color:#6f6962;display:block;margin-bottom:32px;">— Stephanie</span>
+      <a class="rs-cta-interactive rs-cta-enter rs-cta-final" href="Book-Consultation.dc.html" style="display:inline-block;background:var(--rs-cta);color:#ffffff;border-radius:9999px;padding:14px 28px;font-size:15px;font-weight:500;text-decoration:none;" style-hover="background:var(--rs-cta-hover);">Book a Consultation</a>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer style="background:#fafafa;border-top:1px solid #e7e5e4;padding:64px 32px 32px;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;padding-bottom:48px;">
+        <div>
+          <span style="font-family:'EB Garamond',serif;font-weight:300;font-size:21px;">Rainbow Sanctuary</span>
+          <p style="font-size:14px;color:#6f6962;line-height:1.6;margin-top:12px;max-width:240px;">A healing academy and global community, part of the Planetary Symbiosis Network.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <span style="font-size:12px;font-weight:600;letter-spacing:0.96px;color:#6f6962;text-transform:uppercase;margin-bottom:4px;">Explore</span>
+          <a href="Home.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Home</a>
+          <a href="About-Stephanie.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">About Stephanie</a>
+          <a href="Spiral-Journey.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">The Spiral Journey</a>
+          <a href="Workshops.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Workshops &amp; Programs</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <span style="font-size:12px;font-weight:600;letter-spacing:0.96px;color:#6f6962;text-transform:uppercase;margin-bottom:4px;">More</span>
+          <a href="Children-Family.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Children &amp; Family</a>
+          <a href="1-1-Sessions.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">1:1 Private Sessions</a>
+          <a href="Practitioner-Certification.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Practitioner Certification</a>
+          <a href="Bigger-Vision.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">The Bigger Vision</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <span style="font-size:12px;font-weight:600;letter-spacing:0.96px;color:#6f6962;text-transform:uppercase;margin-bottom:4px;">Connect</span>
+          <a href="Community-Stories.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Community &amp; Stories</a>
+          <a href="Events-Retreats.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Events &amp; Retreats</a>
+          <a href="Book-Consultation.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Book a Consultation</a>
+        </div>
+      </div>
+      <div class="rs-footer-bottom">
+        <span>© 2026 Rainbow Sanctuary</span>
+        <nav class="rs-footer-legal" aria-label="Legal and accessibility">
+          <a href="Privacy-Policy.dc.html">Privacy</a>
+          <a href="Terms-Conditions.dc.html">Terms</a>
+          <a href="Cookie-Policy.dc.html">Cookies</a>
+          <a href="Wellbeing-Disclaimer.dc.html">Wellbeing disclaimer</a>
+          <a href="Children-Safeguarding.dc.html">Children &amp; safeguarding</a>
+          <a href="Accessibility-Statement.dc.html">Accessibility</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+</body>
+</html>
