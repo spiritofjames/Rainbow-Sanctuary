@@ -61,7 +61,14 @@
       const location = [event.venue, event.location].filter(Boolean).map(escapeHtml).join(" · ") || "Location to be confirmed";
       const registrationUrl = safeUrl(event.registrationUrl);
       const action = registrationUrl ? `<a href="${escapeHtml(registrationUrl)}">${escapeHtml(statusNames[event.status] || "View details")} →</a>` : "";
-      return `<article class="rs-event-card"><div class="rs-event-date"><strong>${start.getDate()}</strong><span>${start.toLocaleDateString("en", { month:"short" })}</span></div><div><span class="rs-event-card__category">${escapeHtml(categoryNames[event.category])} · ${escapeHtml(dateRange(event))}</span><h4>${escapeHtml(event.title)}</h4><p>${location}</p>${event.summary ? `<p>${escapeHtml(event.summary)}</p>` : ""}${action}</div></article>`;
+      const deadline = event.earlyBirdDeadline ? eventDate(event.earlyBirdDeadline).toLocaleDateString("en", { day:"numeric", month:"short", year:"numeric" }) : "";
+      const priceLines = [
+        event.earlyBirdPrice ? `Early Bird: ${event.earlyBirdPrice}${deadline ? ` until ${deadline}` : ""}` : "",
+        event.price ? `Standard: ${event.price}` : "",
+        event.deposit || ""
+      ].filter(Boolean);
+      const pricing = priceLines.length ? `<div class="rs-event-card__pricing">${priceLines.map(line => `<span>${escapeHtml(line)}</span>`).join("")}</div>` : "";
+      return `<article class="rs-event-card"><div class="rs-event-date"><strong>${start.getDate()}</strong><span>${start.toLocaleDateString("en", { month:"short" })}</span></div><div><span class="rs-event-card__category">${escapeHtml(categoryNames[event.category])} · ${escapeHtml(dateRange(event))}</span><h4>${escapeHtml(event.title)}</h4><p>${location}</p>${event.summary ? `<p>${escapeHtml(event.summary)}</p>` : ""}${pricing}${action}</div></article>`;
     }).join("");
     empty.hidden = events.length > 0;
   }

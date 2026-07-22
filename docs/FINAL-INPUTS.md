@@ -72,20 +72,48 @@ pilot price. Keep this price for the first 6–8 sessions, then review attendanc
 repeat participation, refunds/no-shows, and movement into Spiral I before changing
 it. Do not silently convert the wellbeing session into a free lead magnet.
 
-Enter the final display-ready value for each offer in `pricing`. Values may
-include currency and payment framing exactly as visitors should see it, for
-example `€1,200` or `€400 deposit · €1,600 total`.
+The course breakdown supplied on 22 July 2026 confirms and the website now shows:
 
-Keys: `group-healing`, `spiral-i`, `spiral-ii`, `spiral-iii`, `spiral-iv`, `regeneration`,
-`earth-healer-training`, `rainbow-light-codes`, `crystal-healing`,
-`intuitive-perception-training`, `holographic-healing`,
-`adult-potential-development`, `unlock-the-potential`,
-`childrens-potential-coach-certification`, `one-to-one-sessions`,
-`personal-karma-reconciliation`, `family-information-field-restoration`, and
-`dna-activation`.
+| Offer | Published price |
+|---|---|
+| Spiral I · 4 days | USD 1,399 · Early Bird USD 999 |
+| Spiral II · 4 days | USD 1,599 · Early Bird USD 1,299 |
+| Spiral III · 4 days | USD 1,599 · Early Bird USD 1,399 |
+| Spiral IV · 4 days | USD 1,599 · Early Bird USD 1,399 |
+| ReGeneration Level I · 5 days | USD 2,999 |
+| ReGeneration Level II · 4 days | USD 2,399 |
+| Earth Healer Level I · 3 days | USD 500 |
+| Earth Healer Level II · 3 days | USD 699 |
+| Crystal Healing · 4 days | USD 899 |
+| Intuitive Perception · 4 days | USD 899 |
+| Awaken Infinite Potential Adult Program · 5 days | USD 1,599 |
+| Children’s Potential Mentor/Coach Certification package | USD 7,399 |
 
-Until a value is confirmed, the public-facing badge remains “Pricing coming
-soon.”
+The Children’s package source describes one adult plus one child, Spiral I and II,
+Children Levels I and II, lifetime Spiral review, and children’s review until age
+18. The final certification title, number and duration of meetings, assessment,
+practicum, transferability, and included expenses still need written confirmation
+before payment opens.
+
+### Prices still missing or structurally unresolved
+
+- Personal Karma Reconciliation Session;
+- Family Information Field Restoration Session;
+- DNA Activation;
+- the Private Healing hub, if it is intended to have a separate umbrella fee;
+- Holographic Healing;
+- Unlock the Potential as a standalone child/family program;
+- Rainbow Light Code Healing as a standalone offer—the source says it is covered
+  in Earth Healing, so the team should either fold it into that page or set a fee;
+- Tea Ceremony Mastery—the source says it is covered in Awaken Infinite Potential,
+  and there is not currently a standalone page or price;
+- Earth Healing Zone, if it will become a paid membership or event rather than a
+  community practice.
+
+The source provides early-bird amounts for Spiral I–IV but no deadlines or rules.
+Taxes, deposits, instalments, refund/cancellation terms, inclusions, and cohort
+dates also remain unconfirmed across the catalog. Until a standalone value is
+confirmed, the relevant public-facing badge remains “Pricing coming soon.”
 
 ## 3. Application and enquiry form
 
@@ -114,12 +142,25 @@ route. Set `form.provider`, `form.photoRetention`, `scheduling.provider`, and
 
 ## 4. Events calendar
 
-Add confirmed public events to `events.items` in `site/site-config.js`. Each item
+The calendar now includes **Awakening Your Inner Light**, 1–7 October 2026 in
+Bocas del Toro, Panama. The supplied brochure confirms a standard rate of USD
+3,500 per person and an early-bird rate of USD 3,000 with a 50% deposit before 1
+September 2026. It links to a dedicated event page and currently accepts interest
+only—not payment or a guaranteed reservation.
+
+Add further confirmed public events to `events.items` in `site/site-config.js`. Each item
 uses `id`, `title`, `category` (`group`, `retreat`, `adult`, `family`, or `community`),
 `startDate`, optional `endDate`, `location`, optional `venue`, `summary`, `status`,
 and `registrationUrl`. Dates use `YYYY-MM-DD`; the configured calendar timezone
 provides the public context. The page provides month navigation, filters, an
 upcoming list, and an honest empty state when no dates are confirmed.
+
+Before opening retreat registration or collecting a deposit, confirm the named
+venue, operator/legal basis, adult health-and-medication screening, contraindications,
+facilitator credentials, emergency and medical escalation, transport, insurance,
+room arrangements, exact inclusions/exclusions, informed consent, conduct,
+cancellation/refund terms, and integration support. The current page deliberately
+does not present the retreat as medical or mental-health treatment.
 
 Before opening Group Healing registration, confirm the first two dates, timezone,
 facilitator, delivery link/process, payment URL, attendance cap, accessibility

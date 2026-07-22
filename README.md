@@ -1,6 +1,6 @@
 # Rainbow Sanctuary
 
-Responsive website prototype for Rainbow Sanctuary, including the complete page set, shared navigation, visual assets, responsive hero media, legal and safeguarding pages, and the approved design and voice references. It now includes a $20 Online Group Healing entry offer, the sequential Spiral client journey, a dedicated Earth Healing Zone, a three-path Private Healing area, application-first intake, and a filterable Events & Retreats calendar.
+Responsive website prototype for Rainbow Sanctuary, including the complete page set, shared navigation, visual assets, responsive hero media, legal and safeguarding pages, and the approved design and voice references. It now includes confirmed program pricing, a $20 Online Group Healing entry offer, the sequential Spiral client journey, a dedicated Earth Healing Zone, a three-path Private Healing area, application-first intake, and a filterable Events & Retreats calendar. The October 2026 Awakening Your Inner Light retreat has a dedicated interest-only page pending final legal and safety confirmations.
 
 ## Live preview
 
@@ -35,4 +35,4 @@ The included `vercel.json` contains the routing configuration used by the team p
 
 ## Current status
 
-This is the approved design prototype and design-system source, not the final production platform. Pricing, confirmed event dates and locations, the secure form/CRM provider, headshot-retention rules, final legal entity details, and selected consent-dependent content remain launch inputs.
+This is the approved design prototype and design-system source, not the final production platform. Several standalone offer prices, early-bird rules, payment/refund terms, the secure form/CRM provider, retreat legal and safety approvals, headshot-retention rules, final legal entity details, and selected consent-dependent content remain launch inputs.

@@ -77,6 +77,16 @@ photo.
     and the resulting cookie/transfer disclosures and processor agreements.
 11. Group Healing payment, refund/no-show, replay, facilitator, accessibility, and
     online-safety terms before the first paid event opens.
+12. Before accepting registration or payment for the October 2026 plant-medicine
+    retreat: written confirmation of Panama legal compliance and authorized
+    ceremony provision; the venue and responsible operator; adult eligibility,
+    confidential health and medication screening, contraindications and exclusion
+    criteria; facilitator credentials; emergency transport and medical escalation;
+    insurance; informed consent; safeguarding and incident reporting; exact
+    inclusions, refunds, cancellations, and participant conduct; and preparation
+    and integration support. Do not describe ayahuasca as medical or mental-health
+    treatment, promise healing outcomes, or advise anyone to stop prescribed
+    medication.
 
 ## Official sources used as guardrails
 
@@ -96,6 +106,13 @@ photo.
   https://www.cdc.gov/covid/vaccines/how-they-work.html
 - US NCCIH, current evidence overview for Reiki:
   https://www.nccih.nih.gov/health/reiki
+- US National Institute on Drug Abuse, commonly used drugs reference describing
+  ayahuasca effects and risks:
+  https://nida.nih.gov/sites/default/files/commonly_abused_drugs.pdf
+- US Department of State, Panama country information and local-law warning:
+  https://travel.state.gov/content/travel/en/international-travel/International-Travel-Country-Information-Pages/Panama.html
+- Panama Ministry of Health, controlled-substances information:
+  https://www.minsa.gob.pa/informacion-salud/departamento-de-sustancias-controladas
 
 These sources inform conservative global-facing defaults; they do not decide which
 laws apply. That requires confirmed entity, market, participant, and program-location

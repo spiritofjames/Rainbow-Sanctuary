@@ -189,7 +189,9 @@ class Component extends DCLogic {
     const params = new URLSearchParams(window.location.search);
     const reason = params.get('reason');
     const privateSession = params.get('session');
-    if (reason || privateSession) this.setState({ reason: reason || (privateSession ? 'private-healing' : ''), privateSession: privateSession || '' });
+    const event = params.get('event');
+    const eventMessage = event === 'awakening-inner-light-2026' ? 'I would like to register interest in the Awakening Your Inner Light retreat, 1–7 October 2026 in Bocas del Toro.' : '';
+    if (reason || privateSession || eventMessage) this.setState({ reason: reason || (privateSession ? 'private-healing' : ''), privateSession: privateSession || '', message: eventMessage });
   }
 
   renderVals() {
