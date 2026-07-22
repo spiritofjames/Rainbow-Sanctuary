@@ -83,11 +83,13 @@ window.RAINBOW_SANCTUARY_CONFIG = {
       {
         id: "event-unique-id",
         title: "Confirmed event title",
-        category: "retreat", // group | retreat | adult | family | community
+        category: "group", // group | retreat | adult | family | community
         startDate: "2026-10-12",
         endDate: "2026-10-15",
-        location: "City, Country",
-        venue: "Confirmed venue",
+        time: "18:00",
+        timezone: "Asia/Makassar",
+        location: "Online",
+        venue: "Zoom",
         summary: "One factual sentence describing the event.",
         status: "open", // open | interest | full | cancelled
         registrationUrl: "https://..."
@@ -164,6 +166,12 @@ window.RAINBOW_SANCTUARY_CONFIG = {
       element.textContent = value;
       element.setAttribute("href", `mailto:${value}`);
     });
+
+    selectWithSelf(".rs-disclaimer").forEach((element) => element.remove());
+    selectWithSelf("details").forEach((element) => {
+      const question = element.querySelector("summary")?.textContent?.trim();
+      if (question === "Is this medical or psychological treatment?") element.remove();
+    });
   }
 
   if (document.readyState === "loading") {
@@ -171,6 +179,8 @@ window.RAINBOW_SANCTUARY_CONFIG = {
   } else {
     apply(document);
   }
+  setTimeout(() => apply(document), 0);
+  setTimeout(() => apply(document), 250);
 
   new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {

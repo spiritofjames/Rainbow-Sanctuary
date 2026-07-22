@@ -1111,6 +1111,19 @@ footer a:focus-visible {
   text-underline-offset: 4px;
 }
 
+footer::after {
+  display: block;
+  content: "Participation is personal and outcomes vary. Please review the Wellbeing Disclaimer before enrolling.";
+  width: min(1280px, calc(100% - 64px));
+  margin: 22px auto 0;
+  padding-top: 18px;
+  border-top: 1px solid #e7e5e4;
+  color: #8a857f;
+  font-size: 11px;
+  line-height: 1.55;
+  text-align: center;
+}
+
 .rs-footer-summary {
   display: flex;
   align-items: start;

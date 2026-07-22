@@ -20,6 +20,11 @@
 .rs-retreat-kicker{display:block;color:var(--retreat-gold-100);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
 .rs-retreat-hero h1{max-width:900px;margin:16px 0 18px;font-family:"EB Garamond",serif;font-size:clamp(54px,13vw,96px);font-weight:300;letter-spacing:-.045em;line-height:.88}
 .rs-retreat-hero__lead{max-width:720px;margin:0;color:rgba(255,255,255,.8);font-size:17px;line-height:1.7}
+.rs-retreat-photo-story{position:relative;min-height:440px;overflow:hidden;background:var(--retreat-forest-950)}
+.rs-retreat-photo-story img{display:block;width:100%;height:clamp(440px,62vw,760px);object-fit:cover;object-position:center}
+.rs-retreat-photo-story::after{position:absolute;inset:42% 0 0;background:linear-gradient(transparent,rgba(7,20,15,.9));content:""}
+.rs-retreat-photo-story__caption{position:absolute;z-index:1;right:max(20px,calc((100% - 1180px)/2));bottom:34px;left:max(20px,calc((100% - 1180px)/2));max-width:690px;color:#fff}
+.rs-retreat-photo-story__caption p{margin:10px 0 0;font-family:"EB Garamond",serif;font-size:clamp(28px,5vw,46px);font-weight:300;line-height:1.04}
 .rs-retreat-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:28px 0}
 .rs-retreat-fact{padding:15px;border:1px solid rgba(255,255,255,.2);border-radius:16px;background:rgba(7,20,15,.56);backdrop-filter:blur(12px)}
 .rs-retreat-fact span{display:block;color:rgba(255,255,255,.58);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}

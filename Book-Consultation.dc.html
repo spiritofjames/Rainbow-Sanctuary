@@ -68,6 +68,12 @@
             <input id="consultation-email" name="email" autocomplete="email" type="email" required="true" value="{{ email }}" onChange="{{ onEmailChange }}" />
           </div>
 
+          <div class="rs-field">
+            <label for="consultation-whatsapp">WhatsApp number</label>
+            <input id="consultation-whatsapp" name="whatsapp" autocomplete="tel" inputmode="tel" type="tel" required="true" placeholder="+1 555 123 4567" aria-describedby="consultation-whatsapp-help" value="{{ whatsapp }}" onChange="{{ onWhatsappChange }}" />
+            <p class="rs-field-help" id="consultation-whatsapp-help">Required. Include the international country code so our team can follow up directly.</p>
+          </div>
+
           <div class="rs-application-form__heading"><span>Step 2 · Pathway</span><h2>What brings you here?</h2></div>
           <div class="rs-field">
             <label for="consultation-reason">Choose the closest pathway</label>
@@ -102,7 +108,7 @@
 
           <label class="rs-consent-field" for="consultation-privacy">
             <input id="consultation-privacy" name="privacyConsent" type="checkbox" required="true" />
-            <span>I have read the <a href="Privacy-Policy.dc.html">Privacy Policy</a> and agree to my information being used to review and respond to this request.</span>
+            <span>I agree to the <a href="Terms-Conditions.dc.html">Terms &amp; Conditions</a>, acknowledge the <a href="Wellbeing-Disclaimer.dc.html">Wellbeing Disclaimer</a>, and have read the <a href="Privacy-Policy.dc.html">Privacy Policy</a>. For a child-related enquiry, I also agree to the <a href="Children-Safeguarding.dc.html">Children &amp; Family Safeguarding Policy</a>. I consent to follow-up by email or WhatsApp.</span>
           </label>
 
           <sc-if value="{{ configurationPending }}">
@@ -182,7 +188,7 @@
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { name: '', email: '', reason: '', privateSession: '', currentChallenges: '', intendedOutcome: '', message: '', photoFile: null, photoName: '', submitted: false, submitting: false, configurationPending: false, error: '' };
+    this.state = { name: '', email: '', whatsapp: '', reason: '', privateSession: '', currentChallenges: '', intendedOutcome: '', message: '', photoFile: null, photoName: '', submitted: false, submitting: false, configurationPending: false, error: '' };
   }
 
   componentDidMount() {
@@ -198,6 +204,7 @@ class Component extends DCLogic {
     return {
       name: this.state.name,
       email: this.state.email,
+      whatsapp: this.state.whatsapp,
       reason: this.state.reason,
       privateSession: this.state.privateSession,
       currentChallenges: this.state.currentChallenges,
@@ -212,6 +219,7 @@ class Component extends DCLogic {
       submitLabel: this.state.submitting ? 'Sending securely…' : (this.state.reason === 'private-healing' ? 'Submit application' : 'Send enquiry'),
       onNameChange: (e) => this.setState({ name: e.target.value, configurationPending: false, error: '' }),
       onEmailChange: (e) => this.setState({ email: e.target.value, configurationPending: false, error: '' }),
+      onWhatsappChange: (e) => this.setState({ whatsapp: e.target.value, configurationPending: false, error: '' }),
       onReasonChange: (e) => this.setState({ reason: e.target.value, privateSession: e.target.value === 'private-healing' ? this.state.privateSession : '', photoFile: e.target.value === 'private-healing' ? this.state.photoFile : null, photoName: e.target.value === 'private-healing' ? this.state.photoName : '', configurationPending: false, error: '' }),
       onPrivateSessionChange: (e) => this.setState({ privateSession: e.target.value, error: '' }),
       onChallengesChange: (e) => this.setState({ currentChallenges: e.target.value, error: '' }),
@@ -231,6 +239,10 @@ class Component extends DCLogic {
         e.preventDefault();
         const formConfig = window.RAINBOW_SANCTUARY_CONFIG && window.RAINBOW_SANCTUARY_CONFIG.form;
         const isPrivate = this.state.reason === 'private-healing';
+        if (!/^\+[1-9][0-9\s().-]{6,20}$/.test(this.state.whatsapp.trim())) {
+          this.setState({ error: 'Please enter your WhatsApp number with its international country code, beginning with +.' });
+          return;
+        }
         if (isPrivate && !this.state.photoFile) {
           this.setState({ error: 'Please add the requested recent headshot, or contact the team to discuss an accessible alternative.' });
           return;
@@ -245,12 +257,16 @@ class Component extends DCLogic {
           const payload = new FormData();
           payload.append('name', this.state.name);
           payload.append('email', this.state.email);
+          payload.append('whatsapp', this.state.whatsapp.trim());
           payload.append('reason', this.state.reason);
           payload.append('privateSession', this.state.privateSession);
           payload.append('currentChallenges', this.state.currentChallenges);
           payload.append('intendedOutcome', this.state.intendedOutcome);
           payload.append('message', this.state.message);
           payload.append('privacyConsent', 'true');
+          payload.append('termsAccepted', 'true');
+          payload.append('wellbeingDisclaimerAcknowledged', 'true');
+          payload.append('safeguardingPolicyAcknowledged', this.state.reason === 'family' ? 'true' : 'not-applicable');
           payload.append('photoConsent', isPrivate ? 'true' : 'false');
           payload.append('privacyPolicyVersion', window.RAINBOW_SANCTUARY_CONFIG?.legal?.effectiveDate || '13 July 2026');
           if (this.state.photoFile) payload.append('headshot', this.state.photoFile, this.state.photoFile.name);

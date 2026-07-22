@@ -155,29 +155,20 @@ const RAW_NAV = [
     { label: 'Spiral III — Consciousness & Purpose', href: 'Spiral-III.dc.html' },
     { label: 'Spiral IV — Integrated Living & Leadership', href: 'Spiral-IV.dc.html' },
   ]},
-  { key: 'workshops', label: 'Workshops', href: 'Workshops.dc.html', children: [
-    { label: 'Overview', href: 'Workshops.dc.html' },
-    { label: 'ReGeneration', href: 'ReGeneration.dc.html' },
-    { label: 'Earth Healer Training', href: 'Earth-Healer-Training.dc.html' },
-    { label: 'Rainbow Light Codes', href: 'Rainbow-Light-Codes.dc.html' },
-    { label: 'Crystal Healing', href: 'Crystal-Healing.dc.html' },
-    { label: 'Intuitive Perception Training', href: 'Intuitive-Perception-Training.dc.html' },
-    { label: 'Holographic Healing', href: 'Holographic-Healing.dc.html' },
-    { label: 'Adult Potential Development', href: 'Adult-Potential-Development.dc.html' },
+  { key: 'programs', label: 'Programs', href: 'Workshops.dc.html', activeKeys: ['workshops', 'family', 'cert'], children: [
+    { label: 'All programs', href: 'Workshops.dc.html' },
+    { label: 'For adults — Workshops', href: 'Workshops.dc.html#explore' },
+    { label: 'For children & families', href: 'Children-Family.dc.html' },
+    { label: 'For practitioners — Certification', href: 'Practitioner-Certification.dc.html' },
   ]},
-  { key: 'family', label: 'Family', href: 'Children-Family.dc.html', children: null },
   { key: 'private', label: 'Private Healing', href: '1-1-Sessions.dc.html', children: [
     { label: 'Overview', href: '1-1-Sessions.dc.html' },
     { label: 'Personal Karma Reconciliation', href: 'Personal-Karma-Reconciliation.dc.html' },
     { label: 'Family Information Field Restoration', href: 'Family-Information-Field-Restoration.dc.html' },
     { label: 'DNA Activation', href: 'DNA-Activation.dc.html' },
   ]},
-  { key: 'cert', label: 'Certification', href: 'Practitioner-Certification.dc.html', children: [
-    { label: 'Overview', href: 'Practitioner-Certification.dc.html' },
-    { label: 'Earth Healer Training', href: 'Earth-Healer-Training.dc.html' },
-    { label: "Children's Potential Coach Certification", href: 'Childrens-Potential-Coach-Certification.dc.html' },
-  ]},
   { key: 'events', label: 'Events', href: 'Events-Retreats.dc.html', children: null },
+  { key: 'community', label: 'Community', href: 'Community-Stories.dc.html', children: null },
   { key: 'vision', label: 'Bigger Vision', href: 'Bigger-Vision.dc.html', children: [
     { label: 'Planetary Symbiosis Network', href: 'Bigger-Vision.dc.html' },
     { label: 'Earth Healing Zone', href: 'Earth-Healing-Zone.dc.html' },
@@ -212,7 +203,7 @@ class Component extends DCLogic {
     const lightNavigation = isHome && !this.state.isScrolled && !this.state.mobileOpen;
 
     const navItems = RAW_NAV.map(item => {
-      const isCurrent = item.key === active;
+      const isCurrent = item.key === active || (item.activeKeys || []).includes(active);
       const hasChildren = !!item.children;
       const isOpen = hasChildren ? (isDesktop ? openMenu === item.key : mobileExpanded === item.key) : false;
       return {
