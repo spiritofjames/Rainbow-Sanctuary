@@ -34,7 +34,7 @@
 
     <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
       <nav aria-label="Primary navigation" style="display:flex;align-items:center;gap:0;flex-shrink:0;">
-        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="7">
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="8">
           <div
             style="position:relative;padding:12px 2px;flex-shrink:0;"
             onMouseEnter="{{ item.onEnter }}"
@@ -52,7 +52,7 @@
           </div>
         </sc-for>
       </nav>
-      <a class="rs-cta-interactive rs-cta-enter rs-cta-final" href="Book-Consultation.dc.html" style="background:var(--rs-cta);color:#ffffff;border-radius:9999px;padding:10px 18px;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap;flex-shrink:0;" style-hover="background:var(--rs-cta-hover);">Book a Call</a>
+      <a class="rs-cta-interactive rs-cta-enter rs-cta-final" href="Book-Consultation.dc.html" style="background:var(--rs-cta);color:#ffffff;border-radius:9999px;padding:10px 18px;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap;flex-shrink:0;" style-hover="background:var(--rs-cta-hover);">Apply / Enquire</a>
     </sc-if>
 
     <sc-if value="{{ !isDesktop }}" hint-placeholder-val="{{ false }}">
@@ -66,7 +66,7 @@
 
   <sc-if value="{{ mobileOpen }}" hint-placeholder-val="{{ false }}">
     <nav id="mobile-navigation" aria-label="Mobile navigation" style="background:#ffffff;border-top:1px solid #e7e5e4;padding:8px 20px 24px;">
-      <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="7">
+      <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="8">
         <div style="border-bottom:1px solid #e7e5e4;">
           <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 4px;">
             <a href="{{ item.href }}" style="font-size:17px;color:#0c0a09;text-decoration:none;font-weight:400;">{{ item.label }}</a>
@@ -83,12 +83,12 @@
           </sc-if>
         </div>
       </sc-for>
-      <a class="rs-cta-interactive rs-cta-enter rs-cta-final" href="Book-Consultation.dc.html" style="display:block;text-align:center;margin-top:20px;background:var(--rs-cta);color:#ffffff;border-radius:9999px;padding:14px 24px;font-size:15px;font-weight:500;text-decoration:none;">Book a Consultation</a>
+      <a class="rs-cta-interactive rs-cta-enter rs-cta-final" href="Book-Consultation.dc.html" style="display:block;text-align:center;margin-top:20px;background:var(--rs-cta);color:#ffffff;border-radius:9999px;padding:14px 24px;font-size:15px;font-weight:500;text-decoration:none;">Apply or Enquire</a>
     </nav>
   </sc-if>
 </header>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;activePage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;about&quot;,&quot;spiral&quot;,&quot;workshops&quot;,&quot;family&quot;,&quot;cert&quot;,&quot;vision&quot;,&quot;community&quot;]}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;activePage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;about&quot;,&quot;spiral&quot;,&quot;workshops&quot;,&quot;family&quot;,&quot;private&quot;,&quot;cert&quot;,&quot;events&quot;,&quot;vision&quot;,&quot;community&quot;]}}">
 const RAW_NAV = [
   { key: 'about', label: 'About', href: 'About-Stephanie.dc.html', children: null },
   { key: 'spiral', label: 'Spiral Journey', href: 'Spiral-Journey.dc.html', children: [
@@ -109,13 +109,19 @@ const RAW_NAV = [
     { label: 'Adult Potential Development', href: 'Adult-Potential-Development.dc.html' },
   ]},
   { key: 'family', label: 'Family', href: 'Children-Family.dc.html', children: null },
+  { key: 'private', label: 'Private Healing', href: '1-1-Sessions.dc.html', children: [
+    { label: 'Overview', href: '1-1-Sessions.dc.html' },
+    { label: 'Personal Karma Reconciliation', href: 'Personal-Karma-Reconciliation.dc.html' },
+    { label: 'Family Information Field Restoration', href: 'Family-Information-Field-Restoration.dc.html' },
+    { label: 'DNA Activation', href: 'DNA-Activation.dc.html' },
+  ]},
   { key: 'cert', label: 'Certification', href: 'Practitioner-Certification.dc.html', children: [
     { label: 'Overview', href: 'Practitioner-Certification.dc.html' },
     { label: 'Earth Healer Training', href: 'Earth-Healer-Training.dc.html' },
     { label: "Children's Potential Coach Certification", href: 'Childrens-Potential-Coach-Certification.dc.html' },
   ]},
+  { key: 'events', label: 'Events', href: 'Events-Retreats.dc.html', children: null },
   { key: 'vision', label: 'Bigger Vision', href: 'Bigger-Vision.dc.html', children: null },
-  { key: 'community', label: 'Community', href: 'Community-Stories.dc.html', children: null },
 ];
 
 class Component extends DCLogic {

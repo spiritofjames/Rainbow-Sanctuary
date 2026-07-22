@@ -3,15 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Book a Consultation | Rainbow Sanctuary</title>
-<meta name="description" content="Tell Rainbow Sanctuary what brings you here and find the most suitable next step.">
+<title>Apply or Enquire | Rainbow Sanctuary</title>
+<meta name="description" content="Apply for private healing or tell Rainbow Sanctuary what brings you here and find the most suitable next step.">
 <meta name="theme-color" content="#f5f5f5">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Book a Consultation | Rainbow Sanctuary">
-<meta property="og:description" content="Tell Rainbow Sanctuary what brings you here and find the most suitable next step.">
+<meta property="og:title" content="Apply or Enquire | Rainbow Sanctuary">
+<meta property="og:description" content="Apply for private healing or tell Rainbow Sanctuary what brings you here and find the most suitable next step.">
 <link rel="icon" href="./assets/brand/favicon-lotus-64.png?v=20260717-final1" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="./assets/brand/apple-touch-icon.png?v=20260717-final1" sizes="180x180">
 <link rel="stylesheet" href="./site.css?v=20260714-spectrum1">
+<link rel="stylesheet" href="./application.css?v=20260722-application1">
 <script src="./site-config.js"></script>
 <script src="./support.js"></script>
 <script src="./cta-effects.js?v=20260714-purple3" defer></script>
@@ -32,75 +33,97 @@
   <dc-import name="SiteNavFixed" active-page="" hint-size="100%,84px"></dc-import>
 
   <main id="main-content">
-  <!-- HERO -->
-  <section style="position:relative;overflow:hidden;padding:96px 32px 48px;">
-    <div style="position:absolute;top:-120px;left:20%;width:440px;height:440px;border-radius:50%;background:#a7e5d3;filter:blur(100px);opacity:0.4;"></div>
-    <div style="position:relative;max-width:600px;margin:0 auto;text-align:center;">
-      <h1 style="font-family:'EB Garamond',serif;font-weight:300;font-size:44px;line-height:1.15;margin:0 0 20px;">Let's get together.</h1>
-      <p style="font-family:'EB Garamond',serif;font-weight:300;font-style:italic;font-size:19px;line-height:1.6;color:#4e4e4e;margin:0;">"It's going to take us to come together to create a new timeline and a new reality." — Stephanie</p>
+  <section class="rs-application-hero">
+    <div class="rs-application-shell rs-application-hero__inner">
+      <span class="rs-application-kicker">Application &amp; enquiries</span>
+      <h1>Begin with context,<br><em>not a calendar.</em></h1>
+      <p>Tell us what brings you here. Private-healing requests are reviewed before scheduling; other enquiries are routed to the most relevant program or event.</p>
     </div>
   </section>
+  <section class="rs-application-flow" aria-label="Application process"><div class="rs-application-shell rs-application-flow__grid"><div><span>01</span><strong>Share</strong><small>Your context and intention</small></div><div><span>02</span><strong>Review</strong><small>Scope, consent, and fit</small></div><div><span>03</span><strong>Schedule</strong><small>Private link if accepted</small></div><div><span>04</span><strong>Integrate</strong><small>Written follow-up where applicable</small></div></div></section>
 
-  <!-- FORM -->
-  <section style="padding:32px 32px 96px;">
-    <div style="max-width:520px;margin:0 auto;">
+  <section class="rs-application-section">
+    <div class="rs-application-shell rs-application-layout">
+      <aside class="rs-application-aside">
+        <span class="rs-application-kicker">Before you submit</span>
+        <h2>A request is not an acceptance.</h2>
+        <p>We may suggest a different Rainbow Sanctuary pathway, ask for clarification, or recommend qualified care outside our scope.</p>
+        <p>Do not submit medical records, diagnoses, government identifiers, emergency information, or unnecessary details about another person.</p>
+        <a href="1-1-Sessions.dc.html">Explore Private Healing →</a>
+      </aside>
+      <div>
 
       <sc-if value="{{ !submitted }}" hint-placeholder-val="{{ true }}">
-        <form aria-busy="{{ submitting }}" onSubmit="{{ handleSubmit }}" style="background:#ffffff;border:1px solid #e7e5e4;border-radius:16px;padding:36px;display:flex;flex-direction:column;gap:20px;">
+        <form class="rs-application-form" aria-busy="{{ submitting }}" onSubmit="{{ handleSubmit }}">
 
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <label for="consultation-name" style="font-size:14px;font-weight:500;color:#0c0a09;">Name</label>
-            <input id="consultation-name" name="name" autocomplete="name" type="text" required="true" value="{{ name }}" onChange="{{ onNameChange }}" style="border:1px solid #d6d3d1;border-radius:8px;padding:12px 14px;font-size:16px;font-family:'Inter',sans-serif;background:#fafafa;color:#0c0a09;" />
+          <div class="rs-application-form__heading"><span>Step 1 · Contact</span><h2>How may we reach you?</h2></div>
+
+          <div class="rs-field">
+            <label for="consultation-name">Name</label>
+            <input id="consultation-name" name="name" autocomplete="name" type="text" required="true" value="{{ name }}" onChange="{{ onNameChange }}" />
           </div>
 
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <label for="consultation-email" style="font-size:14px;font-weight:500;color:#0c0a09;">Email</label>
-            <input id="consultation-email" name="email" autocomplete="email" type="email" required="true" value="{{ email }}" onChange="{{ onEmailChange }}" style="border:1px solid #d6d3d1;border-radius:8px;padding:12px 14px;font-size:16px;font-family:'Inter',sans-serif;background:#fafafa;color:#0c0a09;" />
+          <div class="rs-field">
+            <label for="consultation-email">Email</label>
+            <input id="consultation-email" name="email" autocomplete="email" type="email" required="true" value="{{ email }}" onChange="{{ onEmailChange }}" />
           </div>
 
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <label for="consultation-reason" style="font-size:14px;font-weight:500;color:#0c0a09;">What brings you here?</label>
-            <select id="consultation-reason" name="reason" value="{{ reason }}" onChange="{{ onReasonChange }}" style="border:1px solid #d6d3d1;border-radius:8px;padding:12px 14px;font-size:16px;font-family:'Inter',sans-serif;background:#fafafa;color:#0c0a09;">
+          <div class="rs-application-form__heading"><span>Step 2 · Pathway</span><h2>What brings you here?</h2></div>
+          <div class="rs-field">
+            <label for="consultation-reason">Choose the closest pathway</label>
+            <select id="consultation-reason" name="reason" required="true" value="{{ reason }}" onChange="{{ onReasonChange }}">
               <option value="">Choose one</option>
-              <option value="healing">Healing &amp; Renewal</option>
-              <option value="practitioner">Practitioner Training</option>
-              <option value="child">My Child</option>
-              <option value="vision">The Bigger Vision</option>
+              <option value="private-healing">Private Healing application</option>
+              <option value="spiral">The Spiral Journey</option>
+              <option value="workshop">Adult workshop or program</option>
+              <option value="family">Children &amp; Family</option>
+              <option value="certification">Practitioner Certification</option>
+              <option value="events">Events &amp; Retreats</option>
+              <option value="vision">The Bigger Vision / PSN</option>
               <option value="other">Something Else</option>
             </select>
           </div>
 
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <label for="consultation-message" style="font-size:14px;font-weight:500;color:#0c0a09;">Message <span style="color:#6f6962;font-weight:400;">(optional)</span></label>
-            <textarea id="consultation-message" name="message" rows="4" value="{{ message }}" onChange="{{ onMessageChange }}" style="border:1px solid #d6d3d1;border-radius:8px;padding:12px 14px;font-size:16px;font-family:'Inter',sans-serif;background:#fafafa;color:#0c0a09;resize:vertical;"></textarea>
-            <p class="rs-field-help">Please do not include medical records, diagnoses, government identifiers, or unnecessary identifying information about a child. A parent or legal guardian should make all child-related enquiries.</p>
-          </div>
+          <sc-if value="{{ isPrivateHealing }}" hint-placeholder-val="{{ false }}">
+            <div class="rs-field"><label for="private-session">Which private session are you considering?</label><select id="private-session" name="privateSession" required="true" value="{{ privateSession }}" onChange="{{ onPrivateSessionChange }}"><option value="">Choose one</option><option value="karma">Personal Karma Reconciliation</option><option value="family-field">Family Information Field Restoration</option><option value="dna-activation">DNA Activation</option><option value="unsure">I am not sure</option></select></div>
+            <div class="rs-application-form__heading"><span>Step 3 · Your application</span><h2>What support are you seeking?</h2></div>
+            <div class="rs-field"><label for="current-challenges">Your current challenges</label><textarea id="current-challenges" name="currentChallenges" rows="5" required="true" value="{{ currentChallenges }}" onChange="{{ onChallengesChange }}"></textarea><p class="rs-field-help">Describe your lived experience in your own words. Do not include medical records or private information about another person.</p></div>
+            <div class="rs-field"><label for="intended-outcome">Your intended outcome</label><textarea id="intended-outcome" name="intendedOutcome" rows="4" required="true" value="{{ intendedOutcome }}" onChange="{{ onOutcomeChange }}"></textarea><p class="rs-field-help">What do you hope to understand, practise, or relate to differently?</p></div>
+            <div class="rs-field rs-file-field"><label for="recent-headshot">Clear, recent headshot</label><input id="recent-headshot" name="headshot" type="file" accept="image/jpeg,image/png,image/webp" required="true" onChange="{{ onPhotoChange }}" /><p class="rs-field-help">JPG, PNG, or WebP; maximum 10 MB. Use a recent, unedited image reflecting your current appearance. Collection remains inactive until the secure form provider and retention rules are connected.</p><sc-if value="{{ photoName }}"><p class="rs-file-selected">Selected: {{ photoName }}</p></sc-if></div>
+            <label class="rs-consent-field" for="consultation-photo-consent"><input id="consultation-photo-consent" name="photoConsent" type="checkbox" required="true" /><span>I consent to Rainbow Sanctuary using this image solely to review and, if accepted, support this private-healing request. I understand it is not used for medical diagnosis or identity verification.</span></label>
+          </sc-if>
+
+          <sc-if value="{{ !isPrivateHealing }}" hint-placeholder-val="{{ true }}">
+            <div class="rs-application-form__heading"><span>Step 3 · Your enquiry</span><h2>What would you like us to understand?</h2></div>
+            <div class="rs-field"><label for="consultation-message">Message</label><textarea id="consultation-message" name="message" rows="5" required="true" value="{{ message }}" onChange="{{ onMessageChange }}"></textarea><p class="rs-field-help">A parent or legal guardian should make child-related enquiries. Do not include unnecessary identifying information about a child.</p></div>
+          </sc-if>
 
           <label class="rs-consent-field" for="consultation-privacy">
             <input id="consultation-privacy" name="privacyConsent" type="checkbox" required="true" />
-            <span>I have read the <a href="Privacy-Policy.dc.html">Privacy Policy</a> and agree to my information being used to respond to this enquiry.</span>
+            <span>I have read the <a href="Privacy-Policy.dc.html">Privacy Policy</a> and agree to my information being used to review and respond to this request.</span>
           </label>
 
           <sc-if value="{{ configurationPending }}">
-            <p class="rs-form-notice" role="status" aria-live="polite">The form is ready, but its delivery address has not been connected yet. No message was sent. Add the confirmed endpoint in <strong>site-config.js</strong> to activate submissions.</p>
+            <p class="rs-form-notice" role="status" aria-live="polite">The application experience is ready, but the secure HubSpot or CRM endpoint has not been connected. Nothing was uploaded or sent.</p>
           </sc-if>
 
           <sc-if value="{{ error }}">
             <p class="rs-form-notice rs-form-notice--error" role="alert" aria-live="assertive">{{ error }}</p>
           </sc-if>
 
-          <button class="rs-cta-interactive rs-cta-enter rs-cta-final" type="submit" disabled="{{ submitting }}" style="background:var(--rs-cta);color:#ffffff;border:none;border-radius:9999px;padding:14px 28px;font-size:15px;font-weight:500;cursor:pointer;margin-top:8px;" style-hover="background:var(--rs-cta-hover);">{{ submitLabel }}</button>
+          <button class="rs-application-submit rs-cta-interactive rs-cta-enter rs-cta-final" type="submit" disabled="{{ submitting }}">{{ submitLabel }}</button>
 
         </form>
       </sc-if>
 
       <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
-        <div style="background:#ffffff;border:1px solid #e7e5e4;border-radius:16px;padding:48px;text-align:center;">
-          <h2 style="font-family:'EB Garamond',serif;font-weight:300;font-size:26px;margin:0 0 16px;">Thank you.</h2>
-          <p style="font-size:16px;color:#4e4e4e;line-height:1.65;margin:0;">We've received your message and will be in touch soon.</p>
+        <div class="rs-application-success">
+          <span class="rs-application-kicker">Request received</span><h2>Thank you for sharing your context.</h2>
+          <p>We will review your request before proposing a next step. For private healing, a response or scheduling link confirms only the next conversation or appointment described in that message.</p>
         </div>
       </sc-if>
 
+      </div>
     </div>
   </section>
 
@@ -124,7 +147,7 @@
         <div style="display:flex;flex-direction:column;gap:12px;">
           <span style="font-size:12px;font-weight:600;letter-spacing:0.96px;color:#6f6962;text-transform:uppercase;margin-bottom:4px;">More</span>
           <a href="Children-Family.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Children &amp; Family</a>
-          <a href="1-1-Sessions.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">1:1 Private Sessions</a>
+          <a href="1-1-Sessions.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Private Healing</a>
           <a href="Practitioner-Certification.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Practitioner Certification</a>
           <a href="Bigger-Vision.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">The Bigger Vision</a>
         </div>
@@ -132,7 +155,7 @@
           <span style="font-size:12px;font-weight:600;letter-spacing:0.96px;color:#6f6962;text-transform:uppercase;margin-bottom:4px;">Connect</span>
           <a href="Community-Stories.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Community &amp; Stories</a>
           <a href="Events-Retreats.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Events &amp; Retreats</a>
-          <a href="Book-Consultation.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Book a Consultation</a>
+          <a href="Book-Consultation.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Apply or Enquire</a>
         </div>
       </div>
       <div class="rs-footer-bottom">
@@ -155,7 +178,14 @@
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { name: '', email: '', reason: '', message: '', submitted: false, submitting: false, configurationPending: false, error: '' };
+    this.state = { name: '', email: '', reason: '', privateSession: '', currentChallenges: '', intendedOutcome: '', message: '', photoFile: null, photoName: '', submitted: false, submitting: false, configurationPending: false, error: '' };
+  }
+
+  componentDidMount() {
+    const params = new URLSearchParams(window.location.search);
+    const reason = params.get('reason');
+    const privateSession = params.get('session');
+    if (reason || privateSession) this.setState({ reason: reason || (privateSession ? 'private-healing' : ''), privateSession: privateSession || '' });
   }
 
   renderVals() {
@@ -163,19 +193,42 @@ class Component extends DCLogic {
       name: this.state.name,
       email: this.state.email,
       reason: this.state.reason,
+      privateSession: this.state.privateSession,
+      currentChallenges: this.state.currentChallenges,
+      intendedOutcome: this.state.intendedOutcome,
       message: this.state.message,
+      photoName: this.state.photoName,
+      isPrivateHealing: this.state.reason === 'private-healing',
       submitted: this.state.submitted,
       submitting: this.state.submitting,
       configurationPending: this.state.configurationPending,
       error: this.state.error,
-      submitLabel: this.state.submitting ? 'Sending…' : 'Send',
+      submitLabel: this.state.submitting ? 'Sending securely…' : (this.state.reason === 'private-healing' ? 'Submit application' : 'Send enquiry'),
       onNameChange: (e) => this.setState({ name: e.target.value, configurationPending: false, error: '' }),
       onEmailChange: (e) => this.setState({ email: e.target.value, configurationPending: false, error: '' }),
-      onReasonChange: (e) => this.setState({ reason: e.target.value, configurationPending: false, error: '' }),
+      onReasonChange: (e) => this.setState({ reason: e.target.value, privateSession: e.target.value === 'private-healing' ? this.state.privateSession : '', photoFile: e.target.value === 'private-healing' ? this.state.photoFile : null, photoName: e.target.value === 'private-healing' ? this.state.photoName : '', configurationPending: false, error: '' }),
+      onPrivateSessionChange: (e) => this.setState({ privateSession: e.target.value, error: '' }),
+      onChallengesChange: (e) => this.setState({ currentChallenges: e.target.value, error: '' }),
+      onOutcomeChange: (e) => this.setState({ intendedOutcome: e.target.value, error: '' }),
       onMessageChange: (e) => this.setState({ message: e.target.value, configurationPending: false, error: '' }),
+      onPhotoChange: (e) => {
+        const file = e.target.files && e.target.files[0];
+        const allowed = ['image/jpeg', 'image/png', 'image/webp'];
+        if (file && (!allowed.includes(file.type) || file.size > 10 * 1024 * 1024)) {
+          e.target.value = '';
+          this.setState({ photoFile: null, photoName: '', error: 'Please choose a JPG, PNG, or WebP image no larger than 10 MB.' });
+          return;
+        }
+        this.setState({ photoFile: file || null, photoName: file ? file.name : '', error: '' });
+      },
       handleSubmit: async (e) => {
         e.preventDefault();
         const formConfig = window.RAINBOW_SANCTUARY_CONFIG && window.RAINBOW_SANCTUARY_CONFIG.form;
+        const isPrivate = this.state.reason === 'private-healing';
+        if (isPrivate && !this.state.photoFile) {
+          this.setState({ error: 'Please add the requested recent headshot, or contact the team to discuss an accessible alternative.' });
+          return;
+        }
         if (!formConfig || !formConfig.endpoint) {
           this.setState({ configurationPending: true, error: '', submitted: false });
           return;
@@ -183,17 +236,22 @@ class Component extends DCLogic {
 
         this.setState({ submitting: true, configurationPending: false, error: '' });
         try {
+          const payload = new FormData();
+          payload.append('name', this.state.name);
+          payload.append('email', this.state.email);
+          payload.append('reason', this.state.reason);
+          payload.append('privateSession', this.state.privateSession);
+          payload.append('currentChallenges', this.state.currentChallenges);
+          payload.append('intendedOutcome', this.state.intendedOutcome);
+          payload.append('message', this.state.message);
+          payload.append('privacyConsent', 'true');
+          payload.append('photoConsent', isPrivate ? 'true' : 'false');
+          payload.append('privacyPolicyVersion', window.RAINBOW_SANCTUARY_CONFIG?.legal?.effectiveDate || '13 July 2026');
+          if (this.state.photoFile) payload.append('headshot', this.state.photoFile, this.state.photoFile.name);
           const response = await fetch(formConfig.endpoint, {
             method: formConfig.method || 'POST',
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-            body: JSON.stringify({
-              name: this.state.name,
-              email: this.state.email,
-              reason: this.state.reason,
-              message: this.state.message,
-              privacyConsent: true,
-              privacyPolicyVersion: window.RAINBOW_SANCTUARY_CONFIG?.legal?.effectiveDate || '13 July 2026'
-            }),
+            headers: { 'Accept': 'application/json' },
+            body: payload,
           });
           if (!response.ok) throw new Error('Submission failed');
           this.setState({ submitted: true, submitting: false });

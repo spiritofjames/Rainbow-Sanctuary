@@ -5,7 +5,13 @@
 window.RAINBOW_SANCTUARY_CONFIG = {
   form: {
     endpoint: "",
-    method: "POST"
+    method: "POST",
+    provider: "",
+    photoRetention: ""
+  },
+  scheduling: {
+    provider: "",
+    acceptedApplicantUrl: ""
   },
   contact: {
     email: "",
@@ -42,7 +48,30 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     "adult-potential-development": "",
     "unlock-the-potential": "",
     "childrens-potential-coach-certification": "",
-    "one-to-one-sessions": ""
+    "one-to-one-sessions": "",
+    "personal-karma-reconciliation": "",
+    "family-information-field-restoration": "",
+    "dna-activation": ""
+  },
+  events: {
+    timezone: "Asia/Makassar",
+    publicCalendarUrl: "",
+    items: [
+      /*
+      {
+        id: "event-unique-id",
+        title: "Confirmed event title",
+        category: "retreat", // retreat | adult | family | community
+        startDate: "2026-10-12",
+        endDate: "2026-10-15",
+        location: "City, Country",
+        venue: "Confirmed venue",
+        summary: "One factual sentence describing the event.",
+        status: "open", // open | interest | full | cancelled
+        registrationUrl: "https://..."
+      }
+      */
+    ]
   },
   images: {
     "home-spiral": {
