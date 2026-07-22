@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rainbow Sanctuary — Healing, Consciousness & Community</title>
-<meta name="description" content="A healing academy and global community for personal transformation, practitioner development, children and families, and the Planetary Symbiosis Network.">
+<title>Rainbow Sanctuary — Find Your Path to Healing, Growth & Service</title>
+<meta name="description" content="A clear starting point for emotional renewal, deeper inner work, children and families, practitioner development, and regenerative community.">
 <meta name="theme-color" content="#f5f5f5">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Rainbow Sanctuary — Healing, Consciousness &amp; Community">
-<meta property="og:description" content="A healing academy and global community for personal transformation, practitioner development, children and families, and the Planetary Symbiosis Network.">
+<meta property="og:title" content="Rainbow Sanctuary — Find Your Path to Healing, Growth &amp; Service">
+<meta property="og:description" content="A clear starting point for emotional renewal, deeper inner work, children and families, practitioner development, and regenerative community.">
 <link rel="icon" href="./assets/brand/favicon-lotus-64.png?v=20260717-final1" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="./assets/brand/apple-touch-icon.png?v=20260717-final1" sizes="180x180">
 <link rel="stylesheet" href="./site.css?v=20260714-spectrum1">
@@ -116,6 +116,37 @@
     text-shadow: 0 2px 18px rgba(0,0,0,.56);
   }
 
+  .rs-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 26px;
+  }
+
+  .rs-hero-action {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,.36);
+    border-radius: 9999px;
+    padding: 12px 22px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+  }
+
+  .rs-hero-action:hover { transform: translateY(-2px); }
+  .rs-hero-action--primary { border-color: rgba(105,86,255,.82); background: rgba(90,73,234,.9); }
+  .rs-hero-action--primary:hover { background: #6956ff; }
+  .rs-hero-action--secondary { background: rgba(8,20,16,.46); }
+  .rs-hero-action--secondary:hover { background: rgba(8,20,16,.72); }
+
   .rs-hero-motion-toggle {
     position: absolute;
     right: 20px;
@@ -140,11 +171,40 @@
   }
 
   .rs-home-audience {
+    scroll-margin-top: 90px;
     padding: 48px 20px 64px;
     background:
       radial-gradient(circle at 14% 10%, rgba(200,184,224,0.26), transparent 34%),
       radial-gradient(circle at 88% 92%, rgba(167,229,211,0.24), transparent 32%),
       #f5f5f5;
+  }
+
+  .rs-home-audience__intro {
+    width: min(760px, 100%);
+    margin: 0 auto 34px;
+    text-align: center;
+  }
+
+  .rs-home-audience__intro > span,
+  .rs-home-audience__card > span {
+    color: #6f6962;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .rs-home-audience__intro h2 {
+    margin: 12px 0 10px;
+    font: 300 clamp(34px, 8.5vw, 48px)/1.02 'EB Garamond', serif;
+    letter-spacing: -.025em;
+  }
+
+  .rs-home-audience__intro p {
+    margin: 0;
+    color: #5f5a54;
+    font-size: 16px;
+    line-height: 1.65;
   }
 
   .rs-home-audience__grid {
@@ -167,12 +227,10 @@
     backdrop-filter: blur(18px);
   }
 
-  .rs-home-audience__card > span {
-    color: #6f6962;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  .rs-home-audience__card h3 {
+    margin: 0;
+    font: 300 29px/1.08 'EB Garamond', serif;
+    letter-spacing: -.02em;
   }
 
   .rs-home-audience__card p {
@@ -181,6 +239,25 @@
     font-size: 16px;
     line-height: 1.65;
   }
+
+  .rs-home-audience__link {
+    align-self: flex-start;
+    margin-top: auto;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+    color: #2f2b28;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .rs-home-audience__link:hover { color: #5a49ea; }
+
+  .rs-home-audience__card--renewal { box-shadow: inset 0 3px 0 #e78364, 0 18px 60px rgba(41,37,36,.06); }
+  .rs-home-audience__card--depth { box-shadow: inset 0 3px 0 #e2b85e, 0 18px 60px rgba(41,37,36,.06); }
+  .rs-home-audience__card--practice { box-shadow: inset 0 3px 0 #74a9d8, 0 18px 60px rgba(41,37,36,.06); }
+  .rs-home-audience__card--family { box-shadow: inset 0 3px 0 #68aa8c, 0 18px 60px rgba(41,37,36,.06); }
+  .rs-home-audience__card--mission { box-shadow: inset 0 3px 0 #8e73d8, 0 18px 60px rgba(41,37,36,.06); }
 
   @media (max-width: 700px) {
     .rs-hero-motion-toggle { right: 16px; bottom: 16px; }
@@ -195,12 +272,18 @@
       font-size: clamp(23px, 7.2vw, 32px) !important;
       letter-spacing: -0.045em;
     }
+
+    .rs-hero-copy p { max-width: 92vw; font-size: 14px; line-height: 1.55; }
+    .rs-hero-actions { gap: 10px; margin-top: 20px; }
+    .rs-hero-action { min-height: 44px; padding: 10px 16px; font-size: 12px; }
   }
 
   @media (min-width: 760px) {
     .rs-home-audience { padding: 64px 32px 80px; }
     .rs-home-audience__grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 24px; }
-    .rs-home-audience__card { min-height: 270px; padding: 38px 36px; }
+    .rs-home-audience__intro { margin-bottom: 46px; }
+    .rs-home-audience__card { min-height: 290px; padding: 38px 36px; }
+    .rs-home-audience__card--mission { grid-column: 1 / -1; min-height: 230px; }
   }
 
   @media (min-width: 920px) {
@@ -280,25 +363,54 @@
     </div>
     <div class="rs-home-hero__content">
       <div class="rs-hero-copy">
-        <span class="rs-hero-eyebrow">Rainbow Sanctuary</span>
+        <span class="rs-hero-eyebrow">Healing · Growth · Purpose · Service</span>
         <h1 class="rs-hero-title">Home is where your heart feels peace.</h1>
-        <p>Rainbow Sanctuary is a high-frequency academy and global community for consciousness, holistic healing, and personal transformation — part of a larger movement to build the foundations of a new way of living, for one another and the Earth.</p>
+        <p>When life feels heavy, growth feels stuck, your child needs support, or your inner work is ready to become service—find a grounded next step for healing, deeper practice, and conscious contribution.</p>
+        <div class="rs-hero-actions" aria-label="Homepage starting actions">
+          <a class="rs-hero-action rs-hero-action--primary" href="#find-your-path">Find your starting point</a>
+          <a class="rs-hero-action rs-hero-action--secondary" href="Group-Healing.dc.html">Try Group Healing · $20</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- TWO AUDIENCE PATHS -->
-  <section class="rs-home-audience" aria-label="Choose your Rainbow Sanctuary pathway">
+  <!-- PERSONA-LED PATH ROUTER -->
+  <section id="find-your-path" class="rs-home-audience" aria-labelledby="find-your-path-title">
+    <div class="rs-home-audience__intro">
+      <span>Find your starting point</span>
+      <h2 id="find-your-path-title">What brings you here?</h2>
+      <p>You do not need to know the program names. Start with the situation that feels most true today, and explore at your own pace.</p>
+    </div>
     <div class="rs-home-audience__grid">
-      <article class="rs-home-audience__card">
-        <span>For Those Seeking Healing &amp; Renewal</span>
-        <p>For emotional overwhelm, chronic stress, life transitions, burnout, or feeling disconnected from yourself. Begin with an affordable guided group experience, then decide whether deeper study feels right.</p>
-        <a class="rs-cta-interactive rs-cta-enter" href="Group-Healing.dc.html" style="display:inline-block;background:var(--rs-cta);color:#ffffff;border-radius:9999px;padding:14px 28px;font-size:15px;font-weight:500;text-decoration:none;align-self:flex-start;" style-hover="background:var(--rs-cta-hover);">Start with Group Healing · $20</a>
+      <article class="rs-home-audience__card rs-home-audience__card--renewal">
+        <span>Relief &amp; renewal</span>
+        <h3>You are tired of carrying everything alone.</h3>
+        <p>Stress, exhaustion, a life transition, or the same emotional patterns keep returning. Begin with a gentle shared experience—or request private support when your situation needs individual attention.</p>
+        <a class="rs-home-audience__link" href="Group-Healing.dc.html">Start small with Group Healing · $20</a>
       </article>
-      <article class="rs-home-audience__card">
-        <span>For Conscious Practitioners &amp; Future Facilitators</span>
-        <p>For those already on a path of inner development who want deeper understanding, community, mentorship, and conscious leadership. Awakening does not have to be a solitary journey.</p>
-        <a class="rs-cta-interactive rs-cta-enter rs-tone-certification" href="Practitioner-Certification.dc.html" style="display:inline-block;background:var(--rs-cta);color:#ffffff;border-radius:9999px;padding:14px 28px;font-size:15px;font-weight:500;text-decoration:none;align-self:flex-start;" style-hover="background:var(--rs-cta-hover);">See the Certification Path</a>
+      <article class="rs-home-audience__card rs-home-audience__card--depth">
+        <span>Deeper inner work</span>
+        <h3>You have done the work—and still feel a ceiling.</h3>
+        <p>You are not looking for another beginner course. You want a specific framework for integrating old patterns, strengthening intuition, and moving forward with greater clarity.</p>
+        <a class="rs-home-audience__link" href="Spiral-Journey.dc.html">Explore the four-part Spiral Journey</a>
+      </article>
+      <article class="rs-home-audience__card rs-home-audience__card--practice">
+        <span>Practice &amp; facilitation</span>
+        <h3>Your personal growth is becoming a call to guide.</h3>
+        <p>You want ethical training, mentorship, a serious practitioner community, and a visible pathway from personal integration toward serving others.</p>
+        <a class="rs-home-audience__link" href="Practitioner-Certification.dc.html">See the practitioner pathway</a>
+      </article>
+      <article class="rs-home-audience__card rs-home-audience__card--family">
+        <span>Children &amp; family</span>
+        <h3>You can see more in your child than struggle.</h3>
+        <p>Focus, confidence, withdrawal, rebellion, or family tension may be getting in the way. See how our children’s work is structured and hear directly from other parents.</p>
+        <a class="rs-home-audience__link" href="Children-Family.dc.html">Explore children &amp; family support</a>
+      </article>
+      <article class="rs-home-audience__card rs-home-audience__card--mission">
+        <span>Regenerative vision</span>
+        <h3>You want inner development to become tangible contribution.</h3>
+        <p>You are drawn to healing, education, resilient communities, and a more life-supporting future. Discover the Planetary Symbiosis Network and the practical direction Rainbow Sanctuary is helping to build.</p>
+        <a class="rs-home-audience__link" href="Bigger-Vision.dc.html">Explore the bigger vision</a>
       </article>
     </div>
   </section>
@@ -316,7 +428,7 @@
     </div>
   </section>
 
-  <!-- SIGNATURE MOMENTS (disclosed editorial imagery) -->
+  <!-- SIGNATURE MOMENTS -->
   <section style="padding:0 32px 96px;">
     <div style="max-width:1240px;margin:0 auto;">
 
@@ -365,8 +477,9 @@
   <!-- PHILOSOPHY STRIP -->
   <section style="background:#fafafa;border-top:1px solid #e7e5e4;border-bottom:1px solid #e7e5e4;padding:64px 32px;">
     <div style="max-width:760px;margin:0 auto;text-align:center;">
-      <span style="font-size:12px;font-weight:600;letter-spacing:0.96px;color:#6f6962;text-transform:uppercase;">Information &rarr; Energy &rarr; Physical Reality</span>
-      <p style="font-family:'EB Garamond',serif;font-weight:300;font-size:28px;line-height:1.45;margin:20px 0 0;">We believe lasting change begins by transforming the patterns that shape perception, energy, habits, and everyday experience. We do not create fear. We do not promise instant transformation. We do not rely on spiritual sensationalism.</p>
+      <span style="font-size:12px;font-weight:600;letter-spacing:0.96px;color:#6f6962;text-transform:uppercase;">Grounded by clear boundaries</span>
+      <h2 style="font-family:'EB Garamond',serif;font-weight:300;font-size:36px;line-height:1.15;margin:18px 0 0;">Spiritual in language. Practical in application.</h2>
+      <p style="font-size:17px;color:#4e4e4e;line-height:1.7;margin:18px 0 0;">Our work explores the patterns that shape perception, energy, habits, and everyday experience. We do not create fear, promise instant transformation, or ask you to surrender your own discernment.</p>
     </div>
   </section>
 
@@ -452,9 +565,10 @@
   <!-- CLOSING CTA -->
   <section style="padding:96px 32px;">
     <div style="max-width:700px;margin:0 auto;text-align:center;">
-      <p style="font-family:'EB Garamond',serif;font-weight:300;font-style:italic;font-size:28px;line-height:1.5;margin:0 0 12px;">"Let's get together. It's going to take us to come together to create a new timeline and a new reality."</p>
-      <span style="font-size:15px;color:#6f6962;display:block;margin-bottom:32px;">— Stephanie</span>
-      <a class="rs-cta-interactive rs-cta-enter rs-cta-final" href="Book-Consultation.dc.html" style="display:inline-block;background:var(--rs-cta);color:#ffffff;border-radius:9999px;padding:14px 28px;font-size:15px;font-weight:500;text-decoration:none;" style-hover="background:var(--rs-cta-hover);">Apply or Enquire</a>
+      <span style="font-size:12px;font-weight:600;letter-spacing:0.96px;color:#6f6962;text-transform:uppercase;">A human next step</span>
+      <h2 style="font-family:'EB Garamond',serif;font-weight:300;font-size:42px;line-height:1.15;margin:18px 0 16px;">Still not sure where you belong?</h2>
+      <p style="font-size:17px;color:#4e4e4e;line-height:1.7;margin:0 auto 32px;max-width:620px;">Tell us what you are navigating and what you hope will change. We will point you toward the most suitable starting place—or say honestly if we are not the right fit.</p>
+      <a class="rs-cta-interactive rs-cta-enter rs-cta-final" href="Book-Consultation.dc.html" style="display:inline-block;background:var(--rs-cta);color:#ffffff;border-radius:9999px;padding:14px 28px;font-size:15px;font-weight:500;text-decoration:none;" style-hover="background:var(--rs-cta-hover);">Help me choose my next step</a>
     </div>
   </section>
 
