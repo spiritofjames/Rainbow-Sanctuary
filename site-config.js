@@ -120,6 +120,21 @@ window.RAINBOW_SANCTUARY_CONFIG = {
   }
 };
 
+(function loadPersonaFaqSystem() {
+  if (!document.querySelector('link[href*="persona-faqs.css"]')) {
+    const stylesheet = document.createElement("link");
+    stylesheet.rel = "stylesheet";
+    stylesheet.href = "./persona-faqs.css?v=20260723-1";
+    document.head.appendChild(stylesheet);
+  }
+  if (!document.querySelector('script[src*="persona-faqs.js"]')) {
+    const script = document.createElement("script");
+    script.src = "./persona-faqs.js?v=20260723-1";
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+})();
+
 (function applyConfirmedInputs() {
   const config = window.RAINBOW_SANCTUARY_CONFIG;
 
