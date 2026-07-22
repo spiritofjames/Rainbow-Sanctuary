@@ -1,12 +1,13 @@
 (function () {
-  const categoryNames = { retreat: "Retreat", adult: "Adult workshop", family: "Children & Family", community: "Community" };
+  const categoryNames = { group: "Group Healing", retreat: "Retreat", adult: "Adult workshop", family: "Children & Family", community: "Community" };
   const statusNames = { open: "Registration open", interest: "Register interest", full: "Currently full", cancelled: "Cancelled" };
   const config = window.RAINBOW_SANCTUARY_CONFIG?.events || { items: [] };
   const items = Array.isArray(config.items) ? config.items.filter(validEvent).slice() : [];
   const today = startOfDay(new Date());
   const firstUpcoming = items.map(event => eventDate(event.startDate)).filter(date => date >= today).sort((a, b) => a - b)[0];
   let visibleMonth = new Date((firstUpcoming || today).getFullYear(), (firstUpcoming || today).getMonth(), 1);
-  let activeFilter = "all";
+  const requestedFilter = new URLSearchParams(window.location.search).get("filter");
+  let activeFilter = requestedFilter && categoryNames[requestedFilter] ? requestedFilter : "all";
 
   function validEvent(event) { return event && event.id && event.title && event.startDate && categoryNames[event.category]; }
   function eventDate(value) { return new Date(value + "T12:00:00"); }
@@ -72,11 +73,14 @@
     const calendarGrid = document.getElementById("events-calendar-grid");
     if (!calendarGrid || !document.getElementById("events-upcoming-list") || calendarGrid.closest("x-dc")) return false;
     initialized = true;
-    document.querySelectorAll("[data-event-filter]").forEach(button => button.addEventListener("click", function () {
-      activeFilter = button.dataset.eventFilter;
-      document.querySelectorAll("[data-event-filter]").forEach(item => item.setAttribute("aria-pressed", String(item === button)));
-      render();
-    }));
+    document.querySelectorAll("[data-event-filter]").forEach(button => {
+      button.setAttribute("aria-pressed", String(button.dataset.eventFilter === activeFilter));
+      button.addEventListener("click", function () {
+        activeFilter = button.dataset.eventFilter;
+        document.querySelectorAll("[data-event-filter]").forEach(item => item.setAttribute("aria-pressed", String(item === button)));
+        render();
+      });
+    });
     document.getElementById("events-prev-month")?.addEventListener("click", () => { visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1); renderCalendar(); });
     document.getElementById("events-next-month")?.addEventListener("click", () => { visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1); renderCalendar(); });
     const publicLink = document.getElementById("events-calendar-link");

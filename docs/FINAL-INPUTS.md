@@ -67,11 +67,16 @@ For any later replacement documentary file:
 
 ## 2. Pricing
 
+Online Group Healing is configured at **$20 USD per session** as an accessible
+pilot price. Keep this price for the first 6–8 sessions, then review attendance,
+repeat participation, refunds/no-shows, and movement into Spiral I before changing
+it. Do not silently convert the wellbeing session into a free lead magnet.
+
 Enter the final display-ready value for each offer in `pricing`. Values may
 include currency and payment framing exactly as visitors should see it, for
 example `€1,200` or `€400 deposit · €1,600 total`.
 
-Keys: `spiral-i`, `spiral-ii`, `spiral-iii`, `spiral-iv`, `regeneration`,
+Keys: `group-healing`, `spiral-i`, `spiral-ii`, `spiral-iii`, `spiral-iv`, `regeneration`,
 `earth-healer-training`, `rainbow-light-codes`, `crystal-healing`,
 `intuitive-perception-training`, `holographic-healing`,
 `adult-potential-development`, `unlock-the-potential`,
@@ -110,11 +115,16 @@ route. Set `form.provider`, `form.photoRetention`, `scheduling.provider`, and
 ## 4. Events calendar
 
 Add confirmed public events to `events.items` in `site/site-config.js`. Each item
-uses `id`, `title`, `category` (`retreat`, `adult`, `family`, or `community`),
+uses `id`, `title`, `category` (`group`, `retreat`, `adult`, `family`, or `community`),
 `startDate`, optional `endDate`, `location`, optional `venue`, `summary`, `status`,
 and `registrationUrl`. Dates use `YYYY-MM-DD`; the configured calendar timezone
 provides the public context. The page provides month navigation, filters, an
 upcoming list, and an honest empty state when no dates are confirmed.
+
+Before opening Group Healing registration, confirm the first two dates, timezone,
+facilitator, delivery link/process, payment URL, attendance cap, accessibility
+needs, replay policy, and cancellation/no-show terms. Add those dates as `group`
+events. The `?filter=group` link already opens the calendar in the right view.
 
 Use a dedicated public Google Calendar only if the team wants calendar publishing.
 Keep operational scheduling in a separate private calendar. The public calendar

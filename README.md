@@ -1,6 +1,6 @@
 # Rainbow Sanctuary
 
-Responsive website prototype for Rainbow Sanctuary, including the complete page set, shared navigation, visual assets, responsive hero media, legal and safeguarding pages, and the approved design and voice references. It now includes a three-path Private Healing area, application-first intake, and a filterable Events & Retreats calendar.
+Responsive website prototype for Rainbow Sanctuary, including the complete page set, shared navigation, visual assets, responsive hero media, legal and safeguarding pages, and the approved design and voice references. It now includes a $20 Online Group Healing entry offer, the sequential Spiral client journey, a dedicated Earth Healing Zone, a three-path Private Healing area, application-first intake, and a filterable Events & Retreats calendar.
 
 ## Live preview
 
@@ -11,6 +11,7 @@ https://rainbow-sanctuary-team-preview.vercel.app/
 - [`docs/DESIGN.md`](docs/DESIGN.md) — visual system, tokens, responsive behavior, components, motion, and accessibility
 - [`docs/VOICE.md`](docs/VOICE.md) — brand voice and content guardrails
 - [`docs/PRIVATE-HEALING-AND-EVENTS-FUNNEL.md`](docs/PRIVATE-HEALING-AND-EVENTS-FUNNEL.md) — information architecture, application funnel, CRM stages, and event data contract
+- [`docs/GROUP-HEALING-AND-JOURNEY.md`](docs/GROUP-HEALING-AND-JOURNEY.md) — Group Healing themes, pathway logic, Earth Healing framing, and launch inputs
 - [`docs/FINAL-INPUTS.md`](docs/FINAL-INPUTS.md) — remaining configuration and launch inputs
 - [`docs/LEGAL-REVIEW-NOTES.md`](docs/LEGAL-REVIEW-NOTES.md) — privacy, consent, and professional-review checklist
 

@@ -60,12 +60,23 @@ photo.
    duties, supervision ratios, incident process, emergency plan, and media-consent flow.
 7. Whether marketing email, analytics, embedded media, maps, chat, or social widgets
    will be used. No such tool should be activated before the notices and controls are
-   updated.
+  updated.
+- Group Healing is presented as guided spiritual reflection and collective
+  wellbeing practice—not medical care. Do not publish claims that a session
+  removes vaccine ingredients, spike proteins, mRNA, graphene, heavy metals, or
+  toxins; repairs DNA, cells, organs, nerves, mitochondria, immunity, or disease;
+  or has scientifically established effects across distance.
+- Earth Healing is framed as meditation, gratitude, community ritual, and practical
+  ecological stewardship. Do not claim it prevents disasters, war, pollution, or
+  illness; do not rank participants as high- or low-frequency; and do not present
+  a participant threshold or recorded audio as a scientifically proven mechanism.
 8. Formal production accessibility testing and the preferred response time/channel.
 9. The precise purpose, retention period, deletion process, access roles, and
    storage location for application headshots and wellbeing narratives.
 10. Whether HubSpot, Calendly, and Google Calendar will be embedded or merely linked,
     and the resulting cookie/transfer disclosures and processor agreements.
+11. Group Healing payment, refund/no-show, replay, facilitator, accessibility, and
+    online-safety terms before the first paid event opens.
 
 ## Official sources used as guardrails
 
@@ -81,6 +92,10 @@ photo.
   https://www.w3.org/WAI/planning/statements/
 - Google Fonts privacy and data collection FAQ:
   https://developers.google.com/fonts/faq/privacy
+- US CDC, how mRNA COVID-19 vaccines work:
+  https://www.cdc.gov/covid/vaccines/how-they-work.html
+- US NCCIH, current evidence overview for Reiki:
+  https://www.nccih.nih.gov/health/reiki
 
 These sources inform conservative global-facing defaults; they do not decide which
 laws apply. That requires confirmed entity, market, participant, and program-location

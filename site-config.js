@@ -35,6 +35,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     paymentProvider: ""
   },
   pricing: {
+    "group-healing": "$20",
     "spiral-i": "",
     "spiral-ii": "",
     "spiral-iii": "",
@@ -55,13 +56,18 @@ window.RAINBOW_SANCTUARY_CONFIG = {
   },
   events: {
     timezone: "Asia/Makassar",
+    groupHealing: {
+      frequency: "Twice monthly",
+      duration: "Approximately 60 minutes",
+      registrationUrl: ""
+    },
     publicCalendarUrl: "",
     items: [
       /*
       {
         id: "event-unique-id",
         title: "Confirmed event title",
-        category: "retreat", // retreat | adult | family | community
+        category: "retreat", // group | retreat | adult | family | community
         startDate: "2026-10-12",
         endDate: "2026-10-15",
         location: "City, Country",
