@@ -118,6 +118,19 @@
 .rs-entry-next-step p { margin: 0; font-size: 14px; }
 .rs-entry-next-step a { color: #fff; font-weight: 600; }
 
+.rs-pathway-section { background: linear-gradient(180deg,#fbfbfa 0%,#f5f5f3 100%); }
+.rs-pathway-section .rs-section-heading { max-width: 760px; }
+.rs-pathway-option { display: grid; gap: 22px; align-items: center; margin-top: 34px; border: 1px solid; border-radius: 24px; padding: 26px; }
+.rs-pathway-option--entry { border-color: #cfc5ff; background: linear-gradient(135deg,#f3efff,#faf9ff); }
+.rs-pathway-option--retreat { border-color: #efc5b3; background: linear-gradient(135deg,#fff0e9,#fff9f6); }
+.rs-pathway-option h3 { margin: 9px 0 8px; font-family: "EB Garamond",serif; font-size: clamp(28px,5vw,36px); font-weight: 300; line-height: 1.05; }
+.rs-pathway-option p { max-width: 780px; margin: 0; color: #57514c; font-size: 15px; line-height: 1.65; }
+.rs-pathway-option .rs-button { justify-self: start; background: rgba(255,255,255,.7); }
+.rs-pathway-track { margin-top: 22px; }
+.rs-pathway-track .rs-pathway-card { display: flex; min-height: 390px; flex-direction: column; }
+.rs-pathway-card__meta { display: inline-flex; align-self: flex-start; margin: 16px 0 22px; border: 1px solid color-mix(in srgb,var(--rs-pathway-accent) 25%,#e7e5e4); border-radius: 999px; padding: 6px 9px; background: rgba(255,255,255,.7); color: #645f59; font-size: 10px; font-weight: 600; letter-spacing: .035em; }
+.rs-pathway-card .rs-pathway-card__outcome { display: block; color: var(--rs-pathway-accent); font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.rs-pathway-card__link { display: inline-flex; align-items: center; align-self: flex-start; margin-top: auto; padding-top: 22px; color: var(--rs-pathway-accent); font-size: 13px; font-weight: 700; }
 .rs-journey { display: grid; gap: 18px; align-items: stretch; }
 .rs-journey-node { position: relative; display: flex; min-height: 120px; flex-direction: column; justify-content: center; border: 1px solid var(--entry-line); border-radius: 22px; padding: 22px; background: #fff; text-decoration: none; color: inherit; }
 .rs-journey-node::after { position: absolute; right: 50%; bottom: -19px; width: 1px; height: 18px; background: #aaa49c; content: ""; }
@@ -155,6 +168,8 @@
   .rs-care-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
   .rs-collective-values { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .rs-session-card { grid-template-columns: 1fr auto; padding: 28px 30px; }
+  .rs-pathway-option { grid-template-columns: minmax(0,1fr) auto; padding: 30px 34px; }
+  .rs-pathway-option .rs-button { justify-self: end; }
 }
 
 @media (min-width: 1020px) {
