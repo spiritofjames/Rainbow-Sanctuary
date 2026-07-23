@@ -235,7 +235,7 @@
       q("What does ‘Register interest’ mean?", "It means the event is collecting enquiries rather than accepting automatic admission or payment. Screening, legal readiness, capacity, and final terms may still need confirmation."),
       q("Can I filter events by audience?", "Yes. The calendar distinguishes group sessions, adult programs, family events, retreats, and community gatherings when dates exist."),
       q("Should I book travel as soon as I submit the form?", "No. Wait for written acceptance and confirmed venue, schedule, payment, cancellation terms, and travel guidance."),
-      q("How will online event times be shown?", "Each event should display its time zone. Verify the converted time for your location before booking."),
+      q("How will online event times be shown?", "The site automatically detects your browser time zone and converts each online session into your local date and time. The organizer’s original time zone remains visible beside it so you can verify the schedule before booking."),
       ...booking,
     ],
     "Awakening-Your-Inner-Light-2026.dc.html": [

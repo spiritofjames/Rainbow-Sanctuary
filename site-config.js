@@ -55,7 +55,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     "dna-activation": ""
   },
   events: {
-    timezone: "Asia/Makassar",
+    timezone: "Asia/Singapore",
     groupHealing: {
       frequency: "Twice monthly",
       duration: "Approximately 60 minutes",
@@ -64,6 +64,24 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     },
     publicCalendarUrl: "",
     items: [
+      {
+        id: "group-healing-2026-08-22",
+        title: "Grounding & Renewal",
+        category: "group",
+        startDate: "2026-08-22",
+        startDateTime: "2026-08-22T20:00:00+08:00",
+        time: "20:00",
+        timezone: "Asia/Singapore",
+        timezoneLabel: "Singapore time",
+        location: "Online",
+        venue: "Zoom",
+        summary: "A guided Group Healing session for grounding, rest, and renewal.",
+        duration: "Approximately 60 minutes",
+        price: "USD 20",
+        status: "scheduled",
+        registrationUrl: "./Group-Healing.dc.html#choose-session",
+        checkoutUrl: ""
+      },
       {
         id: "awakening-inner-light-2026",
         title: "Awakening Your Inner Light",

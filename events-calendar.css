@@ -15,4 +15,6 @@
 @media(max-width:420px){.rs-calendar-weekdays span{font-size:8px}.rs-calendar-day{min-height:62px;padding:5px 3px}.rs-calendar-pill{height:4px;padding:0;font-size:0}.rs-calendar-day__number{font-size:10px}}
 @media(prefers-reduced-motion:reduce){.rs-events-button,.rs-events-filters button{transition:none}}
 .rs-events-calendar-link[hidden], .rs-events-empty[hidden] { display: none !important; }
+.rs-events-timezone{max-width:680px;margin-top:14px!important;border-left:3px solid #5a49ea;padding:3px 0 3px 13px;color:#59526a!important;font-size:13px!important;line-height:1.55!important}
+.rs-event-card__time{color:#413653!important;font-weight:600}.rs-event-card__source-time{display:block;margin-top:3px;color:var(--events-muted);font-size:11px;line-height:1.5}
 .rs-event-card__pricing{display:grid;gap:3px;margin:10px 0;padding:10px 12px;border-left:3px solid var(--events-retreat);border-radius:0 10px 10px 0;background:#f7f3fa;color:var(--events-body);font-size:12px;line-height:1.5}.rs-event-card__pricing span:first-child{font-weight:600;color:#60457f}

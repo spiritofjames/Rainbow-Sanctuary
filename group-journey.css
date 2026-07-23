@@ -70,6 +70,9 @@
 .rs-collective-values { display: grid; gap: 10px; margin-top: 28px; }
 .rs-collective-values span { border: 1px solid rgba(90,73,234,.18); border-radius: 999px; padding: 11px 15px; background: rgba(255,255,255,.65); color: #403a4d; font-size: 13px; font-weight: 600; }
 .rs-booking-layout { display: grid; gap: 20px; align-items: start; }
+.rs-timezone-notice { display: flex; max-width: 720px; gap: 9px; align-items: flex-start; margin-top: 18px !important; border: 1px solid rgba(90,73,234,.18); border-radius: 14px; padding: 11px 14px; background: rgba(255,255,255,.68); color: #514b59 !important; font-size: 13px !important; line-height: 1.55 !important; }
+.rs-timezone-notice > span:first-child { flex: 0 0 auto; color: var(--entry-violet); font-size: 17px; line-height: 1.2; }
+.rs-timezone-notice > span:last-child { min-width: 0; flex: 1 1 auto; overflow-wrap: anywhere; }
 .rs-booking-calendar, .rs-checkout-panel { border: 1px solid rgba(90,73,234,.18); border-radius: 28px; background: rgba(255,255,255,.82); box-shadow: 0 18px 50px rgba(56,42,104,.08); }
 .rs-booking-calendar { overflow: hidden; }
 .rs-booking-calendar__head { display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; padding: 18px; border-bottom: 1px solid #e8e3f1; }
@@ -106,6 +109,8 @@
 .rs-session-card h3, .rs-session-empty h3 { margin: 8px 0; font-family: "EB Garamond", serif; font-size: 32px; font-weight: 400; }
 .rs-session-card p, .rs-session-empty p { margin: 0; color: #59534e; line-height: 1.65; }
 .rs-session-card small { display: block; margin-top: 8px; color: #716a65; font-size: 12px; }
+.rs-session-card .rs-session-local-time { margin-top: 0; color: #312a3c; font-size: 15px; font-weight: 600; }
+.rs-session-card .rs-session-source-time { margin-top: 5px; }
 .rs-session-card button:disabled { cursor: not-allowed; opacity: .62; }
 .rs-session-empty { margin-top: 22px; border: 1px solid rgba(90,73,234,.2); border-radius: 28px; padding: 30px; background: rgba(255,255,255,.75); }
 .rs-session-empty .rs-entry-button { margin-top: 22px; }
