@@ -32,6 +32,7 @@ preserved as the source record while optimized PNG derivatives are used live.
 | `site/assets/panama-earth-01.jpg` | Panama Drive image `695.JPG` (`13UOfN3TaPwTVB0GrUbzAEu8ud4AQPri5`) | Earth Healer Training | Confirm photographer/source permission; no prominent identifiable participant |
 | `site/assets/spiral-session-01.jpg` | Spiral 1 Drive image `IMG_0188.jpg` (`19t4oE57yqLn5DiQMlnZNBqBawu9Jjm8x`) | Bundled candidate, not currently published | Confirm all visible participants before use |
 | `site/assets/hanan-perea-portrait.jpg` | Portrait screenshot supplied directly by James on 2026-07-23 and identified in the supplied retreat brochure as Hanan Joao Perea Fernández Baca | Awakening Your Inner Light facilitator profile | Confirm Hanan and the photographer/source authorize public website use |
+| `site/assets/retreat-panama-coast-aerial.jpg` | Pexels image supplied directly by James as `pexels-israel-samaniego-53802335-7786371.jpg` on 2026-07-23; filename credits photographer Israel Samaniego | Representative coastal-environment image in Awakening Your Inner Light setting section | Preserve source/photographer record and confirm the downloaded Pexels asset may be republished; do not present it as the exact retreat venue |
 
 ## Supplied brochure imagery
 
