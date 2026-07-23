@@ -96,24 +96,23 @@
 .rs-checkout-price { display: flex; align-items: center; justify-content: space-between; margin: 22px 0 16px; padding: 15px 0; border-block: 1px solid #e4deef; }
 .rs-checkout-price span { color: #706a64; font-size: 12px; font-weight: 600; text-transform: uppercase; }
 .rs-checkout-price strong { color: #1d1838; font-size: 18px; }
-.rs-checkout-panel .rs-entry-button { width: 100%; box-sizing: border-box; }
+.rs-checkout-panel .rs-entry-button { width: 100%; box-sizing: border-box; padding-inline: 12px; font-size: 12px; white-space: nowrap; }
 .rs-checkout-panel .rs-entry-button[hidden] { display: none; }
+.rs-checkout-panel .is-hidden, .rs-entry-section--scheduler > .rs-entry-shell > .is-hidden { display: none !important; }
+.rs-time-options { margin-top: 20px; }
+.rs-time-options > span { display: block; margin-bottom: 8px; color: #706a64; font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
+.rs-time-options button { display: flex; width: 100%; min-height: 54px; cursor: pointer; align-items: center; justify-content: space-between; border: 1px solid #b8acef; border-radius: 16px; padding: 10px 14px; background: #fff; color: #332878; font: inherit; text-align: left; }
+.rs-time-options button:hover, .rs-time-options button[aria-pressed="true"] { border-color: var(--entry-violet); background: #eeeafd; box-shadow: 0 8px 20px rgba(90,73,234,.12); }
+.rs-time-options button strong { font-size: 15px; }
+.rs-time-options button small { color: #6d6681; font-size: 11px; }
 .rs-checkout-panel .rs-checkout-link--pending { border-color: #b8acef; background: #dcd6fa; box-shadow: none; color: #514391; cursor: not-allowed; }
-.rs-checkout-panel .rs-checkout-link--pending::after { content: "Opening soon"; margin-left: auto; border-radius: 999px; padding: 4px 8px; background: rgba(255,255,255,.62); font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.rs-checkout-panel .rs-checkout-link--pending::after { content: "Opening soon"; margin-left: auto; border-radius: 999px; padding: 3px 5px; background: rgba(255,255,255,.62); font-size: 7px; font-weight: 700; letter-spacing: .02em; text-transform: uppercase; }
 .rs-checkout-status { margin-top: 12px !important; font-size: 12px !important; }
 .rs-checkout-steps { display: grid; gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; }
 .rs-checkout-steps li { display: flex; gap: 10px; align-items: center; color: #514b59; font-size: 13px; }
 .rs-checkout-steps span { display: grid; width: 24px; height: 24px; flex: 0 0 24px; place-items: center; border-radius: 50%; background: #eee9fb; color: #4939c7; font-size: 10px; font-weight: 700; }
-.rs-session-list { display: grid; gap: 14px; margin-top: 22px; }
-.rs-session-card { display: grid; gap: 20px; align-items: center; border: 1px solid rgba(90,73,234,.2); border-radius: 24px; padding: 24px; background: rgba(255,255,255,.82); box-shadow: 0 18px 50px rgba(56,42,104,.08); }
-.rs-session-card.is-selected { border-color: var(--entry-violet); box-shadow: 0 18px 50px rgba(56,42,104,.16); }
-.rs-session-card span { color: var(--entry-violet); font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
-.rs-session-card h3, .rs-session-empty h3 { margin: 8px 0; font-family: "EB Garamond", serif; font-size: 32px; font-weight: 400; }
-.rs-session-card p, .rs-session-empty p { margin: 0; color: #59534e; line-height: 1.65; }
-.rs-session-card small { display: block; margin-top: 8px; color: #716a65; font-size: 12px; }
-.rs-session-card .rs-session-local-time { margin-top: 0; color: #312a3c; font-size: 15px; font-weight: 600; }
-.rs-session-card .rs-session-source-time { margin-top: 5px; }
-.rs-session-card button:disabled { cursor: not-allowed; opacity: .62; }
+.rs-session-empty h3 { margin: 8px 0; font-family: "EB Garamond", serif; font-size: 32px; font-weight: 400; }
+.rs-session-empty p { margin: 0; color: #59534e; line-height: 1.65; }
 .rs-session-empty { margin-top: 22px; border: 1px solid rgba(90,73,234,.2); border-radius: 28px; padding: 30px; background: rgba(255,255,255,.75); }
 .rs-session-empty .rs-entry-button { margin-top: 22px; }
 .rs-entry-next-step { padding: 30px 0; background: #17211d; color: rgba(255,255,255,.72); text-align: center; }
@@ -169,7 +168,6 @@
   .rs-scope-note, .rs-earth-practice { grid-template-columns: 1fr 1.2fr; align-items: center; }
   .rs-care-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
   .rs-collective-values { grid-template-columns: repeat(2,minmax(0,1fr)); }
-  .rs-session-card { grid-template-columns: 1fr auto; padding: 28px 30px; }
   .rs-pathway-option { grid-template-columns: minmax(0,1fr) auto; padding: 30px 34px; }
   .rs-pathway-option .rs-button { justify-self: end; }
 }

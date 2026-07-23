@@ -13,6 +13,7 @@
   const upcoming = sessions.filter((item) => eventInstant(item) >= now || eventDate(item.endDate || item.startDate) >= today);
   const firstUpcoming = upcoming[0] ? calendarDate(upcoming[0]) : today;
   let visibleMonth = new Date(firstUpcoming.getFullYear(), firstUpcoming.getMonth(), 1);
+  let chosenDateId = "";
   let selectedId = "";
   let initialized = false;
 
@@ -105,6 +106,25 @@
     heading.appendChild(notice);
   }
 
+  function showTimeOptions(id) {
+    const item = upcoming.find((candidate) => candidate.id === id);
+    if (!item) return;
+    chosenDateId = id;
+    selectedId = "";
+    const title = document.getElementById("group-checkout-title");
+    const details = document.getElementById("group-checkout-details");
+    const options = document.getElementById("group-time-options");
+    const summary = document.getElementById("group-booking-summary");
+
+    title.textContent = "Choose an available time";
+    details.textContent = `${localDate(item)} · Times shown in ${readableZone(viewerTimeZone)}.`;
+    options.classList.remove("is-hidden");
+    options.innerHTML = `<span>Available time</span><button type="button" data-group-time="${escapeHtml(item.id)}" aria-pressed="false"><strong>${escapeHtml(localTime(item))}</strong><small>${escapeHtml(zoneOffset(eventInstant(item), viewerTimeZone) || readableZone(viewerTimeZone))}</small></button>`;
+    summary.classList.add("is-hidden");
+    options.querySelector("[data-group-time]")?.addEventListener("click", () => selectSession(id));
+    renderCalendar();
+  }
+
   function selectSession(id) {
     const item = upcoming.find((candidate) => candidate.id === id);
     if (!item) return;
@@ -113,29 +133,29 @@
     const details = document.getElementById("group-checkout-details");
     const link = document.getElementById("group-checkout-link");
     const status = document.getElementById("group-checkout-status");
+    const summary = document.getElementById("group-booking-summary");
     const url = checkoutUrl(item);
 
     title.textContent = item.title;
     details.textContent = `Your time: ${localDateTime(item)} · Zoom. Scheduled as ${sourceDateTime(item)}.`;
-    document.querySelectorAll("[data-group-session]").forEach((button) => {
-      const selected = button.dataset.groupSession === id;
-      button.setAttribute("aria-pressed", String(selected));
-      button.closest(".rs-session-card")?.classList.toggle("is-selected", selected);
+    summary.classList.remove("is-hidden");
+    document.querySelectorAll("[data-group-time]").forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.dataset.groupTime === id));
     });
     document.querySelectorAll("[data-group-calendar-session]").forEach((button) => {
-      button.setAttribute("aria-pressed", String(button.dataset.groupCalendarSession === id));
+      button.setAttribute("aria-pressed", String(button.dataset.groupCalendarSession === chosenDateId));
     });
 
     if (url && item.status === "open") {
       link.href = url;
-      link.hidden = false;
+      link.classList.remove("is-hidden");
       link.removeAttribute("aria-disabled");
       link.removeAttribute("tabindex");
       link.classList.remove("rs-checkout-link--pending");
       link.textContent = "Continue to secure checkout";
       status.textContent = "Complete the $20 payment securely through Stripe. Confirmation and Zoom access follow registration.";
     } else {
-      link.hidden = item.status === "full";
+      link.classList.toggle("is-hidden", item.status === "full");
       link.removeAttribute("href");
       link.setAttribute("aria-disabled", "true");
       link.setAttribute("tabindex", "-1");
@@ -163,7 +183,7 @@
       const daySessions = upcoming.filter((item) => sameDate(calendarDate(item), date));
       const item = daySessions[0];
       const bookable = item && isBookable(item);
-      const selected = item && item.id === selectedId;
+      const selected = item && item.id === chosenDateId;
       const labelText = date.toLocaleDateString("en", { weekday:"long", day:"numeric", month:"long" });
       const content = item
         ? `<button type="button" data-group-calendar-session="${escapeHtml(item.id)}" aria-pressed="${selected}" aria-label="${escapeHtml(`${labelText}, ${item.title}, ${sessionStatus(item)}`)}"><span>${date.getDate()}</span><i aria-hidden="true"></i></button>`
@@ -172,17 +192,15 @@
     }
     grid.innerHTML = cells.join("");
     grid.querySelectorAll("[data-group-calendar-session]").forEach((button) => {
-      button.addEventListener("click", () => selectSession(button.dataset.groupCalendarSession));
+      button.addEventListener("click", () => showTimeOptions(button.dataset.groupCalendarSession));
     });
   }
 
-  function renderSessionList() {
-    const list = document.getElementById("group-session-list");
+  function renderAvailabilityState() {
     const empty = document.getElementById("group-session-empty");
-    if (!list || !empty) return;
+    if (!empty) return;
     if (!upcoming.length) {
-      list.innerHTML = "";
-      empty.hidden = false;
+      empty.classList.remove("is-hidden");
       const title = document.getElementById("group-checkout-title");
       const details = document.getElementById("group-checkout-details");
       const status = document.getElementById("group-checkout-status");
@@ -191,23 +209,13 @@
       if (status) status.textContent = "No consultation or enquiry is required. Return here to choose, pay, and register directly.";
       return;
     }
-
-    list.innerHTML = upcoming.map((item) => {
-      const available = isBookable(item);
-      const status = sessionStatus(item);
-      return `<article class="rs-session-card"><div><span>Online group session</span><h3>${escapeHtml(item.title)}</h3><p class="rs-session-local-time">Your time: ${escapeHtml(localDateTime(item))}</p><small class="rs-session-source-time">Scheduled: ${escapeHtml(sourceDateTime(item))} · Zoom</small><small>${escapeHtml(status)} · ${escapeHtml(item.price || groupConfig.price || "USD 20")}</small></div><button class="rs-entry-button${available ? " rs-entry-button--primary" : ""}" type="button" data-group-session="${escapeHtml(item.id)}" aria-pressed="false">${available ? "Choose this session" : "View session"}</button></article>`;
-    }).join("");
-    empty.hidden = true;
-    list.querySelectorAll("[data-group-session]").forEach((button) => {
-      button.addEventListener("click", () => selectSession(button.dataset.groupSession));
-    });
+    empty.classList.add("is-hidden");
   }
 
   function init() {
     if (initialized) return true;
     const grid = document.getElementById("group-calendar-grid");
-    const list = document.getElementById("group-session-list");
-    if (!grid || !list || grid.closest("x-dc")) return false;
+    if (!grid || grid.closest("x-dc")) return false;
     initialized = true;
     addTimezoneNotice();
 
@@ -221,8 +229,7 @@
     });
 
     renderCalendar();
-    renderSessionList();
-    if (upcoming[0]) selectSession(upcoming[0].id);
+    renderAvailabilityState();
     return true;
   }
 
