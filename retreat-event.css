@@ -14,22 +14,20 @@
 }
 .rs-retreat-page{background:var(--retreat-paper);color:var(--retreat-ink)}
 .rs-retreat-shell{width:min(1180px,calc(100% - 40px));margin:0 auto}
-.rs-retreat-hero{position:relative;display:flex;min-height:760px;align-items:flex-end;overflow:hidden;background:var(--retreat-forest-950) url('./assets/panama-earth-01.jpg') center/cover no-repeat;color:#fff}
-.rs-retreat-hero::before{position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,20,15,.18),rgba(7,20,15,.46) 48%,rgba(7,20,15,.94));content:""}
-.rs-retreat-hero__content{position:relative;padding:150px 0 54px}
+.rs-retreat-hero{position:relative;display:flex;min-height:820px;align-items:flex-end;overflow:hidden;background:var(--retreat-forest-950) url('./assets/editorial/retreat-preparation-panama.jpg') center/cover no-repeat;color:#fff}
+.rs-retreat-hero::before{position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,20,15,.86),rgba(7,20,15,.38) 58%,rgba(7,20,15,.12)),linear-gradient(180deg,rgba(7,20,15,.12),rgba(7,20,15,.2) 45%,rgba(7,20,15,.9));content:""}
+.rs-retreat-hero__content{position:relative;padding:130px 0 44px}
+.rs-retreat-hero__intro{max-width:720px}
+.rs-retreat-hero__intro>a{display:inline-flex;margin-bottom:18px;color:rgba(255,255,255,.76);font-size:13px;text-decoration:none}
 .rs-retreat-kicker{display:block;color:var(--retreat-gold-100);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
 .rs-retreat-hero h1{max-width:900px;margin:16px 0 18px;font-family:"EB Garamond",serif;font-size:clamp(54px,13vw,96px);font-weight:300;letter-spacing:-.045em;line-height:.88}
 .rs-retreat-hero__lead{max-width:720px;margin:0;color:rgba(255,255,255,.8);font-size:17px;line-height:1.7}
-.rs-retreat-photo-story{position:relative;min-height:440px;overflow:hidden;background:var(--retreat-forest-950)}
-.rs-retreat-photo-story img{display:block;width:100%;height:clamp(440px,62vw,760px);object-fit:cover;object-position:center}
-.rs-retreat-photo-story::after{position:absolute;inset:42% 0 0;background:linear-gradient(transparent,rgba(7,20,15,.9));content:""}
-.rs-retreat-photo-story__caption{position:absolute;z-index:1;right:max(20px,calc((100% - 1180px)/2));bottom:34px;left:max(20px,calc((100% - 1180px)/2));max-width:690px;color:#fff}
-.rs-retreat-photo-story__caption p{margin:10px 0 0;font-family:"EB Garamond",serif;font-size:clamp(28px,5vw,46px);font-weight:300;line-height:1.04}
-.rs-retreat-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:28px 0}
+.rs-retreat-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:30px 0 0}
 .rs-retreat-fact{padding:15px;border:1px solid rgba(255,255,255,.2);border-radius:16px;background:rgba(7,20,15,.56);backdrop-filter:blur(12px)}
 .rs-retreat-fact span{display:block;color:rgba(255,255,255,.58);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
 .rs-retreat-fact strong{display:block;margin-top:5px;font-family:"EB Garamond",serif;font-size:20px;font-weight:400}
 .rs-retreat-actions{display:flex;flex-wrap:wrap;gap:12px}
+.rs-retreat-hero__intro .rs-retreat-actions{margin-top:24px}
 .rs-retreat-button{display:inline-flex;min-height:50px;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.55);border-radius:999px;padding:11px 22px;color:#fff;font-size:14px;font-weight:600;text-decoration:none}
 .rs-retreat-button--primary{border-color:var(--rs-cta);background:var(--rs-cta)}
 .rs-retreat-section{padding:72px 0}
@@ -42,6 +40,25 @@
 .rs-retreat-card span{color:#766233;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
 .rs-retreat-card h3{margin:12px 0 9px;font-family:"EB Garamond",serif;font-size:29px;font-weight:300;line-height:1}
 .rs-retreat-card p{margin:0;color:var(--retreat-body);font-size:14px;line-height:1.7}
+.rs-retreat-section--setting{background:var(--retreat-forest-900);color:#fff}
+.rs-retreat-setting{display:grid;gap:28px;align-items:center}
+.rs-retreat-setting figure{margin:0;overflow:hidden;border-radius:30px;box-shadow:var(--retreat-shadow)}
+.rs-retreat-setting img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center}
+.rs-retreat-setting__copy h2,.rs-retreat-facilitator-heading h2{margin:12px 0 16px;font-family:"EB Garamond",serif;font-size:clamp(42px,8vw,64px);font-weight:300;letter-spacing:-.035em;line-height:.95}
+.rs-retreat-setting__copy>p{max-width:590px;color:rgba(255,255,255,.76);font-size:17px;line-height:1.75}
+.rs-retreat-setting__details{display:flex;flex-wrap:wrap;gap:9px;margin:26px 0 20px}
+.rs-retreat-setting__details span{border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:9px 13px;color:rgba(255,255,255,.84);font-size:12px}
+.rs-retreat-setting__copy small{display:block;max-width:560px;color:rgba(255,255,255,.52);font-size:12px;line-height:1.6}
+.rs-retreat-facilitator-heading{max-width:760px;margin:72px 0 30px}
+.rs-retreat-facilitator-heading>p{color:var(--retreat-body);font-size:16px;line-height:1.7}
+.rs-retreat-facilitators{display:grid;gap:18px}
+.rs-retreat-facilitators article{display:grid;overflow:hidden;border:1px solid var(--retreat-border);border-radius:28px;background:var(--retreat-card);box-shadow:0 18px 50px rgba(7,20,15,.08)}
+.rs-retreat-facilitators img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center 24%}
+.rs-retreat-facilitators article>div{padding:26px}
+.rs-retreat-facilitators span{color:#766233;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.rs-retreat-facilitators h3{margin:12px 0 10px;font-family:"EB Garamond",serif;font-size:32px;font-weight:300;line-height:1}
+.rs-retreat-facilitators p{margin:0;color:var(--retreat-body);font-size:14px;line-height:1.72}
+.rs-retreat-facilitators a{display:inline-flex;margin-top:18px;color:#5d4930;font-size:13px;font-weight:600;text-underline-offset:4px}
 .rs-retreat-price{display:grid;gap:24px;border:1px solid rgba(200,154,59,.55);border-radius:30px;padding:30px;background:linear-gradient(135deg,var(--retreat-card),var(--retreat-gold-100));box-shadow:var(--retreat-shadow)}
 .rs-retreat-price__rates{display:grid;gap:12px}
 .rs-retreat-rate{border-radius:18px;padding:18px 20px;background:rgba(255,255,255,.72)}
@@ -54,6 +71,6 @@
 .rs-retreat-checklist li{position:relative;padding:0 0 0 24px;color:rgba(255,255,255,.8);font-size:14px;line-height:1.6}
 .rs-retreat-checklist li::before{position:absolute;top:.65em;left:0;width:8px;height:8px;border:1px solid var(--retreat-gold-500);border-radius:50%;content:""}
 .rs-retreat-note{margin:24px 0 0;padding:16px 18px;border-left:3px solid var(--retreat-gold-500);background:rgba(255,255,255,.07);color:rgba(255,255,255,.78);font-size:13px;line-height:1.65}
-@media(min-width:720px){.rs-retreat-facts{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-card{padding:32px}.rs-retreat-price{grid-template-columns:1.15fr .85fr;align-items:center;padding:44px}.rs-retreat-safety{padding:44px}}
-@media(min-width:980px){.rs-retreat-hero{min-height:820px}.rs-retreat-hero__content{padding-bottom:72px}.rs-retreat-section{padding:100px 0}.rs-retreat-grid--four{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:720px){.rs-retreat-facts{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-card{padding:32px}.rs-retreat-setting{grid-template-columns:minmax(280px,.8fr) minmax(0,1.2fr)}.rs-retreat-facilitators{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-price{grid-template-columns:1.15fr .85fr;align-items:center;padding:44px}.rs-retreat-safety{padding:44px}}
+@media(min-width:980px){.rs-retreat-hero{min-height:900px}.rs-retreat-hero__content{padding-bottom:64px}.rs-retreat-section{padding:100px 0}.rs-retreat-grid--four{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-facilitators article{grid-template-columns:minmax(150px,.72fr) minmax(0,1.28fr)}.rs-retreat-facilitators img{height:100%;min-height:390px;aspect-ratio:auto}}
 @media(prefers-reduced-motion:reduce){.rs-retreat-button{transition:none}}

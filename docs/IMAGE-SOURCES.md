@@ -31,6 +31,7 @@ preserved as the source record while optimized PNG derivatives are used live.
 | `site/assets/stephanie-facilitating.jpg` | Spiral 1 Drive image `57b3e7d42j9f7722200f05242475dba0.HEIC` (`16lV3KkLHS5FbuOTLeQ9LP1YTCJFWh7Ne`) | Spiral Journey overview | Confirm Stephanie and all visible participants consent to public web use |
 | `site/assets/panama-earth-01.jpg` | Panama Drive image `695.JPG` (`13UOfN3TaPwTVB0GrUbzAEu8ud4AQPri5`) | Earth Healer Training | Confirm photographer/source permission; no prominent identifiable participant |
 | `site/assets/spiral-session-01.jpg` | Spiral 1 Drive image `IMG_0188.jpg` (`19t4oE57yqLn5DiQMlnZNBqBawu9Jjm8x`) | Bundled candidate, not currently published | Confirm all visible participants before use |
+| `site/assets/hanan-perea-portrait.jpg` | Portrait screenshot supplied directly by James on 2026-07-23 and identified in the supplied retreat brochure as Hanan Joao Perea Fernández Baca | Awakening Your Inner Light facilitator profile | Confirm Hanan and the photographer/source authorize public website use |
 
 ## Generated editorial imagery
 
@@ -59,6 +60,7 @@ auras, supernatural effects, stock-photo smiles, and implied medical outcomes.
 | `site/assets/editorial/spiral-iii-direction.jpg` | Spiral III | One adult reflecting above two coastal paths; discernment, purpose, and grounded choice |
 | `site/assets/editorial/spiral-iv-leadership.jpg` | Spiral IV | Five adults co-creating a regenerative community plan; shared leadership, integration, and service |
 | `site/assets/editorial/psn-regenerative-future.jpg` | Bigger Vision hero + Home Planetary Symbiosis Network bridge | Panoramic regenerative tropical community with food gardens, water systems, solar roofs, and people working together |
+| `site/assets/editorial/retreat-preparation-panama.jpg` | Awakening Your Inner Light hero | Adults in a guided preparation conversation at an open-air tropical lodge; relational preparation and connection to place |
 
 The five final assets above were generated with the built-in image-generation
 workflow on 2026-07-14 and optimized as 1536px landscape JPEGs (1600×900 for the
