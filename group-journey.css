@@ -98,6 +98,8 @@
 .rs-checkout-price strong { color: #1d1838; font-size: 18px; }
 .rs-checkout-panel .rs-entry-button { width: 100%; box-sizing: border-box; }
 .rs-checkout-panel .rs-entry-button[hidden] { display: none; }
+.rs-checkout-panel .rs-checkout-link--pending { border-color: #b8acef; background: #dcd6fa; box-shadow: none; color: #514391; cursor: not-allowed; }
+.rs-checkout-panel .rs-checkout-link--pending::after { content: "Opening soon"; margin-left: auto; border-radius: 999px; padding: 4px 8px; background: rgba(255,255,255,.62); font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
 .rs-checkout-status { margin-top: 12px !important; font-size: 12px !important; }
 .rs-checkout-steps { display: grid; gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; }
 .rs-checkout-steps li { display: flex; gap: 10px; align-items: center; color: #514b59; font-size: 13px; }

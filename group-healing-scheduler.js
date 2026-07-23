@@ -130,13 +130,20 @@
       link.href = url;
       link.hidden = false;
       link.removeAttribute("aria-disabled");
+      link.removeAttribute("tabindex");
+      link.classList.remove("rs-checkout-link--pending");
+      link.textContent = "Continue to secure checkout";
       status.textContent = "Complete the $20 payment securely through Stripe. Confirmation and Zoom access follow registration.";
     } else {
-      link.hidden = true;
+      link.hidden = item.status === "full";
       link.removeAttribute("href");
+      link.setAttribute("aria-disabled", "true");
+      link.setAttribute("tabindex", "-1");
+      link.classList.toggle("rs-checkout-link--pending", item.status !== "full");
+      link.textContent = "Continue to registration";
       status.textContent = item.status === "full"
         ? "This session is currently full. Choose another highlighted date."
-        : "The date is confirmed. Direct $20 registration will open here as soon as the Stripe payment link is connected—no consultation will be required.";
+        : "Online registration for this confirmed date is opening soon. Once available, this button will continue directly to secure $20 payment—no consultation required.";
     }
   }
 
