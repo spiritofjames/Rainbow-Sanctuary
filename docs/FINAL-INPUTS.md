@@ -162,10 +162,22 @@ room arrangements, exact inclusions/exclusions, informed consent, conduct,
 cancellation/refund terms, and integration support. The current page deliberately
 does not present the retreat as medical or mental-health treatment.
 
-Before opening Group Healing registration, confirm the first two dates, timezone,
-facilitator, delivery link/process, payment URL, attendance cap, accessibility
-needs, replay policy, and cancellation/no-show terms. Add those dates as `group`
-events. The `?filter=group` link already opens the calendar in the right view.
+Group Healing now has a self-serve booking path on its own page: visitors choose a
+confirmed date in the first-party calendar, continue directly to a USD 20 Stripe
+checkout, and then receive confirmation and Zoom access. It deliberately has no
+consultation, enquiry, or wait-list fallback. Each `group` event needs `time`,
+`timezone`, `price`, `status: "open"`, and a secure `checkoutUrl`; a shared Stripe
+Payment Link can instead be set at `events.groupHealing.checkoutUrl`. Stripe links
+receive the event ID as `client_reference_id` so downstream automations can match
+the payment to the selected session.
+
+Before opening Group Healing registration, confirm the first two dates and themes,
+time and timezone, facilitator, attendance cap, accessibility needs, replay policy,
+and cancellation/transfer/no-show terms. Create the Stripe Payment Link and connect
+its completed-payment event to the confirmation email, calendar record, and correct
+Zoom access through Stripe automation, Zapier/Make, HubSpot, or the future CRM. The
+static website does not send Zoom details by itself. Add the confirmed dates as
+`group` events only after that fulfillment route has been tested end to end.
 
 Use a dedicated public Google Calendar only if the team wants calendar publishing.
 Keep operational scheduling in a separate private calendar. The public calendar

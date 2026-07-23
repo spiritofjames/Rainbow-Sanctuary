@@ -59,7 +59,8 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     groupHealing: {
       frequency: "Twice monthly",
       duration: "Approximately 60 minutes",
-      registrationUrl: ""
+      price: "USD 20",
+      checkoutUrl: ""
     },
     publicCalendarUrl: "",
     items: [
@@ -80,6 +81,20 @@ window.RAINBOW_SANCTUARY_CONFIG = {
         registrationUrl: "./Awakening-Your-Inner-Light-2026.dc.html"
       }
       /*
+      {
+        id: "group-healing-2026-08-01",
+        title: "Grounding & Renewal",
+        category: "group",
+        startDate: "2026-08-01",
+        time: "18:00",
+        timezone: "Asia/Makassar",
+        location: "Online",
+        venue: "Zoom",
+        summary: "A guided Group Healing session for grounding, rest, and renewal.",
+        price: "USD 20",
+        status: "open",
+        checkoutUrl: "https://buy.stripe.com/REPLACE_WITH_PAYMENT_LINK"
+      },
       {
         id: "event-unique-id",
         title: "Confirmed event title",

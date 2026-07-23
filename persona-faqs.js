@@ -188,8 +188,10 @@
       q("What if I feel emotional or uncomfortable during the session?", "Pause the audio, ground yourself, leave the call if needed, and use appropriate personal or professional support. A group session cannot provide individual crisis care."),
       q("Is this the same as Spiral I?", "No. Group Healing is a lower-cost, lower-commitment introduction. Spiral I is a structured multi-day foundation program."),
       q("What does it cost?", priceAnswer("group-healing")),
+      q("How do I book a Group Healing session?", "Choose an available date in the embedded calendar and continue directly to secure Stripe checkout. This entry experience does not require a consultation or sales conversation."),
+      q("What happens after I pay?", "Stripe confirms the payment, and the registration workflow sends your session confirmation and Zoom access details to the contact information collected at checkout."),
+      q("Can I cancel or move my booking?", "The applicable cancellation and transfer terms must be visible before payment. Review them at checkout and contact support only if you need help with an existing paid booking."),
       ...foundations,
-      ...booking,
     ],
     "1-1-Sessions.dc.html": [
       q("How do I choose among the three Private Healing sessions?", "Choose by the pattern you want to explore: recurring personal and relational patterns, the atmosphere and dynamics of home, or inherited stories and inner possibility. The team reviews fit before scheduling."),
