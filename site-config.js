@@ -54,6 +54,12 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     "family-information-field-restoration": "",
     "dna-activation": ""
   },
+  earlyBirdPricing: {
+    "spiral-i": { standard: "USD 1,399", earlyBird: "USD 999", deadline: "" },
+    "spiral-ii": { standard: "USD 1,599", earlyBird: "USD 1,299", deadline: "" },
+    "spiral-iii": { standard: "USD 1,599", earlyBird: "USD 1,399", deadline: "" },
+    "spiral-iv": { standard: "USD 1,599", earlyBird: "USD 1,399", deadline: "" }
+  },
   events: {
     timezone: "Asia/Singapore",
     groupHealing: {
@@ -180,6 +186,19 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     selectWithSelf("[data-price-key]").forEach((element) => {
       const value = config.pricing[element.getAttribute("data-price-key")];
       if (value) element.textContent = value;
+    });
+
+    selectWithSelf("[data-early-bird-key]").forEach((element) => {
+      const value = config.earlyBirdPricing[element.getAttribute("data-early-bird-key")];
+      if (!value) return;
+      const standard = element.querySelector(".rs-price-standard strong");
+      const earlyBird = element.querySelector(".rs-price-early-bird strong");
+      const deadline = element.querySelector(".rs-price-deadline");
+      if (standard && value.standard) standard.textContent = value.standard;
+      if (earlyBird && value.earlyBird) earlyBird.textContent = value.earlyBird;
+      if (deadline) deadline.textContent = value.deadline
+        ? `Register by ${value.deadline}`
+        : "Deadline to be announced";
     });
 
     selectWithSelf("[data-image-key]").forEach((element) => {
