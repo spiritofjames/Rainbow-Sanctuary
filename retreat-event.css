@@ -59,6 +59,12 @@
 .rs-retreat-facilitators h3{margin:12px 0 10px;font-family:"EB Garamond",serif;font-size:32px;font-weight:300;line-height:1}
 .rs-retreat-facilitators p{margin:0;color:var(--retreat-body);font-size:14px;line-height:1.72}
 .rs-retreat-facilitators a{display:inline-flex;margin-top:18px;color:#5d4930;font-size:13px;font-weight:600;text-underline-offset:4px}
+.rs-retreat-ceremony-visual{position:relative;display:flex;min-height:620px;align-items:flex-end;overflow:hidden;background:var(--retreat-forest-950);color:#fff}
+.rs-retreat-ceremony-visual>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.rs-retreat-ceremony-visual::after{position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,20,15,.08),rgba(7,20,15,.2) 45%,rgba(7,20,15,.88));content:""}
+.rs-retreat-ceremony-visual__content{position:relative;z-index:1;padding-bottom:58px}
+.rs-retreat-ceremony-visual h2{max-width:920px;margin:12px 0 14px;font-family:"EB Garamond",serif;font-size:clamp(42px,8vw,70px);font-weight:300;letter-spacing:-.04em;line-height:.94}
+.rs-retreat-ceremony-visual p{max-width:680px;margin:0;color:rgba(255,255,255,.74);font-size:16px;line-height:1.7}
 .rs-retreat-price{display:grid;gap:24px;border:1px solid rgba(200,154,59,.55);border-radius:30px;padding:30px;background:linear-gradient(135deg,var(--retreat-card),var(--retreat-gold-100));box-shadow:var(--retreat-shadow)}
 .rs-retreat-price__rates{display:grid;gap:12px}
 .rs-retreat-rate{border-radius:18px;padding:18px 20px;background:rgba(255,255,255,.72)}
@@ -72,5 +78,5 @@
 .rs-retreat-checklist li::before{position:absolute;top:.65em;left:0;width:8px;height:8px;border:1px solid var(--retreat-gold-500);border-radius:50%;content:""}
 .rs-retreat-note{margin:24px 0 0;padding:16px 18px;border-left:3px solid var(--retreat-gold-500);background:rgba(255,255,255,.07);color:rgba(255,255,255,.78);font-size:13px;line-height:1.65}
 @media(min-width:720px){.rs-retreat-facts{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-card{padding:32px}.rs-retreat-setting{grid-template-columns:minmax(280px,.8fr) minmax(0,1.2fr)}.rs-retreat-facilitators{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-price{grid-template-columns:1.15fr .85fr;align-items:center;padding:44px}.rs-retreat-safety{padding:44px}}
-@media(min-width:980px){.rs-retreat-hero{min-height:900px}.rs-retreat-hero__content{padding-bottom:64px}.rs-retreat-section{padding:100px 0}.rs-retreat-grid--four{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-facilitators article{grid-template-columns:minmax(150px,.72fr) minmax(0,1.28fr)}.rs-retreat-facilitators img{height:100%;min-height:390px;aspect-ratio:auto}}
+@media(min-width:980px){.rs-retreat-hero{min-height:900px}.rs-retreat-hero__content{padding-bottom:64px}.rs-retreat-section{padding:100px 0}.rs-retreat-grid--four{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-facilitators article{grid-template-columns:minmax(150px,.72fr) minmax(0,1.28fr)}.rs-retreat-facilitators img{height:100%;min-height:390px;aspect-ratio:auto}.rs-retreat-ceremony-visual{min-height:720px}.rs-retreat-ceremony-visual__content{padding-bottom:74px}}
 @media(prefers-reduced-motion:reduce){.rs-retreat-button{transition:none}}

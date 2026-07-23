@@ -33,6 +33,12 @@ preserved as the source record while optimized PNG derivatives are used live.
 | `site/assets/spiral-session-01.jpg` | Spiral 1 Drive image `IMG_0188.jpg` (`19t4oE57yqLn5DiQMlnZNBqBawu9Jjm8x`) | Bundled candidate, not currently published | Confirm all visible participants before use |
 | `site/assets/hanan-perea-portrait.jpg` | Portrait screenshot supplied directly by James on 2026-07-23 and identified in the supplied retreat brochure as Hanan Joao Perea Fernández Baca | Awakening Your Inner Light facilitator profile | Confirm Hanan and the photographer/source authorize public website use |
 
+## Supplied brochure imagery
+
+| Site asset | Source | Current use | Publication check |
+|---|---|---|---|
+| `site/assets/editorial/retreat-jungle-ceremony.jpg` | 1600×912 jungle-and-fire image extracted from Page 5 of the supplied `Awakening Your Inner Light retreat 2026.pdf` | Awakening Your Inner Light cinematic ceremony transition | Confirm Rainbow Sanctuary has the right to republish the brochure image independently on the website |
+
 ## Generated editorial imagery
 
 Generated with the built-in image-generation tool on 2026-07-13. All prompts
