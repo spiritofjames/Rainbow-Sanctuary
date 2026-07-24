@@ -170,6 +170,141 @@
     transform: translateY(-1px);
   }
 
+  .rs-home-promotions {
+    padding: 24px 20px 48px;
+    background: #f5f5f5;
+  }
+
+  .rs-home-promotions__inner {
+    display: grid;
+    gap: 14px;
+    width: min(1200px, 100%);
+    margin: 0 auto;
+  }
+
+  .rs-home-promo {
+    position: relative;
+    display: flex;
+    min-height: 280px;
+    overflow: hidden;
+    align-items: flex-end;
+    border: 1px solid rgba(12,10,9,.1);
+    border-radius: 26px;
+    color: inherit;
+    text-decoration: none;
+    box-shadow: 0 20px 56px rgba(32,27,23,.1);
+    isolation: isolate;
+    transition: transform 220ms ease, box-shadow 220ms ease;
+  }
+
+  .rs-home-promo:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 26px 68px rgba(32,27,23,.15);
+  }
+
+  .rs-home-promo:focus-visible {
+    outline: 3px solid rgba(105,86,255,.38);
+    outline-offset: 4px;
+  }
+
+  .rs-home-promo__image,
+  .rs-home-promo::after {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .rs-home-promo__image {
+    z-index: -2;
+    object-fit: cover;
+    transition: transform 700ms cubic-bezier(.2,.7,.2,1);
+  }
+
+  .rs-home-promo:hover .rs-home-promo__image { transform: scale(1.025); }
+
+  .rs-home-promo::after {
+    z-index: -1;
+    content: "";
+    pointer-events: none;
+  }
+
+  .rs-home-promo--retreat { color: #fff; }
+
+  .rs-home-promo--retreat .rs-home-promo__image { object-position: 57% center; }
+
+  .rs-home-promo--retreat::after {
+    background:
+      linear-gradient(90deg, rgba(7,20,15,.9), rgba(7,20,15,.57) 62%, rgba(7,20,15,.22)),
+      linear-gradient(0deg, rgba(7,20,15,.76), transparent 62%);
+  }
+
+  .rs-home-promo--group {
+    color: #211a43;
+    background: #eeeafe;
+  }
+
+  .rs-home-promo--group::after {
+    background:
+      linear-gradient(180deg, rgba(31,24,65,.08), rgba(31,24,65,.72)),
+      linear-gradient(90deg, rgba(90,73,234,.18), transparent);
+  }
+
+  .rs-home-promo--group .rs-home-promo__image {
+    object-position: 52% center;
+    filter: saturate(.84);
+  }
+
+  .rs-home-promo--group .rs-home-promo__content { color: #fff; }
+
+  .rs-home-promo__content {
+    width: 100%;
+    padding: 26px;
+  }
+
+  .rs-home-promo__eyebrow {
+    display: block;
+    margin-bottom: 9px;
+    color: rgba(255,255,255,.7);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+  }
+
+  .rs-home-promo h2 {
+    max-width: 630px;
+    margin: 0;
+    font: 300 clamp(31px, 8vw, 43px)/.98 'EB Garamond', serif;
+    letter-spacing: -.03em;
+  }
+
+  .rs-home-promo__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    margin: 16px 0 0;
+    color: rgba(255,255,255,.8);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .rs-home-promo__cta {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    margin-top: 20px;
+    border: 1px solid rgba(255,255,255,.38);
+    border-radius: 999px;
+    padding: 9px 16px;
+    background: rgba(255,255,255,.1);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+
   .rs-home-audience {
     scroll-margin-top: 90px;
     padding: 48px 20px 64px;
@@ -279,6 +414,12 @@
   }
 
   @media (min-width: 760px) {
+    .rs-home-promotions { padding: 30px 32px 58px; }
+    .rs-home-promotions__inner { grid-template-columns: minmax(0,1.7fr) minmax(310px,.8fr); gap: 18px; }
+    .rs-home-promo { min-height: 330px; }
+    .rs-home-promo__content { padding: 34px; }
+    .rs-home-promo--retreat h2 { font-size: clamp(42px,5vw,58px); }
+    .rs-home-promo--group h2 { font-size: clamp(32px,3vw,40px); }
     .rs-home-audience { padding: 64px 32px 80px; }
     .rs-home-audience__grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 24px; }
     .rs-home-audience__intro { margin-bottom: 46px; }
@@ -338,6 +479,12 @@
       display: none;
     }
 
+    .rs-home-promo,
+    .rs-home-promo__image { transition: none; }
+
+    .rs-home-promo:hover,
+    .rs-home-promo:hover .rs-home-promo__image { transform: none; }
+
     .rs-pastel-hero[data-motion-override="true"] .rs-hero-video {
       display: block;
     }
@@ -371,6 +518,31 @@
           <a class="rs-hero-action rs-hero-action--secondary" href="Group-Healing.dc.html">Try Group Healing · $20</a>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- CURRENT EXPERIENCES -->
+  <section class="rs-home-promotions" aria-label="Upcoming Rainbow Sanctuary experiences">
+    <div class="rs-home-promotions__inner">
+      <a class="rs-home-promo rs-home-promo--retreat" href="Awakening-Your-Inner-Light-2026.dc.html" aria-label="Explore Awakening Your Inner Light retreat, 1 to 7 October 2026 in Panama">
+        <img class="rs-home-promo__image" src="./assets/editorial/retreat-preparation-panama.jpg" alt="" width="1600" height="900" loading="eager" decoding="async">
+        <div class="rs-home-promo__content">
+          <span class="rs-home-promo__eyebrow">October 2026 · Panama</span>
+          <h2>Awakening Your Inner Light</h2>
+          <p class="rs-home-promo__meta"><span>1–7 October 2026</span><span>Bocas del Toro</span><span>Seven-day retreat</span></p>
+          <span class="rs-home-promo__cta">Explore the retreat</span>
+        </div>
+      </a>
+
+      <a class="rs-home-promo rs-home-promo--group" href="Group-Healing.dc.html#choose-session" aria-label="Choose the next online Group Healing session on 22 August 2026">
+        <img class="rs-home-promo__image" src="./assets/editorial/group-healing-zoom.jpg" alt="" width="1672" height="941" loading="eager" decoding="async">
+        <div class="rs-home-promo__content">
+          <span class="rs-home-promo__eyebrow">Online · $20 per session</span>
+          <h2>Join the next Group Healing</h2>
+          <p class="rs-home-promo__meta"><span>22 August 2026</span><span>Shown in your time zone</span></p>
+          <span class="rs-home-promo__cta">Choose your session&nbsp;→</span>
+        </div>
+      </a>
     </div>
   </section>
 
