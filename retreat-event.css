@@ -22,6 +22,7 @@
 .rs-retreat-kicker{display:block;color:var(--retreat-gold-100);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
 .rs-retreat-hero h1{max-width:900px;margin:16px 0 18px;font-family:"EB Garamond",serif;font-size:clamp(54px,13vw,96px);font-weight:300;letter-spacing:-.045em;line-height:.88}
 .rs-retreat-hero__lead{max-width:720px;margin:0;color:rgba(255,255,255,.8);font-size:17px;line-height:1.7}
+.rs-retreat-hero__first{max-width:650px;margin:16px 0 0;padding-left:14px;border-left:2px solid rgba(245,232,201,.62);color:rgba(255,255,255,.7);font-size:13px;line-height:1.6}
 .rs-retreat-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:30px 0 0}
 .rs-retreat-fact{padding:15px;border:1px solid rgba(255,255,255,.2);border-radius:16px;background:rgba(7,20,15,.56);backdrop-filter:blur(12px)}
 .rs-retreat-fact span{display:block;color:rgba(255,255,255,.58);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
@@ -30,6 +31,12 @@
 .rs-retreat-hero__intro .rs-retreat-actions{margin-top:24px}
 .rs-retreat-button{display:inline-flex;min-height:50px;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.55);border-radius:999px;padding:11px 22px;color:#fff;font-size:14px;font-weight:600;text-decoration:none}
 .rs-retreat-button--primary{border-color:var(--rs-cta);background:var(--rs-cta)}
+.rs-retreat-nav{position:sticky;z-index:20;top:72px;border-bottom:1px solid rgba(220,214,200,.88);background:rgba(246,243,236,.92);backdrop-filter:blur(14px)}
+.rs-retreat-nav .rs-retreat-shell{display:flex;overflow-x:auto;scrollbar-width:none}
+.rs-retreat-nav .rs-retreat-shell::-webkit-scrollbar{display:none}
+.rs-retreat-nav a{flex:0 0 auto;padding:17px 14px;color:#5e5a51;font-size:12px;font-weight:600;text-decoration:none;white-space:nowrap}
+.rs-retreat-nav a:first-child{padding-left:0}
+.rs-retreat-nav a:hover,.rs-retreat-nav a:focus-visible{color:var(--retreat-forest-800)}
 .rs-retreat-section{padding:72px 0}
 .rs-retreat-section--light{background:#fff}
 .rs-retreat-heading{max-width:760px;margin-bottom:32px}
@@ -40,6 +47,37 @@
 .rs-retreat-card span{color:#766233;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
 .rs-retreat-card h3{margin:12px 0 9px;font-family:"EB Garamond",serif;font-size:29px;font-weight:300;line-height:1}
 .rs-retreat-card p{margin:0;color:var(--retreat-body);font-size:14px;line-height:1.7}
+.rs-retreat-section--recognition{background:linear-gradient(180deg,#fff,#f8f4eb)}
+.rs-retreat-recognition-grid{display:grid;gap:12px}
+.rs-retreat-recognition-grid article{border:1px solid var(--retreat-border);border-radius:22px;padding:24px;background:rgba(255,255,255,.72)}
+.rs-retreat-recognition-grid article>span{display:grid;width:34px;height:34px;place-items:center;border-radius:50%;background:var(--retreat-gold-100);color:#765919;font-size:11px;font-weight:600}
+.rs-retreat-recognition-grid h3{margin:22px 0 9px;font-family:"EB Garamond",serif;font-size:29px;font-weight:300;line-height:1}
+.rs-retreat-recognition-grid p{margin:0;color:var(--retreat-body);font-size:14px;line-height:1.7}
+.rs-retreat-truth{display:grid;gap:8px;margin-top:18px;border-radius:20px;padding:22px;background:var(--retreat-forest-900);color:#fff}
+.rs-retreat-truth strong{font-family:"EB Garamond",serif;font-size:26px;font-weight:400}
+.rs-retreat-truth p{margin:0;color:rgba(255,255,255,.7);font-size:14px;line-height:1.65}
+.rs-retreat-section--first-time{background:var(--retreat-forest-950);color:#fff}
+.rs-retreat-section--first-time .rs-retreat-heading p{color:rgba(255,255,255,.72)}
+.rs-retreat-clarity-grid{display:grid;gap:12px}
+.rs-retreat-clarity-grid article{border:1px solid rgba(245,232,201,.18);border-radius:22px;padding:24px;background:rgba(255,255,255,.055)}
+.rs-retreat-clarity-grid span{color:var(--retreat-gold-100);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.rs-retreat-clarity-grid h3{margin:13px 0 10px;font-family:"EB Garamond",serif;font-size:29px;font-weight:300;line-height:1.05}
+.rs-retreat-clarity-grid p{margin:0;color:rgba(255,255,255,.68);font-size:14px;line-height:1.72}
+.rs-retreat-mid-cta{display:grid;gap:22px;align-items:center;margin-top:18px;border:1px solid rgba(245,232,201,.22);border-radius:24px;padding:25px;background:linear-gradient(135deg,rgba(200,154,59,.13),rgba(255,255,255,.045))}
+.rs-retreat-mid-cta h3{margin:10px 0 8px;font-family:"EB Garamond",serif;font-size:33px;font-weight:300;line-height:1}
+.rs-retreat-mid-cta p{max-width:650px;margin:0;color:rgba(255,255,255,.68);font-size:14px;line-height:1.65}
+.rs-retreat-section--outcomes{background:#fff}
+.rs-retreat-section--week{background:linear-gradient(145deg,#efe9dc,#f8f5ee)}
+.rs-retreat-arc{position:relative;display:grid;gap:12px;margin:0;padding:0;list-style:none}
+.rs-retreat-arc::before{position:absolute;top:30px;bottom:30px;left:23px;width:1px;background:rgba(118,98,51,.3);content:""}
+.rs-retreat-arc li{position:relative;display:grid;grid-template-columns:46px 1fr;gap:16px;align-items:start;border:1px solid rgba(118,98,51,.2);border-radius:22px;padding:20px;background:rgba(255,255,255,.72)}
+.rs-retreat-arc li>span{position:relative;z-index:1;display:grid;width:46px;height:46px;place-items:center;border-radius:50%;background:var(--retreat-forest-900);color:var(--retreat-gold-100);font-size:10px;font-weight:600;text-align:center}
+.rs-retreat-arc h3{margin:1px 0 7px;font-family:"EB Garamond",serif;font-size:27px;font-weight:300;line-height:1}
+.rs-retreat-arc p{margin:0;color:var(--retreat-body);font-size:14px;line-height:1.65}
+.rs-retreat-inclusions{display:grid;gap:10px;margin-top:18px}
+.rs-retreat-inclusions article{border-top:1px solid rgba(118,98,51,.25);padding:16px 2px}
+.rs-retreat-inclusions span{display:block;color:#766233;font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.rs-retreat-inclusions strong{display:block;margin-top:6px;font-family:"EB Garamond",serif;font-size:22px;font-weight:400}
 .rs-retreat-section--setting{background:var(--retreat-forest-900);color:#fff}
 .rs-retreat-setting{display:grid;gap:28px;align-items:center}
 .rs-retreat-setting figure{aspect-ratio:16/10;margin:0;overflow:hidden;border-radius:30px;box-shadow:var(--retreat-shadow)}
@@ -81,12 +119,25 @@
 .rs-retreat-rate span{display:block;color:var(--retreat-body);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
 .rs-retreat-rate strong{display:block;margin-top:5px;font-family:"EB Garamond",serif;font-size:30px;font-weight:400}
 .rs-retreat-rate small{display:block;margin-top:5px;color:var(--retreat-body);font-size:12px;line-height:1.5}
+.rs-retreat-rate--early{position:relative;overflow:hidden;border:1px solid rgba(200,154,59,.48);background:#fff}
+.rs-retreat-rate--early::after{position:absolute;top:16px;right:-34px;width:120px;padding:4px 0;background:var(--retreat-gold-500);color:#fff;content:"Limited rate";font-size:8px;font-weight:700;letter-spacing:.08em;text-align:center;text-transform:uppercase;transform:rotate(38deg)}
+.rs-retreat-guide-link{display:inline-flex;min-height:50px;align-items:center;justify-content:center;border-bottom:1px solid rgba(23,23,19,.45);color:var(--retreat-ink);font-size:14px;font-weight:600;text-decoration:none}
+.rs-retreat-section--application{background:var(--retreat-forest-900);color:#fff}
+.rs-retreat-application{display:grid;gap:34px}
+.rs-retreat-application header{max-width:720px}
+.rs-retreat-application h2{margin:12px 0 15px;font-family:"EB Garamond",serif;font-size:clamp(42px,8vw,64px);font-weight:300;letter-spacing:-.035em;line-height:.96}
+.rs-retreat-application header p{margin:0;color:rgba(255,255,255,.7);font-size:16px;line-height:1.75}
+.rs-retreat-application ol{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.rs-retreat-application li{display:grid;grid-template-columns:38px 1fr;gap:15px;border:1px solid rgba(255,255,255,.13);border-radius:18px;padding:18px;background:rgba(255,255,255,.045)}
+.rs-retreat-application li>span{display:grid;width:38px;height:38px;place-items:center;border:1px solid rgba(245,232,201,.35);border-radius:50%;color:var(--retreat-gold-100);font-size:10px}
+.rs-retreat-application strong{display:block;margin-top:1px;font-family:"EB Garamond",serif;font-size:23px;font-weight:400}
+.rs-retreat-application li p{margin:5px 0 0;color:rgba(255,255,255,.62);font-size:13px;line-height:1.6}
 .rs-retreat-safety{border-radius:30px;padding:30px;background:var(--retreat-forest-900);color:#fff}
 .rs-retreat-safety p{color:rgba(255,255,255,.72)}
 .rs-retreat-checklist{display:grid;gap:10px;margin:24px 0 0;padding:0;list-style:none}
 .rs-retreat-checklist li{position:relative;padding:0 0 0 24px;color:rgba(255,255,255,.8);font-size:14px;line-height:1.6}
 .rs-retreat-checklist li::before{position:absolute;top:.65em;left:0;width:8px;height:8px;border:1px solid var(--retreat-gold-500);border-radius:50%;content:""}
 .rs-retreat-note{margin:24px 0 0;padding:16px 18px;border-left:3px solid var(--retreat-gold-500);background:rgba(255,255,255,.07);color:rgba(255,255,255,.78);font-size:13px;line-height:1.65}
-@media(min-width:720px){.rs-retreat-facts{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-card{padding:32px}.rs-retreat-setting{grid-template-columns:minmax(280px,.8fr) minmax(0,1.2fr)}.rs-retreat-ceremony-card{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:center;padding:48px}.rs-retreat-facilitators{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-price{grid-template-columns:1.15fr .85fr;align-items:center;padding:44px}.rs-retreat-safety{padding:44px}}
-@media(min-width:980px){.rs-retreat-hero{min-height:900px}.rs-retreat-hero__content{padding-bottom:64px}.rs-retreat-section{padding:100px 0}.rs-retreat-grid--four{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-facilitators article{grid-template-columns:minmax(150px,.72fr) minmax(0,1.28fr)}.rs-retreat-facilitators img{height:100%;min-height:390px;aspect-ratio:auto}.rs-retreat-ceremony-visual{min-height:560px}.rs-retreat-ceremony-visual__content{padding-bottom:58px}}
+@media(min-width:720px){.rs-retreat-facts{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-nav a{padding:19px 18px}.rs-retreat-recognition-grid,.rs-retreat-clarity-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-truth{grid-template-columns:auto 1fr;align-items:center;padding:25px 28px}.rs-retreat-truth p{padding-left:24px;border-left:1px solid rgba(255,255,255,.15)}.rs-retreat-mid-cta{grid-template-columns:1fr auto;padding:30px}.rs-retreat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-card{padding:32px}.rs-retreat-arc li{grid-template-columns:58px 1fr;padding:24px}.rs-retreat-arc li>span{width:50px;height:50px}.rs-retreat-arc::before{left:49px}.rs-retreat-inclusions{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-setting{grid-template-columns:minmax(280px,.8fr) minmax(0,1.2fr)}.rs-retreat-ceremony-card{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:center;padding:48px}.rs-retreat-facilitators{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-application{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:start}.rs-retreat-price{grid-template-columns:1.15fr .85fr;align-items:center;padding:44px}.rs-retreat-safety{padding:44px}}
+@media(min-width:980px){.rs-retreat-hero{min-height:900px}.rs-retreat-hero__content{padding-bottom:64px}.rs-retreat-section{padding:100px 0}.rs-retreat-recognition-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-grid--four{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-arc{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.rs-retreat-arc::before{top:48px;right:40px;bottom:auto;left:40px;width:auto;height:1px}.rs-retreat-arc li{display:block;padding:24px}.rs-retreat-arc li>span{margin-bottom:40px}.rs-retreat-inclusions{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-facilitators article{grid-template-columns:minmax(150px,.72fr) minmax(0,1.28fr)}.rs-retreat-facilitators img{height:100%;min-height:390px;aspect-ratio:auto}.rs-retreat-ceremony-visual{min-height:560px}.rs-retreat-ceremony-visual__content{padding-bottom:58px}}
 @media(prefers-reduced-motion:reduce){.rs-retreat-button{transition:none}}
