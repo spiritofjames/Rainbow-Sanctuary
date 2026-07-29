@@ -8,6 +8,15 @@ const origin = "https://rainbowsanctuary.life";
 const lastmod = "2026-07-29";
 const headers = [
   {
+    source: "/assets/documents/awakening-your-inner-light-retreat-2026.pdf",
+    headers: [
+      {
+        key: "X-Robots-Tag",
+        value: "noindex, nofollow, noarchive"
+      }
+    ]
+  },
+  {
     source: "/(.*)",
     headers: [
       {
