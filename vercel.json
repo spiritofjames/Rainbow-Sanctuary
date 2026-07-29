@@ -1,9 +1,358 @@
 {
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=()"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        }
+      ]
+    }
+  ],
   "redirects": [
     {
+      "source": "/Home.dc.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/About-Stephanie.dc.html",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/1-1-Sessions.dc.html",
+      "destination": "/private-healing",
+      "permanent": true
+    },
+    {
+      "source": "/Accessibility-Statement.dc.html",
+      "destination": "/accessibility",
+      "permanent": true
+    },
+    {
+      "source": "/Adult-Potential-Development.dc.html",
+      "destination": "/adult-potential-development",
+      "permanent": true
+    },
+    {
+      "source": "/Awakening-Your-Inner-Light-2026.dc.html",
+      "destination": "/awakening-your-inner-light-2026",
+      "permanent": true
+    },
+    {
+      "source": "/Bigger-Vision.dc.html",
+      "destination": "/bigger-vision",
+      "permanent": true
+    },
+    {
+      "source": "/Book-Consultation.dc.html",
+      "destination": "/apply",
+      "permanent": true
+    },
+    {
+      "source": "/Children-Family.dc.html",
+      "destination": "/children-and-family",
+      "permanent": true
+    },
+    {
+      "source": "/Children-Safeguarding.dc.html",
+      "destination": "/children-safeguarding",
+      "permanent": true
+    },
+    {
+      "source": "/Childrens-Potential-Coach-Certification.dc.html",
+      "destination": "/childrens-potential-coach-certification",
+      "permanent": true
+    },
+    {
+      "source": "/Community-Stories.dc.html",
+      "destination": "/community-stories",
+      "permanent": true
+    },
+    {
+      "source": "/Cookie-Policy.dc.html",
+      "destination": "/cookie-policy",
+      "permanent": true
+    },
+    {
+      "source": "/Crystal-Healing.dc.html",
+      "destination": "/crystal-healing",
+      "permanent": true
+    },
+    {
+      "source": "/DNA-Activation.dc.html",
+      "destination": "/dna-activation",
+      "permanent": true
+    },
+    {
+      "source": "/Earth-Healer-Training.dc.html",
+      "destination": "/earth-healer-training",
+      "permanent": true
+    },
+    {
+      "source": "/Earth-Healing-Zone.dc.html",
+      "destination": "/earth-healing-zone",
+      "permanent": true
+    },
+    {
+      "source": "/Events-Retreats.dc.html",
+      "destination": "/events",
+      "permanent": true
+    },
+    {
+      "source": "/Family-Information-Field-Restoration.dc.html",
+      "destination": "/family-information-field-restoration",
+      "permanent": true
+    },
+    {
+      "source": "/Group-Healing.dc.html",
+      "destination": "/group-healing",
+      "permanent": true
+    },
+    {
+      "source": "/Holographic-Healing.dc.html",
+      "destination": "/holographic-healing",
+      "permanent": true
+    },
+    {
+      "source": "/Intuitive-Perception-Training.dc.html",
+      "destination": "/intuitive-perception-training",
+      "permanent": true
+    },
+    {
+      "source": "/Personal-Karma-Reconciliation.dc.html",
+      "destination": "/personal-karma-reconciliation",
+      "permanent": true
+    },
+    {
+      "source": "/Practitioner-Certification.dc.html",
+      "destination": "/practitioner-certification",
+      "permanent": true
+    },
+    {
+      "source": "/Privacy-Policy.dc.html",
+      "destination": "/privacy-policy",
+      "permanent": true
+    },
+    {
+      "source": "/Rainbow-Light-Codes.dc.html",
+      "destination": "/rainbow-light-codes",
+      "permanent": true
+    },
+    {
+      "source": "/ReGeneration.dc.html",
+      "destination": "/regeneration",
+      "permanent": true
+    },
+    {
+      "source": "/Spiral-I.dc.html",
+      "destination": "/spiral-i",
+      "permanent": true
+    },
+    {
+      "source": "/Spiral-II.dc.html",
+      "destination": "/spiral-ii",
+      "permanent": true
+    },
+    {
+      "source": "/Spiral-III.dc.html",
+      "destination": "/spiral-iii",
+      "permanent": true
+    },
+    {
+      "source": "/Spiral-IV.dc.html",
+      "destination": "/spiral-iv",
+      "permanent": true
+    },
+    {
+      "source": "/Spiral-Journey.dc.html",
+      "destination": "/spiral-journey",
+      "permanent": true
+    },
+    {
+      "source": "/Terms-Conditions.dc.html",
+      "destination": "/terms",
+      "permanent": true
+    },
+    {
+      "source": "/Unlock-The-Potential.dc.html",
+      "destination": "/unlock-the-potential",
+      "permanent": true
+    },
+    {
+      "source": "/Wellbeing-Disclaimer.dc.html",
+      "destination": "/wellbeing-disclaimer",
+      "permanent": true
+    },
+    {
+      "source": "/Workshops.dc.html",
+      "destination": "/programs",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
       "source": "/",
-      "destination": "/Home.dc.html",
-      "permanent": false
+      "destination": "/Home.dc.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/About-Stephanie.dc.html"
+    },
+    {
+      "source": "/private-healing",
+      "destination": "/1-1-Sessions.dc.html"
+    },
+    {
+      "source": "/accessibility",
+      "destination": "/Accessibility-Statement.dc.html"
+    },
+    {
+      "source": "/adult-potential-development",
+      "destination": "/Adult-Potential-Development.dc.html"
+    },
+    {
+      "source": "/awakening-your-inner-light-2026",
+      "destination": "/Awakening-Your-Inner-Light-2026.dc.html"
+    },
+    {
+      "source": "/bigger-vision",
+      "destination": "/Bigger-Vision.dc.html"
+    },
+    {
+      "source": "/apply",
+      "destination": "/Book-Consultation.dc.html"
+    },
+    {
+      "source": "/children-and-family",
+      "destination": "/Children-Family.dc.html"
+    },
+    {
+      "source": "/children-safeguarding",
+      "destination": "/Children-Safeguarding.dc.html"
+    },
+    {
+      "source": "/childrens-potential-coach-certification",
+      "destination": "/Childrens-Potential-Coach-Certification.dc.html"
+    },
+    {
+      "source": "/community-stories",
+      "destination": "/Community-Stories.dc.html"
+    },
+    {
+      "source": "/cookie-policy",
+      "destination": "/Cookie-Policy.dc.html"
+    },
+    {
+      "source": "/crystal-healing",
+      "destination": "/Crystal-Healing.dc.html"
+    },
+    {
+      "source": "/dna-activation",
+      "destination": "/DNA-Activation.dc.html"
+    },
+    {
+      "source": "/earth-healer-training",
+      "destination": "/Earth-Healer-Training.dc.html"
+    },
+    {
+      "source": "/earth-healing-zone",
+      "destination": "/Earth-Healing-Zone.dc.html"
+    },
+    {
+      "source": "/events",
+      "destination": "/Events-Retreats.dc.html"
+    },
+    {
+      "source": "/family-information-field-restoration",
+      "destination": "/Family-Information-Field-Restoration.dc.html"
+    },
+    {
+      "source": "/group-healing",
+      "destination": "/Group-Healing.dc.html"
+    },
+    {
+      "source": "/holographic-healing",
+      "destination": "/Holographic-Healing.dc.html"
+    },
+    {
+      "source": "/intuitive-perception-training",
+      "destination": "/Intuitive-Perception-Training.dc.html"
+    },
+    {
+      "source": "/personal-karma-reconciliation",
+      "destination": "/Personal-Karma-Reconciliation.dc.html"
+    },
+    {
+      "source": "/practitioner-certification",
+      "destination": "/Practitioner-Certification.dc.html"
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/Privacy-Policy.dc.html"
+    },
+    {
+      "source": "/rainbow-light-codes",
+      "destination": "/Rainbow-Light-Codes.dc.html"
+    },
+    {
+      "source": "/regeneration",
+      "destination": "/ReGeneration.dc.html"
+    },
+    {
+      "source": "/spiral-i",
+      "destination": "/Spiral-I.dc.html"
+    },
+    {
+      "source": "/spiral-ii",
+      "destination": "/Spiral-II.dc.html"
+    },
+    {
+      "source": "/spiral-iii",
+      "destination": "/Spiral-III.dc.html"
+    },
+    {
+      "source": "/spiral-iv",
+      "destination": "/Spiral-IV.dc.html"
+    },
+    {
+      "source": "/spiral-journey",
+      "destination": "/Spiral-Journey.dc.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/Terms-Conditions.dc.html"
+    },
+    {
+      "source": "/unlock-the-potential",
+      "destination": "/Unlock-The-Potential.dc.html"
+    },
+    {
+      "source": "/wellbeing-disclaimer",
+      "destination": "/Wellbeing-Disclaimer.dc.html"
+    },
+    {
+      "source": "/programs",
+      "destination": "/Workshops.dc.html"
     }
   ]
 }

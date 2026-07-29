@@ -35,7 +35,7 @@
   ];
 
   const pages = {
-    "Home.dc.html": [
+    "/": [
       q("Where should I begin if I feel exhausted or emotionally overwhelmed?", "Begin with the accessible Online Group Healing session or explore Spiral I. If your situation is highly personal, you can enquire about Private Healing. The best first step should reduce overwhelm, not create another large commitment."),
       q("I have already done years of inner work. Is everything here beginner-level?", "No. Spiral II and III, intuitive-development programs, and practitioner routes are designed for people seeking greater depth. Use Help Me Choose so previous experience can be considered rather than automatically starting over."),
       q("Can I come here because I want to support my child?", "Yes. Children & Family Programs clearly separates a guided experience for a child from professional training for adults who want to support children."),
@@ -43,7 +43,7 @@
       q("What if I am interested in regenerative community rather than personal healing?", "Go directly to Bigger Vision or the Earth Healing Zone. Those pages distinguish the work happening now from the longer-term Planetary Symbiosis Network vision."),
       ...foundations,
     ],
-    "About-Stephanie.dc.html": [
+    "/about": [
       q("What is Rainbow Sanctuary?", "Rainbow Sanctuary is a healing academy and global community bringing together accessible group practice, the progressive Spiral Journey, focused programs, private support, retreats, and practitioner development. Its purpose is to help people translate inner awareness into lived change."),
       q("Who is Rainbow Sanctuary for?", "It serves people seeking renewal, steadier wellbeing, and relief from repeating patterns, as well as experienced practitioners who want greater depth, community, and a responsible path toward facilitation or service."),
       q("Who is Stephanie Wu?", "Stephanie Wu, also introduced to Chinese-speaking communities as Teacher Rongrong, is a co-founder and the lead facilitator of Rainbow Sanctuary. She helps shape the practice framework, anchors group experiences, and supports preparation and integration."),
@@ -56,7 +56,7 @@
       q("Where should I begin?", "Choose Group Healing for an accessible first experience, the Spiral Journey for a progressive path, or Help Me Choose if you want to discuss your circumstances before deciding."),
       ...foundations.slice(1),
     ],
-    "Workshops.dc.html": [
+    "/programs": [
       q("What is the difference between Programs, Workshops, and Certification?", "Programs is the orientation hub. Adult Workshops are focused experiential learning. Children & Family includes a child pathway. Practitioner Certification is for adults preparing to facilitate responsibly."),
       q("Which adult workshop is best for burnout or low vitality?", "ReGeneration is the closest match for restoration and sustainable vitality. Holographic Healing takes a broader whole-person reflection approach. If you feel overwhelmed by choice, enquire before enrolling."),
       q("Which program is best for intuition or spiritual perception?", "Intuitive Perception Training focuses on sensitivity and discernment. Rainbow Light Codes and Crystal Healing use more specific contemplative tools. None asks you to abandon evidence, boundaries, or critical thinking."),
@@ -64,7 +64,7 @@
       q("Are these one-off experiences or part of a longer journey?", "Both options exist. A workshop can be taken for its own focus, while some participants later choose the Spiral Journey or a practitioner route. Progression is never automatic."),
       ...programCommon,
     ],
-    "Children-Family.dc.html": [
+    "/children-and-family": [
       q("Is this page for my child—or for me as an adult?", "It contains two separate routes. Unlock the Potential is the guided children’s program. Children’s Potential Coach Certification is professional training for adults. Choose based on who will participate."),
       q("What kinds of concerns might bring a family here?", "Parents often ask about confidence, attention, emotional expression, imagination, or tension around daily routines. The program does not diagnose a child or treat a medical, learning, or mental-health condition."),
       q("What actually happens in a children’s session?", "The approach uses age-appropriate explanation, choice, rapport, sensory or creative activities, reflection, and simple home practices. Final format, group size, caregiver involvement, and schedule are confirmed before enrollment."),
@@ -75,7 +75,7 @@
       q("Can I speak with the team before involving my child?", "Yes. A low-pressure parent enquiry is the recommended first step. You can ask about fit, safeguarding, facilitator experience, format, and what the child will be told."),
       ...booking,
     ],
-    "Unlock-The-Potential.dc.html": [
+    "/unlock-the-potential": [
       q("What age group is Unlock the Potential designed for?", "The program is primarily designed for children around ages 7–14. The confirmed age range is published with each intake so parents can check fit before enrollment."),
       q("What is the difference between Level I and Level II?", "Level I is the entry experience and Level II is intended to deepen the work. Exact curriculum, duration, prerequisites, and package structure must be confirmed for the next cohort."),
       q("Will this improve school performance or attention?", "The program may explore attention, confidence, emotional language, and supportive routines, but it cannot guarantee grades, test performance, or a particular behavioural result."),
@@ -86,14 +86,14 @@
       ...foundations.slice(1, 5),
       ...booking,
     ],
-    "Practitioner-Certification.dc.html": [
+    "/practitioner-certification": [
       q("Who are the certification pathways for?", "They are for coaches, educators, wellbeing practitioners, experienced students, and others who want structured preparation for responsible facilitation. They are not shortcuts around regulated professional training."),
       q("Can I apply without completing every Spiral level?", "Possibly, depending on the pathway and your prior experience. Direct-entry assessment, prerequisites, and any required foundation work must be confirmed before admission."),
       q("What should I verify before paying for a certification?", "Ask for the certificate title, total hours, live practice, assessment, practicum, facilitator qualifications, scope, recognition, post-training support, full fee, and refund terms in writing."),
       q("Will I practise with real people during training?", "Practicum and supervised practice are important expectations, but the exact requirement varies by pathway and must be confirmed for the intake you are considering."),
       ...practitionerCommon,
     ],
-    "Childrens-Potential-Coach-Certification.dc.html": [
+    "/childrens-potential-coach-certification": [
       q("What does the Children’s Potential Coach training prepare me to do?", "It is intended to develop child-centred session design, family communication, consent, safeguarding, scope, and reflective practice. The exact graduate role and permitted services must be confirmed before enrollment."),
       q("Do I need to be a parent, teacher, or therapist?", "Not necessarily, but relevant experience with children, maturity, communication skill, and safeguarding readiness matter. Admission criteria and background checks, if required, should be confirmed for each cohort."),
       q("Does this qualify me to diagnose or treat children?", "No. It does not confer clinical authority or permission to diagnose learning, developmental, medical, or mental-health conditions."),
@@ -101,7 +101,7 @@
       q("What is the current price?", priceAnswer("childrens-potential-coach-certification", "Confirm whether the package includes all levels, assessment, practicum, materials, and post-training support.")),
       ...practitionerCommon,
     ],
-    "Spiral-Journey.dc.html": [
+    "/spiral-journey": [
       q("Do I have to complete all four Spirals?", "No. The sequence is designed to build progressively, but each enrollment is a separate decision. You can pause, integrate, or decide not to continue."),
       q("Can I enter Spiral II or III directly?", "Experienced practitioners may be considered for direct entry after a fit conversation. Placement should reflect actual foundations and readiness, not status or spiritual vocabulary."),
       q("How is the Spiral Journey different from a collection of workshops?", "The Spiral is sequential: foundations, relationships, purpose and discernment, then leadership and service. Workshops focus on a narrower theme and may be taken independently."),
@@ -109,84 +109,84 @@
       q("What if I am already in therapy or another spiritual practice?", "You can continue appropriate care and may retain other practices. Discuss possible conflicts, emotional load, and scheduling so the combined commitment remains sustainable."),
       ...programCommon,
     ],
-    "Spiral-I.dc.html": [
+    "/spiral-i": [
       q("Is Spiral I the right start if I feel burned out or disconnected?", "It is the main foundational route for people wanting a structured introduction to awareness, emotional signals, and everyday integration. Online Group Healing is a smaller first step if a multi-day program feels too large."),
       q("Will Spiral I fix my sleep, fatigue, or health condition?", "No result is guaranteed and the program is not medical treatment. It may help you observe patterns and practise supportive routines alongside appropriate professional care."),
       q("How intensive is the emotional work?", "The intention is a paced foundation, not forced disclosure or catharsis. You remain responsible for communicating limits and using additional support when needed."),
       q("What is the current fee?", priceAnswer("spiral-i")),
       ...programCommon,
     ],
-    "Spiral-II.dc.html": [
+    "/spiral-ii": [
       q("What is Spiral II mainly about?", "Spiral II explores recurring emotional, relational, and family-system patterns, then practises clearer needs, boundaries, communication, and repair."),
       q("Do I need to complete Spiral I first?", "Usually Spiral I provides the foundation. Experienced applicants may discuss direct placement, but readiness is considered rather than assumed."),
       q("Will I have to confront family members or disclose private history?", "No. Reflection and communication practice should respect privacy, consent, and safety. The program cannot require another person to participate or change."),
       q("What is the current fee?", priceAnswer("spiral-ii")),
       ...programCommon,
     ],
-    "Spiral-III.dc.html": [
+    "/spiral-iii": [
       q("Is Spiral III only for people who identify as intuitive?", "No. It is for people exploring discernment, purpose, and subtle perception without treating every impression as fact."),
       q("How do you distinguish intuition from fear or imagination?", "The program compares internal impressions with emotion, conditioning, context, and observable evidence. Responsible discernment welcomes uncertainty rather than claiming infallibility."),
       q("Will the program tell me my life purpose?", "No. It offers a framework for examining values, gifts, responsibilities, and possible directions. You remain responsible for real-world testing and decisions."),
       q("What is the current fee?", priceAnswer("spiral-iii")),
       ...programCommon,
     ],
-    "Spiral-IV.dc.html": [
+    "/spiral-iv": [
       q("Is Spiral IV a certification?", "Spiral IV is an integration, leadership, and service level. It may lead toward practitioner training, but completing it is not the same as receiving a professional credential."),
       q("Do I have to become a facilitator afterward?", "No. Leadership can mean living and contributing with greater coherence in your existing family, profession, or community."),
       q("How does Spiral IV connect to the Bigger Vision?", "It creates a bridge from personal integration toward responsible service, Earth Healing, practitioner development, and potentially the Planetary Symbiosis Network."),
       q("What is the current fee?", priceAnswer("spiral-iv")),
       ...programCommon,
     ],
-    "ReGeneration.dc.html": [
+    "/regeneration": [
       q("Who is ReGeneration for?", "It is for adults seeking a more sustainable relationship with rest, vitality, and restoration, including people who feel depleted after prolonged stress."),
       q("Is this a retreat or an adult workshop?", "ReGeneration can appear as an optional retreat branch after Spiral II. The exact delivery format, location, and cohort dates must be confirmed for the offering you are considering."),
       q("What is the difference between Level I and Level II?", "Level II is a deeper continuation of Level I. The curriculum, prerequisites, duration, and inclusions are confirmed with each intake before enrollment."),
       q("What does it cost?", priceAnswer("regeneration")),
       ...programCommon,
     ],
-    "Rainbow-Light-Codes.dc.html": [
+    "/rainbow-light-codes": [
       q("What are ‘Rainbow Light Codes’ in practical terms?", "The page uses this as spiritual and creative language for colour, breath, imagery, attention, and reflective practice—not as a scientifically established code or medical intervention."),
       q("Is this suitable if I am skeptical of metaphysical language?", "You can engage with the exercises as symbolic or contemplative practices. You are not required to interpret imagery as objective fact."),
       q("Is this a standalone course or included elsewhere?", "Rainbow Light Code Healing is currently included within Earth Healing rather than offered as a separately priced course."),
       q("What does it cost?", priceAnswer("rainbow-light-codes")),
       ...programCommon,
     ],
-    "Crystal-Healing.dc.html": [
+    "/crystal-healing": [
       q("Do I need to own crystals before joining?", "Do not purchase materials until the team confirms what is needed. Any required or optional crystals should be listed with the final cohort details."),
       q("Are crystals presented as medical treatment?", "No. They are used as intentional objects within reflection, meditation, and space-setting—not as substitutes for diagnosis, medicine, or qualified care."),
       q("Can I join if I already work with crystals?", "Yes. Experienced participants should ask about depth and learning outcomes so the program does not simply repeat material they already know."),
       q("What is the current fee?", priceAnswer("crystal-healing")),
       ...programCommon,
     ],
-    "Intuitive-Perception-Training.dc.html": [
+    "/intuitive-perception-training": [
       q("What is the goal of intuitive perception training?", "To develop sensitivity while strengthening discernment, consent, uncertainty tolerance, and the habit of checking impressions against context and evidence."),
       q("Will I be taught that every impression is true?", "No. Responsible practice distinguishes intuition from projection, fear, wishful thinking, memory, and observable information."),
       q("Can I use these skills professionally afterward?", "The workshop alone should not be treated as unrestricted professional authorization. Ask what the course covers, what competence is assessed, and what additional training or legal duties apply."),
       q("What is the current fee?", priceAnswer("intuitive-perception-training")),
       ...programCommon,
     ],
-    "Holographic-Healing.dc.html": [
+    "/holographic-healing": [
       q("What does ‘holographic’ mean on this page?", "It describes a whole-person map: body, emotion, attention, relationships, environment, and daily habits are considered together. It is a reflective framework, not a diagnostic technology."),
       q("Is this appropriate for a diagnosed health condition?", "It can only be considered as educational wellbeing support alongside qualified care. Do not delay assessment or treatment in order to attend."),
       q("Will I receive a diagnosis or personalised treatment plan?", "No. You may develop observations and questions that can be discussed with appropriate professionals."),
       q("What does it cost?", priceAnswer("holographic-healing")),
       ...programCommon,
     ],
-    "Adult-Potential-Development.dc.html": [
+    "/adult-potential-development": [
       q("Is this a manifestation course?", "It explores beliefs, self-worth, direction, and practical action. It does not promise that intention alone controls external events or guarantees wealth."),
       q("Will this help me choose a career or business direction?", "It may help you clarify values, assumptions, experiments, and next steps. Professional, financial, or legal decisions still require appropriate expertise and real-world validation."),
       q("Is this only for people who feel unsuccessful?", "No. It can also suit people whose external life looks successful but feels misaligned, stagnant, or disconnected from their values."),
       q("What is the current fee?", priceAnswer("adult-potential-development")),
       ...programCommon,
     ],
-    "Earth-Healer-Training.dc.html": [
+    "/earth-healer-training": [
       q("Is Earth Healer Training spiritual practice, ecological training, or certification?", "It is presented as a service-oriented pathway combining spiritual/ecological attention, place relationship, facilitation, reciprocity, and community practice. Ask for the exact credential and practical curriculum before enrolling."),
       q("Does the program involve real environmental work?", "The intention includes practical stewardship, but the precise fieldwork, service hours, partners, and assessment for each intake must be confirmed."),
       q("How does this connect to the Earth Healing Zone?", "The Earth Healing Zone is the accessible community practice. Earth Healer Training is the deeper learning route for people preparing to facilitate or steward related work responsibly."),
       q("What is the current fee?", priceAnswer("earth-healer-training")),
       ...practitionerCommon,
     ],
-    "Group-Healing.dc.html": [
+    "/group-healing": [
       q("What happens during Online Group Healing?", "You join at the published time through Zoom, settle in a private space, and follow the guided audio or live instructions. The session uses rest, attention, imagery, and reflection within a shared spiritual-wellbeing setting."),
       q("Do I have to speak or share personal information with the group?", "No personal disclosure should be required. Exact participation expectations are provided before the session, and you remain free to keep your camera or microphone use within the stated event rules."),
       q("Is the session live or prerecorded?", "The current model may use a prerecorded guided audio played during a fixed shared time, with the possibility of live guidance as the community grows. The booking card should state the format for each date."),
@@ -198,7 +198,7 @@
       q("Can I cancel or move my booking?", "The applicable cancellation and transfer terms must be visible before payment. Review them at checkout and contact support only if you need help with an existing paid booking."),
       ...foundations,
     ],
-    "1-1-Sessions.dc.html": [
+    "/private-healing": [
       q("How do I choose among the three Private Healing sessions?", "Choose by the pattern you want to explore: recurring personal and relational patterns, the atmosphere and dynamics of home, or inherited stories and inner possibility. The team reviews fit before scheduling."),
       q("Why is Private Healing application-only?", "The review protects scope, consent, privacy, and suitability. Applying does not guarantee acceptance, and the team may recommend a different kind of support."),
       q("Why do you request a recent headshot?", "The team describes it as part of its spiritual review process. It is not used for diagnosis or identity verification. Upload collection remains unavailable until secure storage, access, retention, and deletion procedures are confirmed."),
@@ -208,7 +208,7 @@
       ...foundations,
       ...booking,
     ],
-    "Personal-Karma-Reconciliation.dc.html": [
+    "/personal-karma-reconciliation": [
       q("What does ‘karma’ mean in this session?", "It is the practitioner’s spiritual framework for recurring patterns, unresolved regret, resentment, attachment, and relational themes. It is not a factual determination of guilt, past lives, or why harm occurred."),
       q("Will you tell me that I caused everything that happened to me?", "No. Spiritual language must never be used to blame someone for abuse, illness, loss, or injustice. The focus is your present relationship with patterns and choices."),
       q("Do I need to contact or forgive someone from my past?", "No. Reconciliation does not require unsafe contact, forced forgiveness, or removing appropriate boundaries. The session is centred on your own reflection and integration."),
@@ -217,7 +217,7 @@
       ...foundations,
       ...booking,
     ],
-    "Family-Information-Field-Restoration.dc.html": [
+    "/family-information-field-restoration": [
       q("Does my whole family need to participate?", "No. The current offer is framed as a private session for an adult reflecting on home and family patterns. It cannot promise to change another person without their participation."),
       q("What is a ‘family information field’?", "It is Rainbow Sanctuary’s spiritual language for the accumulated atmosphere, memories, habits, emotions, and relational patterns associated with a home and family."),
       q("Will this resolve conflict without communication or practical change?", "No. A spiritual session may support reflection and intention, but relationships also require boundaries, communication, accountability, and sometimes qualified family or individual support."),
@@ -226,7 +226,7 @@
       ...foundations,
       ...booking,
     ],
-    "DNA-Activation.dc.html": [
+    "/dna-activation": [
       q("Does DNA Activation alter my biological DNA?", "No biological alteration, genetic testing, or medical treatment is claimed. ‘DNA activation’ is used symbolically within a spiritual practice about inherited stories, self-limiting beliefs, vitality, creativity, and possibility."),
       q("Can it treat genetic disease or repair damaged genes?", "No. Genetic or health concerns require qualified medical assessment. Do not replace or delay evidence-based care."),
       q("What might I explore during the session?", "Themes may include family narratives, learned limitations, confidence, intuition, creativity, and the relationship between past conditioning and present choices."),
@@ -235,7 +235,7 @@
       ...foundations,
       ...booking,
     ],
-    "Events-Retreats.dc.html": [
+    "/events": [
       q("Which dates on the calendar are confirmed?", "Only events with published date, location, status, and registration or interest instructions should be treated as public. Private cohorts and unconfirmed ideas are not shown as bookable events."),
       q("What does ‘Register interest’ mean?", "It means the event is collecting enquiries rather than accepting automatic admission or payment. Screening, legal readiness, capacity, and final terms may still need confirmation."),
       q("Can I filter events by audience?", "Yes. The calendar distinguishes group sessions, adult programs, family events, retreats, and community gatherings when dates exist."),
@@ -243,7 +243,7 @@
       q("How will online event times be shown?", "The site automatically detects your browser time zone and converts each online session into your local date and time. The organizer’s original time zone remains visible beside it so you can verify the schedule before booking."),
       ...booking,
     ],
-    "Awakening-Your-Inner-Light-2026.dc.html": [
+    "/awakening-your-inner-light-2026": [
       q("Can I enquire if I have never attended an ayahuasca ceremony?", "Yes. First-time participants are invited to begin with questions and a private fit conversation. Previous experience is not assumed, and an enquiry does not commit you to attend."),
       q("What is ayahuasca, and what might the experience feel like?", "Ayahuasca is a psychoactive ceremonial preparation with origins in Indigenous Amazonian traditions. It can profoundly alter perception, emotion, and physical experience; responses vary and can be intense or unpredictable. The team should explain the format, known risks, and support clearly before you decide."),
       q("Is this retreat intended to cure trauma, depression, anxiety, or a health condition?", "No. The retreat is a spiritual and experiential gathering, not medical treatment or psychotherapy, and no specific outcome is promised. Continue appropriate professional care and discuss any relevant history during confidential suitability screening."),
@@ -258,7 +258,7 @@
       q("When should I arrange flights?", "Only after written acceptance, final venue confirmation, payment and cancellation terms, legal-readiness confirmation, and explicit travel instructions."),
       ...booking,
     ],
-    "Earth-Healing-Zone.dc.html": [
+    "/earth-healing-zone": [
       q("What is the Earth Healing Zone?", "It is a community space for shared-time guided spiritual practice and practical stewardship. The current model may use a recorded meditation at a fixed daily time, with live gatherings developing later."),
       q("Do I have to be in China or join from a particular place?", "No. The shared-time practice is designed for remote participation. Each gathering should state its time zone and access method."),
       q("Is this only meditation, or does it include practical environmental action?", "Both dimensions matter. The page connects inner practice with tangible care for land, water, community, and everyday ecological responsibility."),
@@ -267,7 +267,7 @@
       ...foundations,
       ...booking,
     ],
-    "Bigger-Vision.dc.html": [
+    "/bigger-vision": [
       q("What is the Planetary Symbiosis Network?", "It is the longer-term vision for interconnected regenerative anchor communities combining ecological stewardship, education, wellbeing, community systems, and appropriate technology."),
       q("What exists today, and what is still aspirational?", "Rainbow Sanctuary programs, community practices, and the emerging Earth Healing pathway exist as the present bridge. The full Twelve Anchors network remains a developing vision rather than completed global infrastructure."),
       q("Is this an intentional community I can move into now?", "No current residential application or move-in process is published. Do not interpret the vision page as an offer of housing, land access, residency, or investment."),
@@ -277,7 +277,7 @@
       q("What is the most concrete first step for a mission-aligned builder?", "Read the current model, review Earth Healer Training, and submit a skills-based expression of interest. The team should then distinguish genuine near-term work from longer-horizon ideas."),
       ...foundations.slice(1, 4),
     ],
-    "Community-Stories.dc.html": [
+    "/community-stories": [
       q("Who is the Rainbow Sanctuary community for?", "It includes first-time participants, experienced practitioners, parents, facilitators, and mission-aligned contributors. You do not need to present yourself as spiritually advanced to belong."),
       q("Are the stories on this page guaranteed outcomes?", "No. They are individual experiences. They can illustrate what someone noticed, but they cannot predict what another person will experience."),
       q("How are testimonials selected and consented?", "Only stories with appropriate publication permission should be attributed. Sensitive details, children’s identities, and health information require particular care."),
@@ -285,7 +285,7 @@
       q("How can I meet others in the community?", "Public events, group sessions, Earth Healing gatherings, and future practitioner activities are the clearest routes. Availability is shown through the Events page."),
       ...foundations.slice(1, 5),
     ],
-    "Book-Consultation.dc.html": [
+    "/apply": [
       q("Is this form a booking or an enquiry?", "It is an enquiry and fit request. Public group dates may offer direct registration, while private work, retreats, and some programs require review before scheduling."),
       q("Why are both email and WhatsApp required?", "Email provides a formal written record and policy links; WhatsApp helps the team follow up promptly across countries. Use an international number you actively monitor."),
       q("What should I write in my message?", "Describe your present situation, what you hope to change or learn, your relevant experience, and any practical timing or accessibility needs. Avoid unnecessary medical records or private information about other people."),
@@ -324,7 +324,7 @@
   }
 
   function mount() {
-    const file = location.pathname.split("/").pop() || "Home.dc.html";
+    const file = location.pathname.split("/").pop() || "/";
     const items = dedupe(pages[file] || []);
     if (!items.length || document.querySelector("[data-rs-persona-faq]")) return;
     const main = document.querySelector("main");

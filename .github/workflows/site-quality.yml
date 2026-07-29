@@ -1,0 +1,44 @@
+name: Site quality
+
+on:
+  pull_request:
+    branches:
+      - staging
+      - main
+  push:
+    branches:
+      - staging
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: validate-static-site
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Configure Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Validate pages, links, assets, placeholders, and headers
+        run: python3 scripts/validate_site.py
+
+      - name: Verify discovery layer is reproducible
+        run: |
+          node scripts/publish-discovery-layer.mjs
+          git diff --exit-code
+
+      - name: Validate Vercel configuration syntax
+        run: python3 -m json.tool vercel.json >/dev/null

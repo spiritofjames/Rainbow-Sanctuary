@@ -2,20 +2,27 @@
   const eventsConfig = window.RAINBOW_SANCTUARY_CONFIG?.events || {};
   const groupConfig = eventsConfig.groupHealing || {};
   const viewerTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
-  const sessions = Array.isArray(eventsConfig.items)
-    ? eventsConfig.items
-      .filter((item) => item && item.category === "group" && item.startDate && item.status !== "cancelled")
-      .sort((a, b) => eventInstant(a) - eventInstant(b))
-    : [];
-
   const now = new Date();
   const today = startOfDay(now);
-  const upcoming = sessions.filter((item) => eventInstant(item) >= now || eventDate(item.endDate || item.startDate) >= today);
-  const firstUpcoming = upcoming[0] ? calendarDate(upcoming[0]) : today;
-  let visibleMonth = new Date(firstUpcoming.getFullYear(), firstUpcoming.getMonth(), 1);
+  let sessions = [];
+  let upcoming = [];
+  let feedState = { generatedAt: eventsConfig.staticGeneratedAt || "", source: "approved-static", status: "degraded" };
+  let visibleMonth = new Date(today.getFullYear(), today.getMonth(), 1);
   let chosenDateId = "";
   let selectedId = "";
   let initialized = false;
+
+  function applyFeed(result) {
+    feedState = result || feedState;
+    sessions = Array.isArray(result?.items)
+      ? result.items
+        .filter((item) => item && item.category === "group" && item.startDate && item.status !== "cancelled")
+        .sort((a, b) => eventInstant(a) - eventInstant(b))
+      : [];
+    upcoming = sessions.filter((item) => eventInstant(item) >= now || eventDate(item.endDate || item.startDate) >= today);
+    const first = upcoming[0] ? calendarDate(upcoming[0]) : today;
+    visibleMonth = new Date(first.getFullYear(), first.getMonth(), 1);
+  }
 
   function eventDate(value) { return new Date(`${value}T12:00:00`); }
   function eventInstant(item) {
@@ -104,6 +111,15 @@
     notice.className = "rs-timezone-notice";
     notice.innerHTML = `<span aria-hidden="true">◷</span><span>Times are automatically shown in <strong>${escapeHtml(readableZone(viewerTimeZone))}</strong>, your detected time zone. The original schedule remains visible in Singapore time (GMT+8).</span>`;
     heading.appendChild(notice);
+    const feedNotice = document.createElement("p");
+    feedNotice.className = "rs-timezone-notice";
+    feedNotice.setAttribute("role", "status");
+    feedNotice.innerHTML = feedState.status === "ready"
+      ? `<span aria-hidden="true">✓</span><span>Live CRM schedule · updated ${escapeHtml(new Date(feedState.generatedAt).toLocaleString("en"))}.</span>`
+      : feedState.status === "degraded"
+        ? `<span aria-hidden="true">◷</span><span>Showing the ${feedState.source === "last-known-safe" ? "last known safe schedule" : "approved static schedule"} · timestamp ${escapeHtml(new Date(feedState.generatedAt).toLocaleString("en"))}.</span>`
+        : `<span aria-hidden="true">!</span><span>The public schedule is unavailable. No unverified dates are being shown.</span>`;
+    heading.appendChild(feedNotice);
   }
 
   function showTimeOptions(id) {
@@ -233,11 +249,18 @@
     return true;
   }
 
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once:true });
-  if (!init()) {
-    const observer = new MutationObserver(() => {
-      if (init()) observer.disconnect();
-    });
-    observer.observe(document.documentElement, { childList:true, subtree:true });
+  function start(result) {
+    applyFeed(result);
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once:true });
+    if (!init()) {
+      const observer = new MutationObserver(() => {
+        if (init()) observer.disconnect();
+      });
+      observer.observe(document.documentElement, { childList:true, subtree:true });
+    }
   }
+
+  Promise.resolve(window.RAINBOW_PUBLIC_EVENTS_READY)
+    .then(start)
+    .catch(() => start({ items: [], source: "none", status: "unavailable" }));
 })();

@@ -2,9 +2,14 @@
 
 Responsive website prototype for Rainbow Sanctuary, including the complete page set, shared navigation, visual assets, responsive hero media, legal and safeguarding pages, and the approved design and voice references. It now includes confirmed program pricing, a $20 Online Group Healing entry offer, the sequential Spiral client journey, a dedicated Earth Healing Zone, a three-path Private Healing area, application-first intake, and a filterable Events & Retreats calendar. The October 2026 Awakening Your Inner Light retreat has a dedicated interest-only page pending final legal and safety confirmations.
 
-## Live preview
+## Environments
 
-https://rainbow-sanctuary-team-preview.vercel.app/
+- Production: https://rainbowsanctuary.life/
+- Protected staging: https://staging.rainbowsanctuary.life/
+
+Changes move through feature branch → `staging` → `main`. See
+[`docs/DEPLOYMENT-WORKFLOW.md`](docs/DEPLOYMENT-WORKFLOW.md) for the required
+review, testing, promotion, and rollback process.
 
 ## Design-system references
 
@@ -31,7 +36,10 @@ Then visit http://127.0.0.1:4173/Home.dc.html.
 
 ## Deployment
 
-The included `vercel.json` contains the routing configuration used by the team preview. Local `.vercel` project metadata is intentionally excluded from version control.
+The included `vercel.json` contains routing and security headers used by Vercel.
+Local `.vercel` project metadata is intentionally excluded from version control.
+Pull requests run dependency-free site validation, and scheduled endpoint monitoring
+checks production routing, the canonical `www` redirect, and staging protection.
 
 ## Current status
 
