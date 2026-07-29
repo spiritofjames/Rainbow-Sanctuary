@@ -73,20 +73,24 @@ def strip_javascript_comments(text: str) -> str:
     return re.sub(r"(^|[^:])//.*$", r"\1", text, flags=re.MULTILINE)
 
 
-def local_reference_target(source: Path, reference: str) -> tuple[Path | None, str]:
+def local_reference_target(
+    source: Path, reference: str, route_map: dict[str, str]
+) -> tuple[Path | None, str]:
     if "{{" in reference or "}}" in reference:
         return None, ""
     parsed = urlsplit(reference)
     if parsed.scheme.lower() in SKIP_SCHEMES or reference.startswith(("#", "//")):
         return None, parsed.fragment
     path = unquote(parsed.path)
-    if not path or path == "/":
+    if not path:
         return None, parsed.fragment
+    if path.startswith("/") and path in route_map:
+        path = route_map[path]
     target = (ROOT / path.lstrip("/")) if path.startswith("/") else (source.parent / path)
     return target.resolve(), parsed.fragment
 
 
-def validate_html(path: Path, errors: list[str]) -> None:
+def validate_html(path: Path, errors: list[str], route_map: dict[str, str]) -> None:
     text = path.read_text(encoding="utf-8")
     parser = DocumentParser()
     try:
@@ -106,7 +110,7 @@ def validate_html(path: Path, errors: list[str]) -> None:
         errors.append(f"{relative}: missing viewport metadata")
 
     for attribute, reference in parser.references:
-        target, fragment = local_reference_target(path, reference)
+        target, fragment = local_reference_target(path, reference, route_map)
         if target is None:
             continue
         try:
@@ -139,12 +143,91 @@ def validate_active_placeholders(errors: list[str]) -> None:
                 errors.append(f"{path.name}: contains {label}")
 
 
-def validate_vercel_configuration(errors: list[str]) -> None:
+def load_vercel_configuration(errors: list[str]) -> dict:
     path = ROOT / "vercel.json"
     try:
-        config = json.loads(path.read_text(encoding="utf-8"))
+        return json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         errors.append(f"vercel.json: invalid JSON: {exc}")
+        return {}
+
+
+def validate_discovery_layer(
+    config: dict, route_map: dict[str, str], errors: list[str]
+) -> None:
+    if len(route_map) != 36:
+        errors.append(f"vercel.json: expected 36 canonical routes, found {len(route_map)}")
+
+    redirects = config.get("redirects", [])
+    redirect_map = {
+        rule.get("source"): rule
+        for rule in redirects
+        if rule.get("source") and rule.get("destination")
+    }
+    for clean_route, legacy_path in route_map.items():
+        target = ROOT / legacy_path.lstrip("/")
+        if not target.is_file():
+            errors.append(f"vercel.json: {clean_route} rewrites to missing {legacy_path}")
+        redirect = redirect_map.get(legacy_path)
+        if not redirect or redirect.get("destination") != clean_route:
+            errors.append(
+                f"vercel.json: missing legacy redirect from {legacy_path} to {clean_route}"
+            )
+        elif redirect.get("permanent") is not True:
+            errors.append(f"vercel.json: legacy redirect {legacy_path} is not permanent")
+
+        if target.is_file():
+            text = target.read_text(encoding="utf-8")
+            canonical = f'https://rainbowsanctuary.life{clean_route}'
+            if f'<link rel="canonical" href="{canonical}">' not in text:
+                errors.append(f"{target.name}: canonical URL is not {canonical}")
+            for marker in (
+                '<meta name="robots" content="index,follow',
+                '<meta property="og:url"',
+                '<meta name="twitter:card"',
+                '<script type="application/ld+json">',
+            ):
+                if marker not in text:
+                    errors.append(f"{target.name}: missing discovery metadata {marker}")
+
+    expected_urls = {
+        f"https://rainbowsanctuary.life{route}" for route in route_map
+    }
+    sitemap_path = ROOT / "sitemap.xml"
+    if sitemap_path.is_file():
+        sitemap_urls = set(re.findall(r"<loc>([^<]+)</loc>", sitemap_path.read_text()))
+        if sitemap_urls != expected_urls:
+            errors.append(
+                "sitemap.xml: URLs do not exactly match the 36 canonical routes"
+            )
+    else:
+        errors.append("sitemap.xml: missing")
+
+    required_files = ("robots.txt", "llms.txt", "llms-full.txt")
+    for filename in required_files:
+        if not (ROOT / filename).is_file():
+            errors.append(f"{filename}: missing")
+
+    robots_path = ROOT / "robots.txt"
+    if robots_path.is_file():
+        robots = robots_path.read_text(encoding="utf-8")
+        if "Sitemap: https://rainbowsanctuary.life/sitemap.xml" not in robots:
+            errors.append("robots.txt: missing canonical sitemap declaration")
+        for crawler in (
+            "GPTBot",
+            "OAI-SearchBot",
+            "ClaudeBot",
+            "PerplexityBot",
+            "Google-Extended",
+        ):
+            if f"User-agent: {crawler}" not in robots:
+                errors.append(f"robots.txt: missing explicit rule for {crawler}")
+
+
+def validate_vercel_configuration(
+    config: dict, route_map: dict[str, str], errors: list[str]
+) -> None:
+    if not config:
         return
 
     configured = {
@@ -156,23 +239,27 @@ def validate_vercel_configuration(errors: list[str]) -> None:
     if missing:
         errors.append(f"vercel.json: missing security headers: {', '.join(missing)}")
 
-    redirects = config.get("redirects", [])
-    if not any(
-        rule.get("source") == "/" and rule.get("destination") == "/Home.dc.html"
-        for rule in redirects
-    ):
-        errors.append("vercel.json: root does not route to Home.dc.html")
+    if route_map.get("/") != "/Home.dc.html":
+        errors.append("vercel.json: root does not rewrite to Home.dc.html")
+
+    validate_discovery_layer(config, route_map, errors)
 
 
 def main() -> int:
     errors: list[str] = []
+    config = load_vercel_configuration(errors)
+    route_map = {
+        rule["source"]: rule["destination"]
+        for rule in config.get("rewrites", [])
+        if isinstance(rule, dict) and rule.get("source") and rule.get("destination")
+    }
     html_files = sorted(ROOT.glob("*.html"))
     if not html_files:
         errors.append("No root HTML pages found")
     for path in html_files:
-        validate_html(path, errors)
+        validate_html(path, errors, route_map)
     validate_active_placeholders(errors)
-    validate_vercel_configuration(errors)
+    validate_vercel_configuration(config, route_map, errors)
 
     if errors:
         print(f"Site validation failed with {len(errors)} issue(s):", file=sys.stderr)

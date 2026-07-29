@@ -35,5 +35,10 @@ jobs:
       - name: Validate pages, links, assets, placeholders, and headers
         run: python3 scripts/validate_site.py
 
+      - name: Verify discovery layer is reproducible
+        run: |
+          node scripts/publish-discovery-layer.mjs
+          git diff --exit-code
+
       - name: Validate Vercel configuration syntax
         run: python3 -m json.tool vercel.json >/dev/null

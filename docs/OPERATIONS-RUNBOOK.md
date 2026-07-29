@@ -12,7 +12,9 @@
 
 GitHub Actions runs `Endpoint health` twice per hour and checks:
 
-- production DNS, TLS, and root routing;
+- production DNS, TLS, root routing, and representative clean routes;
+- a representative legacy `.dc.html` permanent redirect;
+- `sitemap.xml`, `robots.txt`, and `llms.txt`;
 - the permanent `www` canonical redirect;
 - staging DNS, TLS, and Vercel authentication protection.
 
@@ -44,7 +46,8 @@ Preferred rollback uses Vercel's immutable deployment history:
 2. Find the last deployment that passed acceptance testing.
 3. Inspect its commit, date, and deployment URL.
 4. Use Vercel's production promotion/rollback control to restore it.
-5. Verify the production homepage and critical journeys.
+5. Verify the production homepage, representative clean routes, legacy redirect,
+   sitemap, robots file, LLM discovery file, and critical journeys.
 6. Revert the faulty Git commit through a pull request so Git matches production.
 7. Record the rollback in `docs/RELEASE-LOG.md`.
 

@@ -83,7 +83,7 @@
 </helmet>
 <header class="{{ headerClass }}" onKeyDown="{{ onKeyDown }}" style="position:sticky;top:0;z-index:100;background:#f5f5f5;border-bottom:1px solid #e7e5e4;font-family:'Inter',sans-serif;">
   <div class="rs-site-nav__inner" style="max-width:1280px;margin:0 auto;padding:0 24px;height:72px;display:flex;align-items:center;justify-content:space-between;gap:10px;">
-    <a class="rs-brand-link" href="Home.dc.html" aria-label="Rainbow Sanctuary home">
+    <a class="rs-brand-link" href="/" aria-label="Rainbow Sanctuary home">
       <img class="rs-brand-link__mark" src="./assets/brand/lotus-mark-header.png?v=20260717-final1" alt="" width="256" height="186" aria-hidden="true">
       <span class="rs-brand-link__name">Rainbow Sanctuary</span>
     </a>
@@ -108,7 +108,7 @@
           </div>
         </sc-for>
       </nav>
-      <a class="rs-cta-interactive rs-cta-enter rs-cta-final" href="Book-Consultation.dc.html" style="background:var(--rs-cta);color:#ffffff;border-radius:9999px;padding:10px 18px;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap;flex-shrink:0;" style-hover="background:var(--rs-cta-hover);">Apply / Enquire</a>
+      <a class="rs-cta-interactive rs-cta-enter rs-cta-final" href="/apply" style="background:var(--rs-cta);color:#ffffff;border-radius:9999px;padding:10px 18px;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap;flex-shrink:0;" style-hover="background:var(--rs-cta-hover);">Apply / Enquire</a>
     </sc-if>
 
     <sc-if value="{{ !isDesktop }}" hint-placeholder-val="{{ false }}">
@@ -139,39 +139,39 @@
           </sc-if>
         </div>
       </sc-for>
-      <a class="rs-cta-interactive rs-cta-enter rs-cta-final" href="Book-Consultation.dc.html" style="display:block;text-align:center;margin-top:20px;background:var(--rs-cta);color:#ffffff;border-radius:9999px;padding:14px 24px;font-size:15px;font-weight:500;text-decoration:none;">Apply or Enquire</a>
+      <a class="rs-cta-interactive rs-cta-enter rs-cta-final" href="/apply" style="display:block;text-align:center;margin-top:20px;background:var(--rs-cta);color:#ffffff;border-radius:9999px;padding:14px 24px;font-size:15px;font-weight:500;text-decoration:none;">Apply or Enquire</a>
     </nav>
   </sc-if>
 </header>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;activePage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;about&quot;,&quot;spiral&quot;,&quot;workshops&quot;,&quot;family&quot;,&quot;private&quot;,&quot;cert&quot;,&quot;events&quot;,&quot;vision&quot;,&quot;community&quot;]}}">
 const RAW_NAV = [
-  { key: 'about', label: 'About', href: 'About-Stephanie.dc.html', children: null },
-  { key: 'spiral', label: 'Spiral Journey', href: 'Spiral-Journey.dc.html', children: [
-    { label: 'Start Here — Group Healing', href: 'Group-Healing.dc.html' },
-    { label: 'Overview', href: 'Spiral-Journey.dc.html' },
-    { label: 'Spiral I — Foundations of Wellbeing', href: 'Spiral-I.dc.html' },
-    { label: 'Spiral II — Deep Emotional Transformation', href: 'Spiral-II.dc.html' },
-    { label: 'Spiral III — Consciousness & Purpose', href: 'Spiral-III.dc.html' },
-    { label: 'Spiral IV — Integrated Living & Leadership', href: 'Spiral-IV.dc.html' },
+  { key: 'about', label: 'About', href: '/about', children: null },
+  { key: 'spiral', label: 'Spiral Journey', href: '/spiral-journey', children: [
+    { label: 'Start Here — Group Healing', href: '/group-healing' },
+    { label: 'Overview', href: '/spiral-journey' },
+    { label: 'Spiral I — Foundations of Wellbeing', href: '/spiral-i' },
+    { label: 'Spiral II — Deep Emotional Transformation', href: '/spiral-ii' },
+    { label: 'Spiral III — Consciousness & Purpose', href: '/spiral-iii' },
+    { label: 'Spiral IV — Integrated Living & Leadership', href: '/spiral-iv' },
   ]},
-  { key: 'programs', label: 'Programs', href: 'Workshops.dc.html', activeKeys: ['workshops', 'family', 'cert'], children: [
-    { label: 'All programs', href: 'Workshops.dc.html' },
-    { label: 'For adults — Workshops', href: 'Workshops.dc.html#explore' },
-    { label: 'For children & families', href: 'Children-Family.dc.html' },
-    { label: 'For practitioners — Certification', href: 'Practitioner-Certification.dc.html' },
+  { key: 'programs', label: 'Programs', href: '/programs', activeKeys: ['workshops', 'family', 'cert'], children: [
+    { label: 'All programs', href: '/programs' },
+    { label: 'For adults — Workshops', href: '/programs#explore' },
+    { label: 'For children & families', href: '/children-and-family' },
+    { label: 'For practitioners — Certification', href: '/practitioner-certification' },
   ]},
-  { key: 'private', label: 'Private Healing', href: '1-1-Sessions.dc.html', children: [
-    { label: 'Overview', href: '1-1-Sessions.dc.html' },
-    { label: 'Personal Karma Reconciliation', href: 'Personal-Karma-Reconciliation.dc.html' },
-    { label: 'Family Information Field Restoration', href: 'Family-Information-Field-Restoration.dc.html' },
-    { label: 'DNA Activation', href: 'DNA-Activation.dc.html' },
+  { key: 'private', label: 'Private Healing', href: '/private-healing', children: [
+    { label: 'Overview', href: '/private-healing' },
+    { label: 'Personal Karma Reconciliation', href: '/personal-karma-reconciliation' },
+    { label: 'Family Information Field Restoration', href: '/family-information-field-restoration' },
+    { label: 'DNA Activation', href: '/dna-activation' },
   ]},
-  { key: 'events', label: 'Events', href: 'Events-Retreats.dc.html', children: null },
-  { key: 'community', label: 'Community', href: 'Community-Stories.dc.html', children: null },
-  { key: 'vision', label: 'Bigger Vision', href: 'Bigger-Vision.dc.html', children: [
-    { label: 'Planetary Symbiosis Network', href: 'Bigger-Vision.dc.html' },
-    { label: 'Earth Healing Zone', href: 'Earth-Healing-Zone.dc.html' },
+  { key: 'events', label: 'Events', href: '/events', children: null },
+  { key: 'community', label: 'Community', href: '/community-stories', children: null },
+  { key: 'vision', label: 'Bigger Vision', href: '/bigger-vision', children: [
+    { label: 'Planetary Symbiosis Network', href: '/bigger-vision' },
+    { label: 'Earth Healing Zone', href: '/earth-healing-zone' },
   ]},
 ];
 

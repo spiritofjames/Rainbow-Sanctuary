@@ -13,6 +13,8 @@ Describe the user-facing change and why it is needed.
 - [ ] Desktop pages reviewed
 - [ ] Mobile pages reviewed
 - [ ] Navigation, forms, and primary calls to action tested
+- [ ] Clean routes, legacy redirects, sitemap, robots, and discovery metadata tested
+- [ ] Discovery generator was run and all generated changes are committed
 - [ ] No placeholders, internal notes, or test URLs are exposed
 - [ ] Staging deployment reviewed at `staging.rainbowsanctuary.life`
 

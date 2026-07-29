@@ -3,15 +3,21 @@
   const statusNames = { open: "Registration open", scheduled: "View confirmed date", interest: "Register interest", full: "Currently full", cancelled: "Cancelled" };
   const config = window.RAINBOW_SANCTUARY_CONFIG?.events || { items: [] };
   const viewerTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
-  const items = Array.isArray(config.items) ? config.items.filter(validEvent).slice() : [];
+  let items = Array.isArray(config.items) ? config.items.filter(validEvent).slice() : [];
+  let feedState = { generatedAt: config.staticGeneratedAt || "", source: "approved-static", status: "degraded" };
   const today = startOfDay(new Date());
-  const firstUpcomingItem = items.filter((event) => eventInstant(event) >= new Date()).sort((a, b) => eventInstant(a) - eventInstant(b))[0];
-  const firstUpcoming = firstUpcomingItem ? calendarDate(firstUpcomingItem) : today;
-  let visibleMonth = new Date(firstUpcoming.getFullYear(), firstUpcoming.getMonth(), 1);
+  let visibleMonth = new Date(today.getFullYear(), today.getMonth(), 1);
   const requestedFilter = new URLSearchParams(window.location.search).get("filter");
   let activeFilter = requestedFilter && categoryNames[requestedFilter] ? requestedFilter : "all";
 
   function validEvent(event) { return event && event.id && event.title && event.startDate && categoryNames[event.category]; }
+  function applyFeed(result) {
+    feedState = result || feedState;
+    items = Array.isArray(result?.items) ? result.items.filter(validEvent).slice() : [];
+    const first = items.filter((event) => eventInstant(event) >= new Date()).sort((a, b) => eventInstant(a) - eventInstant(b))[0];
+    const firstDate = first ? calendarDate(first) : today;
+    visibleMonth = new Date(firstDate.getFullYear(), firstDate.getMonth(), 1);
+  }
   function eventDate(value) { return new Date(value + "T12:00:00"); }
   function eventInstant(event) {
     const instant = event?.startDateTime ? new Date(event.startDateTime) : eventDate(event?.startDate);
@@ -79,6 +85,15 @@
     notice.className = "rs-events-timezone";
     notice.innerHTML = `Online times are automatically shown in <strong>${escapeHtml(readableZone(viewerTimeZone))}</strong>, your detected time zone. Each event also keeps its original organizer time visible.`;
     heading.appendChild(notice);
+    const feedNotice = document.createElement("p");
+    feedNotice.className = "rs-events-timezone";
+    feedNotice.setAttribute("role", "status");
+    feedNotice.textContent = feedState.status === "ready"
+      ? `Live CRM event feed · updated ${new Date(feedState.generatedAt).toLocaleString("en")}.`
+      : feedState.status === "degraded"
+        ? `Showing ${feedState.source === "last-known-safe" ? "the last known safe event feed" : "the approved static event schedule"} · timestamp ${new Date(feedState.generatedAt).toLocaleString("en")}.`
+        : "The public event feed is unavailable. No unverified dates are being shown.";
+    heading.appendChild(feedNotice);
   }
 
   function renderCalendar() {
@@ -156,11 +171,18 @@
     return true;
   }
 
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
-  if (!init()) {
-    const observer = new MutationObserver(() => {
-      if (init()) observer.disconnect();
-    });
-    observer.observe(document.documentElement, { childList: true, subtree: true });
+  function start(result) {
+    applyFeed(result);
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
+    if (!init()) {
+      const observer = new MutationObserver(() => {
+        if (init()) observer.disconnect();
+      });
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+    }
   }
+
+  Promise.resolve(window.RAINBOW_PUBLIC_EVENTS_READY)
+    .then(start)
+    .catch(() => start({ items: [], source: "none", status: "unavailable" }));
 })();

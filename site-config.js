@@ -61,6 +61,10 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     "spiral-iv": { standard: "USD 1,599", earlyBird: "USD 1,399", deadline: "" }
   },
   events: {
+    feedUrl: "",
+    staticFallbackApproved: true,
+    staticGeneratedAt: "2026-07-25T10:00:00.000Z",
+    staticCacheVersion: "events-1",
     timezone: "Asia/Singapore",
     groupHealing: {
       frequency: "Twice monthly",
@@ -85,7 +89,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
         duration: "Approximately 60 minutes",
         price: "USD 20",
         status: "scheduled",
-        registrationUrl: "./Group-Healing.dc.html#choose-session",
+        registrationUrl: "/group-healing#choose-session",
         checkoutUrl: ""
       },
       {
@@ -102,7 +106,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
         earlyBirdDeadline: "2026-09-01",
         deposit: "50% deposit required for the early-bird rate",
         status: "interest",
-        registrationUrl: "./Awakening-Your-Inner-Light-2026.dc.html"
+        registrationUrl: "/awakening-your-inner-light-2026"
       }
       /*
       {

@@ -12,14 +12,32 @@
 
 1. Create a short-lived branch from `staging`.
 2. Make one focused change.
-3. Open a pull request into `staging`.
-4. Wait for `Site quality` and the Vercel preview to pass.
-5. Review the protected preview on desktop and mobile.
-6. Resolve all review conversations.
-7. Merge into `staging`.
-8. Perform acceptance testing at the staging URL.
+3. Run `node scripts/publish-discovery-layer.mjs` after changing public pages,
+   navigation, events, or route metadata. Commit its generated output.
+4. Run `python3 scripts/validate_site.py`.
+5. Open a pull request into `staging`.
+6. Wait for `Site quality` and the Vercel preview to pass. The quality gate reruns
+   the discovery generator and fails if generated files were not committed.
+7. Review the protected preview on desktop and mobile.
+8. Resolve all review conversations.
+9. Merge into `staging`.
+10. Perform acceptance testing at the staging URL, including a clean path and its
+    corresponding legacy `.dc.html` redirect.
 
 Do not push directly to `staging` or `main`.
+
+## Canonical routes and discovery files
+
+`scripts/publish-discovery-layer.mjs` is the source-controlled publishing step for:
+
+- 36 clean canonical routes and permanent legacy redirects;
+- canonical, robots, Open Graph, Twitter, image, and JSON-LD metadata;
+- `sitemap.xml`, `robots.txt`, `llms.txt`, and `llms-full.txt`;
+- clean internal navigation links; and
+- Vercel rewrites, redirects, and required security headers.
+
+Do not hand-edit generated discovery blocks or replace `vercel.json` with a version
+that omits the security headers.
 
 ## Production promotion
 
@@ -30,7 +48,8 @@ Do not push directly to `staging` or `main`.
 5. Resolve every review conversation.
 6. The release owner merges the pull request.
 7. Watch the Vercel production deployment until it is Ready.
-8. Verify the homepage, navigation, primary calls to action, legal pages, and HTTPS.
+8. Verify the homepage, clean routes, one legacy redirect, navigation, sitemap,
+   robots, LLM discovery files, primary calls to action, legal pages, and HTTPS.
 9. Add the release to `docs/RELEASE-LOG.md`.
 
 Merging the `staging` → `main` pull request is the explicit production approval.
