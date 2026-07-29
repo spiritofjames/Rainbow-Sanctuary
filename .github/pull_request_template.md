@@ -20,6 +20,7 @@ Describe the user-facing change and why it is needed.
 
 ## Production promotion only
 
+- [ ] Phase 4 staging acceptance record is complete and linked
 - [ ] Team acceptance testing is complete
 - [ ] Legal, safeguarding, pricing, payment, and event information is confirmed
 - [ ] Rollback target is recorded
