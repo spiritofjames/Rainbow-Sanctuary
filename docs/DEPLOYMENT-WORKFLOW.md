@@ -41,7 +41,9 @@ that omits the security headers.
 
 ## Production promotion
 
-1. Confirm staging acceptance is complete.
+1. Complete every required item in
+   `docs/PHASE-4-STAGING-ACCEPTANCE.md`, attach evidence, and record each named
+   approval. An incomplete checklist means `NO-GO`.
 2. Record the current production deployment and commit as the rollback target.
 3. Open a pull request from `staging` to `main`.
 4. Complete every production item in the pull-request template.
