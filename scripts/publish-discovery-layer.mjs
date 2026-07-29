@@ -89,7 +89,7 @@ const pageTypes = {
 };
 
 const ogImages = {
-  "Home.dc.html": "/assets/video/home-sanctuary-shore-v3-poster.jpg",
+  "Home.dc.html": "/assets/social/rainbow-sanctuary-home-og-v1.jpg",
   "About-Stephanie.dc.html": "/assets/stephanie-portrait.jpg",
   "1-1-Sessions.dc.html": "/assets/editorial/private-healing-overview.jpg",
   "Awakening-Your-Inner-Light-2026.dc.html": "/assets/retreat-panama-coast-aerial.jpg",
@@ -282,6 +282,11 @@ for (const [file, route] of Object.entries(routes)) {
     `<meta property="og:url" content="${canonical}">`,
     `<meta property="og:image" content="${image}">`,
     `<meta property="og:image:alt" content="${escapeAttribute(`${title} — Rainbow Sanctuary`)}">`,
+    ...(file === "Home.dc.html" ? [
+      `<meta property="og:image:width" content="1200">`,
+      `<meta property="og:image:height" content="630">`,
+      `<meta property="og:image:type" content="image/jpeg">`
+    ] : []),
     '<meta name="twitter:card" content="summary_large_image">',
     `<meta name="twitter:title" content="${escapeAttribute(title)}">`,
     `<meta name="twitter:description" content="${escapeAttribute(description)}">`,
