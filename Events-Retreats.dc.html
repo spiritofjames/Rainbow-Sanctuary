@@ -14,9 +14,23 @@
 <link rel="stylesheet" href="./site.css?v=20260714-spectrum1">
 <link rel="stylesheet" href="./events-calendar.css?v=20260723-timezone1">
 <script src="./site-config.js"></script>
+<script src="./public-event-feed.js?v=20260725-sprint5" defer></script>
 <script src="./support.js"></script>
 <script src="./cta-effects.js?v=20260714-purple3" defer></script>
-<script src="./events-calendar.js?v=20260723-timezone1" defer></script>
+<script src="./events-calendar.js?v=20260725-sprint5" defer></script>
+<!-- rs-discovery:start -->
+<link rel="canonical" href="https://rainbowsanctuary.life/events">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta property="og:site_name" content="Rainbow Sanctuary">
+<meta property="og:url" content="https://rainbowsanctuary.life/events">
+<meta property="og:image" content="https://rainbowsanctuary.life/assets/retreat-panama-coast-aerial.jpg">
+<meta property="og:image:alt" content="Events &amp; Retreats | Rainbow Sanctuary — Rainbow Sanctuary">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Events &amp; Retreats | Rainbow Sanctuary">
+<meta name="twitter:description" content="Explore upcoming online group healing sessions, in-person workshops, retreats, and Rainbow Sanctuary community gatherings.">
+<meta name="twitter:image" content="https://rainbowsanctuary.life/assets/retreat-panama-coast-aerial.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://rainbowsanctuary.life/#organization","name":"Rainbow Sanctuary","url":"https://rainbowsanctuary.life/","logo":{"@type":"ImageObject","url":"https://rainbowsanctuary.life/assets/brand/lotus-planetary-consciousness-original.png"},"founder":{"@type":"Person","name":"Stephanie Wu","url":"https://rainbowsanctuary.life/about"}},{"@type":"WebSite","@id":"https://rainbowsanctuary.life/#website","url":"https://rainbowsanctuary.life/","name":"Rainbow Sanctuary","publisher":{"@id":"https://rainbowsanctuary.life/#organization"},"inLanguage":"en"},{"@type":"CollectionPage","@id":"https://rainbowsanctuary.life/events#webpage","url":"https://rainbowsanctuary.life/events","name":"Events & Retreats | Rainbow Sanctuary","description":"Explore upcoming online group healing sessions, in-person workshops, retreats, and Rainbow Sanctuary community gatherings.","isPartOf":{"@id":"https://rainbowsanctuary.life/#website"},"about":{"@id":"https://rainbowsanctuary.life/#organization"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://rainbowsanctuary.life/assets/retreat-panama-coast-aerial.jpg"},"inLanguage":"en"},{"@type":"ItemList","@id":"https://rainbowsanctuary.life/events#events","name":"Rainbow Sanctuary events and retreats","itemListElement":[{"@type":"ListItem","position":1,"url":"https://rainbowsanctuary.life/group-healing"},{"@type":"ListItem","position":2,"url":"https://rainbowsanctuary.life/awakening-your-inner-light-2026"}]}]}</script>
+<!-- rs-discovery:end -->
 </head>
 <body>
 <x-dc>
@@ -34,13 +48,14 @@
   <dc-import name="SiteNavFixed" active-page="events" hint-size="100%,84px"></dc-import>
 
   <main id="main-content">
-  <section class="rs-events-hero"><div class="rs-events-shell rs-events-hero__inner"><span class="rs-events-kicker">Online &amp; in-person calendar</span><h1>Gather with intention.<br><em>Practise in community.</em></h1><p>Explore confirmed online Group Healing sessions, retreats, adult workshops, children and family experiences, and community gatherings—organized by date, location, and audience.</p><div class="rs-events-hero__actions"><a class="rs-events-button rs-events-button--primary" href="#calendar">View the calendar</a><a class="rs-events-button" href="Book-Consultation.dc.html?reason=events">Ask about an event</a></div></div></section>
+  <noscript><section class="rs-events-section"><div class="rs-events-shell"><p role="status">The interactive event feed requires JavaScript. No unverified dates are displayed; please use the event enquiry link.</p></div></section></noscript>
+  <section class="rs-events-hero"><div class="rs-events-shell rs-events-hero__inner"><span class="rs-events-kicker">Online &amp; in-person calendar</span><h1>Gather with intention.<br><em>Practise in community.</em></h1><p>Explore confirmed online Group Healing sessions, retreats, adult workshops, children and family experiences, and community gatherings—organized by date, location, and audience.</p><div class="rs-events-hero__actions"><a class="rs-events-button rs-events-button--primary" href="#calendar">View the calendar</a><a class="rs-events-button" href="/apply?reason=events">Ask about an event</a></div></div></section>
 
   <section class="rs-events-types" aria-label="Event categories"><div class="rs-events-shell rs-events-types__grid"><article><span>Retreats</span><p>Immersive, multi-day experiences with their own destination, schedule, and preparation.</p></article><article><span>Adult workshops</span><p>In-person delivery of selected Rainbow Sanctuary workshops and practices.</p></article><article><span>Children &amp; Family</span><p>Age-appropriate experiences with confirmed safeguarding, guardian, and consent information.</p></article><article><span>Community</span><p>Talks, circles, open days, and gatherings connected to the wider vision.</p></article></div></section>
 
-  <section id="calendar" class="rs-events-section"><div class="rs-events-shell"><header class="rs-events-heading"><span class="rs-events-kicker">Upcoming dates</span><h2>Find the next way to meet.</h2><p>Only confirmed public events appear here. Private appointments and participant information never belong in this calendar.</p></header><div class="rs-events-filters" role="group" aria-label="Filter events"><button type="button" data-event-filter="all" aria-pressed="true">All</button><button type="button" data-event-filter="group" aria-pressed="false">Group Healing</button><button type="button" data-event-filter="retreat" aria-pressed="false">Retreats</button><button type="button" data-event-filter="adult" aria-pressed="false">Adult workshops</button><button type="button" data-event-filter="family" aria-pressed="false">Children &amp; Family</button><button type="button" data-event-filter="community" aria-pressed="false">Community</button></div><div class="rs-events-layout"><div class="rs-calendar-card"><div class="rs-calendar-toolbar"><button type="button" id="events-prev-month" aria-label="Previous month">←</button><h3 id="events-month-label">Calendar</h3><button type="button" id="events-next-month" aria-label="Next month">→</button></div><div class="rs-calendar-weekdays" aria-hidden="true"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div><div id="events-calendar-grid" class="rs-calendar-grid" role="grid" aria-labelledby="events-month-label"></div></div><aside class="rs-upcoming-panel" aria-labelledby="upcoming-events-title"><div class="rs-upcoming-panel__header"><span class="rs-events-kicker">Next events</span><h3 id="upcoming-events-title">Upcoming sessions &amp; gatherings</h3></div><div id="events-upcoming-list" class="rs-upcoming-list" aria-live="polite"></div><div id="events-empty" class="rs-events-empty" hidden><h4>No confirmed events in this view—yet.</h4><p>The calendar is ready for the team’s dates and locations. You can still register your interest without committing to a booking.</p><a href="Book-Consultation.dc.html?reason=events">Register interest</a></div><a id="events-calendar-link" class="rs-events-calendar-link" href="#" hidden style="display:none;">Open the public calendar ↗</a></aside></div></div></section>
+  <section id="calendar" class="rs-events-section"><div class="rs-events-shell"><header class="rs-events-heading"><span class="rs-events-kicker">Upcoming dates</span><h2>Find the next way to meet.</h2><p>Only confirmed public events appear here. Private appointments and participant information never belong in this calendar.</p></header><div class="rs-events-filters" role="group" aria-label="Filter events"><button type="button" data-event-filter="all" aria-pressed="true">All</button><button type="button" data-event-filter="group" aria-pressed="false">Group Healing</button><button type="button" data-event-filter="retreat" aria-pressed="false">Retreats</button><button type="button" data-event-filter="adult" aria-pressed="false">Adult workshops</button><button type="button" data-event-filter="family" aria-pressed="false">Children &amp; Family</button><button type="button" data-event-filter="community" aria-pressed="false">Community</button></div><div class="rs-events-layout"><div class="rs-calendar-card"><div class="rs-calendar-toolbar"><button type="button" id="events-prev-month" aria-label="Previous month">←</button><h3 id="events-month-label">Calendar</h3><button type="button" id="events-next-month" aria-label="Next month">→</button></div><div class="rs-calendar-weekdays" aria-hidden="true"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div><div id="events-calendar-grid" class="rs-calendar-grid" role="grid" aria-labelledby="events-month-label"></div></div><aside class="rs-upcoming-panel" aria-labelledby="upcoming-events-title"><div class="rs-upcoming-panel__header"><span class="rs-events-kicker">Next events</span><h3 id="upcoming-events-title">Upcoming sessions &amp; gatherings</h3></div><div id="events-upcoming-list" class="rs-upcoming-list" aria-live="polite"></div><div id="events-empty" class="rs-events-empty" hidden><h4>No confirmed events in this view—yet.</h4><p>The calendar is ready for the team’s dates and locations. You can still register your interest without committing to a booking.</p><a href="/apply?reason=events">Register interest</a></div><a id="events-calendar-link" class="rs-events-calendar-link" href="#" hidden style="display:none;">Open the public calendar ↗</a></aside></div></div></section>
 
-  <section class="rs-events-section rs-events-section--soft"><div class="rs-events-shell"><div class="rs-events-note"><div><span class="rs-events-kicker">Publishing rule</span><h2>Program and event are two different things.</h2><p>Workshop, Family, Spiral, and Certification pages explain what the experience is. This Events calendar shows when and where an in-person instance is actually happening. Retreats live here because they are a delivery format—not an About page.</p></div><a class="rs-events-button rs-events-button--primary rs-cta-final" href="Book-Consultation.dc.html?reason=events">Ask about upcoming dates</a></div></div></section>
+  <section class="rs-events-section rs-events-section--soft"><div class="rs-events-shell"><div class="rs-events-note"><div><span class="rs-events-kicker">Publishing rule</span><h2>Program and event are two different things.</h2><p>Workshop, Family, Spiral, and Certification pages explain what the experience is. This Events calendar shows when and where an in-person instance is actually happening. Retreats live here because they are a delivery format—not an About page.</p></div><a class="rs-events-button rs-events-button--primary rs-cta-final" href="/apply?reason=events">Ask about upcoming dates</a></div></div></section>
 
   </main>
 
@@ -54,36 +69,36 @@
         </div>
         <div style="display:flex;flex-direction:column;gap:12px;">
           <span style="font-size:12px;font-weight:600;letter-spacing:0.96px;color:#6f6962;text-transform:uppercase;margin-bottom:4px;">Explore</span>
-          <a href="Home.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Home</a>
-          <a href="About-Stephanie.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">About Stephanie</a>
-          <a href="Spiral-Journey.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">The Spiral Journey</a>
-          <a href="Group-Healing.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Online Group Healing</a>
-          <a href="Workshops.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Workshops &amp; Programs</a>
+          <a href="/" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Home</a>
+          <a href="/about" style="font-size:15px;color:#4e4e4e;text-decoration:none;">About Stephanie</a>
+          <a href="/spiral-journey" style="font-size:15px;color:#4e4e4e;text-decoration:none;">The Spiral Journey</a>
+          <a href="/group-healing" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Online Group Healing</a>
+          <a href="/programs" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Workshops &amp; Programs</a>
         </div>
         <div style="display:flex;flex-direction:column;gap:12px;">
           <span style="font-size:12px;font-weight:600;letter-spacing:0.96px;color:#6f6962;text-transform:uppercase;margin-bottom:4px;">More</span>
-          <a href="Children-Family.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Children &amp; Family</a>
-          <a href="1-1-Sessions.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Private Healing</a>
-          <a href="Practitioner-Certification.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Practitioner Certification</a>
-          <a href="Bigger-Vision.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">The Bigger Vision</a>
-          <a href="Earth-Healing-Zone.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Earth Healing Zone</a>
+          <a href="/children-and-family" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Children &amp; Family</a>
+          <a href="/private-healing" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Private Healing</a>
+          <a href="/practitioner-certification" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Practitioner Certification</a>
+          <a href="/bigger-vision" style="font-size:15px;color:#4e4e4e;text-decoration:none;">The Bigger Vision</a>
+          <a href="/earth-healing-zone" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Earth Healing Zone</a>
         </div>
         <div style="display:flex;flex-direction:column;gap:12px;">
           <span style="font-size:12px;font-weight:600;letter-spacing:0.96px;color:#6f6962;text-transform:uppercase;margin-bottom:4px;">Connect</span>
-          <a href="Community-Stories.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Community &amp; Stories</a>
-          <a href="Events-Retreats.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Events &amp; Retreats</a>
-          <a href="Book-Consultation.dc.html" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Apply or Enquire</a>
+          <a href="/community-stories" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Community &amp; Stories</a>
+          <a href="/events" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Events &amp; Retreats</a>
+          <a href="/apply" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Apply or Enquire</a>
         </div>
       </div>
       <div class="rs-footer-bottom">
         <span>© 2026 Rainbow Sanctuary</span>
         <nav class="rs-footer-legal" aria-label="Legal and accessibility">
-          <a href="Privacy-Policy.dc.html">Privacy</a>
-          <a href="Terms-Conditions.dc.html">Terms</a>
-          <a href="Cookie-Policy.dc.html">Cookies</a>
-          <a href="Wellbeing-Disclaimer.dc.html">Wellbeing disclaimer</a>
-          <a href="Children-Safeguarding.dc.html">Children &amp; safeguarding</a>
-          <a href="Accessibility-Statement.dc.html">Accessibility</a>
+          <a href="/privacy-policy">Privacy</a>
+          <a href="/terms">Terms</a>
+          <a href="/cookie-policy">Cookies</a>
+          <a href="/wellbeing-disclaimer">Wellbeing disclaimer</a>
+          <a href="/children-safeguarding">Children &amp; safeguarding</a>
+          <a href="/accessibility">Accessibility</a>
         </nav>
       </div>
     </div>
