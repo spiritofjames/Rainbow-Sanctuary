@@ -89,7 +89,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
         summary: "A guided Group Healing session for grounding, rest, and renewal.",
         duration: "Approximately 60 minutes",
         price: "USD 20",
-        status: "scheduled",
+        status: "open",
         registrationUrl: "/group-healing#choose-session",
         checkoutUrl: ""
       },
