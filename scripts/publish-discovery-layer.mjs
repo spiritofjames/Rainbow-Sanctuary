@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const scriptsDir = path.dirname(fileURLToPath(import.meta.url));
 const siteDir = path.resolve(scriptsDir, "..");
 const origin = "https://rainbowsanctuary.life";
-const lastmod = "2026-07-29";
+const lastmod = "2026-07-31";
 const headers = [
   {
     source: "/assets/documents/awakening-your-inner-light-retreat-2026.pdf",
@@ -268,7 +268,7 @@ for (const [file, route] of Object.entries(routes)) {
   const title = extract(source, /<title>([\s\S]*?)<\/title>/i, "Rainbow Sanctuary");
   const description = extract(
     source,
-    /<meta\s+name=["']description["']\s+content=["']([^"']*)["'][^>]*>/i,
+    /<meta\s+name="description"\s+content="([^"]*)"[^>]*>/i,
     "Rainbow Sanctuary is a global community for spiritual wellbeing, conscious development, and regenerative service."
   );
   const canonical = `${origin}${route}`;
