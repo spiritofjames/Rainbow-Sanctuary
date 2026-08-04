@@ -14,9 +14,10 @@ application-led and are not exposed as direct Checkout products.
   `STRIPE_ALLOWED_GROUP_EVENT_IDS`.
 - Production also requires a live key and `STRIPE_LIVE_CHECKOUT_APPROVED=true`.
 - Live webhooks fail closed until the governed CRM event endpoint is configured.
-- Customer details are not copied into the webhook handoff. The CRM receives only
-  Stripe/object identifiers, the internal event identifier, status, amount, and
-  currency.
+- The CRM handoff contains only the client's full name and normalized email plus
+  Stripe/object identifiers, the internal session and offer identifiers, amount,
+  currency, and occurrence time. It excludes addresses, phone numbers, payment
+  methods, card data, receipts, secrets, recovery codes, and API keys.
 
 ## Vercel environment variables
 

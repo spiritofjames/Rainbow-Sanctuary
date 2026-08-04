@@ -62,6 +62,12 @@ export function checkoutSessionParameters({ eventId, origin, priceId }) {
     customer_creation: "always",
     billing_address_collection: "auto",
     consent_collection: { terms_of_service: "required" },
+    custom_fields: [{
+      key: "client_display_name",
+      label: { custom: "Full name", type: "custom" },
+      optional: false,
+      type: "text"
+    }],
     metadata: {
       offer_key: "group-healing",
       event_id: eventId,

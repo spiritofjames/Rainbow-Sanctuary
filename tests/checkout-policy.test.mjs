@@ -32,6 +32,12 @@ test("the server owns the Stripe price and amount", () => {
   assert.deepEqual(parameters.line_items, [{ price: "price_server_owned", quantity: 1 }]);
   assert.equal(parameters.client_reference_id, "group-healing-2026-08-22");
   assert.equal(parameters.metadata.event_id, "group-healing-2026-08-22");
+  assert.deepEqual(parameters.custom_fields, [{
+    key: "client_display_name",
+    label: { custom: "Full name", type: "custom" },
+    optional: false,
+    type: "text"
+  }]);
   assert.match(parameters.success_url, /^https:\/\/staging\.rainbowsanctuary\.life\//);
 });
 
