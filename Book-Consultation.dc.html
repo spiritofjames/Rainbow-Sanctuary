@@ -201,7 +201,7 @@
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { name: '', email: '', whatsapp: '', reason: '', privateSession: '', currentChallenges: '', intendedOutcome: '', message: '', photoFile: null, photoName: '', submitted: false, submitting: false, configurationPending: false, error: '' };
+    this.state = { name: '', email: '', whatsapp: '', reason: '', privateSession: '', currentChallenges: '', intendedOutcome: '', message: '', photoFile: null, photoName: '', submissionId: window.crypto.randomUUID(), submitted: false, submitting: false, configurationPending: false, error: '' };
   }
 
   componentDidMount() {
@@ -260,6 +260,10 @@ class Component extends DCLogic {
           this.setState({ error: 'Please add the requested recent headshot, or contact the team to discuss an accessible alternative.' });
           return;
         }
+        if (isPrivate) {
+          this.setState({ error: 'Private Healing intake is still protected while its confidential image-storage and retention process is commissioned. No information or photo was sent.' });
+          return;
+        }
         if (!formConfig || !formConfig.endpoint) {
           this.setState({ configurationPending: true, error: '', submitted: false });
           return;
@@ -267,26 +271,21 @@ class Component extends DCLogic {
 
         this.setState({ submitting: true, configurationPending: false, error: '' });
         try {
-          const payload = new FormData();
-          payload.append('name', this.state.name);
-          payload.append('email', this.state.email);
-          payload.append('whatsapp', this.state.whatsapp.trim());
-          payload.append('reason', this.state.reason);
-          payload.append('privateSession', this.state.privateSession);
-          payload.append('currentChallenges', this.state.currentChallenges);
-          payload.append('intendedOutcome', this.state.intendedOutcome);
-          payload.append('message', this.state.message);
-          payload.append('privacyConsent', 'true');
-          payload.append('termsAccepted', 'true');
-          payload.append('wellbeingDisclaimerAcknowledged', 'true');
-          payload.append('safeguardingPolicyAcknowledged', this.state.reason === 'family' ? 'true' : 'not-applicable');
-          payload.append('photoConsent', isPrivate ? 'true' : 'false');
-          payload.append('privacyPolicyVersion', window.RAINBOW_SANCTUARY_CONFIG?.legal?.effectiveDate || '13 July 2026');
-          if (this.state.photoFile) payload.append('headshot', this.state.photoFile, this.state.photoFile.name);
+          const payload = {
+            clientEventId: this.state.submissionId,
+            email: this.state.email,
+            message: this.state.message,
+            name: this.state.name,
+            privacyAccepted: true,
+            privacyPolicyVersion: window.RAINBOW_SANCTUARY_CONFIG?.legal?.effectiveDate || '13 July 2026',
+            reason: this.state.reason,
+            sourcePage: window.location.pathname + window.location.search,
+            whatsapp: this.state.whatsapp.trim()
+          };
           const response = await fetch(formConfig.endpoint, {
             method: formConfig.method || 'POST',
-            headers: { 'Accept': 'application/json' },
-            body: payload,
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
           });
           if (!response.ok) throw new Error('Submission failed');
           this.setState({ submitted: true, submitting: false });
