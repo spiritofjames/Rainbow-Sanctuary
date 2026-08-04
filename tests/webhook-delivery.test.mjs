@@ -93,6 +93,23 @@ test("live payment events fail closed if CRM delivery is absent", async () => {
   );
 });
 
+test("CRM delivery requires HTTPS and a strong distinct handoff secret", async () => {
+  await assert.rejects(
+    () => forwardStripeEvent(checkoutEvent, {
+      CRM_STRIPE_EVENT_URL: "http://crm.example.test/payment-events",
+      CRM_STRIPE_EVENT_SECRET: "shared-test-secret-that-is-long-enough"
+    }),
+    /configuration is invalid/
+  );
+  await assert.rejects(
+    () => forwardStripeEvent(checkoutEvent, {
+      CRM_STRIPE_EVENT_URL: "https://crm.example.test/payment-events",
+      CRM_STRIPE_EVENT_SECRET: "too-short"
+    }),
+    /configuration is invalid/
+  );
+});
+
 test("CRM delivery is signed and uses Stripe event id for idempotency", async () => {
   let sent;
   const fakeFetch = async (url, options) => {
@@ -101,7 +118,7 @@ test("CRM delivery is signed and uses Stripe event id for idempotency", async ()
   };
   const result = await forwardStripeEvent(checkoutEvent, {
     CRM_STRIPE_EVENT_URL: "https://crm.example.test/payment-events",
-    CRM_STRIPE_EVENT_SECRET: "shared-test-secret"
+    CRM_STRIPE_EVENT_SECRET: "shared-test-secret-that-is-long-enough"
   }, fakeFetch, () => 1785376810);
   assert.equal(result.forwarded, true);
   assert.equal(sent.options.headers["x-rainbow-event-id"], "evt_test_123");
@@ -113,7 +130,7 @@ test("CRM delivery is signed and uses Stripe event id for idempotency", async ()
   assert.equal(
     signaturesMatch(
       `1785376810.${sent.options.body}`,
-      "shared-test-secret",
+      "shared-test-secret-that-is-long-enough",
       signature
     ),
     true

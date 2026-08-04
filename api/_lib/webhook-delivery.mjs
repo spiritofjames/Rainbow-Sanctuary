@@ -114,12 +114,21 @@ export async function forwardStripeEvent(
     if (event.livemode) throw new Error("Live CRM payment delivery is not configured.");
     return { forwarded: false, ignored: false };
   }
+  let endpointUrl;
+  try {
+    endpointUrl = new URL(endpoint);
+  } catch {
+    throw new Error("CRM payment delivery configuration is invalid.");
+  }
+  if (endpointUrl.protocol !== "https:" || secret.length < 32) {
+    throw new Error("CRM payment delivery configuration is invalid.");
+  }
 
   if (!CRM_PAYMENT_HANDOFF_EVENTS.has(event.type)) return { forwarded: false, ignored: true };
 
   const body = JSON.stringify(crmPaymentHandoff(event));
   const timestamp = clockSeconds();
-  const response = await fetchImplementation(endpoint, {
+  const response = await fetchImplementation(endpointUrl.toString(), {
     method: "POST",
     headers: {
       "content-type": "application/json",
