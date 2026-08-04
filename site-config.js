@@ -4,9 +4,9 @@
  */
 window.RAINBOW_SANCTUARY_CONFIG = {
   form: {
-    endpoint: "",
+    endpoint: "/api/crm/intake",
     method: "POST",
-    provider: "",
+    provider: "PSN Operations Hub",
     photoRetention: ""
   },
   scheduling: {
