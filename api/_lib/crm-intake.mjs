@@ -32,6 +32,13 @@ export function normalizePublicIntake(input, receivedAt = new Date()) {
   const sourcePage = clean(input.sourcePage);
   const pathway = PATHWAYS.get(input.reason);
   const eventId = clean(input.clientEventId);
+  const submittedAt = Date.parse(input.submittedAt);
+  const receivedTime = receivedAt.getTime();
+  if (
+    !Number.isFinite(submittedAt) ||
+    submittedAt > receivedTime + 300_000 ||
+    receivedTime - submittedAt > 86_400_000
+  ) throw new Error("Invalid enquiry timestamp.");
   const text = [displayName, email, phone, requestMessage, privacyPolicyVersion, sourcePage];
   if (input.privacyAccepted !== true) throw new Error("Privacy consent is required.");
   if (
@@ -47,12 +54,12 @@ export function normalizePublicIntake(input, receivedAt = new Date()) {
   if (text.some((value) => PROHIBITED_PATTERN.test(value) || FULL_CARD_PATTERN.test(value))) {
     throw new Error("Prohibited credential or payment-card data.");
   }
-  const occurredAt = receivedAt.toISOString();
+  const occurredAt = new Date(submittedAt).toISOString();
   return {
     displayName,
     email,
     eventId,
-    followUpAt: new Date(receivedAt.getTime() + 86_400_000).toISOString(),
+    followUpAt: new Date(submittedAt + 86_400_000).toISOString(),
     occurredAt,
     pathway,
     phone,
