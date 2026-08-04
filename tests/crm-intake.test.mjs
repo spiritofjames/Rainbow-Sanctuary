@@ -12,11 +12,12 @@ const submission = {
   privacyPolicyVersion: "13 July 2026",
   reason: "workshop",
   sourcePage: "/apply?reason=workshop",
+  submittedAt: "2026-08-04T10:00:00.000Z",
   whatsapp: "+1 555 123 4567"
 };
 
 test("public enquiry becomes the exact minimal CRM contract", () => {
-  assert.deepEqual(normalizePublicIntake(submission, new Date("2026-08-04T10:00:00.000Z")), {
+  assert.deepEqual(normalizePublicIntake(submission, new Date("2026-08-04T10:02:00.000Z")), {
     displayName: "Generated Visitor",
     email: "visitor@example.test",
     eventId: submission.clientEventId,
@@ -37,6 +38,17 @@ test("private healing and unsafe or unconsented submissions fail closed", () => 
   assert.throws(() => normalizePublicIntake({ ...submission, reason: "private-healing" }), /private healing/i);
   assert.throws(() => normalizePublicIntake({ ...submission, privacyAccepted: false }), /consent/i);
   assert.throws(() => normalizePublicIntake({ ...submission, message: "card=4242 4242 4242 4242" }), /prohibited/i);
+  assert.throws(
+    () => normalizePublicIntake({ ...submission, submittedAt: "2026-08-03T09:59:59.000Z" }, new Date("2026-08-04T10:00:00.000Z")),
+    /timestamp/i
+  );
+});
+
+test("the same browser submission produces an identical CRM payload on retry", () => {
+  assert.deepEqual(
+    normalizePublicIntake(submission, new Date("2026-08-04T10:00:05.000Z")),
+    normalizePublicIntake(submission, new Date("2026-08-04T10:04:59.000Z"))
+  );
 });
 
 test("website intake is signed, HTTPS-only and duplicate-safe by event id", async () => {
@@ -63,6 +75,7 @@ test("the public enquiry form uses the same-origin CRM bridge without uploading 
   assert.match(config, /endpoint: "\/api\/crm\/intake"/);
   assert.match(form, /clientEventId/);
   assert.match(form, /privacyAccepted: true/);
+  assert.match(form, /submittedAt: this\.state\.submittedAt/);
   assert.match(form, /JSON\.stringify/);
   assert.match(form, /Private Healing intake is still protected/);
   assert.doesNotMatch(form, /payload\.append\('headshot'/);

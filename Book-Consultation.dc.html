@@ -201,7 +201,7 @@
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { name: '', email: '', whatsapp: '', reason: '', privateSession: '', currentChallenges: '', intendedOutcome: '', message: '', photoFile: null, photoName: '', submissionId: window.crypto.randomUUID(), submitted: false, submitting: false, configurationPending: false, error: '' };
+    this.state = { name: '', email: '', whatsapp: '', reason: '', privateSession: '', currentChallenges: '', intendedOutcome: '', message: '', photoFile: null, photoName: '', submissionId: window.crypto.randomUUID(), submittedAt: new Date().toISOString(), submitted: false, submitting: false, configurationPending: false, error: '' };
   }
 
   componentDidMount() {
@@ -280,6 +280,7 @@ class Component extends DCLogic {
             privacyPolicyVersion: window.RAINBOW_SANCTUARY_CONFIG?.legal?.effectiveDate || '13 July 2026',
             reason: this.state.reason,
             sourcePage: window.location.pathname + window.location.search,
+            submittedAt: this.state.submittedAt,
             whatsapp: this.state.whatsapp.trim()
           };
           const response = await fetch(formConfig.endpoint, {
