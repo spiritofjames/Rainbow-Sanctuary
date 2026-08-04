@@ -7,6 +7,13 @@ export const SUPPORTED_STRIPE_EVENTS = new Set([
   "charge.refunded"
 ]);
 
+const CRM_PAYMENT_HANDOFF_EVENTS = new Set([
+  "checkout.session.completed",
+  "checkout.session.async_payment_succeeded"
+]);
+const IDENTIFIER_PATTERN = /^[A-Za-z][A-Za-z0-9_-]{2,199}$/;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export function safeStripeEvent(event) {
   const object = event.data?.object || {};
   const isCheckout = event.type.startsWith("checkout.session.");
@@ -39,7 +46,66 @@ export function signaturesMatch(body, secret, candidate) {
   return expected.length === received.length && timingSafeEqual(expected, received);
 }
 
-export async function forwardStripeEvent(event, environment, fetchImplementation = fetch) {
+function checkoutDisplayName(object) {
+  const customName = object.custom_fields?.find(
+    (field) => field.key === "client_display_name"
+  )?.text?.value;
+  return String(customName || object.customer_details?.name || "").trim();
+}
+
+export function crmPaymentHandoff(event) {
+  if (!CRM_PAYMENT_HANDOFF_EVENTS.has(event.type) || event.livemode) {
+    throw new Error("Only Stripe test-mode successful Checkout events can enter the CRM.");
+  }
+
+  const object = event.data?.object || {};
+  const customerEmail = String(object.customer_details?.email || "").trim().toLowerCase();
+  const customerDisplayName = checkoutDisplayName(object);
+  const paymentIntentId = typeof object.payment_intent === "string"
+    ? object.payment_intent
+    : object.payment_intent?.id || "";
+  const offerId = String(object.metadata?.offer_key || "");
+  const sessionId = String(object.metadata?.event_id || "");
+  const identifiers = [event.id, object.id, paymentIntentId, offerId, sessionId];
+
+  if (
+    object.payment_status !== "paid" ||
+    !Number.isInteger(object.amount_total) ||
+    object.amount_total <= 0 ||
+    String(object.currency || "").toLowerCase() !== "usd" ||
+    !EMAIL_PATTERN.test(customerEmail) ||
+    customerDisplayName.length < 1 ||
+    customerDisplayName.length > 160 ||
+    identifiers.some((value) => !IDENTIFIER_PATTERN.test(value)) ||
+    !Number.isInteger(event.created)
+  ) {
+    throw new Error("Stripe Checkout event is incomplete for the CRM handoff.");
+  }
+
+  return {
+    amountMinor: object.amount_total,
+    bookingReference: object.id,
+    currency: "USD",
+    customer: {
+      displayName: customerDisplayName,
+      email: customerEmail
+    },
+    eventId: event.id,
+    occurredAt: new Date(event.created * 1000).toISOString(),
+    offerId,
+    providerPaymentId: paymentIntentId,
+    schemaVersion: "rainbow.payment-handoff.v1",
+    sessionId,
+    stripeEventId: event.id
+  };
+}
+
+export async function forwardStripeEvent(
+  event,
+  environment,
+  fetchImplementation = fetch,
+  clockSeconds = () => Math.floor(Date.now() / 1000)
+) {
   if (!SUPPORTED_STRIPE_EVENTS.has(event.type)) return { forwarded: false, ignored: true };
 
   const endpoint = environment.CRM_STRIPE_EVENT_URL;
@@ -48,14 +114,26 @@ export async function forwardStripeEvent(event, environment, fetchImplementation
     if (event.livemode) throw new Error("Live CRM payment delivery is not configured.");
     return { forwarded: false, ignored: false };
   }
+  let endpointUrl;
+  try {
+    endpointUrl = new URL(endpoint);
+  } catch {
+    throw new Error("CRM payment delivery configuration is invalid.");
+  }
+  if (endpointUrl.protocol !== "https:" || secret.length < 32) {
+    throw new Error("CRM payment delivery configuration is invalid.");
+  }
 
-  const body = JSON.stringify(safeStripeEvent(event));
-  const response = await fetchImplementation(endpoint, {
+  if (!CRM_PAYMENT_HANDOFF_EVENTS.has(event.type)) return { forwarded: false, ignored: true };
+
+  const body = JSON.stringify(crmPaymentHandoff(event));
+  const timestamp = clockSeconds();
+  const response = await fetchImplementation(endpointUrl.toString(), {
     method: "POST",
     headers: {
       "content-type": "application/json",
       "x-rainbow-event-id": event.id,
-      "x-rainbow-signature": signPayload(body, secret)
+      "x-rainbow-payment-signature": `t=${timestamp},v1=${signPayload(`${timestamp}.${body}`, secret)}`
     },
     body
   });
