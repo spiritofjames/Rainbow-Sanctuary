@@ -117,7 +117,12 @@ confirmed, the relevant public-facing badge remains “Pricing coming soon.”
 
 ## 3. Application and enquiry form
 
-Set `form.endpoint` to a secure HTTPS endpoint. The form sends `multipart/form-data`
+The general enquiry form now uses the same-origin `/api/crm/intake` bridge, which
+signs a minimal JSON handoff to the private CRM. The bridge remains disabled until
+its environment gate and staged replay test pass. Private Healing remains blocked
+from this path because confidential image storage and retention are not commissioned.
+
+The former provider contract used `multipart/form-data`
 with `name`, `email`, `reason`, `privateSession`, `currentChallenges`,
 `intendedOutcome`, `message`, `headshot`, `privacyConsent`, `photoConsent`, and
 the policy version. Private Healing applicants must provide a recent JPG, PNG,
@@ -125,8 +130,8 @@ or WebP headshot up to 10 MB. The endpoint must accept browser CORS requests,
 validate every field and file server-side, store uploads privately, and return a
 successful HTTP status.
 
-Recommended launch setup: use a HubSpot multi-step form/CRM record as the intake
-and source of truth. After human review and acceptance, send the applicant a
+The custom PSN Operations Hub is now the intended source of truth for general
+enquiries; HubSpot is no longer the launch dependency. After review and acceptance, send the applicant a
 private or single-use Calendly link. Connect Calendly to a private Google Calendar
 for availability. Do not expose scheduling before acceptance, and do not put
 health narratives, headshots, or client names on a public calendar.

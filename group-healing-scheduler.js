@@ -95,7 +95,14 @@
     return url.href;
   }
 
-  function isBookable(item) { return item.status === "open" && Boolean(checkoutUrl(item)); }
+  function checkoutEndpoint() {
+    const value = String(groupConfig.checkoutEndpoint || "").trim();
+    return value.startsWith("/") ? value : "";
+  }
+
+  function isBookable(item) {
+    return item.status === "open" && Boolean(checkoutEndpoint() || checkoutUrl(item));
+  }
   function sessionStatus(item) {
     if (item.status === "full") return "Full";
     if (isBookable(item)) return "Available";
@@ -162,8 +169,10 @@
       button.setAttribute("aria-pressed", String(button.dataset.groupCalendarSession === chosenDateId));
     });
 
-    if (url && item.status === "open") {
-      link.href = url;
+    if ((checkoutEndpoint() || url) && item.status === "open") {
+      if (url) link.href = url;
+      else link.removeAttribute("href");
+      link.dataset.checkoutEventId = item.id;
       link.classList.remove("is-hidden");
       link.removeAttribute("aria-disabled");
       link.removeAttribute("tabindex");
@@ -171,6 +180,7 @@
       link.textContent = "Continue to secure checkout";
       status.textContent = "Complete the $20 payment securely through Stripe. Confirmation and Zoom access follow registration.";
     } else {
+      delete link.dataset.checkoutEventId;
       link.classList.toggle("is-hidden", item.status === "full");
       link.removeAttribute("href");
       link.setAttribute("aria-disabled", "true");
@@ -181,6 +191,65 @@
         ? "This session is currently full. Choose another highlighted date."
         : "Online registration for this confirmed date is opening soon. Once available, this button will continue directly to secure $20 payment—no consultation required.";
     }
+  }
+
+  async function beginCheckout(event) {
+    const link = event.currentTarget;
+    const eventId = link.dataset.checkoutEventId;
+    const endpoint = checkoutEndpoint();
+    if (!eventId || !endpoint) return;
+
+    event.preventDefault();
+    if (link.getAttribute("aria-busy") === "true") return;
+
+    const status = document.getElementById("group-checkout-status");
+    const originalText = link.textContent;
+    link.setAttribute("aria-busy", "true");
+    link.setAttribute("aria-disabled", "true");
+    link.textContent = "Opening secure checkout…";
+    if (status) status.textContent = "Preparing your Stripe checkout. Please keep this page open.";
+
+    try {
+      const response = await window.fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "accept": "application/json"
+        },
+        body: JSON.stringify({
+          eventId,
+          requestId: window.crypto.randomUUID()
+        })
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.url) {
+        throw new Error(result.error || "Secure checkout is temporarily unavailable.");
+      }
+      const destination = new URL(result.url);
+      if (destination.protocol !== "https:" || destination.hostname !== "checkout.stripe.com") {
+        throw new Error("The checkout destination could not be verified.");
+      }
+      window.location.assign(destination.href);
+    } catch (error) {
+      link.removeAttribute("aria-busy");
+      link.removeAttribute("aria-disabled");
+      link.textContent = originalText;
+      if (status) status.textContent = `${error.message} No payment was taken. Please try again.`;
+    }
+  }
+
+  function showCheckoutReturnStatus() {
+    const outcome = new URLSearchParams(window.location.search).get("checkout");
+    if (!["success", "cancelled"].includes(outcome)) return;
+    const heading = document.querySelector("#choose-session .rs-entry-heading");
+    if (!heading || heading.querySelector(".rs-checkout-return")) return;
+    const message = document.createElement("p");
+    message.className = "rs-timezone-notice rs-checkout-return";
+    message.setAttribute("role", outcome === "success" ? "status" : "alert");
+    message.innerHTML = outcome === "success"
+      ? "<span aria-hidden=\"true\">✓</span><span><strong>Payment received.</strong> Stripe will email your receipt. Registration details will follow separately.</span>"
+      : "<span aria-hidden=\"true\">↩</span><span><strong>Checkout was cancelled.</strong> No payment was taken; your selected session has not been reserved.</span>";
+    heading.appendChild(message);
   }
 
   function renderCalendar() {
@@ -234,6 +303,8 @@
     if (!grid || grid.closest("x-dc")) return false;
     initialized = true;
     addTimezoneNotice();
+    showCheckoutReturnStatus();
+    document.getElementById("group-checkout-link")?.addEventListener("click", beginCheckout);
 
     document.getElementById("group-calendar-prev")?.addEventListener("click", () => {
       visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1);
