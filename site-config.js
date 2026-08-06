@@ -89,7 +89,9 @@ window.RAINBOW_SANCTUARY_CONFIG = {
         summary: "A guided Group Healing session for grounding, rest, and renewal.",
         duration: "Approximately 60 minutes",
         price: "USD 20",
-        status: "scheduled",
+        // Protected staging uses Stripe test mode for generated Stage 1 CRM acceptance.
+        // Do not promote this status to main until live checkout is separately approved.
+        status: "open",
         registrationUrl: "/group-healing#choose-session",
         checkoutUrl: ""
       },
