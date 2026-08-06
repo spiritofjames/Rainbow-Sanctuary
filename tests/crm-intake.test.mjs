@@ -15,9 +15,10 @@ const submission = {
   submittedAt: "2026-08-04T10:00:00.000Z",
   whatsapp: "+1 555 123 4567"
 };
+const receivedAt = new Date("2026-08-04T10:02:00.000Z");
 
 test("public enquiry becomes the exact minimal CRM contract", () => {
-  assert.deepEqual(normalizePublicIntake(submission, new Date("2026-08-04T10:02:00.000Z")), {
+  assert.deepEqual(normalizePublicIntake(submission, receivedAt), {
     area: "workshop",
     displayName: "Generated Visitor",
     email: "visitor@example.test",
@@ -37,7 +38,6 @@ test("public enquiry becomes the exact minimal CRM contract", () => {
 });
 
 test("private healing and unsafe or unconsented submissions fail closed", () => {
-  const receivedAt = new Date("2026-08-04T10:02:00.000Z");
   assert.throws(() => normalizePublicIntake({ ...submission, reason: "private-healing" }, receivedAt), /private healing/i);
   assert.throws(() => normalizePublicIntake({ ...submission, privacyAccepted: false }, receivedAt), /consent/i);
   assert.throws(() => normalizePublicIntake({ ...submission, message: "card=4242 4242 4242 4242" }, receivedAt), /prohibited/i);
