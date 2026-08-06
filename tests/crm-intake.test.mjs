@@ -19,6 +19,7 @@ const receivedAt = new Date("2026-08-04T10:02:00.000Z");
 
 test("public enquiry becomes the exact minimal CRM contract", () => {
   assert.deepEqual(normalizePublicIntake(submission, receivedAt), {
+    area: "workshop",
     displayName: "Generated Visitor",
     email: "visitor@example.test",
     eventId: submission.clientEventId,
@@ -29,8 +30,9 @@ test("public enquiry becomes the exact minimal CRM contract", () => {
     preferredContact: "whatsapp",
     privacyAcceptedAt: "2026-08-04T10:00:00.000Z",
     privacyPolicyVersion: "13 July 2026",
+    program: null,
     requestMessage: "I would like to understand the next workshop.",
-    schemaVersion: "rainbow.website-intake.v1",
+    schemaVersion: "rainbow.website-intake.v2",
     sourcePage: "/apply?reason=workshop"
   });
 });
