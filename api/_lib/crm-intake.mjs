@@ -31,6 +31,12 @@ export function normalizePublicIntake(input, receivedAt = new Date()) {
   const privacyPolicyVersion = clean(input.privacyPolicyVersion);
   const sourcePage = clean(input.sourcePage);
   const pathway = PATHWAYS.get(input.reason);
+  const area = clean(input.reason);
+  let program = clean(input.program) || null;
+  if (!program && sourcePage.startsWith("/")) {
+    const params = new URL(`https://rainbowsanctuary.life${sourcePage}`).searchParams;
+    program = clean(params.get("session") || params.get("event")) || null;
+  }
   const eventId = clean(input.clientEventId);
   const submittedAt = Date.parse(input.submittedAt);
   const receivedTime = receivedAt.getTime();
@@ -48,6 +54,8 @@ export function normalizePublicIntake(input, receivedAt = new Date()) {
     !PHONE_PATTERN.test(phone) ||
     requestMessage.length < 1 || requestMessage.length > 2000 ||
     !pathway ||
+    area.length > 120 ||
+    (program !== null && (program.length > 160 || !/^[A-Za-z0-9][A-Za-z0-9 _-]*$/.test(program))) ||
     !sourcePage.startsWith("/") || sourcePage.length > 300 ||
     privacyPolicyVersion.length < 1 || privacyPolicyVersion.length > 80
   ) throw new Error("Invalid enquiry fields.");
@@ -56,6 +64,7 @@ export function normalizePublicIntake(input, receivedAt = new Date()) {
   }
   const occurredAt = new Date(submittedAt).toISOString();
   return {
+    area,
     displayName,
     email,
     eventId,
@@ -66,8 +75,9 @@ export function normalizePublicIntake(input, receivedAt = new Date()) {
     preferredContact: "whatsapp",
     privacyAcceptedAt: occurredAt,
     privacyPolicyVersion,
+    program,
     requestMessage,
-    schemaVersion: "rainbow.website-intake.v1",
+    schemaVersion: "rainbow.website-intake.v2",
     sourcePage
   };
 }

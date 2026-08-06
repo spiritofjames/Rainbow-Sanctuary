@@ -18,6 +18,7 @@ const submission = {
 
 test("public enquiry becomes the exact minimal CRM contract", () => {
   assert.deepEqual(normalizePublicIntake(submission, new Date("2026-08-04T10:02:00.000Z")), {
+    area: "workshop",
     displayName: "Generated Visitor",
     email: "visitor@example.test",
     eventId: submission.clientEventId,
@@ -28,16 +29,18 @@ test("public enquiry becomes the exact minimal CRM contract", () => {
     preferredContact: "whatsapp",
     privacyAcceptedAt: "2026-08-04T10:00:00.000Z",
     privacyPolicyVersion: "13 July 2026",
+    program: null,
     requestMessage: "I would like to understand the next workshop.",
-    schemaVersion: "rainbow.website-intake.v1",
+    schemaVersion: "rainbow.website-intake.v2",
     sourcePage: "/apply?reason=workshop"
   });
 });
 
 test("private healing and unsafe or unconsented submissions fail closed", () => {
-  assert.throws(() => normalizePublicIntake({ ...submission, reason: "private-healing" }), /private healing/i);
-  assert.throws(() => normalizePublicIntake({ ...submission, privacyAccepted: false }), /consent/i);
-  assert.throws(() => normalizePublicIntake({ ...submission, message: "card=4242 4242 4242 4242" }), /prohibited/i);
+  const receivedAt = new Date("2026-08-04T10:02:00.000Z");
+  assert.throws(() => normalizePublicIntake({ ...submission, reason: "private-healing" }, receivedAt), /private healing/i);
+  assert.throws(() => normalizePublicIntake({ ...submission, privacyAccepted: false }, receivedAt), /consent/i);
+  assert.throws(() => normalizePublicIntake({ ...submission, message: "card=4242 4242 4242 4242" }, receivedAt), /prohibited/i);
   assert.throws(
     () => normalizePublicIntake({ ...submission, submittedAt: "2026-08-03T09:59:59.000Z" }, new Date("2026-08-04T10:00:00.000Z")),
     /timestamp/i
