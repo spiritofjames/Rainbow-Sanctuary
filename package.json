@@ -1,0 +1,16 @@
+{
+  "name": "rainbow-sanctuary-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "email:check": "node scripts/check-email-system.mjs",
+    "email:preview": "node scripts/build-email-preview.mjs",
+    "resend:sync": "node scripts/sync-resend.mjs",
+    "validate": "npm test && npm run email:check && python3 scripts/validate_site.py && node scripts/publish-discovery-layer.mjs && git diff --exit-code"
+  },
+  "dependencies": {
+    "resend": "^6.18.1",
+    "stripe": "22.4.0"
+  }
+}

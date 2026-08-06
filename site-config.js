@@ -4,9 +4,9 @@
  */
 window.RAINBOW_SANCTUARY_CONFIG = {
   form: {
-    endpoint: "",
+    endpoint: "/api/crm/intake",
     method: "POST",
-    provider: "",
+    provider: "PSN Operations Hub",
     photoRetention: ""
   },
   scheduling: {
@@ -70,6 +70,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
       frequency: "Twice monthly",
       duration: "Approximately 60 minutes",
       price: "USD 20",
+      checkoutEndpoint: "/api/stripe/create-checkout-session",
       checkoutUrl: ""
     },
     publicCalendarUrl: "",
