@@ -209,8 +209,10 @@ class Component extends DCLogic {
     const reason = params.get('reason');
     const privateSession = params.get('session');
     const event = params.get('event');
+    const program = params.get('program');
     const eventMessage = event === 'awakening-inner-light-2026' ? 'I would like to register interest in the Awakening Your Inner Light retreat, 1–7 October 2026 in Bocas del Toro.' : '';
-    if (reason || privateSession || eventMessage) this.setState({ reason: reason || (privateSession ? 'private-healing' : ''), privateSession: privateSession || '', message: eventMessage });
+    const programMessage = program ? `I am interested in ${program.replaceAll('-', ' ')}.` : '';
+    if (reason || privateSession || eventMessage || programMessage) this.setState({ reason: reason || (privateSession ? 'private-healing' : ''), privateSession: privateSession || '', message: eventMessage || programMessage });
   }
 
   renderVals() {
@@ -278,7 +280,7 @@ class Component extends DCLogic {
           }
           const sourceParameters = new URLSearchParams();
           const currentParameters = new URLSearchParams(window.location.search);
-          ['reason', 'session', 'event'].forEach((key) => {
+          ['reason', 'session', 'event', 'program'].forEach((key) => {
             const value = currentParameters.get(key);
             if (value) sourceParameters.set(key, value);
           });

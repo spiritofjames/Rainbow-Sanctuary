@@ -35,7 +35,7 @@ export function normalizePublicIntake(input, receivedAt = new Date()) {
   let program = clean(input.program) || null;
   if (!program && sourcePage.startsWith("/")) {
     const params = new URL(`https://rainbowsanctuary.life${sourcePage}`).searchParams;
-    program = clean(params.get("session") || params.get("event")) || null;
+    program = clean(params.get("program") || params.get("session") || params.get("event")) || null;
   }
   const eventId = clean(input.clientEventId);
   const submittedAt = Date.parse(input.submittedAt);
