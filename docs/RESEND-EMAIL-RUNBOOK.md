@@ -62,6 +62,9 @@ and suppression/cancellation behavior is tested.
 - [ ] From, Reply-To, SPF and DKIM pass for every sender family.
 - [ ] Desktop, mobile, dark-mode fallback and plain-text rendering are reviewed.
 - [ ] A test message is sent only to the Preview allowlist.
+- [ ] A completed test-mode Group Healing Checkout sends exactly one booking
+  confirmation to the allowlisted inbox, while Stripe remains the sole sender
+  of the financial receipt.
 - [ ] Replying reaches the correct Google Workspace alias and Gmail label.
 - [ ] Links use HTTPS and contain no secret access data in public URLs.
 - [ ] Duplicate API/webhook delivery does not duplicate participant messages.

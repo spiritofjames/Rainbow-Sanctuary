@@ -40,7 +40,7 @@ template and a disabled event automation contract.
 | Application | `rs.application.accepted` | `rs-application-accepted` | Human reviewer |
 | Application | `rs.application.declined` | `rs-application-declined` | Human reviewer |
 | Scheduling | `rs.scheduling.invited` | `rs-scheduling-invitation` | CRM |
-| Group Healing | `rs.group_healing.booked` | `rs-booking-confirmed` | Verified Stripe webhook + approved event catalog |
+| Group Healing | `rs.group_healing.booked` | `rs-booking-confirmed` | Verified test-mode Stripe webhook + approved event catalog; staging allowlist only |
 | Group Healing | `rs.group_healing.reminder.24h` | `rs-booking-reminder-24h` | CRM scheduler |
 | Group Healing | `rs.group_healing.reminder.1h` | `rs-booking-reminder-1h` | CRM scheduler |
 | Booking | `rs.booking.changed` | `rs-booking-changed` | Human/CRM |
