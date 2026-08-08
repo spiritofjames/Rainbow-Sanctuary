@@ -6,8 +6,9 @@ Protected staging creates Stripe-hosted Checkout Sessions for the USD 22 Group
 Healing total and for the allowlisted standard programme variants in the governed
 server catalogue. The browser sends only an offer/event identifier and disposable
 request ID; the server owns the amount, currency, policy and quantity. Retreats,
-private healing, unpriced programmes and early-bird variants without an approved
-deadline remain closed.
+private healing, certifications, unpriced programmes and early-bird variants
+without an approved deadline remain closed. Their visible price is not Checkout
+authority.
 
 The advertised totals use an internal 4% + USD 0.50 payment-processing allowance
 and are rounded up to a clear whole-USD price (nearest USD 5 for programme prices).
