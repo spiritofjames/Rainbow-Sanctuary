@@ -1,6 +1,7 @@
 import Stripe from "stripe";
 import { readRawBody, sendJson } from "../_lib/http.mjs";
 import { forwardStripeEvent } from "../_lib/webhook-delivery.mjs";
+import { sendBookingConfirmation } from "../_lib/group-healing-booking-email.mjs";
 
 export const config = {
   api: { bodyParser: false }
@@ -25,11 +26,27 @@ export default async function handler(request, response) {
       process.env.STRIPE_WEBHOOK_SECRET
     );
     const delivery = await forwardStripeEvent(event, process.env);
+    let bookingEmail = { sent: false, reason: "not-applicable" };
+    if (["checkout.session.completed", "checkout.session.async_payment_succeeded"].includes(event.type)) {
+      try {
+        bookingEmail = await sendBookingConfirmation(event, process.env);
+      } catch (emailError) {
+        // Payment, CRM state and the Stripe receipt must never depend on email delivery.
+        // Do not log the recipient or other customer information.
+        console.error("stripe_booking_confirmation_error", {
+          eventId: event.id,
+          message: emailError.message
+        });
+        bookingEmail = { sent: false, reason: "failed" };
+      }
+    }
     console.info("stripe_event_received", {
       eventId: event.id,
       type: event.type,
       forwarded: delivery.forwarded,
-      ignored: delivery.ignored
+      ignored: delivery.ignored,
+      bookingEmailSent: bookingEmail.sent,
+      bookingEmailReason: bookingEmail.reason || null
     });
     return sendJson(response, 200, { received: true });
   } catch (error) {
