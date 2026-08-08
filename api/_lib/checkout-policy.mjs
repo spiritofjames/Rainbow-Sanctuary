@@ -76,6 +76,32 @@ export function assertAllowedOrigin(request, environment) {
   throw new Error("Request origin is not allowed.");
 }
 
+export function assertAllowedPaymentInviteOrigin(request, environment) {
+  const forwardedHost = String(request.headers?.["x-forwarded-host"] || "").split(",")[0].trim();
+  const host = (forwardedHost || String(request.headers?.host || "")).toLowerCase();
+  if (!host || /[\/\s]/.test(host)) throw new Error("Request host is invalid.");
+
+  const forwardedProtocol = String(request.headers?.["x-forwarded-proto"] || "")
+    .split(",")[0]
+    .trim()
+    .toLowerCase();
+  const protocol = forwardedProtocol || (host.startsWith("localhost:") ? "http" : "https");
+  if (protocol !== "https" && !(protocol === "http" && host.startsWith("localhost:"))) {
+    throw new Error("Secure payment invitation origin is required.");
+  }
+
+  const origin = new URL(`${protocol}://${host}`).origin;
+  const allowed = commaSeparatedSet(environment.STRIPE_ALLOWED_CHECKOUT_ORIGINS);
+  if (allowed.has(origin)) return origin;
+
+  const isOwnPreview = environment.VERCEL_ENV === "preview" &&
+    protocol === "https" &&
+    host.endsWith(".vercel.app");
+  if (isOwnPreview) return origin;
+
+  throw new Error("Request origin is not allowed.");
+}
+
 function policyMessage(offer) {
   return offer.policy === "group-healing"
     ? "This booking is non-refundable and non-transferable. You may request one reschedule to an available Group Healing session by contacting bookings@rainbowsanctuary.life at least 24 hours before the booked session. Mandatory consumer rights and organizer cancellation are unaffected."

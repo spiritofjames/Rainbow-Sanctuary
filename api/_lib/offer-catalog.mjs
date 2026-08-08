@@ -181,28 +181,3 @@ export function resolveOfferVariant(id) {
   if (!resolved) throw new Error("This payment option is not available.");
   return resolved;
 }
-
-export function publicOfferCatalog(environment = {}) {
-  const allowed = new Set(
-    String(environment.STRIPE_ALLOWED_OFFER_IDS || "")
-      .split(",")
-      .map((value) => value.trim())
-      .filter(Boolean)
-  );
-  return OFFER_CATALOG
-    .filter((entry) => entry.variants.some((entryVariant) => allowed.has(entryVariant.id)))
-    .map((entry) => ({
-      id: entry.id,
-      name: entry.name,
-      pagePath: entry.pagePath,
-      priceKey: entry.priceKey,
-      variants: entry.variants.map((entryVariant) => ({
-        id: entryVariant.id,
-        name: entryVariant.name,
-        amountMinor: entryVariant.amountMinor,
-        currency: entryVariant.currency.toUpperCase(),
-        processingIncluded: true,
-        checkoutAvailable: allowed.has(entryVariant.id)
-      }))
-    }));
-}
