@@ -37,8 +37,15 @@ test("the public catalogue exposes no Stripe identifiers or internal base amount
     catalog.find((entry) => entry.id === "crystal-healing").variants[0].checkoutAvailable,
     true
   );
+  assert.equal(catalog.some((entry) => entry.id === "spiral-i"), false);
+});
+
+test("an application-first offer is absent unless one of its variants is explicitly opened", () => {
+  const publicCatalog = publicOfferCatalog({
+    STRIPE_ALLOWED_OFFER_IDS: "group-healing,crystal-healing"
+  });
   assert.equal(
-    catalog.find((entry) => entry.id === "spiral-i").variants[0].checkoutAvailable,
+    publicCatalog.some((entry) => entry.id === "childrens-potential-coach-certification"),
     false
   );
 });
