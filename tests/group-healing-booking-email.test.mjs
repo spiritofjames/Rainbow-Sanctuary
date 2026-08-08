@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   bookingConfirmationFromStripeEvent,
+  programConfirmationFromStripeEvent,
   sendBookingConfirmation
 } from "../api/_lib/group-healing-booking-email.mjs";
 
@@ -16,7 +17,7 @@ function checkoutEvent(overrides = {}) {
         id: "cs_test_booking_123",
         payment_intent: "pi_test_booking_123",
         payment_status: "paid",
-        amount_total: 2000,
+        amount_total: 2200,
         currency: "usd",
         customer_details: { email: "reviewer@example.com", name: "Reviewer" },
         custom_fields: [{ key: "client_display_name", text: { value: "Reviewer" } }],
@@ -40,6 +41,29 @@ test("verified Group Healing payment builds a minimal, idempotent booking confir
   assert.match(message.variables.LOCATION, /access details follow separately/i);
 });
 
+test("verified programme payment builds a minimal programme confirmation", () => {
+  const event = checkoutEvent({
+    data: {
+      object: {
+        ...checkoutEvent().data.object,
+        amount_total: 94_000,
+        metadata: {
+          offer_key: "crystal-healing",
+          event_id: "program-crystal-healing"
+        }
+      }
+    }
+  });
+  const message = programConfirmationFromStripeEvent(event);
+  assert.equal(message.alias, "rs-program-enrollment-confirmed");
+  assert.equal(message.variables.PROGRAM_NAME, "Crystal Healing");
+  assert.equal(message.variables.START_DATE, "Schedule confirmed separately");
+  assert.equal(
+    message.idempotencyKey,
+    "stripe:evt_test_booking_123:program-enrollment-confirmed"
+  );
+});
+
 test("live, unpaid, or unknown events cannot create a booking confirmation", () => {
   assert.throws(() => bookingConfirmationFromStripeEvent(checkoutEvent({ livemode: true })), /test-mode/);
   assert.throws(() => bookingConfirmationFromStripeEvent(checkoutEvent({
@@ -48,6 +72,9 @@ test("live, unpaid, or unknown events cannot create a booking confirmation", () 
   assert.throws(() => bookingConfirmationFromStripeEvent(checkoutEvent({
     data: { object: { ...checkoutEvent().data.object, metadata: { offer_key: "group-healing", event_id: "unknown-event-2026" } } }
   })), /No approved booking email catalog/);
+  assert.throws(() => bookingConfirmationFromStripeEvent(checkoutEvent({
+    data: { object: { ...checkoutEvent().data.object, amount_total: 2_201 } }
+  })), /does not match/);
 });
 
 test("staging booking confirmation remains restricted to the explicit Resend allowlist", async () => {

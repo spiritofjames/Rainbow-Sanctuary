@@ -1,5 +1,6 @@
 import { crmPaymentHandoff } from "./webhook-delivery.mjs";
 import { sendTransactionalEmail } from "./email-service.mjs";
+import { resolveOfferVariant } from "./offer-catalog.mjs";
 
 const APPROVED_GROUP_HEALING_EVENTS = new Map([
   ["group-healing-2026-08-22", {
@@ -26,8 +27,12 @@ function googleCalendarUrl(event) {
 
 export function bookingConfirmationFromStripeEvent(stripeEvent) {
   const handoff = crmPaymentHandoff(stripeEvent);
+  const offer = resolveOfferVariant("group-healing");
   const event = APPROVED_GROUP_HEALING_EVENTS.get(handoff.sessionId);
   if (!event) throw new Error("No approved booking email catalog entry exists for this event.");
+  if (handoff.offerId !== offer.id || handoff.amountMinor !== offer.amountMinor) {
+    throw new Error("The Group Healing payment does not match the approved catalogue.");
+  }
 
   return {
     alias: "rs-booking-confirmed",
@@ -50,7 +55,49 @@ export function bookingConfirmationFromStripeEvent(stripeEvent) {
   };
 }
 
+export function programConfirmationFromStripeEvent(stripeEvent) {
+  const handoff = crmPaymentHandoff(stripeEvent);
+  const offer = resolveOfferVariant(handoff.offerId);
+  if (
+    offer.policy === "group-healing" ||
+    handoff.sessionId !== offer.sessionId ||
+    handoff.amountMinor !== offer.amountMinor
+  ) {
+    throw new Error("No approved programme email catalog entry exists for this purchase.");
+  }
+
+  return {
+    alias: "rs-program-enrollment-confirmed",
+    to: handoff.customer.email,
+    variables: {
+      NAME: handoff.customer.displayName,
+      PROGRAM_NAME: offer.name,
+      START_DATE: "Schedule confirmed separately",
+      FORMAT: "As confirmed with the Rainbow Sanctuary team",
+      TIMEZONE: "Included with your programme schedule",
+      PROGRAM_URL: `https://rainbowsanctuary.life${offer.offer.pagePath}`
+    },
+    idempotencyKey: `stripe:${handoff.stripeEventId}:program-enrollment-confirmed`,
+    tags: [
+      { name: "offer", value: handoff.offerId },
+      { name: "session", value: handoff.sessionId }
+    ]
+  };
+}
+
+export function purchaseConfirmationFromStripeEvent(stripeEvent) {
+  const offerKey = String(stripeEvent.data?.object?.metadata?.offer_key || "");
+  return offerKey === "group-healing"
+    ? bookingConfirmationFromStripeEvent(stripeEvent)
+    : programConfirmationFromStripeEvent(stripeEvent);
+}
+
 export async function sendBookingConfirmation(stripeEvent, environment, resendClient) {
   const message = bookingConfirmationFromStripeEvent(stripeEvent);
+  return sendTransactionalEmail(message, environment, resendClient);
+}
+
+export async function sendPurchaseConfirmation(stripeEvent, environment, resendClient) {
+  const message = purchaseConfirmationFromStripeEvent(stripeEvent);
   return sendTransactionalEmail(message, environment, resendClient);
 }

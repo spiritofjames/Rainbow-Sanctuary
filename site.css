@@ -1661,3 +1661,118 @@ footer::after {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* Governed direct-payment controls */
+.rs-button--purchase {
+  appearance: none;
+  background: #4b285f;
+  border: 1px solid #4b285f;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+}
+
+.rs-button--purchase:hover:not(:disabled) {
+  background: #351c44;
+  border-color: #351c44;
+}
+
+.rs-button--purchase:disabled,
+.rs-purchase-dialog__option:disabled {
+  cursor: not-allowed;
+  opacity: .52;
+}
+
+.rs-commerce-status,
+.rs-commerce-note,
+.rs-commerce-return {
+  color: #625b55;
+  font-size: 13px;
+  line-height: 1.55;
+  margin: 12px 0 0;
+  max-width: 760px;
+}
+
+.rs-commerce-return {
+  background: #f0ebe5;
+  border-left: 3px solid #4b285f;
+  border-radius: 0 12px 12px 0;
+  color: #2b2521;
+  padding: 12px 16px;
+}
+
+.rs-purchase-dialog {
+  background: transparent;
+  border: 0;
+  color: #171310;
+  max-height: min(760px, calc(100vh - 32px));
+  max-width: 680px;
+  padding: 0;
+  width: calc(100% - 32px);
+}
+
+.rs-purchase-dialog::backdrop {
+  background: rgba(20, 14, 24, .62);
+  backdrop-filter: blur(4px);
+}
+
+.rs-purchase-dialog__panel {
+  background: #faf8f5;
+  border: 1px solid rgba(75, 40, 95, .16);
+  border-radius: 24px;
+  box-shadow: 0 28px 80px rgba(24, 16, 30, .28);
+  padding: clamp(24px, 5vw, 42px);
+}
+
+.rs-purchase-dialog__head {
+  align-items: flex-start;
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+}
+
+.rs-purchase-dialog__head h2 {
+  font-family: "EB Garamond", serif;
+  font-size: clamp(32px, 5vw, 46px);
+  font-weight: 300;
+  line-height: 1.05;
+  margin: 8px 0 16px;
+}
+
+.rs-purchase-dialog__close {
+  appearance: none;
+  background: transparent;
+  border: 1px solid #c9c0ba;
+  border-radius: 999px;
+  color: #332c28;
+  cursor: pointer;
+  flex: 0 0 auto;
+  font-size: 26px;
+  height: 42px;
+  line-height: 1;
+  width: 42px;
+}
+
+.rs-purchase-dialog__options {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.rs-purchase-dialog__option {
+  appearance: none;
+  background: #fff;
+  border: 1px solid #c9c0ba;
+  border-radius: 14px;
+  color: #211b18;
+  cursor: pointer;
+  font: 500 15px/1.4 "Inter", sans-serif;
+  padding: 16px 18px;
+  text-align: left;
+  width: 100%;
+}
+
+.rs-purchase-dialog__option:hover:not(:disabled) {
+  border-color: #4b285f;
+  box-shadow: 0 5px 20px rgba(75, 40, 95, .1);
+}
