@@ -78,7 +78,12 @@ test("the public enquiry form uses the same-origin CRM bridge without uploading 
   assert.match(config, /endpoint: "\/api\/crm\/intake"/);
   assert.match(form, /clientEventId/);
   assert.match(form, /privacyAccepted: true/);
-  assert.match(form, /submittedAt: this\.state\.submittedAt/);
+  assert.match(form, /submissionId: ''/);
+  assert.match(form, /submittedAt: ''/);
+  assert.match(form, /this\.state\.submissionId \|\| window\.crypto\.randomUUID\(\)/);
+  assert.match(form, /this\.state\.submittedAt \|\| new Date\(\)\.toISOString\(\)/);
+  assert.match(form, /\['reason', 'session', 'event'\]/);
+  assert.doesNotMatch(form, /window\.location\.pathname \+ window\.location\.search/);
   assert.match(form, /JSON\.stringify/);
   assert.match(form, /Private Healing intake is still protected/);
   assert.doesNotMatch(form, /payload\.append\('headshot'/);
