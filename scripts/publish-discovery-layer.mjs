@@ -223,7 +223,7 @@ function schemaFor(file, title, description, canonical, image) {
       organizer: { "@id": `${origin}/#organization` },
       offers: {
         "@type": "Offer",
-        price: "20",
+        price: "22",
         priceCurrency: "USD",
         availability: "https://schema.org/PreOrder",
         url: `${canonical}#choose-session`
@@ -424,7 +424,7 @@ The site speaks about spiritual and energetic practices as part of Rainbow Sanct
 
 ### A gentle first experience
 
-Online Group Healing is the lowest-commitment entry point. Sessions are held on Zoom, are open to adults without prior experience, and may be attended as standalone experiences. The published fee is USD 20 per session. See ${origin}/group-healing.
+Online Group Healing is the lowest-commitment entry point. Sessions are held on Zoom, are open to adults without prior experience, and may be attended as standalone experiences. The published total is USD 22 per session with payment processing included. See ${origin}/group-healing.
 
 ### Progressive personal development
 

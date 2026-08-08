@@ -67,27 +67,34 @@ For any later replacement documentary file:
 
 ## 2. Pricing
 
-Online Group Healing is configured at **$20 USD per session** as an accessible
-pilot price. Keep this price for the first 6–8 sessions, then review attendance,
-repeat participation, refunds/no-shows, and movement into Spiral I before changing
-it. Do not silently convert the wellbeing session into a free lead magnet.
+Online Group Healing is configured at **USD 22 total per session** as an accessible
+pilot price. The total includes Rainbow Sanctuary's internal payment-processing
+allowance; it is not a separate card surcharge. Keep this price for the first 6–8
+sessions, then review attendance, no-shows, rescheduling and movement into Spiral I
+before changing it. Do not silently convert the session into a free lead magnet.
 
 The course breakdown supplied on 22 July 2026 confirms and the website now shows:
 
 | Offer | Published price |
 |---|---|
-| Spiral I · 4 days | USD 1,399 · Early Bird USD 999 |
-| Spiral II · 4 days | USD 1,599 · Early Bird USD 1,299 |
-| Spiral III · 4 days | USD 1,599 · Early Bird USD 1,399 |
-| Spiral IV · 4 days | USD 1,599 · Early Bird USD 1,399 |
-| ReGeneration Level I · 5 days | USD 2,999 |
-| ReGeneration Level II · 4 days | USD 2,399 |
-| Earth Healer Level I · 3 days | USD 500 |
-| Earth Healer Level II · 3 days | USD 699 |
-| Crystal Healing · 4 days | USD 899 |
-| Intuitive Perception · 4 days | USD 899 |
-| Awaken Infinite Potential Adult Program · 5 days | USD 1,599 |
-| Children’s Potential Mentor/Coach Certification package | USD 7,399 |
+| Spiral I · 4 days | USD 1,460 · Early Bird USD 1,045 |
+| Spiral II · 4 days | USD 1,670 · Early Bird USD 1,355 |
+| Spiral III · 4 days | USD 1,670 · Early Bird USD 1,460 |
+| Spiral IV · 4 days | USD 1,670 · Early Bird USD 1,460 |
+| ReGeneration Level I · 5 days | USD 3,125 |
+| ReGeneration Level II · 4 days | USD 2,500 |
+| Earth Healer Level I · 3 days | USD 525 |
+| Earth Healer Level II · 3 days | USD 730 |
+| Crystal Healing · 4 days | USD 940 |
+| Intuitive Perception · 4 days | USD 940 |
+| Awaken Infinite Potential Adult Program · 5 days | USD 1,670 |
+| Children’s Potential Mentor/Coach Certification package | USD 7,710 |
+
+These totals use an internal planning allowance of 4% plus USD 0.50 and are rounded
+upward to a clear public amount. The allowance is absorbed into one advertised
+total rather than added at checkout. It is not a statement of Stripe's exact fee.
+Applicable tax must not be described as included until the merchant entity, Stripe
+account country, registrations and tax treatment are approved and configured.
 
 The Children’s package source describes one adult plus one child, Spiral I and II,
 Children Levels I and II, lifetime Spiral review, and children’s review until age
@@ -111,9 +118,11 @@ before payment opens.
   community practice.
 
 The source provides early-bird amounts for Spiral I–IV but no deadlines or rules.
-Taxes, deposits, instalments, refund/cancellation terms, inclusions, and cohort
-dates also remain unconfirmed across the catalog. Until a standalone value is
-confirmed, the relevant public-facing badge remains “Pricing coming soon.”
+The recalculated early-bird totals may be displayed, but early-bird Checkout stays
+closed until eligibility and deadlines are approved. Taxes, deposits, instalments,
+programme-specific refund/cancellation terms, inclusions, and cohort dates remain
+unconfirmed across the wider catalogue. Until a standalone value is confirmed,
+the relevant public-facing badge remains “Pricing coming soon.”
 
 ## 3. Application and enquiry form
 
@@ -168,7 +177,7 @@ cancellation/refund terms, and integration support. The current page deliberatel
 does not present the retreat as medical or mental-health treatment.
 
 Group Healing now has a self-serve booking path on its own page: visitors choose a
-confirmed date in the first-party calendar, continue directly to a USD 20 Stripe
+confirmed date in the first-party calendar, continue directly to a USD 22 Stripe
 checkout, and then receive confirmation and Zoom access. It deliberately has no
 consultation, enquiry, or wait-list fallback. Each `group` event needs `time`,
 `timezone`, `price`, `status: "open"`, and a secure `checkoutUrl`; a shared Stripe
@@ -177,8 +186,14 @@ receive the event ID as `client_reference_id` so downstream automations can matc
 the payment to the selected session.
 
 Before opening Group Healing registration, confirm the first two dates and themes,
-time and timezone, facilitator, attendance cap, accessibility needs, replay policy,
-and cancellation/transfer/no-show terms. Create the Stripe Payment Link and connect
+time and timezone, facilitator, attendance cap, accessibility needs and replay
+policy. A participant cancellation is non-refundable and non-transferable. One
+reschedule to another available Group Healing session is permitted when requested
+through bookings@rainbowsanctuary.life at least 24 hours before the booked session;
+late cancellation, a second change and a no-show are not eligible. If Rainbow
+Sanctuary cancels and cannot offer a suitable replacement, the participant may
+choose a refund. Mandatory consumer rights and lawful card-dispute rights remain
+unaffected. Connect the Stripe Checkout flow
 its completed-payment event to the confirmation email, calendar record, and correct
 Zoom access through Stripe automation, Zapier/Make, HubSpot, or the future CRM. The
 static website does not send Zoom details by itself. Add the confirmed dates as

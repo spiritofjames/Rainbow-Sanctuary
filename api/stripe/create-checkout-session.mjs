@@ -16,15 +16,20 @@ export default async function handler(request, response) {
   try {
     assertCheckoutConfiguration(process.env);
     const origin = assertAllowedOrigin(request, process.env);
-    const { eventId, requestId } = validateCheckoutRequest(parseJsonBody(request), process.env);
+    const { eventId, offer, offerId, requestId } = validateCheckoutRequest(
+      parseJsonBody(request),
+      process.env
+    );
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const session = await stripe.checkout.sessions.create(
       checkoutSessionParameters({
         eventId,
+        offer,
         origin,
-        priceId: process.env.STRIPE_GROUP_HEALING_PRICE_ID
+        taxEnabled: process.env.STRIPE_AUTOMATIC_TAX_ENABLED === "true" &&
+          process.env.STRIPE_TAX_DISPLAY_APPROVED === "true"
       }),
-      { idempotencyKey: `group-healing:${eventId}:${requestId}` }
+      { idempotencyKey: `rainbow:${offerId}:${eventId}:${requestId}` }
     );
 
     if (!session.url) throw new Error("Stripe did not return a Checkout URL.");

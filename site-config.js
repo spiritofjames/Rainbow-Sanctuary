@@ -18,6 +18,11 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     phone: "",
     instagram: ""
   },
+  commerce: {
+    catalogEndpoint: "/api/stripe/catalog",
+    checkoutEndpoint: "/api/stripe/create-checkout-session",
+    processingLabel: "Payment processing included"
+  },
   legal: {
     entityName: "",
     registeredAddress: "",
@@ -35,30 +40,30 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     paymentProvider: ""
   },
   pricing: {
-    "group-healing": "USD 20",
-    "spiral-i": "USD 1,399 · Early Bird USD 999",
-    "spiral-ii": "USD 1,599 · Early Bird USD 1,299",
-    "spiral-iii": "USD 1,599 · Early Bird USD 1,399",
-    "spiral-iv": "USD 1,599 · Early Bird USD 1,399",
-    "regeneration": "Level I USD 2,999 · Level II USD 2,399",
-    "earth-healer-training": "Level I USD 500 · Level II USD 699",
+    "group-healing": "USD 22 total · payment processing included",
+    "spiral-i": "USD 1,460 · Early Bird USD 1,045 · processing included",
+    "spiral-ii": "USD 1,670 · Early Bird USD 1,355 · processing included",
+    "spiral-iii": "USD 1,670 · Early Bird USD 1,460 · processing included",
+    "spiral-iv": "USD 1,670 · Early Bird USD 1,460 · processing included",
+    "regeneration": "Level I USD 3,125 · Level II USD 2,500 · processing included",
+    "earth-healer-training": "Level I USD 525 · Level II USD 730 · processing included",
     "rainbow-light-codes": "",
-    "crystal-healing": "USD 899",
-    "intuitive-perception-training": "USD 899",
+    "crystal-healing": "USD 940 total · payment processing included",
+    "intuitive-perception-training": "USD 940 total · payment processing included",
     "holographic-healing": "",
-    "adult-potential-development": "USD 1,599",
+    "adult-potential-development": "USD 1,670 total · payment processing included",
     "unlock-the-potential": "",
-    "childrens-potential-coach-certification": "USD 7,399 package",
+    "childrens-potential-coach-certification": "USD 7,710 package · payment processing included",
     "one-to-one-sessions": "",
     "personal-karma-reconciliation": "",
     "family-information-field-restoration": "",
     "dna-activation": ""
   },
   earlyBirdPricing: {
-    "spiral-i": { standard: "USD 1,399", earlyBird: "USD 999", deadline: "" },
-    "spiral-ii": { standard: "USD 1,599", earlyBird: "USD 1,299", deadline: "" },
-    "spiral-iii": { standard: "USD 1,599", earlyBird: "USD 1,399", deadline: "" },
-    "spiral-iv": { standard: "USD 1,599", earlyBird: "USD 1,399", deadline: "" }
+    "spiral-i": { standard: "USD 1,460", earlyBird: "USD 1,045", deadline: "" },
+    "spiral-ii": { standard: "USD 1,670", earlyBird: "USD 1,355", deadline: "" },
+    "spiral-iii": { standard: "USD 1,670", earlyBird: "USD 1,460", deadline: "" },
+    "spiral-iv": { standard: "USD 1,670", earlyBird: "USD 1,460", deadline: "" }
   },
   events: {
     feedUrl: "",
@@ -69,7 +74,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     groupHealing: {
       frequency: "Twice monthly",
       duration: "Approximately 60 minutes",
-      price: "USD 20",
+      price: "USD 22",
       checkoutEndpoint: "/api/stripe/create-checkout-session",
       checkoutUrl: ""
     },
@@ -88,7 +93,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
         venue: "Zoom",
         summary: "A guided Group Healing session for grounding, rest, and renewal.",
         duration: "Approximately 60 minutes",
-        price: "USD 20",
+        price: "USD 22",
         // Protected staging uses Stripe test mode for generated Stage 1 CRM acceptance.
         // Do not promote this status to main until live checkout is separately approved.
         status: "open",
@@ -122,7 +127,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
         location: "Online",
         venue: "Zoom",
         summary: "A guided Group Healing session for grounding, rest, and renewal.",
-        price: "USD 20",
+        price: "USD 22",
         status: "open",
         checkoutUrl: "https://buy.stripe.com/REPLACE_WITH_PAYMENT_LINK"
       },
@@ -179,6 +184,14 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     script.defer = true;
     document.head.appendChild(script);
   }
+})();
+
+(function loadOfferCheckout() {
+  if (document.querySelector('script[src*="offer-checkout.js"]')) return;
+  const script = document.createElement("script");
+  script.src = "./offer-checkout.js?v=20260808-commerce1";
+  script.defer = true;
+  document.head.appendChild(script);
 })();
 
 (function applyConfirmedInputs() {

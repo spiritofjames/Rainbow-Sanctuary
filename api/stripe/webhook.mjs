@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 import { readRawBody, sendJson } from "../_lib/http.mjs";
 import { forwardStripeEvent } from "../_lib/webhook-delivery.mjs";
-import { sendBookingConfirmation } from "../_lib/group-healing-booking-email.mjs";
+import { sendPurchaseConfirmation } from "../_lib/group-healing-booking-email.mjs";
 
 export const config = {
   api: { bodyParser: false }
@@ -29,7 +29,7 @@ export default async function handler(request, response) {
     let bookingEmail = { sent: false, reason: "not-applicable" };
     if (["checkout.session.completed", "checkout.session.async_payment_succeeded"].includes(event.type)) {
       try {
-        bookingEmail = await sendBookingConfirmation(event, process.env);
+        bookingEmail = await sendPurchaseConfirmation(event, process.env);
       } catch (emailError) {
         // Payment, CRM state and the Stripe receipt must never depend on email delivery.
         // Do not log the recipient or other customer information.
