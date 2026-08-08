@@ -2,13 +2,16 @@
 
 ## Current scope
 
-Protected staging creates Stripe-hosted Checkout Sessions for the USD 22 Group
-Healing total and for the allowlisted standard programme variants in the governed
-server catalogue. The browser sends only an offer/event identifier and disposable
-request ID; the server owns the amount, currency, policy and quantity. Retreats,
-private healing, certifications, unpriced programmes and early-bird variants
-without an approved deadline remain closed. Their visible price is not Checkout
-authority.
+The public website creates Stripe-hosted Checkout only for the confirmed USD 22
+Group Healing session. Programme pages remain enquiry-led and contain no public
+purchase button or programme Checkout entry point.
+
+After a human conversation, Ethel may send the participant the exact persistent,
+signed staff payment link from the internal catalogue. It opens a fresh
+Stripe-hosted Checkout for a fixed server-side offer. Standard and Early Bird are
+separate links, so Ethel never edits an amount or uses a generic discount field.
+The catalogue is internal and must not be published on the website. Retreats,
+private healing and unpriced work remain outside it.
 
 The advertised totals use an internal 4% + USD 0.50 payment-processing allowance
 and are rounded up to a clear whole-USD price (nearest USD 5 for programme prices).
@@ -20,6 +23,12 @@ It is not a statement of Stripe's exact fee for every card or market.
 - Preview and staging must use a Stripe sandbox secret key.
 - An event must be both public with `status: "open"` and included in
   `STRIPE_ALLOWED_GROUP_EVENT_IDS`.
+- `STRIPE_ALLOWED_OFFER_IDS` contains only `group-healing`; guessed programme
+  requests to the public website endpoint fail closed.
+- Staff payment invitations resolve to fixed server-side prices and governed
+  offer/session metadata before opening Stripe-hosted Checkout.
+  Ethel sends one only after confirming the person and option. Promotion codes,
+  customer-adjustable amounts and quantities stay disabled.
 - Production also requires a live key and `STRIPE_LIVE_CHECKOUT_APPROVED=true`.
 - Production additionally requires `STRIPE_AUTOMATIC_TAX_ENABLED=true` and
   `STRIPE_TAX_DISPLAY_APPROVED=true`. Do not set either until the operating
@@ -37,8 +46,25 @@ Use `.env.example` as the inventory. Store values in Vercel environment settings
 never put secrets into source code, GitHub, screenshots, chat, or client-side
 JavaScript.
 
-For staging, configure the variables for Preview only and include the exact staging
-origin. Keep production variables unset until the production gate is approved.
+For staging, configure the variables for the protected `staging` environment and
+include the exact staging origin. Keep production variables unset until the
+production gate is approved.
+
+Generate the **test-mode** internal catalogue with the same invitation signing
+secret stored in the protected staging environment. The generator does not need
+or download the Stripe secret key:
+
+```sh
+PAYMENT_INVITE_SIGNING_SECRET="<protected staging value>" \
+PAYMENT_INVITE_BASE_URL="https://staging.rainbowsanctuary.life" \
+npm run stripe:payment-links -- \
+  --output ../../output/ETHEL-PAYMENT-LINK-CATALOG.md
+```
+
+The script signs governed offer identifiers; it never exposes or embeds Stripe
+credentials. A live base URL additionally requires
+`STRIPE_PAYMENT_LINKS_LIVE_APPROVED=true`; do not set that gate until every
+production condition below is accepted.
 
 ## Sandbox acceptance
 
@@ -53,10 +79,10 @@ origin. Keep production variables unset until the production gate is approved.
    refund, duplicate delivery, and an event not on the allowlist.
 6. Restore any synthetic event data before production promotion.
 
-For each programme variant, repeat the same process and verify the exact
-server-catalogue amount, programme/session identifiers, CRM association and
-single programme-confirmation email. Early-bird variants remain unavailable until
-the deadline and eligibility rule are approved.
+For each staff-sent programme payment link, verify the exact catalogue amount,
+programme/session identifiers, CRM association and single programme-confirmation
+email. The Early Bird link may exist in the private catalogue, but Ethel must not
+send it until its eligibility and deadline have been confirmed for that person.
 
 ## Group Healing terms
 
@@ -72,9 +98,9 @@ the deadline and eligibility rule are approved.
 
 ## Production gate
 
-Do not enable live checkout until the operating legal entity and contact routes are
-published, the privacy and terms pages name Stripe, the event capacity and Zoom
-fulfillment owner are confirmed, the CRM payment event gateway has passed sandbox
-tests, and the tax gates above are approved. Each programme also requires its own
-schedule/fulfillment and cancellation/refund terms before its production offer ID
-is allowlisted.
+Do not enable live Group Healing Checkout or issue live staff payment links until
+the operating legal entity and contact routes are published, the privacy and terms
+pages name Stripe, the event capacity and Zoom fulfilment owner are confirmed, the
+CRM payment event gateway has passed sandbox tests, and the tax gates above are
+approved. Each programme also requires its own schedule/fulfilment and
+cancellation/refund terms before Ethel receives its live link.

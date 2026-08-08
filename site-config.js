@@ -18,11 +18,6 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     phone: "",
     instagram: ""
   },
-  commerce: {
-    catalogEndpoint: "/api/stripe/catalog",
-    checkoutEndpoint: "/api/stripe/create-checkout-session",
-    processingLabel: "Payment processing included"
-  },
   legal: {
     entityName: "",
     registeredAddress: "",
@@ -186,12 +181,29 @@ window.RAINBOW_SANCTUARY_CONFIG = {
   }
 })();
 
-(function loadOfferCheckout() {
-  if (document.querySelector('script[src*="offer-checkout.js"]')) return;
-  const script = document.createElement("script");
-  script.src = "./offer-checkout.js?v=20260808-commerce1";
-  script.defer = true;
-  document.head.appendChild(script);
+(function showPaymentReturnStatus() {
+  const parameters = new URLSearchParams(window.location.search);
+  const checkoutStatus = parameters.get("checkout");
+  if (checkoutStatus !== "success" && checkoutStatus !== "cancelled") return;
+
+  const render = () => {
+    if (document.querySelector(".rs-commerce-return")) return;
+    const notice = document.createElement("aside");
+    notice.className = `rs-commerce-return rs-commerce-return--${checkoutStatus}`;
+    notice.setAttribute("role", checkoutStatus === "success" ? "status" : "alert");
+    notice.innerHTML = checkoutStatus === "success"
+      ? "<strong>Thank you.</strong> Stripe is confirming your payment. We will email the next steps after the payment has been verified."
+      : "<strong>Payment not completed.</strong> No purchase was confirmed. You may use the original secure payment link when you are ready, or contact payments@rainbowsanctuary.life.";
+    const main = document.querySelector("main") || document.body;
+    main.prepend(notice);
+    notice.scrollIntoView({ block: "start" });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", render, { once: true });
+  } else {
+    render();
+  }
 })();
 
 (function applyConfirmedInputs() {

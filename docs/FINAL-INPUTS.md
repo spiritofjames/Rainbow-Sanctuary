@@ -118,11 +118,12 @@ before payment opens.
   community practice.
 
 The source provides early-bird amounts for Spiral I–IV but no deadlines or rules.
-The recalculated early-bird totals may be displayed, but early-bird Checkout stays
-closed until eligibility and deadlines are approved. Taxes, deposits, instalments,
-programme-specific refund/cancellation terms, inclusions, and cohort dates remain
-unconfirmed across the wider catalogue. Until a standalone value is confirmed,
-the relevant public-facing badge remains “Pricing coming soon.”
+The recalculated Early Bird totals may be displayed and may exist as private test
+signed staff payment links, but Ethel must not send one until eligibility and deadlines are
+approved for that participant. Taxes, deposits, instalments, programme-specific
+refund/cancellation terms, inclusions, and cohort dates remain unconfirmed across
+the wider catalogue. Until a standalone value is confirmed, the relevant
+public-facing badge remains “Pricing coming soon.”
 
 ## 3. Application and enquiry form
 
