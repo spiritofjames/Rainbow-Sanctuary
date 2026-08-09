@@ -29,6 +29,17 @@ function safeUpstreamStatus(error) {
   return match ? Number(match[1]) : null;
 }
 
+function safeValidationDetail(error) {
+  const message = String(error?.message || "").toLowerCase();
+  if (message.includes("timestamp")) return "timestamp";
+  if (message.includes("fields")) return "fields";
+  if (message.includes("consent")) return "consent";
+  if (message.includes("prohibited")) return "prohibited-data";
+  if (message.includes("headshot")) return "headshot";
+  if (message.includes("private healing")) return "private-healing-gate";
+  return null;
+}
+
 async function parseIntakeRequest(request) {
   const contentType = String(request.headers?.["content-type"] || "").toLowerCase();
   if (contentType.startsWith("multipart/form-data;")) return parseMultipartIntake(request);
@@ -68,6 +79,7 @@ export default async function handler(request, response) {
     console.error("crm_intake_error", {
       category: expected ? "rejected" : "upstream-unavailable",
       reason: safeFailureReason(error),
+      validation: safeValidationDetail(error),
       upstreamStatus: safeUpstreamStatus(error)
     });
     return sendJson(response, expected ? 400 : 502, {
