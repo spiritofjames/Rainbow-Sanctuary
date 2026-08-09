@@ -7,7 +7,8 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     endpoint: "/api/crm/intake",
     method: "POST",
     provider: "PSN Operations Hub",
-    photoRetention: ""
+    photoProvider: "HubSpot",
+    photoRetention: "30 days"
   },
   scheduling: {
     provider: "",
@@ -23,11 +24,12 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     registeredAddress: "",
     jurisdiction: "",
     governingLaw: "",
-    privacyEmail: "",
+    privacyEmail: "privacy@rainbowsanctuary.life",
     legalEmail: "",
     accessibilityEmail: "",
     effectiveDate: "13 July 2026",
     lastReviewed: "13 July 2026",
+    privacyPolicyVersion: "9 August 2026",
     enquiryRetention: "",
     accessibilityResponseTime: "five business days",
     hostingProvider: "",

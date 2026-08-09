@@ -21,6 +21,7 @@ process, and CRM handoff. Email must never carry that material.
 | Help and technical problems | `support@rainbowsanctuary.life` | RS — Support |
 | Privacy requests | `privacy@rainbowsanctuary.life` | RS — Privacy |
 | Financial receipts, failures and refunds | Stripe, with `payments@rainbowsanctuary.life` as the business support contact | RS — Payments |
+| Internal enquiry/payment operations alerts | `hello@` or `bookings@`, addressed only to Ethel | Ethel's official Workspace inbox |
 
 Stripe remains the authority for financial receipts and refund confirmations.
 Resend must not generate a second receipt that could disagree with Stripe.
@@ -73,6 +74,19 @@ owner must first pass acceptance.
    information, payment-card data, identity documents, or headshots are allowed.
 8. A direct programme purchase sends one programme enrollment confirmation after
    the signed paid event. Stripe remains the only financial-receipt sender.
+9. Accepted enquiries and verified payments send one minimal Ethel operations
+   alert using the source event ID as the Resend idempotency key. The alert links
+   to the owned HubSpot contact and excludes enquiry text, attachments, email
+   addresses and payment-method data.
+
+## Interim HubSpot visibility
+
+- Enquiries and payments use contact upsert by email and remain assigned to
+  Ethel. The former public-form submission is not repeated, which removes the
+  duplicate HubSpot form timeline entry on browser retries.
+- A verified purchase updates the contact with the approved programme, payment
+  reference and Customer lifecycle stage. Stripe and the private Rainbow CRM
+  remain the financial authority; HubSpot is an operational view only.
 
 ## CRM handoff contract
 
