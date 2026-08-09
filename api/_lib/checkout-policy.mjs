@@ -67,11 +67,8 @@ export function assertAllowedOrigin(request, environment) {
   if (allowed.has(origin.origin)) return origin.origin;
 
   const requestHost = String(request.headers?.host || "").toLowerCase();
-  const isOwnPreview = environment.VERCEL_ENV === "preview" &&
-    origin.protocol === "https:" &&
-    origin.hostname.toLowerCase() === requestHost &&
-    origin.hostname.endsWith(".vercel.app");
-  if (isOwnPreview) return origin.origin;
+  const isSameOrigin = origin.protocol === "https:" && origin.host.toLowerCase() === requestHost;
+  if (isSameOrigin) return origin.origin;
 
   throw new Error("Request origin is not allowed.");
 }

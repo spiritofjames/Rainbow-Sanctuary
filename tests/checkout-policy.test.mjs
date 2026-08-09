@@ -134,7 +134,7 @@ test("programme checkout uses only the allowlisted server catalogue variant", ()
   }), /Invalid programme/);
 });
 
-test("origins must be explicitly allowed or match the current Vercel preview host", () => {
+test("origins must be explicitly allowed or match the current HTTPS request host", () => {
   const environment = {
     STRIPE_ALLOWED_CHECKOUT_ORIGINS: "https://staging.rainbowsanctuary.life",
     VERCEL_ENV: "preview"
@@ -145,6 +145,9 @@ test("origins must be explicitly allowed or match the current Vercel preview hos
   assert.equal(assertAllowedOrigin({
     headers: { origin: "https://rainbow-pr-12.vercel.app", host: "rainbow-pr-12.vercel.app" }
   }, environment), "https://rainbow-pr-12.vercel.app");
+  assert.equal(assertAllowedOrigin({
+    headers: { origin: "https://rainbowsanctuary.life", host: "rainbowsanctuary.life" }
+  }, { VERCEL_ENV: "production" }), "https://rainbowsanctuary.life");
   assert.throws(() => assertAllowedOrigin({
     headers: { origin: "https://attacker.example", host: "rainbow-pr-12.vercel.app" }
   }, environment), /not allowed/);
