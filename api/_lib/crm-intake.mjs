@@ -1,4 +1,5 @@
 import { createHmac } from "node:crypto";
+import { getVercelOidcToken } from "@vercel/oidc";
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -12,6 +13,7 @@ const PATHWAYS = new Map([
   ["family", "family"],
   ["group-healing", "program"],
   ["other", "other"],
+  ["private-healing", "program"],
   ["spiral", "program"],
   ["vision", "partnership"],
   ["workshop", "program"]
@@ -19,9 +21,9 @@ const PATHWAYS = new Map([
 
 const clean = (value) => typeof value === "string" ? value.trim() : "";
 
-export function normalizePublicIntake(input, receivedAt = new Date()) {
+export function normalizePublicIntake(input, receivedAt = new Date(), options = {}) {
   if (!input || typeof input !== "object" || Array.isArray(input)) throw new Error("Invalid enquiry.");
-  if (input.reason === "private-healing") {
+  if (input.reason === "private-healing" && options.allowPrivateHealing !== true) {
     throw new Error("Private healing requires the approved confidential intake provider.");
   }
   const displayName = clean(input.name);
@@ -32,6 +34,9 @@ export function normalizePublicIntake(input, receivedAt = new Date()) {
   const sourcePage = clean(input.sourcePage);
   const pathway = PATHWAYS.get(input.reason);
   const area = clean(input.reason);
+  if (area === "private-healing" && input.photoConsent !== true) {
+    throw new Error("Private headshot consent is required.");
+  }
   let program = clean(input.program) || null;
   if (!program && sourcePage.startsWith("/")) {
     const params = new URL(`https://rainbowsanctuary.life${sourcePage}`).searchParams;
@@ -45,7 +50,7 @@ export function normalizePublicIntake(input, receivedAt = new Date()) {
     submittedAt > receivedTime + 300_000 ||
     receivedTime - submittedAt > 86_400_000
   ) throw new Error("Invalid enquiry timestamp.");
-  const text = [displayName, email, phone, requestMessage, privacyPolicyVersion, sourcePage];
+  const text = [displayName, requestMessage, privacyPolicyVersion, sourcePage];
   if (input.privacyAccepted !== true) throw new Error("Privacy consent is required.");
   if (
     !UUID_PATTERN.test(eventId) ||
@@ -87,7 +92,8 @@ export async function forwardWebsiteIntake(
   environment,
   fetchImplementation = fetch,
   clock = () => new Date(),
-  clockSeconds = () => Math.floor(Date.now() / 1000)
+  clockSeconds = () => Math.floor(Date.now() / 1000),
+  trustedTokenProvider = getVercelOidcToken
 ) {
   const endpoint = environment.CRM_WEBSITE_INTAKE_URL;
   const secret = environment.CRM_WEBSITE_INTAKE_SECRET;
@@ -96,14 +102,23 @@ export async function forwardWebsiteIntake(
   if (url.protocol !== "https:" || typeof secret !== "string" || secret.length < 32) {
     throw new Error("CRM intake is not configured.");
   }
-  const body = JSON.stringify(normalizePublicIntake(input, clock()));
+  const body = JSON.stringify(normalizePublicIntake(input, clock(), {
+    allowPrivateHealing: environment.HUBSPOT_PRIVATE_INTAKE_ENABLED === "true"
+  }));
   const timestamp = clockSeconds();
   const signature = createHmac("sha256", secret).update(`${timestamp}.${body}`).digest("hex");
+  const trustedSourceHeaders = {};
+  if (environment.VERCEL_ENV === "preview") {
+    const token = await trustedTokenProvider();
+    if (typeof token !== "string" || !token) throw new Error("CRM intake protection is not configured.");
+    trustedSourceHeaders["x-vercel-trusted-oidc-idp-token"] = token;
+  }
   const response = await fetchImplementation(url.toString(), {
     body,
     headers: {
       "content-type": "application/json",
-      "x-rainbow-intake-signature": `t=${timestamp},v1=${signature}`
+      "x-rainbow-intake-signature": `t=${timestamp},v1=${signature}`,
+      ...trustedSourceHeaders
     },
     method: "POST"
   });
