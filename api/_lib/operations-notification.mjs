@@ -107,3 +107,21 @@ export async function sendPurchaseOperationsNotification(stripeEvent, hubspot, e
   if (!result.sent) throw new Error("Rainbow operations notification is not enabled.");
   return result;
 }
+
+export async function attemptPurchaseOperationsNotification(
+  stripeEvent,
+  hubspot,
+  environment,
+  resendClient,
+  logger = console
+) {
+  try {
+    return await sendPurchaseOperationsNotification(stripeEvent, hubspot, environment, resendClient);
+  } catch (error) {
+    logger.error("stripe_operations_notification_error", {
+      eventId: stripeEvent.id,
+      reason: "operations-notification-unavailable"
+    });
+    return { reason: "operations-notification-unavailable", sent: false };
+  }
+}
