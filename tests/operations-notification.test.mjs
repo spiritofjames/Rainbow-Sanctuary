@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   attemptEnquiryOperationsNotification,
+  attemptPurchaseOperationsNotification,
   enquiryOperationsMessage,
   purchaseOperationsMessage,
   sendEnquiryOperationsNotification
@@ -88,5 +89,28 @@ test("an optional operations notification cannot turn an accepted enquiry into a
   assert.deepEqual(logged, [{
     detail: { reason: "operations-notification-unavailable" },
     event: "crm_intake_notification_error"
+  }]);
+});
+
+test("an optional operations notification cannot make Stripe retry an accepted payment", async () => {
+  const logged = [];
+  const result = await attemptPurchaseOperationsNotification(
+    payment,
+    hubspot,
+    { ...environment, RESEND_EMAIL_ENABLED: "false" },
+    undefined,
+    { error: (event, detail) => logged.push({ detail, event }) }
+  );
+
+  assert.deepEqual(result, {
+    reason: "operations-notification-unavailable",
+    sent: false
+  });
+  assert.deepEqual(logged, [{
+    detail: {
+      eventId: payment.id,
+      reason: "operations-notification-unavailable"
+    },
+    event: "stripe_operations_notification_error"
   }]);
 });
