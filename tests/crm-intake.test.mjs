@@ -56,6 +56,14 @@ test("valid international WhatsApp numbers are not misclassified as payment-card
   assert.equal(normalized.phone, "+62 812 3456 7890");
 });
 
+test("valid email addresses containing long numeric identifiers remain acceptable", () => {
+  const normalized = normalizePublicIntake({
+    ...submission,
+    email: "qa-enquiry-1786289134896@example.com"
+  }, receivedAt);
+  assert.equal(normalized.email, "qa-enquiry-1786289134896@example.com");
+});
+
 test("private healing stays gated unless its confidential provider and photo consent are explicit", () => {
   assert.throws(() => normalizePublicIntake({ ...submission, reason: "private-healing" }, receivedAt), /private healing/i);
   assert.throws(

@@ -50,7 +50,7 @@ export function normalizePublicIntake(input, receivedAt = new Date(), options = 
     submittedAt > receivedTime + 300_000 ||
     receivedTime - submittedAt > 86_400_000
   ) throw new Error("Invalid enquiry timestamp.");
-  const text = [displayName, email, requestMessage, privacyPolicyVersion, sourcePage];
+  const text = [displayName, requestMessage, privacyPolicyVersion, sourcePage];
   if (input.privacyAccepted !== true) throw new Error("Privacy consent is required.");
   if (
     !UUID_PATTERN.test(eventId) ||
