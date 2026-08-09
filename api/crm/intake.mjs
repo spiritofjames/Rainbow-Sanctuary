@@ -1,5 +1,6 @@
 import { assertAllowedOrigin } from "../_lib/checkout-policy.mjs";
-import { forwardWebsiteIntake } from "../_lib/crm-intake.mjs";
+import { forwardWebsiteIntake, normalizePublicIntake } from "../_lib/crm-intake.mjs";
+import { mirrorHubSpotIntake } from "../_lib/hubspot-intake.mjs";
 import { parseJsonBody, sendJson } from "../_lib/http.mjs";
 
 export default async function handler(request, response) {
@@ -15,7 +16,9 @@ export default async function handler(request, response) {
       ...process.env,
       STRIPE_ALLOWED_CHECKOUT_ORIGINS: process.env.CRM_ALLOWED_INTAKE_ORIGINS
     });
-    await forwardWebsiteIntake(parseJsonBody(request), process.env);
+    const input = parseJsonBody(request);
+    await forwardWebsiteIntake(input, process.env);
+    await mirrorHubSpotIntake(normalizePublicIntake(input), process.env);
     return sendJson(response, 202, { accepted: true });
   } catch (error) {
     const expected = /not enabled|not configured|not allowed|origin|required|invalid|private healing|consent|prohibited/i.test(error.message);
