@@ -12,6 +12,7 @@ const PATHWAYS = new Map([
   ["family", "family"],
   ["group-healing", "program"],
   ["other", "other"],
+  ["private-healing", "program"],
   ["spiral", "program"],
   ["vision", "partnership"],
   ["workshop", "program"]
@@ -19,9 +20,9 @@ const PATHWAYS = new Map([
 
 const clean = (value) => typeof value === "string" ? value.trim() : "";
 
-export function normalizePublicIntake(input, receivedAt = new Date()) {
+export function normalizePublicIntake(input, receivedAt = new Date(), options = {}) {
   if (!input || typeof input !== "object" || Array.isArray(input)) throw new Error("Invalid enquiry.");
-  if (input.reason === "private-healing") {
+  if (input.reason === "private-healing" && options.allowPrivateHealing !== true) {
     throw new Error("Private healing requires the approved confidential intake provider.");
   }
   const displayName = clean(input.name);
@@ -32,6 +33,9 @@ export function normalizePublicIntake(input, receivedAt = new Date()) {
   const sourcePage = clean(input.sourcePage);
   const pathway = PATHWAYS.get(input.reason);
   const area = clean(input.reason);
+  if (area === "private-healing" && input.photoConsent !== true) {
+    throw new Error("Private headshot consent is required.");
+  }
   let program = clean(input.program) || null;
   if (!program && sourcePage.startsWith("/")) {
     const params = new URL(`https://rainbowsanctuary.life${sourcePage}`).searchParams;
@@ -96,7 +100,9 @@ export async function forwardWebsiteIntake(
   if (url.protocol !== "https:" || typeof secret !== "string" || secret.length < 32) {
     throw new Error("CRM intake is not configured.");
   }
-  const body = JSON.stringify(normalizePublicIntake(input, clock()));
+  const body = JSON.stringify(normalizePublicIntake(input, clock(), {
+    allowPrivateHealing: environment.HUBSPOT_PRIVATE_INTAKE_ENABLED === "true"
+  }));
   const timestamp = clockSeconds();
   const signature = createHmac("sha256", secret).update(`${timestamp}.${body}`).digest("hex");
   const response = await fetchImplementation(url.toString(), {

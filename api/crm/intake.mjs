@@ -2,6 +2,7 @@ import { assertAllowedOrigin } from "../_lib/checkout-policy.mjs";
 import { forwardWebsiteIntake, normalizePublicIntake } from "../_lib/crm-intake.mjs";
 import { mirrorHubSpotIntake } from "../_lib/hubspot-intake.mjs";
 import { parseJsonBody, sendJson } from "../_lib/http.mjs";
+import { parseMultipartIntake } from "../_lib/private-intake.mjs";
 
 function safeFailureReason(error) {
   const message = String(error?.message || "").toLowerCase();
@@ -12,10 +13,19 @@ function safeFailureReason(error) {
   }
   if (message.includes("crm intake is not configured")) return "crm-configuration";
   if (message.includes("crm intake failed")) return "crm-upstream";
+  if (message.includes("hubspot private intake is not configured")) return "hubspot-private-configuration";
   if (message.includes("hubspot intake is not configured")) return "hubspot-configuration";
   if (message.includes("hubspot contact")) return "hubspot-contact";
   if (message.includes("hubspot form")) return "hubspot-form";
+  if (message.includes("hubspot private file")) return "hubspot-private-file";
+  if (message.includes("hubspot private note")) return "hubspot-private-note";
   return "unexpected-upstream";
+}
+
+async function parseIntakeRequest(request) {
+  const contentType = String(request.headers?.["content-type"] || "").toLowerCase();
+  if (contentType.startsWith("multipart/form-data;")) return parseMultipartIntake(request);
+  return { attachment: null, input: parseJsonBody(request) };
 }
 
 export default async function handler(request, response) {
@@ -31,12 +41,20 @@ export default async function handler(request, response) {
       ...process.env,
       STRIPE_ALLOWED_CHECKOUT_ORIGINS: process.env.CRM_ALLOWED_INTAKE_ORIGINS
     });
-    const input = parseJsonBody(request);
+    const { attachment, input } = await parseIntakeRequest(request);
+    const isPrivate = input?.reason === "private-healing";
+    if (isPrivate && process.env.HUBSPOT_PRIVATE_INTAKE_ENABLED !== "true") {
+      throw new Error("HubSpot private intake is not configured.");
+    }
+    if (isPrivate && !attachment) throw new Error("Private headshot is required.");
+    if (!isPrivate && attachment) throw new Error("Invalid private intake request.");
     await forwardWebsiteIntake(input, process.env);
-    await mirrorHubSpotIntake(normalizePublicIntake(input), process.env);
+    await mirrorHubSpotIntake(normalizePublicIntake(input, new Date(), {
+      allowPrivateHealing: isPrivate
+    }), process.env, fetch, attachment);
     return sendJson(response, 202, { accepted: true });
   } catch (error) {
-    const expected = /not enabled|not configured|not allowed|origin|required|invalid|private healing|consent|prohibited/i.test(error.message);
+    const expected = /not enabled|not configured|not allowed|origin|required|invalid|private healing|private headshot|consent|prohibited/i.test(error.message);
     console.error("crm_intake_error", {
       category: expected ? "rejected" : "upstream-unavailable",
       reason: safeFailureReason(error)
