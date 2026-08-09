@@ -1,4 +1,5 @@
 import { createHmac } from "node:crypto";
+import { getVercelOidcToken } from "@vercel/oidc";
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -91,7 +92,8 @@ export async function forwardWebsiteIntake(
   environment,
   fetchImplementation = fetch,
   clock = () => new Date(),
-  clockSeconds = () => Math.floor(Date.now() / 1000)
+  clockSeconds = () => Math.floor(Date.now() / 1000),
+  trustedTokenProvider = getVercelOidcToken
 ) {
   const endpoint = environment.CRM_WEBSITE_INTAKE_URL;
   const secret = environment.CRM_WEBSITE_INTAKE_SECRET;
@@ -105,11 +107,18 @@ export async function forwardWebsiteIntake(
   }));
   const timestamp = clockSeconds();
   const signature = createHmac("sha256", secret).update(`${timestamp}.${body}`).digest("hex");
+  const trustedSourceHeaders = {};
+  if (environment.VERCEL_ENV === "preview") {
+    const token = await trustedTokenProvider();
+    if (typeof token !== "string" || !token) throw new Error("CRM intake protection is not configured.");
+    trustedSourceHeaders["x-vercel-trusted-oidc-idp-token"] = token;
+  }
   const response = await fetchImplementation(url.toString(), {
     body,
     headers: {
       "content-type": "application/json",
-      "x-rainbow-intake-signature": `t=${timestamp},v1=${signature}`
+      "x-rainbow-intake-signature": `t=${timestamp},v1=${signature}`,
+      ...trustedSourceHeaders
     },
     method: "POST"
   });

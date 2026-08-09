@@ -98,6 +98,20 @@ test("website intake is signed, HTTPS-only and duplicate-safe by event id", asyn
   assert.equal(JSON.parse(sent.options.body).eventId, submission.clientEventId);
 });
 
+test("Preview CRM handoff uses a short-lived Vercel trusted-source token", async () => {
+  let sent;
+  await forwardWebsiteIntake(submission, {
+    CRM_WEBSITE_INTAKE_SECRET: "synthetic-website-intake-secret-that-is-long-enough",
+    CRM_WEBSITE_INTAKE_URL: "https://crm.example.test/api/intake/website",
+    VERCEL_ENV: "preview"
+  }, async (url, options) => {
+    sent = { options, url };
+    return { ok: true, status: 202 };
+  }, () => new Date("2026-08-04T10:00:00.000Z"), () => 1785837600, async () => "short-lived-preview-oidc-token");
+
+  assert.equal(sent.options.headers["x-vercel-trusted-oidc-idp-token"], "short-lived-preview-oidc-token");
+});
+
 test("the enquiry form uses JSON for ordinary requests and multipart only for private headshots", async () => {
   const [form, config] = await Promise.all([
     readFile(new URL("../Book-Consultation.dc.html", import.meta.url), "utf8"),
