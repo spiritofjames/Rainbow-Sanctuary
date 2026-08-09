@@ -48,6 +48,14 @@ test("programme context survives the public enquiry URL and reaches the CRM", ()
   assert.equal(contextual.program, "spiral-i");
 });
 
+test("valid international WhatsApp numbers are not misclassified as payment-card data", () => {
+  const normalized = normalizePublicIntake({
+    ...submission,
+    whatsapp: "+62 812 3456 7890"
+  }, receivedAt);
+  assert.equal(normalized.phone, "+62 812 3456 7890");
+});
+
 test("private healing stays gated unless its confidential provider and photo consent are explicit", () => {
   assert.throws(() => normalizePublicIntake({ ...submission, reason: "private-healing" }, receivedAt), /private healing/i);
   assert.throws(
