@@ -24,6 +24,11 @@ function safeFailureReason(error) {
   return "unexpected-upstream";
 }
 
+function safeUpstreamStatus(error) {
+  const match = String(error?.message || "").match(/status (\d{3})\b/i);
+  return match ? Number(match[1]) : null;
+}
+
 async function parseIntakeRequest(request) {
   const contentType = String(request.headers?.["content-type"] || "").toLowerCase();
   if (contentType.startsWith("multipart/form-data;")) return parseMultipartIntake(request);
@@ -62,7 +67,8 @@ export default async function handler(request, response) {
     const expected = !operationalFailure && /not enabled|not configured|not allowed|origin|required|invalid|private healing|private headshot|consent|prohibited/i.test(error.message);
     console.error("crm_intake_error", {
       category: expected ? "rejected" : "upstream-unavailable",
-      reason: safeFailureReason(error)
+      reason: safeFailureReason(error),
+      upstreamStatus: safeUpstreamStatus(error)
     });
     return sendJson(response, expected ? 400 : 502, {
       error: expected
