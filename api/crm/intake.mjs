@@ -1,7 +1,7 @@
 import { assertAllowedOrigin } from "../_lib/checkout-policy.mjs";
 import { forwardWebsiteIntake, normalizePublicIntake } from "../_lib/crm-intake.mjs";
 import { mirrorHubSpotIntake } from "../_lib/hubspot-intake.mjs";
-import { sendEnquiryOperationsNotification } from "../_lib/operations-notification.mjs";
+import { attemptEnquiryOperationsNotification } from "../_lib/operations-notification.mjs";
 import { parseJsonBody, sendJson } from "../_lib/http.mjs";
 import { parseMultipartIntake } from "../_lib/private-intake.mjs";
 
@@ -71,7 +71,7 @@ export default async function handler(request, response) {
     });
     await forwardWebsiteIntake(input, process.env);
     const hubspot = await mirrorHubSpotIntake(normalized, process.env, fetch, attachment);
-    await sendEnquiryOperationsNotification(normalized, hubspot, process.env);
+    await attemptEnquiryOperationsNotification(normalized, hubspot, process.env);
     return sendJson(response, 202, { accepted: true });
   } catch (error) {
     const operationalFailure = /operations notification|operational recipient/i.test(error.message);
