@@ -37,6 +37,17 @@ test("public enquiry becomes the exact minimal CRM contract", () => {
   });
 });
 
+test("programme context survives the public enquiry URL and reaches the CRM", () => {
+  const contextual = normalizePublicIntake({
+    ...submission,
+    reason: "spiral",
+    sourcePage: "/apply?reason=spiral&program=spiral-i"
+  }, receivedAt);
+  assert.equal(contextual.area, "spiral");
+  assert.equal(contextual.pathway, "program");
+  assert.equal(contextual.program, "spiral-i");
+});
+
 test("private healing and unsafe or unconsented submissions fail closed", () => {
   assert.throws(() => normalizePublicIntake({ ...submission, reason: "private-healing" }, receivedAt), /private healing/i);
   assert.throws(() => normalizePublicIntake({ ...submission, privacyAccepted: false }, receivedAt), /consent/i);
@@ -78,7 +89,12 @@ test("the public enquiry form uses the same-origin CRM bridge without uploading 
   assert.match(config, /endpoint: "\/api\/crm\/intake"/);
   assert.match(form, /clientEventId/);
   assert.match(form, /privacyAccepted: true/);
-  assert.match(form, /submittedAt: this\.state\.submittedAt/);
+  assert.match(form, /submissionId: ''/);
+  assert.match(form, /submittedAt: ''/);
+  assert.match(form, /this\.state\.submissionId \|\| window\.crypto\.randomUUID\(\)/);
+  assert.match(form, /this\.state\.submittedAt \|\| new Date\(\)\.toISOString\(\)/);
+  assert.match(form, /\['reason', 'session', 'event', 'program'\]/);
+  assert.doesNotMatch(form, /window\.location\.pathname \+ window\.location\.search/);
   assert.match(form, /JSON\.stringify/);
   assert.match(form, /Private Healing intake is still protected/);
   assert.doesNotMatch(form, /payload\.append\('headshot'/);

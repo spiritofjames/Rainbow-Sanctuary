@@ -201,7 +201,7 @@
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { name: '', email: '', whatsapp: '', reason: '', privateSession: '', currentChallenges: '', intendedOutcome: '', message: '', photoFile: null, photoName: '', submissionId: window.crypto.randomUUID(), submittedAt: new Date().toISOString(), submitted: false, submitting: false, configurationPending: false, error: '' };
+    this.state = { name: '', email: '', whatsapp: '', reason: '', privateSession: '', currentChallenges: '', intendedOutcome: '', message: '', photoFile: null, photoName: '', submissionId: '', submittedAt: '', submitted: false, submitting: false, configurationPending: false, error: '' };
   }
 
   componentDidMount() {
@@ -209,8 +209,10 @@ class Component extends DCLogic {
     const reason = params.get('reason');
     const privateSession = params.get('session');
     const event = params.get('event');
+    const program = params.get('program');
     const eventMessage = event === 'awakening-inner-light-2026' ? 'I would like to register interest in the Awakening Your Inner Light retreat, 1–7 October 2026 in Bocas del Toro.' : '';
-    if (reason || privateSession || eventMessage) this.setState({ reason: reason || (privateSession ? 'private-healing' : ''), privateSession: privateSession || '', message: eventMessage });
+    const programMessage = program ? `I am interested in ${program.replaceAll('-', ' ')}.` : '';
+    if (reason || privateSession || eventMessage || programMessage) this.setState({ reason: reason || (privateSession ? 'private-healing' : ''), privateSession: privateSession || '', message: eventMessage || programMessage });
   }
 
   renderVals() {
@@ -271,16 +273,28 @@ class Component extends DCLogic {
 
         this.setState({ submitting: true, configurationPending: false, error: '' });
         try {
+          const submissionId = this.state.submissionId || window.crypto.randomUUID();
+          const submittedAt = this.state.submittedAt || new Date().toISOString();
+          if (!this.state.submissionId || !this.state.submittedAt) {
+            this.setState({ submissionId, submittedAt });
+          }
+          const sourceParameters = new URLSearchParams();
+          const currentParameters = new URLSearchParams(window.location.search);
+          ['reason', 'session', 'event', 'program'].forEach((key) => {
+            const value = currentParameters.get(key);
+            if (value) sourceParameters.set(key, value);
+          });
+          const sourceQuery = sourceParameters.toString();
           const payload = {
-            clientEventId: this.state.submissionId,
+            clientEventId: submissionId,
             email: this.state.email,
             message: this.state.message,
             name: this.state.name,
             privacyAccepted: true,
             privacyPolicyVersion: window.RAINBOW_SANCTUARY_CONFIG?.legal?.effectiveDate || '13 July 2026',
             reason: this.state.reason,
-            sourcePage: window.location.pathname + window.location.search,
-            submittedAt: this.state.submittedAt,
+            sourcePage: window.location.pathname + (sourceQuery ? `?${sourceQuery}` : ''),
+            submittedAt,
             whatsapp: this.state.whatsapp.trim()
           };
           const response = await fetch(formConfig.endpoint, {
@@ -288,10 +302,17 @@ class Component extends DCLogic {
             headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),
           });
-          if (!response.ok) throw new Error('Submission failed');
+          if (!response.ok) {
+            const failure = new Error('Submission failed');
+            failure.status = response.status;
+            throw failure;
+          }
           this.setState({ submitted: true, submitting: false });
         } catch (error) {
-          this.setState({ submitting: false, error: 'Your message could not be sent. Please try again once the connection is available.' });
+          const message = error && error.status === 400
+            ? 'We could not validate this enquiry. Please refresh the page, check the required fields, and try once more.'
+            : 'Your message could not be sent. Please try again once the connection is available.';
+          this.setState({ submitting: false, error: message });
         }
       },
     };

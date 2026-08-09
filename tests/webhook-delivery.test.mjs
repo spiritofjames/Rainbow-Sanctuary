@@ -23,7 +23,7 @@ const checkoutEvent = {
       }],
       payment_intent: "pi_test_123",
       payment_status: "paid",
-      amount_total: 2000,
+      amount_total: 2200,
       currency: "usd",
       metadata: {
         event_id: "group-healing-2026-08-22",
@@ -37,14 +37,14 @@ test("the CRM envelope excludes customer PII", () => {
   const payload = safeStripeEvent(checkoutEvent);
   assert.equal(payload.stripe_event_id, "evt_test_123");
   assert.equal(payload.event_id, "group-healing-2026-08-22");
-  assert.equal(payload.amount_total, 2000);
+  assert.equal(payload.amount_total, 2200);
   assert.equal(JSON.stringify(payload).includes("private@example.com"), false);
   assert.equal(JSON.stringify(payload).includes("Private Person"), false);
 });
 
 test("the strict CRM handoff includes only the client identity needed for operations", () => {
   assert.deepEqual(crmPaymentHandoff(checkoutEvent), {
-    amountMinor: 2000,
+    amountMinor: 2200,
     bookingReference: "cs_test_123",
     currency: "USD",
     customer: {

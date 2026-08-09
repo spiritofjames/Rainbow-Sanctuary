@@ -178,7 +178,7 @@
       link.removeAttribute("tabindex");
       link.classList.remove("rs-checkout-link--pending");
       link.textContent = "Continue to secure checkout";
-      status.textContent = "Complete the $20 payment securely through Stripe. Confirmation and Zoom access follow registration.";
+      status.textContent = "Complete the $22 total securely through Stripe. Payment processing is included. The booking is non-refundable and non-transferable; one reschedule may be requested at least 24 hours before the session.";
     } else {
       delete link.dataset.checkoutEventId;
       link.classList.toggle("is-hidden", item.status === "full");
@@ -189,7 +189,7 @@
       link.textContent = "Continue to registration";
       status.textContent = item.status === "full"
         ? "This session is currently full. Choose another highlighted date."
-        : "Online registration for this confirmed date is opening soon. Once available, this button will continue directly to secure $20 payment—no consultation required.";
+        : "Online registration for this confirmed date is opening soon. Once available, this button will continue directly to secure $22 total payment—no consultation required.";
     }
   }
 
@@ -218,6 +218,7 @@
         },
         body: JSON.stringify({
           eventId,
+          offerId: "group-healing",
           requestId: window.crypto.randomUUID()
         })
       });

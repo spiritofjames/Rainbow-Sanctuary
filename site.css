@@ -1661,3 +1661,21 @@ footer::after {
     transition-duration: 0.001ms !important;
   }
 }
+/* Stripe return status only; programme purchase controls are intentionally absent. */
+.rs-commerce-return {
+  box-sizing: border-box;
+  max-width: 72rem;
+  margin: 1.5rem auto;
+  padding: 1rem 1.25rem;
+  border: 1px solid rgba(72, 91, 76, 0.28);
+  border-radius: 1rem;
+  background: #f4f7f2;
+  color: #26332a;
+  font: 500 1rem/1.55 system-ui, sans-serif;
+}
+
+.rs-commerce-return--cancelled {
+  border-color: rgba(122, 91, 67, 0.3);
+  background: #fbf6f1;
+  color: #513e31;
+}

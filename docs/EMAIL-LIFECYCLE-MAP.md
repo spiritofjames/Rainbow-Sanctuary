@@ -40,7 +40,7 @@ template and a disabled event automation contract.
 | Application | `rs.application.accepted` | `rs-application-accepted` | Human reviewer |
 | Application | `rs.application.declined` | `rs-application-declined` | Human reviewer |
 | Scheduling | `rs.scheduling.invited` | `rs-scheduling-invitation` | CRM |
-| Group Healing | `rs.group_healing.booked` | `rs-booking-confirmed` | Verified Stripe webhook + approved event catalog |
+| Group Healing | `rs.group_healing.booked` | `rs-booking-confirmed` | Verified test-mode Stripe webhook + approved event catalog; staging allowlist only |
 | Group Healing | `rs.group_healing.reminder.24h` | `rs-booking-reminder-24h` | CRM scheduler |
 | Group Healing | `rs.group_healing.reminder.1h` | `rs-booking-reminder-1h` | CRM scheduler |
 | Booking | `rs.booking.changed` | `rs-booking-changed` | Human/CRM |
@@ -50,7 +50,7 @@ template and a disabled event automation contract.
 | Retreat | `rs.retreat.accepted` | `rs-retreat-accepted` | Human reviewer |
 | Retreat | `rs.retreat.preparation` | `rs-retreat-preparation` | CRM scheduler after approved content |
 | Retreat | `rs.retreat.follow_up` | `rs-retreat-follow-up` | CRM scheduler |
-| Program | `rs.program.enrolled` | `rs-program-enrollment-confirmed` | CRM after confirmed enrollment |
+| Program | `rs.program.enrolled` | `rs-program-enrollment-confirmed` | Verified test-mode Stripe webhook for an allowlisted server-catalogue programme variant; production remains gated |
 | Program | `rs.program.session.reminder` | `rs-program-session-reminder` | CRM scheduler |
 | Program | `rs.program.completed` | `rs-program-completed` | Human/CRM after completion review |
 
@@ -71,6 +71,8 @@ owner must first pass acceptance.
 6. Every producer supplies a stable idempotency key or event identity.
 7. Message variables contain the minimum operational data. No case notes, health
    information, payment-card data, identity documents, or headshots are allowed.
+8. A direct programme purchase sends one programme enrollment confirmation after
+   the signed paid event. Stripe remains the only financial-receipt sender.
 
 ## CRM handoff contract
 
