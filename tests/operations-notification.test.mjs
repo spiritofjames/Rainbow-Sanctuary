@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  attemptEnquiryOperationsNotification,
   enquiryOperationsMessage,
   purchaseOperationsMessage,
   sendEnquiryOperationsNotification
@@ -68,4 +69,24 @@ test("operations notification fails closed when delivery is disabled or HubSpot 
     }),
     /not enabled/i
   );
+});
+
+test("an optional operations notification cannot turn an accepted enquiry into a customer-facing failure", async () => {
+  const logged = [];
+  const result = await attemptEnquiryOperationsNotification(
+    intake,
+    hubspot,
+    { ...environment, RESEND_EMAIL_ENABLED: "false" },
+    undefined,
+    { error: (event, detail) => logged.push({ detail, event }) }
+  );
+
+  assert.deepEqual(result, {
+    reason: "operations-notification-unavailable",
+    sent: false
+  });
+  assert.deepEqual(logged, [{
+    detail: { reason: "operations-notification-unavailable" },
+    event: "crm_intake_notification_error"
+  }]);
 });

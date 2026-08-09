@@ -85,6 +85,23 @@ export async function sendEnquiryOperationsNotification(intake, hubspot, environ
   return result;
 }
 
+export async function attemptEnquiryOperationsNotification(
+  intake,
+  hubspot,
+  environment,
+  resendClient,
+  logger = console
+) {
+  try {
+    return await sendEnquiryOperationsNotification(intake, hubspot, environment, resendClient);
+  } catch (error) {
+    logger.error("crm_intake_notification_error", {
+      reason: "operations-notification-unavailable"
+    });
+    return { reason: "operations-notification-unavailable", sent: false };
+  }
+}
+
 export async function sendPurchaseOperationsNotification(stripeEvent, hubspot, environment, resendClient) {
   const result = await sendOperationalEmail(purchaseOperationsMessage(stripeEvent, hubspot, environment), environment, resendClient);
   if (!result.sent) throw new Error("Rainbow operations notification is not enabled.");
