@@ -1,6 +1,4 @@
 const HUBSPOT_API_ORIGIN = "https://api.hubapi.com";
-const HUBSPOT_FORMS_ORIGIN = "https://api.hsforms.com";
-const FORM_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const NUMERIC_ID_PATTERN = /^\d+$/;
 
 const AREA_LABELS = new Map([
@@ -50,14 +48,12 @@ function requireConfiguration(environment) {
   const token = environment.HUBSPOT_ACCESS_TOKEN;
   const ownerId = environment.HUBSPOT_OWNER_ID;
   const portalId = environment.HUBSPOT_PORTAL_ID;
-  const formId = environment.HUBSPOT_FORM_ID;
   if (
     typeof token !== "string" || !token.startsWith("pat-") || token.length < 30 ||
     !NUMERIC_ID_PATTERN.test(ownerId || "") ||
-    !NUMERIC_ID_PATTERN.test(portalId || "") ||
-    !FORM_ID_PATTERN.test(formId || "")
+    !NUMERIC_ID_PATTERN.test(portalId || "")
   ) throw new Error("HubSpot intake is not configured.");
-  return { formId, ownerId, portalId, token };
+  return { ownerId, portalId, token };
 }
 
 function requirePrivateIntakeConfiguration(environment) {
@@ -135,7 +131,7 @@ export function toHubSpotProperties(intake, ownerId) {
 
 export async function mirrorHubSpotIntake(intake, environment, fetchImplementation = fetch, attachment = null) {
   if (environment.HUBSPOT_INTAKE_ENABLED !== "true") return { enabled: false };
-  const { formId, ownerId, portalId, token } = requireConfiguration(environment);
+  const { ownerId, portalId, token } = requireConfiguration(environment);
   const privateConfiguration = attachment ? requirePrivateIntakeConfiguration(environment) : null;
   const properties = toHubSpotProperties(intake, ownerId);
   const authorization = { authorization: `Bearer ${token}`, "content-type": "application/json" };
@@ -146,10 +142,10 @@ export async function mirrorHubSpotIntake(intake, environment, fetchImplementati
     method: "POST"
   });
   if (!upsertResponse.ok) throw new Error(`HubSpot contact upsert failed with status ${upsertResponse.status}.`);
+  const upserted = await responseJson(upsertResponse, "HubSpot contact upsert returned an invalid response.");
+  const contactId = String(upserted.results?.[0]?.id || "");
+  if (!NUMERIC_ID_PATTERN.test(contactId)) throw new Error("HubSpot contact upsert returned an invalid response.");
   if (attachment) {
-    const upserted = await responseJson(upsertResponse, "HubSpot contact upsert returned an invalid response.");
-    const contactId = String(upserted.results?.[0]?.id || "");
-    if (!NUMERIC_ID_PATTERN.test(contactId)) throw new Error("HubSpot contact upsert returned an invalid response.");
     await attachPrivateHeadshot({
       attachment,
       contactId,
@@ -160,28 +156,11 @@ export async function mirrorHubSpotIntake(intake, environment, fetchImplementati
     }, fetchImplementation);
   }
 
-  const fields = Object.entries(properties)
-    .filter(([name]) => name !== "hubspot_owner_id")
-    .map(([name, value]) => ({ name, objectTypeId: "0-1", value }));
-  const formResponse = await fetchImplementation(`${HUBSPOT_FORMS_ORIGIN}/submissions/v3/integration/submit/${portalId}/${formId}`, {
-    body: JSON.stringify({
-      context: {
-        pageName: "Rainbow Sanctuary enquiry",
-        pageUri: `https://rainbowsanctuary.life${intake.sourcePage}`
-      },
-      fields,
-      legalConsentOptions: {
-        consent: {
-          communications: [],
-          consentToProcess: true,
-          text: "I allow Rainbow Sanctuary to store and process this enquiry so the team can respond."
-        }
-      },
-      submittedAt: Date.parse(intake.occurredAt)
-    }),
-    headers: { "content-type": "application/json" },
-    method: "POST"
-  });
-  if (!formResponse.ok) throw new Error(`HubSpot form submission failed with status ${formResponse.status}.`);
-  return { attachmentStored: Boolean(attachment), enabled: true, ownerId };
+  return {
+    attachmentStored: Boolean(attachment),
+    contactId,
+    contactUrl: `https://app-na2.hubspot.com/contacts/${portalId}/record/0-1/${contactId}`,
+    enabled: true,
+    ownerId
+  };
 }

@@ -34,21 +34,24 @@ test("website enquiry maps to Ethel and exact HubSpot taxonomy", () => {
   });
 });
 
-test("HubSpot mirror upserts the owned contact before recording the form submission", async () => {
+test("HubSpot mirror idempotently upserts the Ethel-owned contact without duplicate form activity", async () => {
   const calls = [];
   const result = await mirrorHubSpotIntake(intake, environment, async (url, options) => {
     calls.push({ body: JSON.parse(options.body), headers: options.headers, url });
-    return { ok: true, status: 200 };
+    return { json: async () => ({ results: [{ id: "41001" }] }), ok: true, status: 200 };
   });
-  assert.deepEqual(result, { attachmentStored: false, enabled: true, ownerId: "166816652" });
-  assert.equal(calls.length, 2);
+  assert.deepEqual(result, {
+    attachmentStored: false,
+    contactId: "41001",
+    contactUrl: "https://app-na2.hubspot.com/contacts/246920029/record/0-1/41001",
+    enabled: true,
+    ownerId: "166816652"
+  });
+  assert.equal(calls.length, 1);
   assert.match(calls[0].url, /contacts\/batch\/upsert$/);
   assert.equal(calls[0].body.inputs[0].idProperty, "email");
   assert.equal(calls[0].body.inputs[0].properties.hubspot_owner_id, "166816652");
   assert.equal(calls[0].headers.authorization, `Bearer ${environment.HUBSPOT_ACCESS_TOKEN}`);
-  assert.match(calls[1].url, /submissions\/v3\/integration\/submit\/246920029\/276bbe5c/);
-  assert.equal(calls[1].body.fields.find(({ name }) => name === "program_or_offering").value, "Spiral I — Foundations");
-  assert.equal(calls[1].body.fields.some(({ name }) => name === "hubspot_owner_id"), false);
 });
 
 test("private healing uploads a private expiring file and attaches it to Ethel's contact note", async () => {
@@ -82,8 +85,14 @@ test("private healing uploads a private expiring file and attaches it to Ethel's
     return { ok: true, status: 200 };
   }, attachment);
 
-  assert.deepEqual(result, { attachmentStored: true, enabled: true, ownerId: "166816652" });
-  assert.equal(calls.length, 4);
+  assert.deepEqual(result, {
+    attachmentStored: true,
+    contactId: "41001",
+    contactUrl: "https://app-na2.hubspot.com/contacts/246920029/record/0-1/41001",
+    enabled: true,
+    ownerId: "166816652"
+  });
+  assert.equal(calls.length, 3);
   assert.match(calls[1].url, /files\/2026-03\/files$/);
   assert.equal(calls[1].options.body.get("folderPath"), "/rainbow-sanctuary/private-healing-intake");
   assert.deepEqual(JSON.parse(calls[1].options.body.get("options")), {

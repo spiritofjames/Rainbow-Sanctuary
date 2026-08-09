@@ -1,6 +1,7 @@
 import { assertAllowedOrigin } from "../_lib/checkout-policy.mjs";
 import { forwardWebsiteIntake, normalizePublicIntake } from "../_lib/crm-intake.mjs";
 import { mirrorHubSpotIntake } from "../_lib/hubspot-intake.mjs";
+import { sendEnquiryOperationsNotification } from "../_lib/operations-notification.mjs";
 import { parseJsonBody, sendJson } from "../_lib/http.mjs";
 import { parseMultipartIntake } from "../_lib/private-intake.mjs";
 
@@ -19,6 +20,7 @@ function safeFailureReason(error) {
   if (message.includes("hubspot form")) return "hubspot-form";
   if (message.includes("hubspot private file")) return "hubspot-private-file";
   if (message.includes("hubspot private note")) return "hubspot-private-note";
+  if (message.includes("operations notification") || message.includes("operational recipient")) return "operations-notification";
   return "unexpected-upstream";
 }
 
@@ -48,13 +50,16 @@ export default async function handler(request, response) {
     }
     if (isPrivate && !attachment) throw new Error("Private headshot is required.");
     if (!isPrivate && attachment) throw new Error("Invalid private intake request.");
-    await forwardWebsiteIntake(input, process.env);
-    await mirrorHubSpotIntake(normalizePublicIntake(input, new Date(), {
+    const normalized = normalizePublicIntake(input, new Date(), {
       allowPrivateHealing: isPrivate
-    }), process.env, fetch, attachment);
+    });
+    await forwardWebsiteIntake(input, process.env);
+    const hubspot = await mirrorHubSpotIntake(normalized, process.env, fetch, attachment);
+    await sendEnquiryOperationsNotification(normalized, hubspot, process.env);
     return sendJson(response, 202, { accepted: true });
   } catch (error) {
-    const expected = /not enabled|not configured|not allowed|origin|required|invalid|private healing|private headshot|consent|prohibited/i.test(error.message);
+    const operationalFailure = /operations notification|operational recipient/i.test(error.message);
+    const expected = !operationalFailure && /not enabled|not configured|not allowed|origin|required|invalid|private healing|private headshot|consent|prohibited/i.test(error.message);
     console.error("crm_intake_error", {
       category: expected ? "rejected" : "upstream-unavailable",
       reason: safeFailureReason(error)
