@@ -2,6 +2,16 @@ import { Resend } from "resend";
 import { emailByAlias } from "../../emails/catalog.mjs";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const OPERATIONAL_IDENTITIES = Object.freeze({
+  bookings: {
+    from: "Rainbow Sanctuary Bookings <bookings@rainbowsanctuary.life>",
+    replyTo: "bookings@rainbowsanctuary.life"
+  },
+  general: {
+    from: "Rainbow Sanctuary <hello@rainbowsanctuary.life>",
+    replyTo: "hello@rainbowsanctuary.life"
+  }
+});
 
 function booleanValue(value) {
   return String(value || "").toLowerCase() === "true";
@@ -53,6 +63,23 @@ export function assertEmailDelivery({ alias, to, variables }, environment = proc
   return { deliver: true, reason: null, template };
 }
 
+export function assertOperationalEmailDelivery({ identity, to }, environment = process.env) {
+  const sender = OPERATIONAL_IDENTITIES[identity];
+  if (!sender) throw new Error("Unknown operational email identity.");
+  if (!EMAIL_PATTERN.test(String(to || ""))) throw new Error("A valid operational recipient is required.");
+
+  const policy = emailDeliveryPolicy(environment);
+  if (!policy.enabled) return { deliver: false, reason: "disabled", sender };
+  if (!policy.configured) throw new Error("Transactional email is enabled but no Resend key is configured.");
+  if (policy.production && !policy.productionApproved) {
+    throw new Error("Production transactional email has not been explicitly approved.");
+  }
+  if (!policy.production && !policy.recipients.has(String(to).toLowerCase())) {
+    throw new Error("Operational recipient is not on the staging allowlist.");
+  }
+  return { deliver: true, reason: null, sender };
+}
+
 export async function sendTransactionalEmail(
   { alias, to, variables, idempotencyKey, tags = [] },
   environment = process.env,
@@ -77,6 +104,41 @@ export async function sendTransactionalEmail(
       tags: [
         { name: "system", value: "rainbow-sanctuary" },
         { name: "template", value: policy.template.alias.replaceAll("-", "_") },
+        ...tags
+      ]
+    },
+    { idempotencyKey }
+  );
+  if (error) throw new Error(`Resend delivery failed: ${error.message}`);
+  return { sent: true, id: data.id };
+}
+
+export async function sendOperationalEmail(
+  { html, identity, idempotencyKey, subject, tags = [], text, to },
+  environment = process.env,
+  resendClient
+) {
+  const policy = assertOperationalEmailDelivery({ identity, to }, environment);
+  if (!policy.deliver) return { sent: false, reason: policy.reason };
+  if (!idempotencyKey || idempotencyKey.length > 256) {
+    throw new Error("A stable Resend idempotency key is required.");
+  }
+  if (![html, subject, text].every((value) => typeof value === "string" && value.trim())) {
+    throw new Error("Operational email content is required.");
+  }
+
+  const resend = resendClient || new Resend(environment.RESEND_API_KEY);
+  const { data, error } = await resend.emails.send(
+    {
+      from: policy.sender.from,
+      replyTo: policy.sender.replyTo,
+      to: [to],
+      subject,
+      html,
+      text,
+      tags: [
+        { name: "system", value: "rainbow-sanctuary" },
+        { name: "message_type", value: "operations" },
         ...tags
       ]
     },

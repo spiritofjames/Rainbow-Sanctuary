@@ -11,6 +11,8 @@
     "validate": "npm test && npm run email:check && python3 scripts/validate_site.py && node scripts/publish-discovery-layer.mjs && git diff --exit-code"
   },
   "dependencies": {
+    "@vercel/oidc": "3.8.2",
+    "busboy": "^1.6.0",
     "resend": "^6.18.1",
     "stripe": "22.4.0"
   }

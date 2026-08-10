@@ -65,6 +65,11 @@ test("live keys are rejected outside production", () => {
     STRIPE_SECRET_KEY: "sk_live_example",
     VERCEL_ENV: "preview"
   }), /not permitted/);
+  assert.throws(() => assertCheckoutConfiguration({
+    STRIPE_CHECKOUT_ENABLED: "true",
+    STRIPE_SECRET_KEY: "rk_live_example",
+    VERCEL_ENV: "preview"
+  }), /not permitted/);
 });
 
 test("production requires a live key and explicit approval", () => {
@@ -79,6 +84,13 @@ test("production requires a live key and explicit approval", () => {
   assert.doesNotThrow(() => assertCheckoutConfiguration({
     ...base,
     STRIPE_SECRET_KEY: "sk_live_example",
+    STRIPE_LIVE_CHECKOUT_APPROVED: "true",
+    STRIPE_AUTOMATIC_TAX_ENABLED: "true",
+    STRIPE_TAX_DISPLAY_APPROVED: "true"
+  }));
+  assert.doesNotThrow(() => assertCheckoutConfiguration({
+    ...base,
+    STRIPE_SECRET_KEY: "rk_live_example",
     STRIPE_LIVE_CHECKOUT_APPROVED: "true",
     STRIPE_AUTOMATIC_TAX_ENABLED: "true",
     STRIPE_TAX_DISPLAY_APPROVED: "true"
@@ -110,6 +122,25 @@ test("tax-inclusive Checkout is enabled only through the governed tax gate", () 
   assert.equal(withTax.line_items[0].price_data.tax_behavior, "inclusive");
 });
 
+test("internal checkout test is separately allowlisted and cannot become a public group booking", () => {
+  const { offer, eventId } = validateCheckoutRequest({
+    offerId: "internal-payment-test",
+    requestId
+  }, {
+    STRIPE_ALLOWED_OFFER_IDS: "internal-payment-test"
+  });
+  const parameters = checkoutSessionParameters({
+    eventId,
+    offer,
+    origin: "https://rainbowsanctuary.life",
+    taxEnabled: true
+  });
+  assert.equal(parameters.line_items[0].price_data.unit_amount, 100);
+  assert.equal(parameters.metadata.internal_payment_test, "true");
+  assert.match(parameters.success_url, /internal_test=1/);
+  assert.match(parameters.custom_text.submit.message, /internal payment-system verification/i);
+});
+
 test("programme checkout uses only the allowlisted server catalogue variant", () => {
   const result = validateCheckoutRequest({
     offerId: "crystal-healing",
@@ -134,7 +165,7 @@ test("programme checkout uses only the allowlisted server catalogue variant", ()
   }), /Invalid programme/);
 });
 
-test("origins must be explicitly allowed or match the current Vercel preview host", () => {
+test("origins must be explicitly allowed or match the current HTTPS request host", () => {
   const environment = {
     STRIPE_ALLOWED_CHECKOUT_ORIGINS: "https://staging.rainbowsanctuary.life",
     VERCEL_ENV: "preview"
@@ -145,6 +176,9 @@ test("origins must be explicitly allowed or match the current Vercel preview hos
   assert.equal(assertAllowedOrigin({
     headers: { origin: "https://rainbow-pr-12.vercel.app", host: "rainbow-pr-12.vercel.app" }
   }, environment), "https://rainbow-pr-12.vercel.app");
+  assert.equal(assertAllowedOrigin({
+    headers: { origin: "https://rainbowsanctuary.life", host: "rainbowsanctuary.life" }
+  }, { VERCEL_ENV: "production" }), "https://rainbowsanctuary.life");
   assert.throws(() => assertAllowedOrigin({
     headers: { origin: "https://attacker.example", host: "rainbow-pr-12.vercel.app" }
   }, environment), /not allowed/);

@@ -14,6 +14,18 @@ const CRM_PAYMENT_HANDOFF_EVENTS = new Set([
 const IDENTIFIER_PATTERN = /^[A-Za-z][A-Za-z0-9_-]{2,199}$/;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+export function livePaymentProcessingAllowed(environment = {}) {
+  const key = String(environment.STRIPE_SECRET_KEY || "");
+  return environment.VERCEL_ENV === "production" &&
+    environment.STRIPE_LIVE_CHECKOUT_APPROVED === "true" &&
+    ["sk_live_", "rk_live_"].some((prefix) => key.startsWith(prefix)) &&
+    String(environment.STRIPE_WEBHOOK_SECRET || "").length >= 32;
+}
+
+export function isInternalPaymentTest(event) {
+  return String(event?.data?.object?.metadata?.internal_payment_test || "") === "true";
+}
+
 export function safeStripeEvent(event) {
   const object = event.data?.object || {};
   const isCheckout = event.type.startsWith("checkout.session.");
@@ -53,9 +65,9 @@ function checkoutDisplayName(object) {
   return String(customName || object.customer_details?.name || "").trim();
 }
 
-export function crmPaymentHandoff(event) {
-  if (!CRM_PAYMENT_HANDOFF_EVENTS.has(event.type) || event.livemode) {
-    throw new Error("Only Stripe test-mode successful Checkout events can enter the CRM.");
+export function crmPaymentHandoff(event, { allowLive = false } = {}) {
+  if (!CRM_PAYMENT_HANDOFF_EVENTS.has(event.type) || (event.livemode && !allowLive)) {
+    throw new Error("Only approved Stripe Checkout events can enter the CRM.");
   }
 
   const object = event.data?.object || {};
@@ -107,6 +119,7 @@ export async function forwardStripeEvent(
   clockSeconds = () => Math.floor(Date.now() / 1000)
 ) {
   if (!SUPPORTED_STRIPE_EVENTS.has(event.type)) return { forwarded: false, ignored: true };
+  if (isInternalPaymentTest(event)) return { forwarded: false, ignored: true };
 
   const endpoint = environment.CRM_STRIPE_EVENT_URL;
   const secret = environment.CRM_STRIPE_EVENT_SECRET;
@@ -126,7 +139,9 @@ export async function forwardStripeEvent(
 
   if (!CRM_PAYMENT_HANDOFF_EVENTS.has(event.type)) return { forwarded: false, ignored: true };
 
-  const body = JSON.stringify(crmPaymentHandoff(event));
+  const body = JSON.stringify(crmPaymentHandoff(event, {
+    allowLive: livePaymentProcessingAllowed(environment)
+  }));
   const timestamp = clockSeconds();
   const response = await fetchImplementation(endpointUrl.toString(), {
     method: "POST",

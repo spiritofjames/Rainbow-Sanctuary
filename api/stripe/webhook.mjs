@@ -1,7 +1,9 @@
 import Stripe from "stripe";
 import { readRawBody, sendJson } from "../_lib/http.mjs";
-import { forwardStripeEvent } from "../_lib/webhook-delivery.mjs";
+import { forwardStripeEvent, isInternalPaymentTest } from "../_lib/webhook-delivery.mjs";
 import { sendPurchaseConfirmation } from "../_lib/group-healing-booking-email.mjs";
+import { mirrorHubSpotPurchase } from "../_lib/hubspot-payment.mjs";
+import { attemptPurchaseOperationsNotification } from "../_lib/operations-notification.mjs";
 
 export const config = {
   api: { bodyParser: false }
@@ -27,7 +29,12 @@ export default async function handler(request, response) {
     );
     const delivery = await forwardStripeEvent(event, process.env);
     let bookingEmail = { sent: false, reason: "not-applicable" };
-    if (["checkout.session.completed", "checkout.session.async_payment_succeeded"].includes(event.type)) {
+    if (
+      ["checkout.session.completed", "checkout.session.async_payment_succeeded"].includes(event.type) &&
+      !isInternalPaymentTest(event)
+    ) {
+      const hubspot = await mirrorHubSpotPurchase(event, process.env);
+      await attemptPurchaseOperationsNotification(event, hubspot, process.env);
       try {
         bookingEmail = await sendPurchaseConfirmation(event, process.env);
       } catch (emailError) {

@@ -1,6 +1,6 @@
 # Rainbow Sanctuary
 
-Responsive website prototype for Rainbow Sanctuary, including the complete page set, shared navigation, visual assets, responsive hero media, legal and safeguarding pages, and the approved design and voice references. It now includes confirmed program pricing, a $20 Online Group Healing entry offer, the sequential Spiral client journey, a dedicated Earth Healing Zone, a three-path Private Healing area, application-first intake, and a filterable Events & Retreats calendar. The October 2026 Awakening Your Inner Light retreat has a dedicated interest-only page pending final legal and safety confirmations.
+Responsive website prototype for Rainbow Sanctuary, including the complete page set, shared navigation, visual assets, responsive hero media, legal and safeguarding pages, and the approved design and voice references. It now includes confirmed program pricing, a $22-total Online Group Healing entry offer with payment processing included, the sequential Spiral client journey, a dedicated Earth Healing Zone, a three-path Private Healing area, application-first intake, and a filterable Events & Retreats calendar. The October 2026 Awakening Your Inner Light retreat has a dedicated interest-only page pending final legal and safety confirmations.
 
 ## Environments
 

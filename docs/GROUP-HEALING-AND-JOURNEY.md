@@ -4,7 +4,7 @@
 
 Group Healing is an optional, accessible first experience—not a prerequisite:
 
-`Group Healing ($20, twice monthly) → Spiral I → Spiral II → Spiral III → Spiral IV`
+`Group Healing ($22 total, twice monthly) → Spiral I → Spiral II → Spiral III → Spiral IV`
 
 After Spiral II, ReGeneration is an optional five-day retreat branch. Short
 courses may be taken in any order; their prerequisites and certification claims
@@ -24,12 +24,10 @@ immunity, or scientifically proven distance-energy mechanisms.
 
 ## Pricing decision
 
-$20 USD is a credible accessible pilot at the low end of visible public group
-healing offers. Public comparisons reviewed on 22 July 2026 included $20, $25,
-$40–$60, and €70 offers with different formats and durations. Keep $20 for 6–8
-sessions, then review attendance, repeat rate, refunds/no-shows, and movement into
-Spiral I. A later three-session pass could be tested at $54 without discounting
-the single session below its intended energy exchange.
+The original USD 20 pilot baseline was superseded on 8 August 2026 by an approved
+USD 22 advertised total that absorbs the internal payment-processing allowance.
+Review attendance, repeat rate, reschedules/no-shows, and movement into Spiral I
+after the initial launch sessions before approving any pass or further price change.
 
 ## Earth Healing Zone
 

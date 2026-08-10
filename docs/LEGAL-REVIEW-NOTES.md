@@ -24,12 +24,16 @@ photo.
 
 - The prototype has no analytics, advertising pixels, behavioral profiling,
   newsletter signup, payment integration, or site-set cookies/local storage.
-- The application/enquiry form is the only direct collection point. It is deliberately
-  disabled until a confirmed HTTPS endpoint is entered in `site/site-config.js`.
-- Private Healing narratives and headshots may be sensitive personal data. Do not
-  activate this flow until purpose, lawful basis, access controls, retention,
-  deletion, processor, storage region, and applicant rights are confirmed. Files
-  must remain private and must never be reused for publicity or model training.
+- The application/enquiry form is the primary direct collection point and uses a
+  same-origin HTTPS endpoint. Ordinary enquiry text is sent to the private Rainbow
+  CRM and mirrored to HubSpot.
+- Private Healing narratives and headshots may be sensitive personal data. The
+  headshot flow is implemented behind a separate gate: explicit photo consent,
+  2 MB maximum, server-side image-signature verification, private HubSpot storage,
+  contact-note association, and automatic deletion after 30 days. The image is not
+  copied into the Rainbow CRM. Files must never be reused for publicity or model
+  training. Staging verification and provider-scope confirmation remain mandatory
+  before activation.
 - The intended operational stack is HubSpot for intake and CRM, Calendly for
   accepted applicants only, and a private Google Calendar for availability. A
   separate public calendar may contain public event details only. Never place
