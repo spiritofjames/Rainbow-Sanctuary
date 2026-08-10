@@ -65,6 +65,11 @@ test("live keys are rejected outside production", () => {
     STRIPE_SECRET_KEY: "sk_live_example",
     VERCEL_ENV: "preview"
   }), /not permitted/);
+  assert.throws(() => assertCheckoutConfiguration({
+    STRIPE_CHECKOUT_ENABLED: "true",
+    STRIPE_SECRET_KEY: "rk_live_example",
+    VERCEL_ENV: "preview"
+  }), /not permitted/);
 });
 
 test("production requires a live key and explicit approval", () => {
@@ -79,6 +84,13 @@ test("production requires a live key and explicit approval", () => {
   assert.doesNotThrow(() => assertCheckoutConfiguration({
     ...base,
     STRIPE_SECRET_KEY: "sk_live_example",
+    STRIPE_LIVE_CHECKOUT_APPROVED: "true",
+    STRIPE_AUTOMATIC_TAX_ENABLED: "true",
+    STRIPE_TAX_DISPLAY_APPROVED: "true"
+  }));
+  assert.doesNotThrow(() => assertCheckoutConfiguration({
+    ...base,
+    STRIPE_SECRET_KEY: "rk_live_example",
     STRIPE_LIVE_CHECKOUT_APPROVED: "true",
     STRIPE_AUTOMATIC_TAX_ENABLED: "true",
     STRIPE_TAX_DISPLAY_APPROVED: "true"
