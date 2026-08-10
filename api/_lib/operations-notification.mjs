@@ -1,6 +1,6 @@
 import { emailHtml, emailText, escapeHtml } from "../../emails/layout.mjs";
 import { sendOperationalEmail } from "./email-service.mjs";
-import { crmPaymentHandoff } from "./webhook-delivery.mjs";
+import { crmPaymentHandoff, isInternalPaymentTest, livePaymentProcessingAllowed } from "./webhook-delivery.mjs";
 import { resolveOfferVariant } from "./offer-catalog.mjs";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -50,7 +50,9 @@ export function enquiryOperationsMessage(intake, hubspot, environment) {
 }
 
 export function purchaseOperationsMessage(stripeEvent, hubspot, environment) {
-  const handoff = crmPaymentHandoff(stripeEvent);
+  const handoff = crmPaymentHandoff(stripeEvent, {
+    allowLive: livePaymentProcessingAllowed(environment)
+  });
   const offer = resolveOfferVariant(handoff.offerId);
   const content = {
     preheader: "A verified Rainbow Sanctuary payment is ready for follow-up.",
@@ -115,6 +117,7 @@ export async function attemptPurchaseOperationsNotification(
   resendClient,
   logger = console
 ) {
+  if (isInternalPaymentTest(stripeEvent)) return { reason: "internal-payment-test", sent: false };
   try {
     return await sendPurchaseOperationsNotification(stripeEvent, hubspot, environment, resendClient);
   } catch (error) {

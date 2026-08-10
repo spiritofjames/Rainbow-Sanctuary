@@ -1,4 +1,4 @@
-import { crmPaymentHandoff } from "./webhook-delivery.mjs";
+import { crmPaymentHandoff, isInternalPaymentTest, livePaymentProcessingAllowed } from "./webhook-delivery.mjs";
 import { resolveOfferVariant } from "./offer-catalog.mjs";
 
 const HUBSPOT_API_ORIGIN = "https://api.hubapi.com";
@@ -25,8 +25,8 @@ async function responseJson(response) {
   try { return await response.json(); } catch { throw new Error("HubSpot payment contact upsert returned an invalid response."); }
 }
 
-export function toHubSpotPurchaseProperties(stripeEvent, ownerId) {
-  const handoff = crmPaymentHandoff(stripeEvent);
+export function toHubSpotPurchaseProperties(stripeEvent, ownerId, { allowLive = false } = {}) {
+  const handoff = crmPaymentHandoff(stripeEvent, { allowLive });
   const variant = resolveOfferVariant(handoff.offerId);
   if (variant.amountMinor !== handoff.amountMinor || variant.sessionId !== handoff.sessionId) {
     throw new Error("The HubSpot payment mirror does not match the approved catalogue.");
@@ -45,9 +45,12 @@ export function toHubSpotPurchaseProperties(stripeEvent, ownerId) {
 }
 
 export async function mirrorHubSpotPurchase(stripeEvent, environment, fetchImplementation = fetch) {
+  if (isInternalPaymentTest(stripeEvent)) return { enabled: false, reason: "internal-payment-test" };
   if (environment.HUBSPOT_INTAKE_ENABLED !== "true") return { enabled: false };
   const { ownerId, portalId, token } = requireConfiguration(environment);
-  const properties = toHubSpotPurchaseProperties(stripeEvent, ownerId);
+  const properties = toHubSpotPurchaseProperties(stripeEvent, ownerId, {
+    allowLive: livePaymentProcessingAllowed(environment)
+  });
   const response = await fetchImplementation(`${HUBSPOT_API_ORIGIN}/crm/v3/objects/contacts/batch/upsert`, {
     body: JSON.stringify({
       inputs: [{
