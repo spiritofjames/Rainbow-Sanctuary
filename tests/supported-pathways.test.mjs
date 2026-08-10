@@ -16,9 +16,13 @@ test("supported pathways use Beijing as the only authored source time", () => {
 });
 
 test("sensitive pathways and optional contributions stay safely gated", () => {
+  const autism = read("Autism-Family-Support.dc.html");
   const youth = read("Young-People-Wellbeing.dc.html");
   const contribution = read("Contribute.dc.html");
   const maintenance = read("144-Stages-Maintenance.dc.html");
+  assert.match(autism, /Our exploratory framework/i);
+  assert.match(autism, /not final answers or promises of a particular outcome/i);
+  assert.match(autism, /does not diagnose, treat, cure, or promise neurological changes/i);
   assert.match(youth, /reviewed first/i);
   assert.match(youth, /not a crisis or emergency service/i);
   assert.match(contribution, /Contributions are not live yet/i);
