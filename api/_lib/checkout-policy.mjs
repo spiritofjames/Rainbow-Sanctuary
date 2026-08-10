@@ -43,7 +43,9 @@ export function assertCheckoutConfiguration(environment) {
     throw new Error("Checkout is not configured.");
   }
 
-  const liveKey = environment.STRIPE_SECRET_KEY.startsWith("sk_live_");
+  const liveKey = ["sk_live_", "rk_live_"].some((prefix) =>
+    environment.STRIPE_SECRET_KEY.startsWith(prefix)
+  );
   if (environment.VERCEL_ENV === "production") {
     if (
       !liveKey ||
