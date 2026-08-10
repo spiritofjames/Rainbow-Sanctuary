@@ -33,6 +33,10 @@
 .rs-field input,.rs-field select,.rs-field textarea { box-sizing:border-box; width:100%; min-height:48px; border:1px solid #d6d3d1; border-radius:10px; padding:12px 14px; background:#fafafa; color:#0c0a09; font:400 16px/1.5 "Inter",sans-serif; }
 .rs-field textarea { resize:vertical; }
 .rs-field input:focus-visible,.rs-field select:focus-visible,.rs-field textarea:focus-visible { outline:2px solid var(--application-focus); outline-offset:2px; border-color:var(--application-focus); }
+/* Show a clear error state only after a visitor has interacted with an invalid required field. */
+.rs-field input:user-invalid,.rs-field select:user-invalid,.rs-field textarea:user-invalid { border-color:#b42318; background:#fff7f6; box-shadow:0 0 0 1px #b42318; }
+.rs-field input:user-invalid:focus-visible,.rs-field select:user-invalid:focus-visible,.rs-field textarea:user-invalid:focus-visible { outline-color:#b42318; border-color:#b42318; }
+.rs-consent-field input:user-invalid { accent-color:#b42318; outline:2px solid #b42318; outline-offset:2px; }
 .rs-file-field input { padding:10px; background:#f5f3ff; }
 .rs-file-selected { margin:0; color:#315f55; font-size:13px; font-weight:500; }
 .rs-application-submit { min-height:52px; border:0; border-radius:999px; padding:14px 28px; background:var(--rs-cta); color:#fff; font-size:15px; font-weight:600; cursor:pointer; }

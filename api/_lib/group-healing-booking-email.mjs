@@ -1,4 +1,4 @@
-import { crmPaymentHandoff } from "./webhook-delivery.mjs";
+import { crmPaymentHandoff, isInternalPaymentTest, livePaymentProcessingAllowed } from "./webhook-delivery.mjs";
 import { sendTransactionalEmail } from "./email-service.mjs";
 import { resolveOfferVariant } from "./offer-catalog.mjs";
 
@@ -25,8 +25,8 @@ function googleCalendarUrl(event) {
   return `https://calendar.google.com/calendar/render?${parameters.toString()}`;
 }
 
-export function bookingConfirmationFromStripeEvent(stripeEvent) {
-  const handoff = crmPaymentHandoff(stripeEvent);
+export function bookingConfirmationFromStripeEvent(stripeEvent, { allowLive = false } = {}) {
+  const handoff = crmPaymentHandoff(stripeEvent, { allowLive });
   const offer = resolveOfferVariant("group-healing");
   const event = APPROVED_GROUP_HEALING_EVENTS.get(handoff.sessionId);
   if (!event) throw new Error("No approved booking email catalog entry exists for this event.");
@@ -55,8 +55,8 @@ export function bookingConfirmationFromStripeEvent(stripeEvent) {
   };
 }
 
-export function programConfirmationFromStripeEvent(stripeEvent) {
-  const handoff = crmPaymentHandoff(stripeEvent);
+export function programConfirmationFromStripeEvent(stripeEvent, { allowLive = false } = {}) {
+  const handoff = crmPaymentHandoff(stripeEvent, { allowLive });
   const offer = resolveOfferVariant(handoff.offerId);
   if (
     offer.policy === "group-healing" ||
@@ -85,19 +85,26 @@ export function programConfirmationFromStripeEvent(stripeEvent) {
   };
 }
 
-export function purchaseConfirmationFromStripeEvent(stripeEvent) {
+export function purchaseConfirmationFromStripeEvent(stripeEvent, { allowLive = false } = {}) {
+  if (isInternalPaymentTest(stripeEvent)) {
+    throw new Error("Internal payment tests do not create participant confirmation emails.");
+  }
   const offerKey = String(stripeEvent.data?.object?.metadata?.offer_key || "");
   return offerKey === "group-healing"
-    ? bookingConfirmationFromStripeEvent(stripeEvent)
-    : programConfirmationFromStripeEvent(stripeEvent);
+    ? bookingConfirmationFromStripeEvent(stripeEvent, { allowLive })
+    : programConfirmationFromStripeEvent(stripeEvent, { allowLive });
 }
 
 export async function sendBookingConfirmation(stripeEvent, environment, resendClient) {
-  const message = bookingConfirmationFromStripeEvent(stripeEvent);
+  const message = bookingConfirmationFromStripeEvent(stripeEvent, {
+    allowLive: livePaymentProcessingAllowed(environment)
+  });
   return sendTransactionalEmail(message, environment, resendClient);
 }
 
 export async function sendPurchaseConfirmation(stripeEvent, environment, resendClient) {
-  const message = purchaseConfirmationFromStripeEvent(stripeEvent);
+  const message = purchaseConfirmationFromStripeEvent(stripeEvent, {
+    allowLive: livePaymentProcessingAllowed(environment)
+  });
   return sendTransactionalEmail(message, environment, resendClient);
 }

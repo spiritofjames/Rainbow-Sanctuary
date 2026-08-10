@@ -122,6 +122,25 @@ test("tax-inclusive Checkout is enabled only through the governed tax gate", () 
   assert.equal(withTax.line_items[0].price_data.tax_behavior, "inclusive");
 });
 
+test("internal checkout test is separately allowlisted and cannot become a public group booking", () => {
+  const { offer, eventId } = validateCheckoutRequest({
+    offerId: "internal-payment-test",
+    requestId
+  }, {
+    STRIPE_ALLOWED_OFFER_IDS: "internal-payment-test"
+  });
+  const parameters = checkoutSessionParameters({
+    eventId,
+    offer,
+    origin: "https://rainbowsanctuary.life",
+    taxEnabled: true
+  });
+  assert.equal(parameters.line_items[0].price_data.unit_amount, 100);
+  assert.equal(parameters.metadata.internal_payment_test, "true");
+  assert.match(parameters.success_url, /internal_test=1/);
+  assert.match(parameters.custom_text.submit.message, /internal payment-system verification/i);
+});
+
 test("programme checkout uses only the allowlisted server catalogue variant", () => {
   const result = validateCheckoutRequest({
     offerId: "crystal-healing",

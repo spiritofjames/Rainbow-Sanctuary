@@ -33,13 +33,15 @@ const variant = ({
   baseAmountUsd,
   amountUsd,
   sessionId,
-  policy = "program-purchase"
+  policy = "program-purchase",
+  internalPaymentTest = false
 }) => Object.freeze({
   id,
   name,
   baseAmountMinor: baseAmountUsd * 100,
   amountMinor: amountUsd * 100,
   currency: "usd",
+  internalPaymentTest,
   sessionId,
   policy
 });
@@ -66,6 +68,23 @@ export const OFFER_CATALOG = Object.freeze([
         amountUsd: 22,
         sessionId: "group-healing-2026-08-22",
         policy: "group-healing"
+      })
+    ]
+  }),
+  offer({
+    id: "internal-payment-test",
+    name: "Internal checkout verification",
+    pagePath: "/group-healing",
+    priceKey: "internal-payment-test",
+    variants: [
+      variant({
+        id: "internal-payment-test",
+        name: "Rainbow Sanctuary internal checkout test",
+        baseAmountUsd: 1,
+        amountUsd: 1,
+        sessionId: "internal-payment-test-2026-08-10",
+        policy: "internal-test",
+        internalPaymentTest: true
       })
     ]
   }),

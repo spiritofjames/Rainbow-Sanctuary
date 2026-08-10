@@ -64,8 +64,9 @@ test("verified programme payment builds a minimal programme confirmation", () =>
   );
 });
 
-test("live, unpaid, or unknown events cannot create a booking confirmation", () => {
-  assert.throws(() => bookingConfirmationFromStripeEvent(checkoutEvent({ livemode: true })), /test-mode/);
+test("unapproved live, unpaid, or unknown events cannot create a booking confirmation", () => {
+  assert.throws(() => bookingConfirmationFromStripeEvent(checkoutEvent({ livemode: true })), /approved Stripe Checkout/);
+  assert.doesNotThrow(() => bookingConfirmationFromStripeEvent(checkoutEvent({ livemode: true }), { allowLive: true }));
   assert.throws(() => bookingConfirmationFromStripeEvent(checkoutEvent({
     data: { object: { ...checkoutEvent().data.object, payment_status: "unpaid" } }
   })), /incomplete/);

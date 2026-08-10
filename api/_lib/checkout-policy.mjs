@@ -104,6 +104,8 @@ export function assertAllowedPaymentInviteOrigin(request, environment) {
 function policyMessage(offer) {
   return offer.policy === "group-healing"
     ? "This booking is non-refundable and non-transferable. You may request one reschedule to an available Group Healing session by contacting bookings@rainbowsanctuary.life at least 24 hours before the booked session. Mandatory consumer rights and organizer cancellation are unaffected."
+    : offer.policy === "internal-test"
+      ? "This is an internal payment-system verification only. It does not reserve a session, programme place, or service."
     : "The total shown includes payment processing. Programme scheduling and participation details are confirmed separately. Mandatory consumer rights are unaffected.";
 }
 
@@ -157,6 +159,13 @@ export function checkoutSessionParameters({ eventId, offer, origin, taxEnabled =
     success_url: `${origin}${offer.offer.pagePath}?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}${offer.offer.pagePath}?checkout=cancelled`
   };
+  if (offer.internalPaymentTest) {
+    parameters.metadata.internal_payment_test = "true";
+    parameters.payment_intent_data.metadata.internal_payment_test = "true";
+    parameters.line_items[0].price_data.product_data.metadata.internal_payment_test = "true";
+    parameters.success_url = `${origin}${offer.offer.pagePath}?checkout=success&internal_test=1&session_id={CHECKOUT_SESSION_ID}`;
+    parameters.cancel_url = `${origin}${offer.offer.pagePath}?checkout=cancelled&internal_test=1`;
+  }
   if (taxEnabled) parameters.automatic_tax = { enabled: true };
   return parameters;
 }
