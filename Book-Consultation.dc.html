@@ -137,7 +137,7 @@
         </form>
       </sc-if>
 
-      <sc-if value="{{ submitted && !acknowledgementClosed }}" hint-placeholder-val="{{ false }}">
+      <sc-if value="{{ showAcknowledgement }}" hint-placeholder-val="{{ false }}">
         <section class="rs-application-acknowledgement" role="dialog" aria-modal="true" aria-labelledby="request-received-title" aria-describedby="request-received-summary">
           <div class="rs-application-acknowledgement__card">
             <button class="rs-application-acknowledgement__close" type="button" aria-label="Close request received message" onClick="{{ dismissAcknowledgement }}">×</button>
@@ -151,7 +151,7 @@
         </section>
       </sc-if>
 
-      <sc-if value="{{ submitted && acknowledgementClosed }}" hint-placeholder-val="{{ false }}">
+      <sc-if value="{{ acknowledgementClosed }}" hint-placeholder-val="{{ false }}">
         <div class="rs-application-success">
           <span class="rs-application-kicker">Request received</span><h2>Your request is with our team.</h2>
           <p>We will follow up through WhatsApp and email with the appropriate next step.</p>
@@ -215,7 +215,7 @@
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { name: '', email: '', whatsapp: '', reason: '', privateSession: '', currentChallenges: '', intendedOutcome: '', message: '', photoFile: null, photoName: '', submissionId: '', submittedAt: '', submitted: false, acknowledgementClosed: false, submitting: false, configurationPending: false, error: '' };
+    this.state = { name: '', email: '', whatsapp: '', reason: '', privateSession: '', currentChallenges: '', intendedOutcome: '', message: '', photoFile: null, photoName: '', submissionId: '', submittedAt: '', submitted: false, showAcknowledgement: false, acknowledgementClosed: false, submitting: false, configurationPending: false, error: '' };
   }
 
   componentDidMount() {
@@ -242,6 +242,7 @@ class Component extends DCLogic {
       photoName: this.state.photoName,
       isPrivateHealing: this.state.reason === 'private-healing',
       submitted: this.state.submitted,
+      showAcknowledgement: this.state.showAcknowledgement,
       acknowledgementClosed: this.state.acknowledgementClosed,
       submitting: this.state.submitting,
       configurationPending: this.state.configurationPending,
@@ -265,7 +266,7 @@ class Component extends DCLogic {
         }
         this.setState({ photoFile: file || null, photoName: file ? file.name : '', error: '' });
       },
-      dismissAcknowledgement: () => this.setState({ acknowledgementClosed: true }),
+      dismissAcknowledgement: () => this.setState({ showAcknowledgement: false, acknowledgementClosed: true }),
       handleSubmit: async (e) => {
         e.preventDefault();
         const formConfig = window.RAINBOW_SANCTUARY_CONFIG && window.RAINBOW_SANCTUARY_CONFIG.form;
@@ -333,7 +334,7 @@ class Component extends DCLogic {
             failure.status = response.status;
             throw failure;
           }
-          this.setState({ submitted: true, acknowledgementClosed: false, submitting: false });
+          this.setState({ submitted: true, showAcknowledgement: true, acknowledgementClosed: false, submitting: false });
         } catch (error) {
           const message = error && error.status === 400
             ? 'We could not validate this enquiry. Please refresh the page, check the required fields, and try once more.'
