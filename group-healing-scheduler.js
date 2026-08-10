@@ -247,7 +247,7 @@
     const heading = document.querySelector("#choose-session .rs-entry-heading");
     if (!heading || heading.querySelector(".rs-checkout-return")) return;
     const message = document.createElement("p");
-    message.className = "rs-timezone-notice rs-checkout-return";
+    message.className = "rs-timezone-notice rs-checkout-return" + (outcome === "cancelled" ? " rs-floating-notice" : "");
     message.setAttribute("role", outcome === "success" ? "status" : "alert");
     message.innerHTML = isInternalTest && outcome === "success"
       ? "<span aria-hidden=\"true\">✓</span><span><strong>Internal test payment received.</strong> This verifies the Stripe Checkout return experience only; no booking, programme place, client record, or Rainbow Sanctuary confirmation email was created.</span>"
