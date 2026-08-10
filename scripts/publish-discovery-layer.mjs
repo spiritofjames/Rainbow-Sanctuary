@@ -82,6 +82,12 @@ const routes = {
   "Workshops.dc.html": "/programs"
 };
 
+// Transaction returns are routable but must never be indexed or enter the sitemap.
+const privateRoutes = {
+  "Payment-Confirmation.dc.html": "/payment-confirmation"
+};
+const allRoutes = { ...routes, ...privateRoutes };
+
 const pageTypes = {
   "About-Stephanie.dc.html": "AboutPage",
   "Book-Consultation.dc.html": "ContactPage",
@@ -261,7 +267,7 @@ for (const [file, route] of Object.entries(routes)) {
   const filePath = path.join(siteDir, file);
   let source = fs.readFileSync(filePath, "utf8");
 
-  for (const [oldFile, cleanRoute] of Object.entries(routes)) {
+  for (const [oldFile, cleanRoute] of Object.entries(allRoutes)) {
     source = source.replaceAll(oldFile, cleanRoute);
   }
 
@@ -303,7 +309,7 @@ for (const [file, route] of Object.entries(routes)) {
 for (const file of fs.readdirSync(siteDir).filter((name) => name.startsWith("SiteNav") && name.endsWith(".dc.html"))) {
   const filePath = path.join(siteDir, file);
   let source = fs.readFileSync(filePath, "utf8");
-  for (const [oldFile, cleanRoute] of Object.entries(routes)) {
+  for (const [oldFile, cleanRoute] of Object.entries(allRoutes)) {
     source = source.replaceAll(oldFile, cleanRoute);
   }
   fs.writeFileSync(filePath, source);
@@ -312,19 +318,19 @@ for (const file of fs.readdirSync(siteDir).filter((name) => name.startsWith("Sit
 for (const file of fs.readdirSync(siteDir).filter((name) => name.endsWith(".js"))) {
   const filePath = path.join(siteDir, file);
   let source = fs.readFileSync(filePath, "utf8");
-  for (const [oldFile, cleanRoute] of Object.entries(routes)) {
+  for (const [oldFile, cleanRoute] of Object.entries(allRoutes)) {
     source = source.replaceAll(`./${oldFile}`, cleanRoute).replaceAll(oldFile, cleanRoute);
   }
   fs.writeFileSync(filePath, source);
 }
 
-const redirects = Object.entries(routes).map(([file, route]) => ({
+const redirects = Object.entries(allRoutes).map(([file, route]) => ({
   source: `/${file}`,
   destination: route,
   permanent: true
 }));
 
-const rewrites = Object.entries(routes).map(([file, route]) => ({
+const rewrites = Object.entries(allRoutes).map(([file, route]) => ({
   source: route,
   destination: `/${file}`
 }));

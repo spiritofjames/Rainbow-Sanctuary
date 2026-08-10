@@ -56,7 +56,7 @@ test("the server owns the Stripe price and amount", () => {
     optional: false,
     type: "text"
   }]);
-  assert.match(parameters.success_url, /^https:\/\/staging\.rainbowsanctuary\.life\//);
+  assert.equal(parameters.success_url, "https://staging.rainbowsanctuary.life/payment-confirmation?payment=confirmed&session_id={CHECKOUT_SESSION_ID}");
 });
 
 test("live keys are rejected outside production", () => {
@@ -137,6 +137,7 @@ test("internal checkout test is separately allowlisted and cannot become a publi
   });
   assert.equal(parameters.line_items[0].price_data.unit_amount, 100);
   assert.equal(parameters.metadata.internal_payment_test, "true");
+  assert.match(parameters.success_url, /payment-confirmation\?payment=confirmed/);
   assert.match(parameters.success_url, /internal_test=1/);
   assert.match(parameters.custom_text.submit.message, /internal payment-system verification/i);
 });

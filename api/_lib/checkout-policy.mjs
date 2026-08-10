@@ -156,14 +156,14 @@ export function checkoutSessionParameters({ eventId, offer, origin, taxEnabled =
         source: "rainbow-sanctuary-web"
       }
     },
-    success_url: `${origin}${offer.offer.pagePath}?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
+    success_url: `${origin}/payment-confirmation?payment=confirmed&session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}${offer.offer.pagePath}?checkout=cancelled`
   };
   if (offer.internalPaymentTest) {
     parameters.metadata.internal_payment_test = "true";
     parameters.payment_intent_data.metadata.internal_payment_test = "true";
     parameters.line_items[0].price_data.product_data.metadata.internal_payment_test = "true";
-    parameters.success_url = `${origin}${offer.offer.pagePath}?checkout=success&internal_test=1&session_id={CHECKOUT_SESSION_ID}`;
+    parameters.success_url = `${origin}/payment-confirmation?payment=confirmed&internal_test=1&session_id={CHECKOUT_SESSION_ID}`;
     parameters.cancel_url = `${origin}${offer.offer.pagePath}?checkout=cancelled&internal_test=1`;
   }
   if (taxEnabled) parameters.automatic_tax = { enabled: true };
