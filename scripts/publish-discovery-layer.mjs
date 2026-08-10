@@ -49,6 +49,7 @@ const routes = {
   "1-1-Sessions.dc.html": "/private-healing",
   "Accessibility-Statement.dc.html": "/accessibility",
   "Adult-Potential-Development.dc.html": "/adult-potential-development",
+  "Autism-Family-Support.dc.html": "/autism-family-support",
   "Awakening-Your-Inner-Light-2026.dc.html": "/awakening-your-inner-light-2026",
   "Bigger-Vision.dc.html": "/bigger-vision",
   "Book-Consultation.dc.html": "/apply",
@@ -84,7 +85,10 @@ const routes = {
 
 // Transaction returns are routable but must never be indexed or enter the sitemap.
 const privateRoutes = {
-  "Payment-Confirmation.dc.html": "/payment-confirmation"
+  "Payment-Confirmation.dc.html": "/payment-confirmation",
+  "Young-People-Wellbeing.dc.html": "/young-people-wellbeing",
+  "144-Stages-Maintenance.dc.html": "/144-stages-maintenance",
+  "Contribute.dc.html": "/contribute"
 };
 const allRoutes = { ...routes, ...privateRoutes };
 
@@ -105,6 +109,7 @@ const ogImages = {
   "Earth-Healing-Zone.dc.html": "/assets/editorial/earth-healing-stewardship-v1.jpg",
   "Events-Retreats.dc.html": "/assets/retreat-panama-coast-aerial.jpg",
   "Group-Healing.dc.html": "/assets/editorial/group-healing-zoom.jpg",
+  "Autism-Family-Support.dc.html": "/assets/editorial/autism-family-support-v1.jpg",
   "Spiral-Journey.dc.html": "/assets/editorial/home-spiral-editorial.jpg"
 };
 
