@@ -11,7 +11,7 @@
 <meta property="og:description" content="Apply for private healing or tell Rainbow Sanctuary what brings you here and find the most suitable next step.">
 <link rel="icon" href="./assets/brand/favicon-lotus-64.png?v=20260717-final1" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="./assets/brand/apple-touch-icon.png?v=20260717-final1" sizes="180x180">
-<link rel="stylesheet" href="./site.css?v=20260714-spectrum1">
+<link rel="stylesheet" href="./site.css?v=20260810-floating-notice1">
 <link rel="stylesheet" href="./application.css?v=20260722-application1">
 <script src="./site-config.js"></script>
 <script src="./support.js"></script>
@@ -129,7 +129,7 @@
           </sc-if>
 
           <sc-if value="{{ error }}">
-            <p class="rs-form-notice rs-form-notice--error" role="alert" aria-live="assertive">{{ error }}</p>
+            <p class="rs-form-notice rs-form-notice--error rs-floating-notice" role="alert" aria-live="assertive">{{ error }}</p>
           </sc-if>
 
           <button class="rs-application-submit rs-cta-interactive rs-cta-enter rs-cta-final" type="submit" disabled="{{ submitting }}">{{ submitLabel }}</button>
