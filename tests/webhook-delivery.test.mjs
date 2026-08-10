@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import {
   crmPaymentHandoff,
   forwardStripeEvent,
+  isInternalPaymentTest,
+  livePaymentProcessingAllowed,
   safeStripeEvent,
   signaturesMatch
 } from "../api/_lib/webhook-delivery.mjs";
@@ -61,8 +63,9 @@ test("the strict CRM handoff includes only the client identity needed for operat
   });
 });
 
-test("CRM handoff rejects live, unpaid or incomplete client events", () => {
-  assert.throws(() => crmPaymentHandoff({ ...checkoutEvent, livemode: true }), /test-mode/);
+test("CRM handoff rejects unapproved live, unpaid or incomplete client events", () => {
+  assert.throws(() => crmPaymentHandoff({ ...checkoutEvent, livemode: true }), /approved Stripe Checkout/);
+  assert.doesNotThrow(() => crmPaymentHandoff({ ...checkoutEvent, livemode: true }, { allowLive: true }));
   assert.throws(() => crmPaymentHandoff({
     ...checkoutEvent,
     data: { object: { ...checkoutEvent.data.object, payment_status: "unpaid" } }
@@ -77,6 +80,39 @@ test("CRM handoff rejects live, unpaid or incomplete client events", () => {
       }
     }
   }), /incomplete/);
+});
+
+test("live CRM forwarding is available only to the approved production webhook", () => {
+  assert.equal(livePaymentProcessingAllowed({
+    VERCEL_ENV: "production",
+    STRIPE_LIVE_CHECKOUT_APPROVED: "true",
+    STRIPE_SECRET_KEY: "sk_live_example",
+    STRIPE_WEBHOOK_SECRET: "a-webhook-secret-that-is-long-enough-for-production"
+  }), true);
+  assert.equal(livePaymentProcessingAllowed({
+    VERCEL_ENV: "preview",
+    STRIPE_LIVE_CHECKOUT_APPROVED: "true",
+    STRIPE_SECRET_KEY: "sk_live_example",
+    STRIPE_WEBHOOK_SECRET: "a-webhook-secret-that-is-long-enough-for-production"
+  }), false);
+});
+
+test("internal payment test events never enter the CRM handoff", async () => {
+  const event = {
+    ...checkoutEvent,
+    livemode: true,
+    data: { object: { ...checkoutEvent.data.object, metadata: {
+      ...checkoutEvent.data.object.metadata,
+      internal_payment_test: "true"
+    } } }
+  };
+  assert.equal(isInternalPaymentTest(event), true);
+  assert.deepEqual(await forwardStripeEvent(event, {
+    VERCEL_ENV: "production",
+    STRIPE_LIVE_CHECKOUT_APPROVED: "true",
+    STRIPE_SECRET_KEY: "sk_live_example",
+    STRIPE_WEBHOOK_SECRET: "a-webhook-secret-that-is-long-enough-for-production"
+  }), { forwarded: false, ignored: true });
 });
 
 test("sandbox events can be verified without forwarding while CRM is governed off", async () => {

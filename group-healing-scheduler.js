@@ -240,14 +240,20 @@
   }
 
   function showCheckoutReturnStatus() {
-    const outcome = new URLSearchParams(window.location.search).get("checkout");
+    const parameters = new URLSearchParams(window.location.search);
+    const outcome = parameters.get("checkout");
+    const isInternalTest = parameters.get("internal_test") === "1";
     if (!["success", "cancelled"].includes(outcome)) return;
     const heading = document.querySelector("#choose-session .rs-entry-heading");
     if (!heading || heading.querySelector(".rs-checkout-return")) return;
     const message = document.createElement("p");
     message.className = "rs-timezone-notice rs-checkout-return";
     message.setAttribute("role", outcome === "success" ? "status" : "alert");
-    message.innerHTML = outcome === "success"
+    message.innerHTML = isInternalTest && outcome === "success"
+      ? "<span aria-hidden=\"true\">✓</span><span><strong>Internal test payment received.</strong> This verifies the Stripe Checkout return experience only; no booking, programme place, client record, or Rainbow Sanctuary confirmation email was created.</span>"
+      : isInternalTest
+        ? "<span aria-hidden=\"true\">↩</span><span><strong>Internal test checkout was cancelled.</strong> No payment was taken and no booking was created.</span>"
+      : outcome === "success"
       ? "<span aria-hidden=\"true\">✓</span><span><strong>Payment received.</strong> Stripe will email your receipt. Registration details will follow separately.</span>"
       : "<span aria-hidden=\"true\">↩</span><span><strong>Checkout was cancelled.</strong> No payment was taken; your selected session has not been reserved.</span>";
     heading.appendChild(message);
