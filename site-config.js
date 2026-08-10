@@ -67,13 +67,24 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     staticFallbackApproved: true,
     staticGeneratedAt: "2026-07-25T10:00:00.000Z",
     staticCacheVersion: "events-1",
-    timezone: "Asia/Singapore",
+    // Beijing is the single authoring time zone for Rainbow Sanctuary's supported group pathways.
+    timezone: "Asia/Shanghai",
     groupHealing: {
       frequency: "Twice monthly",
       duration: "Approximately 60 minutes",
       price: "USD 22",
       checkoutEndpoint: "/api/stripe/create-checkout-session",
       checkoutUrl: ""
+    },
+    privateSchedules: {
+      "144-stages-maintenance": {
+        timezone: "Asia/Shanghai",
+        startDateTime: "2026-08-17T23:00:00+08:00",
+        firstCycle: { frequency: "weekly", sessions: 13 },
+        afterFirstCycle: { frequency: "twice-monthly", status: "requires-team-approved-dates" },
+        deliveryMode: "remote-no-attendance",
+        operationsCalendar: "private-only"
+      }
     },
     publicCalendarUrl: "",
     items: [
@@ -96,6 +107,96 @@ window.RAINBOW_SANCTUARY_CONFIG = {
         status: "open",
         registrationUrl: "/group-healing#choose-session",
         checkoutUrl: ""
+      },
+      {
+        id: "autism-family-support-2026-08-18",
+        title: "Autism & Family Support",
+        category: "family",
+        startDate: "2026-08-18",
+        startDateTime: "2026-08-18T23:00:00+08:00",
+        timezone: "Asia/Shanghai",
+        timezoneLabel: "Beijing time",
+        location: "Remote preparation",
+        venue: "No live attendance required",
+        summary: "A free, scheduled, non-clinical wellbeing practice for autistic people and families.",
+        price: "Free · optional contribution is separate",
+        status: "interest",
+        registrationUrl: "/autism-family-support"
+      },
+      {
+        id: "autism-family-support-2026-08-25",
+        title: "Autism & Family Support",
+        category: "family",
+        startDate: "2026-08-25",
+        startDateTime: "2026-08-25T23:00:00+08:00",
+        timezone: "Asia/Shanghai",
+        timezoneLabel: "Beijing time",
+        location: "Remote preparation",
+        venue: "No live attendance required",
+        summary: "A free, scheduled, non-clinical wellbeing practice for autistic people and families.",
+        price: "Free · optional contribution is separate",
+        status: "interest",
+        registrationUrl: "/autism-family-support"
+      },
+      {
+        id: "autism-family-support-2026-09-01",
+        title: "Autism & Family Support",
+        category: "family",
+        startDate: "2026-09-01",
+        startDateTime: "2026-09-01T23:00:00+08:00",
+        timezone: "Asia/Shanghai",
+        timezoneLabel: "Beijing time",
+        location: "Remote preparation",
+        venue: "No live attendance required",
+        summary: "A free, scheduled, non-clinical wellbeing practice for autistic people and families.",
+        price: "Free · optional contribution is separate",
+        status: "interest",
+        registrationUrl: "/autism-family-support"
+      },
+      {
+        id: "young-people-wellbeing-2026-09-01",
+        title: "Young People’s Wellbeing Support",
+        category: "group",
+        startDate: "2026-09-01",
+        startDateTime: "2026-09-01T23:00:00+08:00",
+        timezone: "Asia/Shanghai",
+        timezoneLabel: "Beijing time",
+        location: "Remote preparation",
+        venue: "Review required before enrolment",
+        summary: "A reviewed, non-clinical monthly wellbeing pathway for young people up to age 25.",
+        price: "Free · optional contribution is separate",
+        status: "interest",
+        registrationUrl: "/young-people-wellbeing"
+      },
+      {
+        id: "young-people-wellbeing-2026-10-06",
+        title: "Young People’s Wellbeing Support",
+        category: "group",
+        startDate: "2026-10-06",
+        startDateTime: "2026-10-06T23:00:00+08:00",
+        timezone: "Asia/Shanghai",
+        timezoneLabel: "Beijing time",
+        location: "Remote preparation",
+        venue: "Review required before enrolment",
+        summary: "A reviewed, non-clinical monthly wellbeing pathway for young people up to age 25.",
+        price: "Free · optional contribution is separate",
+        status: "interest",
+        registrationUrl: "/young-people-wellbeing"
+      },
+      {
+        id: "144-stages-maintenance-2026-08-17",
+        title: "144 Stages Maintenance",
+        category: "group",
+        startDate: "2026-08-17",
+        startDateTime: "2026-08-17T23:00:00+08:00",
+        timezone: "Asia/Shanghai",
+        timezoneLabel: "Beijing time",
+        location: "Private pathway",
+        venue: "Accepted participants only",
+        summary: "A scheduled private maintenance session. Details are sent only to accepted participants.",
+        price: "USD 50 per confirmed session",
+        status: "scheduled",
+        registrationUrl: "/144-stages-maintenance"
       },
       {
         id: "awakening-inner-light-2026",
