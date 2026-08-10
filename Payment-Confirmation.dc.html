@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Payment confirmation | Rainbow Sanctuary</title>
+<meta name="description" content="Confirmation of a Rainbow Sanctuary payment return.">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#f5f5f5">
+<link rel="icon" href="./assets/brand/favicon-lotus-64.png?v=20260717-final1" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="./assets/brand/apple-touch-icon.png?v=20260717-final1" sizes="180x180">
+<link rel="stylesheet" href="./site.css?v=20260810-payment-confirmation1">
+<script src="./support.js"></script>
+<script src="./payment-confirmation.js?v=20260810-payment-confirmation1" defer></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@300;400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</helmet>
+<a class="rs-skip-link" href="#main-content">Skip to content</a>
+<div class="rs-payment-page">
+  <dc-import name="SiteNavFixed" hint-size="100%,84px"></dc-import>
+  <main id="main-content" class="rs-payment-confirmation" aria-live="polite">
+    <section class="rs-payment-confirmation__shell">
+      <div class="rs-payment-confirmation__mark" aria-hidden="true">✓</div>
+      <span class="rs-entry-kicker">Secure payment return</span>
+      <h1 id="payment-confirmation-title">We’re confirming your payment.</h1>
+      <p id="payment-confirmation-summary">Please keep this page open for a moment while we confirm the payment return with Stripe.</p>
+      <dl id="payment-confirmation-details" class="rs-payment-confirmation__details is-hidden"></dl>
+      <div id="payment-confirmation-next" class="rs-payment-confirmation__next is-hidden">
+        <h2>What happens next</h2>
+        <p>We will send your confirmation and any session-access details to the email address used at checkout. Please check your inbox and spam folder before the session.</p>
+      </div>
+      <p id="payment-confirmation-help" class="rs-payment-confirmation__help">If you need help with a payment, contact <a href="mailto:payments@rainbowsanctuary.life">payments@rainbowsanctuary.life</a>.</p>
+      <div class="rs-payment-confirmation__actions">
+        <a class="rs-entry-button rs-entry-button--primary" href="/group-healing">Return to Group Healing</a>
+        <a class="rs-entry-button" href="/">Return home</a>
+      </div>
+    </section>
+  </main>
+</div>
+</x-dc>
+</body>
+</html>

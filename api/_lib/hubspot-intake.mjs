@@ -44,6 +44,31 @@ function splitName(displayName) {
   return { firstname, lastname: remainder.join(" ") };
 }
 
+function escapeHtml(value) {
+  return String(value || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function privateHealingNote({ intake, retention, application }) {
+  const days = retention.slice(1, -1);
+  const session = PROGRAM_LABELS.get(application?.session || intake.program) || "Not specified";
+  const challenges = application?.currentChallenges || intake.requestMessage || "Not specified";
+  const intendedOutcome = application?.intendedOutcome || "Not specified";
+  return [
+    "<h3>Private Healing application</h3>",
+    `<p><strong>Requested session</strong><br>${escapeHtml(session)}</p>`,
+    `<p><strong>Current challenges</strong><br>${escapeHtml(challenges).replaceAll("\n", "<br>")}</p>`,
+    `<p><strong>Intended outcome</strong><br>${escapeHtml(intendedOutcome).replaceAll("\n", "<br>")}</p>`,
+    `<p><strong>Preferred contact</strong><br>WhatsApp: ${escapeHtml(intake.phone)}</p>`,
+    `<p><strong>Headshot</strong><br>Attached to this restricted note. It is automatically deleted after ${days} days. Do not download or duplicate outside the approved case workflow.</p>`,
+    `<p><small>Explicit consent recorded · Submission reference: ${escapeHtml(intake.eventId)}</small></p>`
+  ].join("");
+}
+
 function requireConfiguration(environment) {
   const token = environment.HUBSPOT_ACCESS_TOKEN;
   const ownerId = environment.HUBSPOT_OWNER_ID;
@@ -71,7 +96,7 @@ async function responseJson(response, failureMessage) {
   try { return await response.json(); } catch { throw new Error(failureMessage); }
 }
 
-async function attachPrivateHeadshot({ attachment, contactId, intake, ownerId, retention, token }, fetchImplementation) {
+async function attachPrivateHeadshot({ application, attachment, contactId, intake, ownerId, retention, token }, fetchImplementation) {
   const uploadBody = new FormData();
   uploadBody.append("file", new Blob([attachment.buffer], { type: attachment.mimeType }), `${intake.eventId}.${attachment.extension}`);
   uploadBody.append("fileName", `${intake.eventId}.${attachment.extension}`);
@@ -101,7 +126,7 @@ async function attachPrivateHeadshot({ attachment, contactId, intake, ownerId, r
       }],
       properties: {
         hs_attachment_ids: String(uploaded.id),
-        hs_note_body: `Private Healing headshot received with explicit consent. Automatically deleted after ${retention.slice(1, -1)} days. Do not download or duplicate outside the approved case workflow. Submission reference: ${intake.eventId}.`,
+        hs_note_body: privateHealingNote({ application, intake, retention }),
         hs_timestamp: intake.occurredAt,
         hubspot_owner_id: ownerId
       }
@@ -129,7 +154,7 @@ export function toHubSpotProperties(intake, ownerId) {
   };
 }
 
-export async function mirrorHubSpotIntake(intake, environment, fetchImplementation = fetch, attachment = null) {
+export async function mirrorHubSpotIntake(intake, environment, fetchImplementation = fetch, attachment = null, application = null) {
   if (environment.HUBSPOT_INTAKE_ENABLED !== "true") return { enabled: false };
   const { ownerId, portalId, token } = requireConfiguration(environment);
   const privateConfiguration = attachment ? requirePrivateIntakeConfiguration(environment) : null;
@@ -148,6 +173,7 @@ export async function mirrorHubSpotIntake(intake, environment, fetchImplementati
   if (attachment) {
     await attachPrivateHeadshot({
       attachment,
+      application,
       contactId,
       intake,
       ownerId,

@@ -216,6 +216,11 @@
       "source": "/Workshops.dc.html",
       "destination": "/programs",
       "permanent": true
+    },
+    {
+      "source": "/Payment-Confirmation.dc.html",
+      "destination": "/payment-confirmation",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -362,6 +367,10 @@
     {
       "source": "/programs",
       "destination": "/Workshops.dc.html"
+    },
+    {
+      "source": "/payment-confirmation",
+      "destination": "/Payment-Confirmation.dc.html"
     }
   ]
 }

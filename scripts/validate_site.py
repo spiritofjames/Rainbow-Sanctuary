@@ -32,6 +32,9 @@ REQUIRED_SECURITY_HEADERS = {
     "X-Content-Type-Options",
     "X-Frame-Options",
 }
+# Transaction-return pages are reachable only from a completed Checkout session.
+# They are deliberately routable, but must not become discovery/sitemap content.
+PRIVATE_ROUTES = {"/payment-confirmation"}
 
 
 class DocumentParser(HTMLParser):
@@ -155,8 +158,12 @@ def load_vercel_configuration(errors: list[str]) -> dict:
 def validate_discovery_layer(
     config: dict, route_map: dict[str, str], errors: list[str]
 ) -> None:
-    if len(route_map) != 36:
-        errors.append(f"vercel.json: expected 36 canonical routes, found {len(route_map)}")
+    discovery_routes = {
+        route: target for route, target in route_map.items()
+        if route not in PRIVATE_ROUTES
+    }
+    if len(discovery_routes) != 36:
+        errors.append(f"vercel.json: expected 36 canonical routes, found {len(discovery_routes)}")
 
     redirects = config.get("redirects", [])
     redirect_map = {
@@ -164,7 +171,7 @@ def validate_discovery_layer(
         for rule in redirects
         if rule.get("source") and rule.get("destination")
     }
-    for clean_route, legacy_path in route_map.items():
+    for clean_route, legacy_path in discovery_routes.items():
         target = ROOT / legacy_path.lstrip("/")
         if not target.is_file():
             errors.append(f"vercel.json: {clean_route} rewrites to missing {legacy_path}")
@@ -191,7 +198,7 @@ def validate_discovery_layer(
                     errors.append(f"{target.name}: missing discovery metadata {marker}")
 
     expected_urls = {
-        f"https://rainbowsanctuary.life{route}" for route in route_map
+        f"https://rainbowsanctuary.life{route}" for route in discovery_routes
     }
     sitemap_path = ROOT / "sitemap.xml"
     if sitemap_path.is_file():
