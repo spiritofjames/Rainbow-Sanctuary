@@ -292,6 +292,8 @@ class Component extends DCLogic {
             privacyAccepted: true,
             photoConsent: isPrivate,
             privacyPolicyVersion: window.RAINBOW_SANCTUARY_CONFIG?.legal?.privacyPolicyVersion || '9 August 2026',
+            currentChallenges: isPrivate ? this.state.currentChallenges.trim() : undefined,
+            intendedOutcome: isPrivate ? this.state.intendedOutcome.trim() : undefined,
             reason: this.state.reason,
             program: isPrivate ? this.state.privateSession : undefined,
             sourcePage: window.location.pathname + (sourceQuery ? `?${sourceQuery}` : ''),

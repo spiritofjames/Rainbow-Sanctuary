@@ -83,7 +83,11 @@ test("private healing uploads a private expiring file and attaches it to Ethel's
       return { json: async () => ({ id: "51001" }), ok: true, status: 201 };
     }
     return { ok: true, status: 200 };
-  }, attachment);
+  }, attachment, {
+    currentChallenges: "I feel stuck in an old pattern.",
+    intendedOutcome: "I would like to understand a supportive next step.",
+    session: "karma"
+  });
 
   assert.deepEqual(result, {
     attachmentStored: true,
@@ -108,6 +112,11 @@ test("private healing uploads a private expiring file and attaches it to Ethel's
   assert.equal(note.associations[0].types[0].associationTypeId, 202);
   assert.equal(note.properties.hs_attachment_ids, "51001");
   assert.equal(note.properties.hubspot_owner_id, "166816652");
+  assert.match(note.properties.hs_note_body, /Private Healing application/);
+  assert.match(note.properties.hs_note_body, /Personal Karma Reconciliation/);
+  assert.match(note.properties.hs_note_body, /stuck in an old pattern/);
+  assert.match(note.properties.hs_note_body, /supportive next step/);
+  assert.match(note.properties.hs_note_body, /WhatsApp: \+1 555 123 4567/);
   assert.match(note.properties.hs_note_body, /30 days/);
 });
 

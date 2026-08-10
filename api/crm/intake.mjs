@@ -46,6 +46,17 @@ async function parseIntakeRequest(request) {
   return { attachment: null, input: parseJsonBody(request) };
 }
 
+function privateApplicationDetails(input, intake) {
+  const currentChallenges = String(input?.currentChallenges || "").trim();
+  const intendedOutcome = String(input?.intendedOutcome || "").trim();
+  if (
+    !intake.program ||
+    currentChallenges.length < 1 || currentChallenges.length > 1500 ||
+    intendedOutcome.length < 1 || intendedOutcome.length > 1500
+  ) throw new Error("Invalid private healing application details.");
+  return { currentChallenges, intendedOutcome, session: intake.program };
+}
+
 export default async function handler(request, response) {
   if (request.method !== "POST") {
     response.setHeader("Allow", "POST");
@@ -69,8 +80,9 @@ export default async function handler(request, response) {
     const normalized = normalizePublicIntake(input, new Date(), {
       allowPrivateHealing: isPrivate
     });
+    const privateApplication = isPrivate ? privateApplicationDetails(input, normalized) : null;
     await forwardWebsiteIntake(input, process.env);
-    const hubspot = await mirrorHubSpotIntake(normalized, process.env, fetch, attachment);
+    const hubspot = await mirrorHubSpotIntake(normalized, process.env, fetch, attachment, privateApplication);
     await attemptEnquiryOperationsNotification(normalized, hubspot, process.env);
     return sendJson(response, 202, { accepted: true });
   } catch (error) {
