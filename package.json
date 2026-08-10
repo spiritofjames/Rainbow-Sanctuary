@@ -7,9 +7,12 @@
     "email:check": "node scripts/check-email-system.mjs",
     "email:preview": "node scripts/build-email-preview.mjs",
     "resend:sync": "node scripts/sync-resend.mjs",
+    "stripe:payment-links": "node scripts/generate-payment-invite-catalog.mjs",
     "validate": "npm test && npm run email:check && python3 scripts/validate_site.py && node scripts/publish-discovery-layer.mjs && git diff --exit-code"
   },
   "dependencies": {
+    "@vercel/oidc": "3.8.2",
+    "busboy": "^1.6.0",
     "resend": "^6.18.1",
     "stripe": "22.4.0"
   }

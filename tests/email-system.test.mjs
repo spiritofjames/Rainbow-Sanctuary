@@ -1,7 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { emailCatalog } from "../emails/catalog.mjs";
-import { assertEmailDelivery, sendTransactionalEmail } from "../api/_lib/email-service.mjs";
+import {
+  assertEmailDelivery,
+  assertOperationalEmailDelivery,
+  sendOperationalEmail,
+  sendTransactionalEmail
+} from "../api/_lib/email-service.mjs";
 
 const template = emailCatalog.find(({ alias }) => alias === "rs-enquiry-received");
 const variables = Object.fromEntries(template.variables.map(({ key }) => [key, `Value for ${key}`]));
@@ -66,4 +71,43 @@ test("all required template variables must be populated", () => {
     }),
     /Missing transactional email variables/
   );
+});
+
+test("operational email uses a fixed Rainbow identity, allowlisted recipient and idempotency key", async () => {
+  let call;
+  const client = { emails: { send: async (...args) => { call = args; return { data: { id: "email_ops_123" }, error: null }; } } };
+  const environment = {
+    RESEND_EMAIL_ENABLED: "true",
+    RESEND_API_KEY: "re_test",
+    RESEND_ALLOWED_RECIPIENTS: "ethel@rainbowsanctuary.life",
+    VERCEL_ENV: "preview"
+  };
+  assert.equal(assertOperationalEmailDelivery({
+    identity: "general",
+    to: "ethel@rainbowsanctuary.life"
+  }, environment).deliver, true);
+  await assert.rejects(
+    () => sendOperationalEmail({
+      html: "<p>Test</p>",
+      identity: "unknown",
+      idempotencyKey: "ops:test",
+      subject: "Test",
+      text: "Test",
+      to: "ethel@rainbowsanctuary.life"
+    }, environment, client),
+    /unknown operational email identity/i
+  );
+  const result = await sendOperationalEmail({
+    html: "<p>Test</p>",
+    identity: "general",
+    idempotencyKey: "intake:event-123:operations",
+    subject: "New enquiry",
+    tags: [{ name: "workflow", value: "enquiry" }],
+    text: "Test",
+    to: "ethel@rainbowsanctuary.life"
+  }, environment, client);
+  assert.deepEqual(result, { sent: true, id: "email_ops_123" });
+  assert.equal(call[0].from, "Rainbow Sanctuary <hello@rainbowsanctuary.life>");
+  assert.equal(call[0].to[0], "ethel@rainbowsanctuary.life");
+  assert.equal(call[1].idempotencyKey, "intake:event-123:operations");
 });

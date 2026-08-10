@@ -1,0 +1,29 @@
+name: Knowledge decision intake
+
+on:
+  push:
+    branches: [main, staging]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: knowledge-decision-${{ github.repository }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24.5.0
+      - name: Send signed release decision
+        env:
+          PSN_KNOWLEDGE_INTAKE_SIGNING_KEY: ${{ secrets.PSN_KNOWLEDGE_INTAKE_SIGNING_KEY }}
+        run: node scripts/send-knowledge-decision.mjs

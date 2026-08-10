@@ -108,9 +108,9 @@
           <sc-if value="{{ isPrivateHealing }}" hint-placeholder-val="{{ false }}">
             <div class="rs-field"><label for="private-session">Which private session are you considering?</label><select id="private-session" name="privateSession" required="true" value="{{ privateSession }}" onChange="{{ onPrivateSessionChange }}"><option value="">Choose one</option><option value="karma">Personal Karma Reconciliation</option><option value="family-field">Family Information Field Restoration</option><option value="dna-activation">DNA Activation</option><option value="unsure">I am not sure</option></select></div>
             <div class="rs-application-form__heading"><span>Step 3 · Your application</span><h2>What support are you seeking?</h2></div>
-            <div class="rs-field"><label for="current-challenges">Your current challenges</label><textarea id="current-challenges" name="currentChallenges" rows="5" required="true" value="{{ currentChallenges }}" onChange="{{ onChallengesChange }}"></textarea><p class="rs-field-help">Describe your lived experience in your own words. Do not include medical records or private information about another person.</p></div>
-            <div class="rs-field"><label for="intended-outcome">Your intended outcome</label><textarea id="intended-outcome" name="intendedOutcome" rows="4" required="true" value="{{ intendedOutcome }}" onChange="{{ onOutcomeChange }}"></textarea><p class="rs-field-help">What do you hope to understand, practise, or relate to differently?</p></div>
-            <div class="rs-field rs-file-field"><label for="recent-headshot">Clear, recent headshot</label><input id="recent-headshot" name="headshot" type="file" accept="image/jpeg,image/png,image/webp" required="true" onChange="{{ onPhotoChange }}" /><p class="rs-field-help">JPG, PNG, or WebP; maximum 10 MB. Use a recent, unedited image reflecting your current appearance. Collection remains inactive until the secure form provider and retention rules are connected.</p><sc-if value="{{ photoName }}"><p class="rs-file-selected">Selected: {{ photoName }}</p></sc-if></div>
+            <div class="rs-field"><label for="current-challenges">Your current challenges</label><textarea id="current-challenges" name="currentChallenges" rows="5" maxlength="900" required="true" value="{{ currentChallenges }}" onChange="{{ onChallengesChange }}"></textarea><p class="rs-field-help">Describe your lived experience in your own words. Do not include medical records or private information about another person.</p></div>
+            <div class="rs-field"><label for="intended-outcome">Your intended outcome</label><textarea id="intended-outcome" name="intendedOutcome" rows="4" maxlength="700" required="true" value="{{ intendedOutcome }}" onChange="{{ onOutcomeChange }}"></textarea><p class="rs-field-help">What do you hope to understand, practise, or relate to differently?</p></div>
+            <div class="rs-field rs-file-field"><label for="recent-headshot">Clear, recent headshot</label><input id="recent-headshot" name="headshot" type="file" accept="image/jpeg,image/png,image/webp" required="true" onChange="{{ onPhotoChange }}" /><p class="rs-field-help">JPG, PNG, or WebP; maximum 2 MB. The image is stored privately with your HubSpot contact and automatically deleted after 30 days.</p><sc-if value="{{ photoName }}"><p class="rs-file-selected">Selected: {{ photoName }}</p></sc-if></div>
             <label class="rs-consent-field" for="consultation-photo-consent"><input id="consultation-photo-consent" name="photoConsent" type="checkbox" required="true" /><span>I consent to Rainbow Sanctuary using this image solely to review and, if accepted, support this private-healing request. I understand it is not used for medical diagnosis or identity verification.</span></label>
           </sc-if>
 
@@ -201,7 +201,7 @@
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { name: '', email: '', whatsapp: '', reason: '', privateSession: '', currentChallenges: '', intendedOutcome: '', message: '', photoFile: null, photoName: '', submissionId: window.crypto.randomUUID(), submittedAt: new Date().toISOString(), submitted: false, submitting: false, configurationPending: false, error: '' };
+    this.state = { name: '', email: '', whatsapp: '', reason: '', privateSession: '', currentChallenges: '', intendedOutcome: '', message: '', photoFile: null, photoName: '', submissionId: '', submittedAt: '', submitted: false, submitting: false, configurationPending: false, error: '' };
   }
 
   componentDidMount() {
@@ -209,8 +209,10 @@ class Component extends DCLogic {
     const reason = params.get('reason');
     const privateSession = params.get('session');
     const event = params.get('event');
+    const program = params.get('program');
     const eventMessage = event === 'awakening-inner-light-2026' ? 'I would like to register interest in the Awakening Your Inner Light retreat, 1–7 October 2026 in Bocas del Toro.' : '';
-    if (reason || privateSession || eventMessage) this.setState({ reason: reason || (privateSession ? 'private-healing' : ''), privateSession: privateSession || '', message: eventMessage });
+    const programMessage = program ? `I am interested in ${program.replaceAll('-', ' ')}.` : '';
+    if (reason || privateSession || eventMessage || programMessage) this.setState({ reason: reason || (privateSession ? 'private-healing' : ''), privateSession: privateSession || '', message: eventMessage || programMessage });
   }
 
   renderVals() {
@@ -241,9 +243,9 @@ class Component extends DCLogic {
       onPhotoChange: (e) => {
         const file = e.target.files && e.target.files[0];
         const allowed = ['image/jpeg', 'image/png', 'image/webp'];
-        if (file && (!allowed.includes(file.type) || file.size > 10 * 1024 * 1024)) {
+        if (file && (!allowed.includes(file.type) || file.size > 2 * 1024 * 1024)) {
           e.target.value = '';
-          this.setState({ photoFile: null, photoName: '', error: 'Please choose a JPG, PNG, or WebP image no larger than 10 MB.' });
+          this.setState({ photoFile: null, photoName: '', error: 'Please choose a JPG, PNG, or WebP image no larger than 2 MB.' });
           return;
         }
         this.setState({ photoFile: file || null, photoName: file ? file.name : '', error: '' });
@@ -260,10 +262,6 @@ class Component extends DCLogic {
           this.setState({ error: 'Please add the requested recent headshot, or contact the team to discuss an accessible alternative.' });
           return;
         }
-        if (isPrivate) {
-          this.setState({ error: 'Private Healing intake is still protected while its confidential image-storage and retention process is commissioned. No information or photo was sent.' });
-          return;
-        }
         if (!formConfig || !formConfig.endpoint) {
           this.setState({ configurationPending: true, error: '', submitted: false });
           return;
@@ -271,27 +269,58 @@ class Component extends DCLogic {
 
         this.setState({ submitting: true, configurationPending: false, error: '' });
         try {
+          const submissionId = this.state.submissionId || window.crypto.randomUUID();
+          const submittedAt = this.state.submittedAt || new Date().toISOString();
+          if (!this.state.submissionId || !this.state.submittedAt) {
+            this.setState({ submissionId, submittedAt });
+          }
+          const sourceParameters = new URLSearchParams();
+          const currentParameters = new URLSearchParams(window.location.search);
+          ['reason', 'session', 'event', 'program'].forEach((key) => {
+            const value = currentParameters.get(key);
+            if (value) sourceParameters.set(key, value);
+          });
+          const sourceQuery = sourceParameters.toString();
+          const privateMessage = isPrivate
+            ? `Requested session: ${this.state.privateSession}\n\nCurrent context:\n${this.state.currentChallenges.trim()}\n\nIntended outcome:\n${this.state.intendedOutcome.trim()}`
+            : this.state.message;
           const payload = {
-            clientEventId: this.state.submissionId,
+            clientEventId: submissionId,
             email: this.state.email,
-            message: this.state.message,
+            message: privateMessage,
             name: this.state.name,
             privacyAccepted: true,
-            privacyPolicyVersion: window.RAINBOW_SANCTUARY_CONFIG?.legal?.effectiveDate || '13 July 2026',
+            photoConsent: isPrivate,
+            privacyPolicyVersion: window.RAINBOW_SANCTUARY_CONFIG?.legal?.privacyPolicyVersion || '9 August 2026',
             reason: this.state.reason,
-            sourcePage: window.location.pathname + window.location.search,
-            submittedAt: this.state.submittedAt,
+            program: isPrivate ? this.state.privateSession : undefined,
+            sourcePage: window.location.pathname + (sourceQuery ? `?${sourceQuery}` : ''),
+            submittedAt,
             whatsapp: this.state.whatsapp.trim()
           };
+          const requestBody = isPrivate ? new FormData() : JSON.stringify(payload);
+          if (isPrivate) {
+            requestBody.append('payload', JSON.stringify(payload));
+            requestBody.append('headshot', this.state.photoFile, this.state.photoFile.name);
+          }
+          const headers = { 'Accept': 'application/json' };
+          if (!isPrivate) headers['Content-Type'] = 'application/json';
           const response = await fetch(formConfig.endpoint, {
             method: formConfig.method || 'POST',
-            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
+            headers,
+            body: requestBody,
           });
-          if (!response.ok) throw new Error('Submission failed');
+          if (!response.ok) {
+            const failure = new Error('Submission failed');
+            failure.status = response.status;
+            throw failure;
+          }
           this.setState({ submitted: true, submitting: false });
         } catch (error) {
-          this.setState({ submitting: false, error: 'Your message could not be sent. Please try again once the connection is available.' });
+          const message = error && error.status === 400
+            ? 'We could not validate this enquiry. Please refresh the page, check the required fields, and try once more.'
+            : 'Your message could not be sent. Please try again once the connection is available.';
+          this.setState({ submitting: false, error: message });
         }
       },
     };

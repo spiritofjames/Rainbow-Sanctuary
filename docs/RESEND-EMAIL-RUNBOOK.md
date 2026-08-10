@@ -19,6 +19,7 @@
 - `scripts/build-email-preview.mjs` — local preview gallery
 - `scripts/sync-resend.mjs` — idempotent Resend provisioning
 - `api/_lib/email-service.mjs` — allowlisted application delivery
+- `api/_lib/operations-notification.mjs` — minimal, idempotent Ethel alerts
 - `api/resend/webhook.mjs` — signed delivery-event endpoint
 
 Run:
@@ -39,9 +40,10 @@ Preview environment:
 ```text
 RESEND_EMAIL_ENABLED=true
 RESEND_API_KEY=<domain-restricted Sending Access key>
-RESEND_ALLOWED_RECIPIENTS=workspace-admin@rainbowsanctuary.life
+RESEND_ALLOWED_RECIPIENTS=workspace-admin@rainbowsanctuary.life,ethel@rainbowsanctuary.life
 RESEND_PRODUCTION_APPROVED=false
 RESEND_WEBHOOK_SECRET=<Preview webhook signing secret>
+RAINBOW_OPERATIONS_EMAIL=ethel@rainbowsanctuary.life
 ```
 
 Production remains blocked:
@@ -62,9 +64,14 @@ and suppression/cancellation behavior is tested.
 - [ ] From, Reply-To, SPF and DKIM pass for every sender family.
 - [ ] Desktop, mobile, dark-mode fallback and plain-text rendering are reviewed.
 - [ ] A test message is sent only to the Preview allowlist.
+- [ ] A completed test-mode Group Healing Checkout sends exactly one booking
+  confirmation to the allowlisted inbox, while Stripe remains the sole sender
+  of the financial receipt.
 - [ ] Replying reaches the correct Google Workspace alias and Gmail label.
 - [ ] Links use HTTPS and contain no secret access data in public URLs.
 - [ ] Duplicate API/webhook delivery does not duplicate participant messages.
+- [ ] A new enquiry and a verified payment each create exactly one minimal
+  operations message to Ethel with the owned HubSpot contact link.
 - [ ] Invalid webhook signatures are rejected.
 - [ ] Bounce, complaint and delivery webhook events are visible without logging PII.
 - [ ] Booking reminders are suppressed after cancellation.

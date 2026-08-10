@@ -7,7 +7,8 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     endpoint: "/api/crm/intake",
     method: "POST",
     provider: "PSN Operations Hub",
-    photoRetention: ""
+    photoProvider: "HubSpot",
+    photoRetention: "30 days"
   },
   scheduling: {
     provider: "",
@@ -23,11 +24,12 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     registeredAddress: "",
     jurisdiction: "",
     governingLaw: "",
-    privacyEmail: "",
+    privacyEmail: "privacy@rainbowsanctuary.life",
     legalEmail: "",
     accessibilityEmail: "",
     effectiveDate: "13 July 2026",
     lastReviewed: "13 July 2026",
+    privacyPolicyVersion: "9 August 2026",
     enquiryRetention: "",
     accessibilityResponseTime: "five business days",
     hostingProvider: "",
@@ -35,30 +37,30 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     paymentProvider: ""
   },
   pricing: {
-    "group-healing": "USD 20",
-    "spiral-i": "USD 1,399 · Early Bird USD 999",
-    "spiral-ii": "USD 1,599 · Early Bird USD 1,299",
-    "spiral-iii": "USD 1,599 · Early Bird USD 1,399",
-    "spiral-iv": "USD 1,599 · Early Bird USD 1,399",
-    "regeneration": "Level I USD 2,999 · Level II USD 2,399",
-    "earth-healer-training": "Level I USD 500 · Level II USD 699",
+    "group-healing": "USD 22 total · payment processing included",
+    "spiral-i": "USD 1,460 · Early Bird USD 1,045 · processing included",
+    "spiral-ii": "USD 1,670 · Early Bird USD 1,355 · processing included",
+    "spiral-iii": "USD 1,670 · Early Bird USD 1,460 · processing included",
+    "spiral-iv": "USD 1,670 · Early Bird USD 1,460 · processing included",
+    "regeneration": "Level I USD 3,125 · Level II USD 2,500 · processing included",
+    "earth-healer-training": "Level I USD 525 · Level II USD 730 · processing included",
     "rainbow-light-codes": "",
-    "crystal-healing": "USD 899",
-    "intuitive-perception-training": "USD 899",
+    "crystal-healing": "USD 940 total · payment processing included",
+    "intuitive-perception-training": "USD 940 total · payment processing included",
     "holographic-healing": "",
-    "adult-potential-development": "USD 1,599",
+    "adult-potential-development": "USD 1,670 total · payment processing included",
     "unlock-the-potential": "",
-    "childrens-potential-coach-certification": "USD 7,399 package",
+    "childrens-potential-coach-certification": "USD 7,710 package · payment processing included",
     "one-to-one-sessions": "",
     "personal-karma-reconciliation": "",
     "family-information-field-restoration": "",
     "dna-activation": ""
   },
   earlyBirdPricing: {
-    "spiral-i": { standard: "USD 1,399", earlyBird: "USD 999", deadline: "" },
-    "spiral-ii": { standard: "USD 1,599", earlyBird: "USD 1,299", deadline: "" },
-    "spiral-iii": { standard: "USD 1,599", earlyBird: "USD 1,399", deadline: "" },
-    "spiral-iv": { standard: "USD 1,599", earlyBird: "USD 1,399", deadline: "" }
+    "spiral-i": { standard: "USD 1,460", earlyBird: "USD 1,045", deadline: "" },
+    "spiral-ii": { standard: "USD 1,670", earlyBird: "USD 1,355", deadline: "" },
+    "spiral-iii": { standard: "USD 1,670", earlyBird: "USD 1,460", deadline: "" },
+    "spiral-iv": { standard: "USD 1,670", earlyBird: "USD 1,460", deadline: "" }
   },
   events: {
     feedUrl: "",
@@ -69,7 +71,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     groupHealing: {
       frequency: "Twice monthly",
       duration: "Approximately 60 minutes",
-      price: "USD 20",
+      price: "USD 22",
       checkoutEndpoint: "/api/stripe/create-checkout-session",
       checkoutUrl: ""
     },
@@ -88,8 +90,10 @@ window.RAINBOW_SANCTUARY_CONFIG = {
         venue: "Zoom",
         summary: "A guided Group Healing session for grounding, rest, and renewal.",
         duration: "Approximately 60 minutes",
-        price: "USD 20",
-        status: "scheduled",
+        price: "USD 22",
+        // Protected staging uses Stripe test mode for generated Stage 1 CRM acceptance.
+        // Do not promote this status to main until live checkout is separately approved.
+        status: "open",
         registrationUrl: "/group-healing#choose-session",
         checkoutUrl: ""
       },
@@ -120,7 +124,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
         location: "Online",
         venue: "Zoom",
         summary: "A guided Group Healing session for grounding, rest, and renewal.",
-        price: "USD 20",
+        price: "USD 22",
         status: "open",
         checkoutUrl: "https://buy.stripe.com/REPLACE_WITH_PAYMENT_LINK"
       },
@@ -176,6 +180,31 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     script.src = "./persona-faqs.js?v=20260723-1";
     script.defer = true;
     document.head.appendChild(script);
+  }
+})();
+
+(function showPaymentReturnStatus() {
+  const parameters = new URLSearchParams(window.location.search);
+  const checkoutStatus = parameters.get("checkout");
+  if (checkoutStatus !== "success" && checkoutStatus !== "cancelled") return;
+
+  const render = () => {
+    if (document.querySelector(".rs-commerce-return")) return;
+    const notice = document.createElement("aside");
+    notice.className = `rs-commerce-return rs-commerce-return--${checkoutStatus}`;
+    notice.setAttribute("role", checkoutStatus === "success" ? "status" : "alert");
+    notice.innerHTML = checkoutStatus === "success"
+      ? "<strong>Thank you.</strong> Stripe is confirming your payment. We will email the next steps after the payment has been verified."
+      : "<strong>Payment not completed.</strong> No purchase was confirmed. You may use the original secure payment link when you are ready, or contact payments@rainbowsanctuary.life.";
+    const main = document.querySelector("main") || document.body;
+    main.prepend(notice);
+    notice.scrollIntoView({ block: "start" });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", render, { once: true });
+  } else {
+    render();
   }
 })();
 

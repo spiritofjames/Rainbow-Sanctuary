@@ -15,9 +15,10 @@ const submission = {
   submittedAt: "2026-08-04T10:00:00.000Z",
   whatsapp: "+1 555 123 4567"
 };
+const receivedAt = new Date("2026-08-04T10:02:00.000Z");
 
 test("public enquiry becomes the exact minimal CRM contract", () => {
-  assert.deepEqual(normalizePublicIntake(submission, new Date("2026-08-04T10:02:00.000Z")), {
+  assert.deepEqual(normalizePublicIntake(submission, receivedAt), {
     area: "workshop",
     displayName: "Generated Visitor",
     email: "visitor@example.test",
@@ -36,9 +37,52 @@ test("public enquiry becomes the exact minimal CRM contract", () => {
   });
 });
 
-test("private healing and unsafe or unconsented submissions fail closed", () => {
-  const receivedAt = new Date("2026-08-04T10:02:00.000Z");
+test("programme context survives the public enquiry URL and reaches the CRM", () => {
+  const contextual = normalizePublicIntake({
+    ...submission,
+    reason: "spiral",
+    sourcePage: "/apply?reason=spiral&program=spiral-i"
+  }, receivedAt);
+  assert.equal(contextual.area, "spiral");
+  assert.equal(contextual.pathway, "program");
+  assert.equal(contextual.program, "spiral-i");
+});
+
+test("valid international WhatsApp numbers are not misclassified as payment-card data", () => {
+  const normalized = normalizePublicIntake({
+    ...submission,
+    whatsapp: "+62 812 3456 7890"
+  }, receivedAt);
+  assert.equal(normalized.phone, "+62 812 3456 7890");
+});
+
+test("valid email addresses containing long numeric identifiers remain acceptable", () => {
+  const normalized = normalizePublicIntake({
+    ...submission,
+    email: "qa-enquiry-1786289134896@example.com"
+  }, receivedAt);
+  assert.equal(normalized.email, "qa-enquiry-1786289134896@example.com");
+});
+
+test("private healing stays gated unless its confidential provider and photo consent are explicit", () => {
   assert.throws(() => normalizePublicIntake({ ...submission, reason: "private-healing" }, receivedAt), /private healing/i);
+  assert.throws(
+    () => normalizePublicIntake({ ...submission, reason: "private-healing" }, receivedAt, { allowPrivateHealing: true }),
+    /headshot consent/i
+  );
+  const privateIntake = normalizePublicIntake({
+    ...submission,
+    message: "Requested session: karma\n\nCurrent context:\nSeeking support.\n\nIntended outcome:\nGreater clarity.",
+    photoConsent: true,
+    program: "karma",
+    reason: "private-healing"
+  }, receivedAt, { allowPrivateHealing: true });
+  assert.equal(privateIntake.area, "private-healing");
+  assert.equal(privateIntake.pathway, "program");
+  assert.equal(privateIntake.program, "karma");
+});
+
+test("unsafe or unconsented submissions fail closed", () => {
   assert.throws(() => normalizePublicIntake({ ...submission, privacyAccepted: false }, receivedAt), /consent/i);
   assert.throws(() => normalizePublicIntake({ ...submission, message: "card=4242 4242 4242 4242" }, receivedAt), /prohibited/i);
   assert.throws(
@@ -70,7 +114,21 @@ test("website intake is signed, HTTPS-only and duplicate-safe by event id", asyn
   assert.equal(JSON.parse(sent.options.body).eventId, submission.clientEventId);
 });
 
-test("the public enquiry form uses the same-origin CRM bridge without uploading files", async () => {
+test("Preview CRM handoff uses a short-lived Vercel trusted-source token", async () => {
+  let sent;
+  await forwardWebsiteIntake(submission, {
+    CRM_WEBSITE_INTAKE_SECRET: "synthetic-website-intake-secret-that-is-long-enough",
+    CRM_WEBSITE_INTAKE_URL: "https://crm.example.test/api/intake/website",
+    VERCEL_ENV: "preview"
+  }, async (url, options) => {
+    sent = { options, url };
+    return { ok: true, status: 202 };
+  }, () => new Date("2026-08-04T10:00:00.000Z"), () => 1785837600, async () => "short-lived-preview-oidc-token");
+
+  assert.equal(sent.options.headers["x-vercel-trusted-oidc-idp-token"], "short-lived-preview-oidc-token");
+});
+
+test("the enquiry form uses JSON for ordinary requests and multipart only for private headshots", async () => {
   const [form, config] = await Promise.all([
     readFile(new URL("../Book-Consultation.dc.html", import.meta.url), "utf8"),
     readFile(new URL("../site-config.js", import.meta.url), "utf8")
@@ -78,8 +136,16 @@ test("the public enquiry form uses the same-origin CRM bridge without uploading 
   assert.match(config, /endpoint: "\/api\/crm\/intake"/);
   assert.match(form, /clientEventId/);
   assert.match(form, /privacyAccepted: true/);
-  assert.match(form, /submittedAt: this\.state\.submittedAt/);
+  assert.match(form, /submissionId: ''/);
+  assert.match(form, /submittedAt: ''/);
+  assert.match(form, /this\.state\.submissionId \|\| window\.crypto\.randomUUID\(\)/);
+  assert.match(form, /this\.state\.submittedAt \|\| new Date\(\)\.toISOString\(\)/);
+  assert.match(form, /\['reason', 'session', 'event', 'program'\]/);
+  assert.doesNotMatch(form, /window\.location\.pathname \+ window\.location\.search/);
   assert.match(form, /JSON\.stringify/);
-  assert.match(form, /Private Healing intake is still protected/);
-  assert.doesNotMatch(form, /payload\.append\('headshot'/);
+  assert.doesNotMatch(form, /Private Healing intake is still protected/);
+  assert.match(form, /new FormData\(\)/);
+  assert.match(form, /requestBody\.append\('headshot'/);
+  assert.match(form, /maximum 2 MB/);
+  assert.match(form, /automatically deleted after 30 days/);
 });
