@@ -247,7 +247,7 @@
     const heading = document.querySelector("#choose-session .rs-entry-heading");
     if (!heading || heading.querySelector(".rs-checkout-return")) return;
     const message = document.createElement("p");
-    message.className = "rs-timezone-notice rs-checkout-return" + (outcome === "cancelled" ? " rs-floating-notice" : "");
+    message.className = "rs-timezone-notice rs-checkout-return" + (outcome === "cancelled" ? " rs-floating-notice rs-dismissible-notice" : "");
     message.setAttribute("role", outcome === "success" ? "status" : "alert");
     message.innerHTML = isInternalTest && outcome === "success"
       ? "<span aria-hidden=\"true\">✓</span><span><strong>Internal test payment received.</strong> This verifies the Stripe Checkout return experience only; no booking, programme place, client record, or Rainbow Sanctuary confirmation email was created.</span>"
@@ -256,6 +256,15 @@
       : outcome === "success"
       ? "<span aria-hidden=\"true\">✓</span><span><strong>Payment received.</strong> Stripe will email your receipt. Registration details will follow separately.</span>"
       : "<span aria-hidden=\"true\">↩</span><span><strong>Checkout was cancelled.</strong> No payment was taken; your selected session has not been reserved.</span>";
+    if (outcome === "cancelled") {
+      const close = document.createElement("button");
+      close.type = "button";
+      close.className = "rs-notice-close";
+      close.setAttribute("aria-label", "Dismiss checkout notice");
+      close.textContent = "×";
+      close.addEventListener("click", () => message.remove());
+      message.appendChild(close);
+    }
     heading.appendChild(message);
   }
 

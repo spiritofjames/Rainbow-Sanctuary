@@ -191,11 +191,18 @@ window.RAINBOW_SANCTUARY_CONFIG = {
   const render = () => {
     if (document.querySelector(".rs-commerce-return")) return;
     const notice = document.createElement("aside");
-    notice.className = `rs-commerce-return rs-commerce-return--${checkoutStatus}`;
+    notice.className = `rs-commerce-return rs-commerce-return--${checkoutStatus} rs-floating-notice rs-dismissible-notice`;
     notice.setAttribute("role", checkoutStatus === "success" ? "status" : "alert");
     notice.innerHTML = checkoutStatus === "success"
       ? "<strong>Thank you.</strong> Stripe is confirming your payment. We will email the next steps after the payment has been verified."
       : "<strong>Payment not completed.</strong> No purchase was confirmed. You may use the original secure payment link when you are ready, or contact payments@rainbowsanctuary.life.";
+    const close = document.createElement("button");
+    close.type = "button";
+    close.className = "rs-notice-close";
+    close.setAttribute("aria-label", "Dismiss payment notice");
+    close.textContent = "×";
+    close.addEventListener("click", () => notice.remove());
+    notice.appendChild(close);
     const main = document.querySelector("main") || document.body;
     main.prepend(notice);
     notice.scrollIntoView({ block: "start" });
