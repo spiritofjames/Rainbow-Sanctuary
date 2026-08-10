@@ -59,7 +59,7 @@
       }
 
       title.textContent = "Your payment has been received.";
-      summary.textContent = "Thank you. Your place is now being prepared and the next steps will be sent to the email address used at checkout.";
+      summary.textContent = "Thank you. Your place is now being prepared. A Rainbow Sanctuary team member will reach out through WhatsApp with the next steps, and we will also email your confirmation.";
       showDetails(result);
       next.classList.remove("is-hidden");
     } catch (_) {
