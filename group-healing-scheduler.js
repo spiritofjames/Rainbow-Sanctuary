@@ -60,7 +60,7 @@
   function localTime(item) {
     if (!item?.startDateTime) return item.time || "Time to be confirmed";
     return new Intl.DateTimeFormat("en", {
-      timeZone: viewerTimeZone, hour:"numeric", minute:"2-digit"
+      timeZone: viewerTimeZone, hour:"numeric", minute:"2-digit", hour12:true
     }).format(eventInstant(item));
   }
   function localDateTime(item) {
@@ -74,7 +74,7 @@
     const date = new Intl.DateTimeFormat("en", {
       timeZone: zone, weekday:"long", day:"numeric", month:"long", year:"numeric"
     }).format(eventInstant(item));
-    const time = new Intl.DateTimeFormat("en", { timeZone: zone, hour:"numeric", minute:"2-digit" }).format(eventInstant(item));
+    const time = new Intl.DateTimeFormat("en", { timeZone: zone, hour:"numeric", minute:"2-digit", hour12:true }).format(eventInstant(item));
     const offset = zoneOffset(eventInstant(item), zone);
     return `${date} at ${time} · ${label}${offset ? ` (${offset})` : ""}`;
   }
@@ -140,7 +140,7 @@
     const summary = document.getElementById("group-booking-summary");
 
     title.textContent = "Choose an available time";
-    details.textContent = `${localDate(item)} · Times shown in ${readableZone(viewerTimeZone)}.`;
+    details.innerHTML = `<span class="rs-group-session-time"><small>Selected date</small>${escapeHtml(localDate(item))}</span><span class="rs-group-session-format"><small>Time zone</small>Times shown in ${escapeHtml(readableZone(viewerTimeZone))}.</span>`;
     options.classList.remove("is-hidden");
     options.innerHTML = `<span>Available time</span><button type="button" data-group-time="${escapeHtml(item.id)}" aria-pressed="false"><strong>${escapeHtml(localTime(item))}</strong><small>${escapeHtml(zoneOffset(eventInstant(item), viewerTimeZone) || readableZone(viewerTimeZone))}</small></button>`;
     summary.classList.add("is-hidden");
@@ -160,7 +160,7 @@
     const url = checkoutUrl(item);
 
     title.textContent = item.title;
-    details.textContent = `Your time: ${localDateTime(item)} · Zoom. Scheduled as ${sourceDateTime(item)}.`;
+    details.innerHTML = `<span class="rs-group-session-time"><small>Selected date &amp; time</small>${escapeHtml(localDateTime(item))}</span><span class="rs-group-session-format"><small>Format</small>Live Zoom session</span><span class="rs-group-session-format"><small>Original schedule</small>${escapeHtml(sourceDateTime(item))}</span>`;
     summary.classList.remove("is-hidden");
     document.querySelectorAll("[data-group-time]").forEach((button) => {
       button.setAttribute("aria-pressed", String(button.dataset.groupTime === id));

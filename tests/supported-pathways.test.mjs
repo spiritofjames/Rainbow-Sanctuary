@@ -54,10 +54,20 @@ test("supported session selection separates the date, format and registration ac
   const scheduler = read("supported-pathway-scheduler.js");
   const styles = read("supported-pathways.css");
   assert.match(scheduler, /hour12:true/);
+  assert.match(read("site-config.js"), /10:00 PM Beijing time/);
   assert.match(scheduler, /rs-supported-session-time/);
   assert.match(scheduler, /rs-supported-session-format/);
   assert.match(styles, /Selected supported-pathway sessions need a clearly scannable date/);
   assert.match(styles, /rs-supported-session-summary\{margin:30px/);
+});
+
+test("Group Healing uses the same selected date and format hierarchy", () => {
+  const scheduler = read("group-healing-scheduler.js");
+  const styles = read("group-journey.css");
+  assert.match(scheduler, /rs-group-session-time/);
+  assert.match(scheduler, /rs-group-session-format/);
+  assert.match(scheduler, /hour12:true/);
+  assert.match(styles, /rs-group-session-time/);
 });
 
 test("every rendered site footer offers a contribution pathway", () => {

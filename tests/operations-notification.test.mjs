@@ -59,7 +59,7 @@ test("Autism registration receipt confirms the weekly list without promising rev
   assert.equal(message.to, "visitor@example.test");
   assert.equal(message.idempotencyKey, `intake:${intake.eventId}:autism-registration`);
   assert.match(message.text, /weekly list/i);
-  assert.match(message.text, /23:00 Beijing time/);
+  assert.match(message.text, /11:00 PM Beijing time/);
   assert.doesNotMatch(message.text, /review|diagnos/i);
   assert.match(message.text, /no Zoom session/i);
 });

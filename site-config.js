@@ -325,6 +325,21 @@ window.RAINBOW_SANCTUARY_CONFIG = {
       ...root.querySelectorAll(selector)
     ];
 
+    // Keep visitor-facing time copy consistent without changing the ISO schedule data.
+    // Limit this to rendered page content so scripts and configuration remain untouched.
+    selectWithSelf("main, footer").forEach((section) => {
+      const walker = document.createTreeWalker(section, NodeFilter.SHOW_TEXT);
+      const textNodes = [];
+      while (walker.nextNode()) textNodes.push(walker.currentNode);
+      textNodes.forEach((node) => {
+        node.nodeValue = node.nodeValue
+          .replace(/23:00 Beijing time \(UTC\+8\)/g, "11:00 PM Beijing time (UTC+8)")
+          .replace(/23:00 Beijing \(UTC\+8\)/g, "11:00 PM Beijing time (UTC+8)")
+          .replace(/23:00 Beijing time/g, "11:00 PM Beijing time")
+          .replace(/22:00 Beijing time/g, "10:00 PM Beijing time");
+      });
+    });
+
     selectWithSelf("[data-price-key]").forEach((element) => {
       const value = config.pricing[element.getAttribute("data-price-key")];
       if (value) element.textContent = value;
