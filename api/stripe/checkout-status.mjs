@@ -1,6 +1,7 @@
 import Stripe from "stripe";
 import { assertCheckoutConfiguration } from "../_lib/checkout-policy.mjs";
 import { sendJson } from "../_lib/http.mjs";
+import { isOptionalContributionSession } from "../_lib/optional-contribution.mjs";
 
 const CHECKOUT_SESSION_PATTERN = /^cs_(?:test|live)_[A-Za-z0-9]+$/;
 
@@ -48,7 +49,7 @@ export default async function handler(request, response) {
       amount,
       currency,
       internalTest: session.metadata?.internal_payment_test === "true",
-      contribution: session.metadata?.contribution === "true"
+      contribution: isOptionalContributionSession(session, process.env)
     });
   } catch (error) {
     console.error("checkout_status_error", { message: error.message });
