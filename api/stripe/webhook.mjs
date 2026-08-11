@@ -4,14 +4,11 @@ import { forwardStripeEvent, isInternalPaymentTest } from "../_lib/webhook-deliv
 import { sendPurchaseConfirmation } from "../_lib/group-healing-booking-email.mjs";
 import { mirrorHubSpotPurchase } from "../_lib/hubspot-payment.mjs";
 import { attemptPurchaseOperationsNotification } from "../_lib/operations-notification.mjs";
+import { isOptionalContributionSession } from "../_lib/optional-contribution.mjs";
 
 export const config = {
   api: { bodyParser: false }
 };
-
-function isOptionalContribution(event) {
-  return event?.data?.object?.metadata?.contribution === "true";
-}
 
 export default async function handler(request, response) {
   if (request.method !== "POST") {
@@ -36,7 +33,7 @@ export default async function handler(request, response) {
     if (
       ["checkout.session.completed", "checkout.session.async_payment_succeeded"].includes(event.type) &&
       !isInternalPaymentTest(event) &&
-      !isOptionalContribution(event)
+      !isOptionalContributionSession(event?.data?.object, process.env)
     ) {
       const hubspot = await mirrorHubSpotPurchase(event, process.env);
       await attemptPurchaseOperationsNotification(event, hubspot, process.env);
