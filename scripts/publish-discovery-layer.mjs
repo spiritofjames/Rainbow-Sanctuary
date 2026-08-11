@@ -57,6 +57,7 @@ const routes = {
   "Children-Safeguarding.dc.html": "/children-safeguarding",
   "Childrens-Potential-Coach-Certification.dc.html": "/childrens-potential-coach-certification",
   "Community-Stories.dc.html": "/community-stories",
+  "Contribute.dc.html": "/contribute",
   "Cookie-Policy.dc.html": "/cookie-policy",
   "Crystal-Healing.dc.html": "/crystal-healing",
   "DNA-Activation.dc.html": "/dna-activation",
@@ -87,8 +88,7 @@ const routes = {
 const privateRoutes = {
   "Payment-Confirmation.dc.html": "/payment-confirmation",
   "Young-People-Wellbeing.dc.html": "/young-people-wellbeing",
-  "144-Stages-Maintenance.dc.html": "/144-stages-maintenance",
-  "Contribute.dc.html": "/contribute"
+  "144-Stages-Maintenance.dc.html": "/144-stages-maintenance"
 };
 const allRoutes = { ...routes, ...privateRoutes };
 
@@ -106,6 +106,7 @@ const ogImages = {
   "Bigger-Vision.dc.html": "/assets/editorial/psn-regenerative-future.jpg",
   "Children-Family.dc.html": "/assets/editorial/home-family-editorial.jpg",
   "Community-Stories.dc.html": "/assets/editorial/home-community-editorial.jpg",
+  "Contribute.dc.html": "/assets/editorial/home-community-editorial.jpg",
   "Earth-Healing-Zone.dc.html": "/assets/editorial/earth-healing-stewardship-v1.jpg",
   "Events-Retreats.dc.html": "/assets/retreat-panama-coast-aerial.jpg",
   "Group-Healing.dc.html": "/assets/editorial/group-healing-zoom.jpg",
@@ -129,6 +130,22 @@ const escapeAttribute = (value) => value
   .replaceAll(">", "&gt;");
 
 const extract = (source, pattern, fallback) => decodeHtml(source.match(pattern)?.[1]?.trim() || fallback);
+
+function ensureContributionFooterLink(source) {
+  return source.replace(/<footer\b[\s\S]*?<\/footer>/i, (footer) => {
+    if (/href=["']\/contribute["']/i.test(footer)) return footer;
+    if (/class=["'][^"']*rs-footer-legal[^"']*["']/i.test(footer)) {
+      return footer.replace(
+        /(<nav\b[^>]*class=["'][^"']*rs-footer-legal[^"']*["'][^>]*>[\s\S]*?)(<\/nav>)/i,
+        '$1\n          <a href="/contribute">Donate to support</a>\n        $2'
+      );
+    }
+    return footer.replace(
+      /<\/footer>/i,
+      '<div class="rs-footer-donate-wrap"><a href="/contribute">Donate to support</a></div>\n</footer>'
+    );
+  });
+}
 
 const organization = {
   "@type": "Organization",
@@ -276,6 +293,7 @@ for (const [file, route] of Object.entries(routes)) {
   for (const [oldFile, cleanRoute] of Object.entries(allRoutes)) {
     source = source.replaceAll(oldFile, cleanRoute);
   }
+  source = ensureContributionFooterLink(source);
 
   const title = extract(source, /<title>([\s\S]*?)<\/title>/i, "Rainbow Sanctuary");
   const description = extract(
@@ -309,6 +327,15 @@ for (const [file, route] of Object.entries(routes)) {
 
   source = source.replace(/\n?<!-- rs-discovery:start -->[\s\S]*?<!-- rs-discovery:end -->\n?/g, "\n");
   source = source.replace("</head>", `${metadata}\n</head>`);
+  source = source.replace(/[ \t]+$/gm, "");
+  fs.writeFileSync(filePath, source);
+}
+
+// Keep the support invitation present even on routable, non-indexed pages.
+for (const file of fs.readdirSync(siteDir).filter((name) => name.endsWith(".dc.html"))) {
+  const filePath = path.join(siteDir, file);
+  let source = fs.readFileSync(filePath, "utf8");
+  source = ensureContributionFooterLink(source).replace(/[ \t]+$/gm, "");
   fs.writeFileSync(filePath, source);
 }
 
@@ -405,6 +432,7 @@ const llms = `# Rainbow Sanctuary
 - [Planetary Symbiosis Network](${origin}/bigger-vision): Rainbow Sanctuary's wider regenerative vision
 - [Earth Healing Zone](${origin}/earth-healing-zone): Collective reflection and practical stewardship
 - [Community Stories](${origin}/community-stories): Published community experiences
+- [Donate to support access](${origin}/contribute): Voluntary contributions that help keep selected pathways accessible
 
 ## Policies and scope
 
@@ -472,6 +500,8 @@ Rainbow Sanctuary's platform and community are introduced at ${origin}/about, wi
 ## Wider vision
 
 Rainbow Sanctuary is connected to the Planetary Symbiosis Network, a vision for regenerative communities and conscious service. See ${origin}/bigger-vision and ${origin}/earth-healing-zone.
+
+Voluntary contributions help Rainbow Sanctuary keep selected group pathways accessible to people and families who may not otherwise be able to participate. Giving is optional, does not reserve a place, and does not provide priority access. See ${origin}/contribute.
 
 ## Policies
 

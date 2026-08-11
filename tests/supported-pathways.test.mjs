@@ -15,7 +15,7 @@ test("supported pathways use Beijing as the only authored source time", () => {
   assert.match(config, /firstCycle: \{ frequency: "weekly", sessions: 13 \}/);
 });
 
-test("sensitive pathways and optional contributions stay safely gated", () => {
+test("sensitive pathways stay safely gated and contributions use approved Stripe checkout", () => {
   const autism = read("Autism-Family-Support.dc.html");
   const youth = read("Young-People-Wellbeing.dc.html");
   const contribution = read("Contribute.dc.html");
@@ -25,8 +25,24 @@ test("sensitive pathways and optional contributions stay safely gated", () => {
   assert.match(autism, /does not diagnose, treat, cure, or promise neurological changes/i);
   assert.match(youth, /reviewed first/i);
   assert.match(youth, /not a crisis or emergency service/i);
-  assert.match(contribution, /Before accepting live contributions/i);
-  assert.match(contribution, /data-donation-form/);
+  assert.match(contribution, /https:\/\/donate\.stripe\.com\/fZuaEXeIh1mdazHeZ53Nm00/);
+  assert.match(contribution, /Every contribution is voluntary/i);
+  assert.match(contribution, /does not reserve a place/i);
+  assert.doesNotMatch(contribution, /data-donation-form/);
+  assert.doesNotMatch(contribution, /donation-selector\.js/);
+  assert.match(read("scripts\/publish-discovery-layer.mjs"), /"Contribute\.dc\.html": "\/contribute"/);
   assert.match(read("api\/stripe\/create-donation-checkout.mjs"), /STRIPE_DONATION_CHECKOUT_APPROVED/);
   assert.match(maintenance, /accepted participants only/i);
+});
+
+test("every rendered site footer offers a contribution pathway", () => {
+  const pages = fs.readdirSync(root)
+    .filter((name) => name.endsWith(".dc.html"))
+    .map((name) => [name, read(name)])
+    .filter(([, source]) => /<footer\b/i.test(source));
+  assert.ok(pages.length >= 38);
+  for (const [name, source] of pages) {
+    const footer = source.match(/<footer\b[\s\S]*?<\/footer>/i)?.[0] || "";
+    assert.match(footer, /href=["']\/contribute["']/, `${name} footer should link to contributions`);
+  }
 });

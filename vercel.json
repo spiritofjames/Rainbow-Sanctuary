@@ -103,6 +103,11 @@
       "permanent": true
     },
     {
+      "source": "/Contribute.dc.html",
+      "destination": "/contribute",
+      "permanent": true
+    },
+    {
       "source": "/Cookie-Policy.dc.html",
       "destination": "/cookie-policy",
       "permanent": true
@@ -236,11 +241,6 @@
       "source": "/144-Stages-Maintenance.dc.html",
       "destination": "/144-stages-maintenance",
       "permanent": true
-    },
-    {
-      "source": "/Contribute.dc.html",
-      "destination": "/contribute",
-      "permanent": true
     }
   ],
   "rewrites": [
@@ -295,6 +295,10 @@
     {
       "source": "/community-stories",
       "destination": "/Community-Stories.dc.html"
+    },
+    {
+      "source": "/contribute",
+      "destination": "/Contribute.dc.html"
     },
     {
       "source": "/cookie-policy",
@@ -403,10 +407,6 @@
     {
       "source": "/144-stages-maintenance",
       "destination": "/144-Stages-Maintenance.dc.html"
-    },
-    {
-      "source": "/contribute",
-      "destination": "/Contribute.dc.html"
     }
   ]
 }
