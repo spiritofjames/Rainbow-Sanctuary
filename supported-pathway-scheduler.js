@@ -18,7 +18,15 @@
     const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
     return new Date(Number(values.year), Number(values.month) - 1, Number(values.day), 12);
   };
-  const localDateTime = (item) => new Intl.DateTimeFormat("en", { timeZone: viewerTimeZone, weekday:"long", day:"numeric", month:"long", year:"numeric", hour:"numeric", minute:"2-digit", timeZoneName:"short" }).format(new Date(item.startDateTime));
+  const localDateTime = (item) => new Intl.DateTimeFormat("en", { timeZone: viewerTimeZone, weekday:"long", day:"numeric", month:"long", year:"numeric", hour:"numeric", minute:"2-digit", hour12:true, timeZoneName:"short" }).format(new Date(item.startDateTime));
+
+  function normalizeAuthoredTimeCopy() {
+    page.querySelectorAll(".rs-supported-schedule").forEach((element) => {
+      element.textContent = element.textContent
+        .replace("23:00 Beijing (UTC+8)", "11:00 PM Beijing time (UTC+8)")
+        .replace("22:00 Beijing time", "10:00 PM Beijing time");
+    });
+  }
 
   function renderDetails(item) {
     const title = document.getElementById("supported-session-title");
@@ -27,7 +35,7 @@
     if (!title || !details || !action) return;
     selected = item;
     title.textContent = item.title;
-    details.textContent = `${localDateTime(item)}. ${item.venue || "Preparation details follow review."}`;
+    details.innerHTML = `<span class="rs-supported-session-time"><small>Selected date &amp; time</small>${escapeHtml(localDateTime(item))}</span><span class="rs-supported-session-format"><small>Format</small>${escapeHtml(item.venue || "Preparation details follow review.")}</span>`;
     const existingParameters = new URLSearchParams(applyPath.split("?")[1] || "");
     const parameters = new URLSearchParams({ event: item.id });
     if (!existingParameters.get("program")) parameters.set("program", prefix);
@@ -72,5 +80,6 @@
     if (sessions[0]) renderDetails(sessions[0]);
   }
 
+  normalizeAuthoredTimeCopy();
   Promise.resolve(window.RAINBOW_PUBLIC_EVENTS_READY).then(start).catch(() => start({ items: [] }));
 })();
