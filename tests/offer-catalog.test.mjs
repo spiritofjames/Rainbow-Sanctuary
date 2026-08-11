@@ -14,7 +14,7 @@ test("the internal processing allowance grosses up and rounds customer prices", 
 
 test("every direct payment variant has a stable identity and server-owned USD amount", () => {
   const variants = OFFER_CATALOG.flatMap((entry) => entry.variants);
-  assert.equal(variants.length, 18);
+  assert.equal(variants.length, 19);
   assert.equal(new Set(variants.map((entry) => entry.id)).size, variants.length);
   for (const entry of variants) {
     assert.match(entry.id, /^[a-z0-9][a-z0-9-]+$/);
@@ -36,4 +36,11 @@ test("the internal live checkout test is isolated and fixed at one dollar", () =
   assert.equal(testOffer.amountMinor, 100);
   assert.equal(testOffer.internalPaymentTest, true);
   assert.equal(testOffer.policy, "internal-test");
+});
+
+test("Regeneration Maintenance has a fixed server-owned fifty-dollar session price", () => {
+  const offer = resolveOfferVariant("regeneration-maintenance");
+  assert.equal(offer.amountMinor, 5_000);
+  assert.equal(offer.policy, "regeneration-maintenance");
+  assert.equal(offer.offer.pagePath, "/144-stages-maintenance");
 });

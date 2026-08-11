@@ -28,12 +28,16 @@ async function responseJson(response) {
 export function toHubSpotPurchaseProperties(stripeEvent, ownerId, { allowLive = false } = {}) {
   const handoff = crmPaymentHandoff(stripeEvent, { allowLive });
   const variant = resolveOfferVariant(handoff.offerId);
-  if (variant.amountMinor !== handoff.amountMinor || variant.sessionId !== handoff.sessionId) {
+  const allowsSelectedEvent = ["group-healing", "regeneration-maintenance"].includes(variant.policy);
+  if (
+    variant.amountMinor !== handoff.amountMinor ||
+    (!allowsSelectedEvent && variant.sessionId !== handoff.sessionId)
+  ) {
     throw new Error("The HubSpot payment mirror does not match the approved catalogue.");
   }
   const { firstname, lastname } = splitName(handoff.customer.displayName);
   return {
-    area_of_interest: variant.policy === "group-healing" ? "Group healing" : "Program guidance",
+    area_of_interest: ["group-healing", "regeneration-maintenance"].includes(variant.policy) ? "Group healing" : "Program guidance",
     email: handoff.customer.email,
     enquiry_details: `Payment received for ${variant.name}. Reference: ${handoff.bookingReference}. Financial authority: Stripe and the private Rainbow CRM.`,
     firstname,

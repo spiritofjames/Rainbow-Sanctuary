@@ -39,6 +39,22 @@ test("verified purchase maps to an Ethel-owned HubSpot customer contact", () => 
   });
 });
 
+test("a selected approved group-session date remains eligible for the payment mirror", () => {
+  const laterSession = {
+    ...event,
+    data: {
+      object: {
+        ...event.data.object,
+        metadata: { offer_key: "regeneration-maintenance", event_id: "regeneration-maintenance-2026-08-24" },
+        amount_total: 5000
+      }
+    }
+  };
+  const properties = toHubSpotPurchaseProperties(laterSession, "166816652");
+  assert.equal(properties.area_of_interest, "Group healing");
+  assert.equal(properties.program_or_offering, "Regeneration Maintenance");
+});
+
 test("purchase mirror uses contact upsert and the Stripe event as its write trace", async () => {
   let call;
   const result = await mirrorHubSpotPurchase(event, environment, async (url, options) => {

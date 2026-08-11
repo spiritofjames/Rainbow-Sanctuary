@@ -59,6 +59,32 @@ test("the server owns the Stripe price and amount", () => {
   assert.equal(parameters.success_url, "https://staging.rainbowsanctuary.life/payment-confirmation?payment=confirmed&session_id={CHECKOUT_SESSION_ID}");
 });
 
+test("Regeneration Maintenance can only use the explicitly opened Monday sessions", () => {
+  const environment = {
+    STRIPE_ALLOWED_OFFER_IDS: "regeneration-maintenance",
+    STRIPE_ALLOWED_REGENERATION_EVENT_IDS: "regeneration-maintenance-2026-08-17,regeneration-maintenance-2026-08-24"
+  };
+  const result = validateCheckoutRequest({
+    offerId: "regeneration-maintenance",
+    eventId: "regeneration-maintenance-2026-08-17",
+    requestId
+  }, environment);
+  assert.equal(result.offer.amountMinor, 5_000);
+  assert.equal(result.eventId, "regeneration-maintenance-2026-08-17");
+  assert.throws(() => validateCheckoutRequest({
+    offerId: "regeneration-maintenance",
+    eventId: "regeneration-maintenance-unlisted",
+    requestId
+  }, environment), /not open/);
+  const parameters = checkoutSessionParameters({
+    eventId: result.eventId,
+    offer: result.offer,
+    origin: "https://staging.rainbowsanctuary.life"
+  });
+  assert.equal(parameters.line_items[0].price_data.unit_amount, 5_000);
+  assert.match(parameters.custom_text.submit.message, /USD 50/);
+});
+
 test("live keys are rejected outside production", () => {
   assert.throws(() => assertCheckoutConfiguration({
     STRIPE_CHECKOUT_ENABLED: "true",

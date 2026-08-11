@@ -14,6 +14,16 @@ const APPROVED_GROUP_HEALING_EVENTS = new Map([
   }]
 ]);
 
+const APPROVED_REGENERATION_MAINTENANCE_EVENTS = new Map([
+  "2026-08-17", "2026-08-24", "2026-08-31", "2026-09-07", "2026-09-14", "2026-09-21", "2026-09-28",
+  "2026-10-05", "2026-10-12", "2026-10-19", "2026-10-26", "2026-11-02", "2026-11-09", "2026-11-16"
+].map((date) => [`regeneration-maintenance-${date}`, {
+  date: new Intl.DateTimeFormat("en", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Shanghai" })
+    .format(new Date(`${date}T23:00:00+08:00`)),
+  time: "11:00 PM",
+  timezone: "Beijing time (UTC+8)"
+}]));
+
 function googleCalendarUrl(event) {
   const parameters = new URLSearchParams({
     action: "TEMPLATE",
@@ -85,14 +95,40 @@ export function programConfirmationFromStripeEvent(stripeEvent, { allowLive = fa
   };
 }
 
+export function regenerationMaintenanceConfirmationFromStripeEvent(stripeEvent, { allowLive = false } = {}) {
+  const handoff = crmPaymentHandoff(stripeEvent, { allowLive });
+  const offer = resolveOfferVariant("regeneration-maintenance");
+  const event = APPROVED_REGENERATION_MAINTENANCE_EVENTS.get(handoff.sessionId);
+  if (!event) throw new Error("No approved Regeneration Maintenance email catalog entry exists for this event.");
+  if (handoff.offerId !== offer.id || handoff.amountMinor !== offer.amountMinor) {
+    throw new Error("The Regeneration Maintenance payment does not match the approved catalogue.");
+  }
+  return {
+    alias: "rs-regeneration-maintenance-confirmed",
+    to: handoff.customer.email,
+    variables: {
+      NAME: handoff.customer.displayName,
+      EVENT_DATE: event.date,
+      EVENT_TIME: event.time,
+      TIMEZONE: event.timezone,
+      REFERENCE_ID: handoff.bookingReference
+    },
+    idempotencyKey: `stripe:${handoff.stripeEventId}:regeneration-maintenance-confirmed`,
+    tags: [
+      { name: "offer", value: handoff.offerId },
+      { name: "event", value: handoff.sessionId }
+    ]
+  };
+}
+
 export function purchaseConfirmationFromStripeEvent(stripeEvent, { allowLive = false } = {}) {
   if (isInternalPaymentTest(stripeEvent)) {
     throw new Error("Internal payment tests do not create participant confirmation emails.");
   }
   const offerKey = String(stripeEvent.data?.object?.metadata?.offer_key || "");
-  return offerKey === "group-healing"
-    ? bookingConfirmationFromStripeEvent(stripeEvent, { allowLive })
-    : programConfirmationFromStripeEvent(stripeEvent, { allowLive });
+  if (offerKey === "group-healing") return bookingConfirmationFromStripeEvent(stripeEvent, { allowLive });
+  if (offerKey === "regeneration-maintenance") return regenerationMaintenanceConfirmationFromStripeEvent(stripeEvent, { allowLive });
+  return programConfirmationFromStripeEvent(stripeEvent, { allowLive });
 }
 
 export async function sendBookingConfirmation(stripeEvent, environment, resendClient) {
