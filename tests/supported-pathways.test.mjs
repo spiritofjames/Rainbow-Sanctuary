@@ -59,6 +59,8 @@ test("supported session selection separates the date, format and registration ac
   assert.match(siteConfig, /10:00 PM Beijing time/);
   assert.match(scheduler, /rs-supported-session-time/);
   assert.match(scheduler, /rs-supported-session-format/);
+  assert.match(scheduler, /#dc-root \[data-supported-prefix\]/);
+  assert.match(scheduler, /MutationObserver/);
   assert.match(styles, /Selected supported-pathway sessions need a clearly scannable date/);
   assert.match(styles, /rs-supported-session-summary\{margin:30px/);
 });

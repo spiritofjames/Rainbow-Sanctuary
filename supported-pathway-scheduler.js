@@ -1,6 +1,11 @@
 (function supportedPathwayScheduler() {
+  let booted = false;
+
+  function boot() {
+  if (booted) return;
   const page = document.querySelector("[data-supported-prefix]");
   if (!page) return;
+  booted = true;
 
   const prefix = page.dataset.supportedPrefix || "";
   const applyPath = page.dataset.supportedApply || "/apply";
@@ -73,4 +78,28 @@
   }
 
   Promise.resolve(window.RAINBOW_PUBLIC_EVENTS_READY).then(start).catch(() => start({ items: [] }));
+  }
+
+  // The design-export runtime replaces the raw <x-dc> markup asynchronously.
+  // Attach to its mounted DOM, rather than to the transient template that gets
+  // removed immediately afterwards.
+  function bootWhenMounted() {
+    if (document.querySelector("#dc-root [data-supported-prefix]")) {
+      boot();
+      return;
+    }
+
+    const observer = new MutationObserver(() => {
+      if (!document.querySelector("#dc-root [data-supported-prefix]")) return;
+      observer.disconnect();
+      boot();
+    });
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+    window.setTimeout(() => {
+      observer.disconnect();
+      boot();
+    }, 3000);
+  }
+
+  bootWhenMounted();
 })();
