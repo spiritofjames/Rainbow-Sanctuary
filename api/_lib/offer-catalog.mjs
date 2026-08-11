@@ -72,6 +72,22 @@ export const OFFER_CATALOG = Object.freeze([
     ]
   }),
   offer({
+    id: "regeneration-maintenance",
+    name: "Regeneration Maintenance",
+    pagePath: "/144-stages-maintenance",
+    priceKey: "regeneration-maintenance",
+    variants: [
+      variant({
+        id: "regeneration-maintenance",
+        name: "Regeneration Maintenance — single session",
+        baseAmountUsd: 50,
+        amountUsd: 50,
+        sessionId: "regeneration-maintenance-2026-08-17",
+        policy: "regeneration-maintenance"
+      })
+    ]
+  }),
+  offer({
     id: "internal-payment-test",
     name: "Internal checkout verification",
     pagePath: "/group-healing",

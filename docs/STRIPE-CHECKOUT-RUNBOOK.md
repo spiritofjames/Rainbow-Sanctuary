@@ -2,9 +2,11 @@
 
 ## Current scope
 
-The public website creates Stripe-hosted Checkout only for the confirmed USD 22
-Group Healing session. Programme pages remain enquiry-led and contain no public
-purchase button or programme Checkout entry point.
+The public website creates Stripe-hosted Checkout only for approved public
+journeys: the confirmed USD 22 Group Healing session and the USD 50
+Regeneration Maintenance Monday sessions. Other programme pages remain
+enquiry-led and contain no public purchase button or programme Checkout entry
+point.
 
 After a human conversation, Ethel may send the participant the exact persistent,
 signed staff payment link from the internal catalogue. It opens a fresh
@@ -21,10 +23,13 @@ It is not a statement of Stripe's exact fee for every card or market.
 ## Safety gates
 
 - Preview and staging must use a Stripe sandbox secret key.
-- An event must be both public with `status: "open"` and included in
+- A Group Healing event must be public with `status: "open"` and included in
   `STRIPE_ALLOWED_GROUP_EVENT_IDS`.
-- `STRIPE_ALLOWED_OFFER_IDS` contains only `group-healing`; guessed programme
-  requests to the public website endpoint fail closed.
+- A Regeneration Maintenance Monday must be public with `status: "open"` and
+  included in `STRIPE_ALLOWED_REGENERATION_EVENT_IDS`.
+- `STRIPE_ALLOWED_OFFER_IDS` contains only the explicitly approved public
+  offer IDs (`group-healing,regeneration-maintenance`); guessed programme
+  requests to the public endpoint fail closed.
 - Staff payment invitations resolve to fixed server-side prices and governed
   offer/session metadata before opening Stripe-hosted Checkout.
   Ethel sends one only after confirming the person and option. Promotion codes,
@@ -69,9 +74,9 @@ production condition below is accepted.
 ## Sandbox acceptance
 
 1. Open a confirmed test event by changing its public status to `open` and adding
-   its identifier to the staging allowlist.
+   its identifier to the matching staging allowlist.
 2. Select the session on staging and confirm Checkout shows the expected USD 22
-   Group Healing product.
+   Group Healing or USD 50 Regeneration Maintenance product.
 3. Complete a Stripe test-card payment.
 4. Confirm the success return, Stripe receipt, signed webhook delivery, duplicate
    webhook idempotency at the CRM gateway, and no public Zoom link.

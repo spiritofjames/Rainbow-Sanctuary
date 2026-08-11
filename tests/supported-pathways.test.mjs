@@ -11,11 +11,13 @@ test("supported pathways use Beijing as the only authored source time", () => {
   assert.match(config, /autism-family-support-2026-08-18/);
   assert.match(config, /2026-08-18T23:00:00\+08:00/);
   assert.match(config, /young-people-wellbeing-2026-09-01/);
-  assert.match(config, /144-stages-maintenance-2026-08-17/);
-  assert.match(config, /firstCycle: \{ frequency: "weekly", sessions: 13 \}/);
+  assert.match(config, /regeneration-maintenance-\$\{date\}/);
+  assert.match(config, /"2026-08-17"/);
+  assert.match(config, /startDateTime: `\$\{date\}T23:00:00\+08:00`/);
+  assert.match(config, /firstCycle: \{ frequency: "weekly", sessions: 14/);
 });
 
-test("sensitive pathways stay safely gated and contributions use approved Stripe checkout", () => {
+test("sensitive pathways stay safely gated, while approved direct registration remains server-governed", () => {
   const autism = read("Autism-Family-Support.dc.html");
   const youth = read("Young-People-Wellbeing.dc.html");
   const contribution = read("Contribute.dc.html");
@@ -36,7 +38,12 @@ test("sensitive pathways stay safely gated and contributions use approved Stripe
   assert.doesNotMatch(contribution, /donation-selector\.js/);
   assert.match(read("scripts\/publish-discovery-layer.mjs"), /"Contribute\.dc\.html": "\/contribute"/);
   assert.match(read("api\/stripe\/create-donation-checkout.mjs"), /STRIPE_DONATION_CHECKOUT_APPROVED/);
-  assert.match(maintenance, /accepted participants only/i);
+  assert.match(maintenance, /Regeneration Maintenance/);
+  assert.match(maintenance, /regeneration-maintenance-scheduler\.js/);
+  assert.match(maintenance, /USD 50 per session/);
+  assert.match(maintenance, /no live attendance required/i);
+  assert.match(read("regeneration-maintenance-scheduler.js"), /offerId: "regeneration-maintenance"/);
+  assert.match(read("regeneration-maintenance-scheduler.js"), /checkout\.stripe\.com/);
 });
 
 test("homepage promotional mosaic alternates wide and compact desktop cards without separate section spacing", () => {

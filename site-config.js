@@ -1,3 +1,22 @@
+const regenerationMaintenanceSessions = [
+  "2026-08-17", "2026-08-24", "2026-08-31", "2026-09-07", "2026-09-14", "2026-09-21", "2026-09-28",
+  "2026-10-05", "2026-10-12", "2026-10-19", "2026-10-26", "2026-11-02", "2026-11-09", "2026-11-16"
+].map((date) => ({
+  id: `regeneration-maintenance-${date}`,
+  title: "Regeneration Maintenance",
+  category: "group",
+  startDate: date,
+  startDateTime: `${date}T23:00:00+08:00`,
+  timezone: "Asia/Shanghai",
+  timezoneLabel: "Beijing time",
+  location: "Remote practice",
+  venue: "No live attendance required",
+  summary: "A scheduled Rainbow Sanctuary restorative practice held while participants rest.",
+  price: "USD 50 per session",
+  status: "open",
+  registrationUrl: "/144-stages-maintenance#choose-session"
+}));
+
 /*
  * Final-input configuration for Rainbow Sanctuary.
  * Replace empty values only after James/Stephanie confirm them.
@@ -38,6 +57,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
   },
   pricing: {
     "group-healing": "USD 22 total · payment processing included",
+    "regeneration-maintenance": "USD 50 per session",
     "spiral-i": "USD 1,460 · Early Bird USD 1,045 · processing included",
     "spiral-ii": "USD 1,670 · Early Bird USD 1,355 · processing included",
     "spiral-iii": "USD 1,670 · Early Bird USD 1,460 · processing included",
@@ -76,11 +96,17 @@ window.RAINBOW_SANCTUARY_CONFIG = {
       checkoutEndpoint: "/api/stripe/create-checkout-session",
       checkoutUrl: ""
     },
+    regenerationMaintenance: {
+      frequency: "Weekly through 16 November 2026",
+      duration: "Overnight restorative practice",
+      price: "USD 50 per session",
+      checkoutEndpoint: "/api/stripe/create-checkout-session"
+    },
     privateSchedules: {
       "144-stages-maintenance": {
         timezone: "Asia/Shanghai",
         startDateTime: "2026-08-17T23:00:00+08:00",
-        firstCycle: { frequency: "weekly", sessions: 13 },
+        firstCycle: { frequency: "weekly", sessions: 14, endsOn: "2026-11-16" },
         afterFirstCycle: { frequency: "twice-monthly", status: "requires-team-approved-dates" },
         deliveryMode: "remote-no-attendance",
         operationsCalendar: "private-only"
@@ -183,21 +209,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
         status: "interest",
         registrationUrl: "/young-people-wellbeing"
       },
-      {
-        id: "144-stages-maintenance-2026-08-17",
-        title: "144 Stages Maintenance",
-        category: "group",
-        startDate: "2026-08-17",
-        startDateTime: "2026-08-17T23:00:00+08:00",
-        timezone: "Asia/Shanghai",
-        timezoneLabel: "Beijing time",
-        location: "Private pathway",
-        venue: "Accepted participants only",
-        summary: "A scheduled private maintenance session. Details are sent only to accepted participants.",
-        price: "USD 50 per confirmed session",
-        status: "scheduled",
-        registrationUrl: "/144-stages-maintenance"
-      },
+      ...regenerationMaintenanceSessions,
       {
         id: "awakening-inner-light-2026",
         title: "Awakening Your Inner Light",
