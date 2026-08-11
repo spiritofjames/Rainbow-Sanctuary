@@ -20,11 +20,11 @@ test("sensitive pathways stay safely gated and contributions use approved Stripe
   const youth = read("Young-People-Wellbeing.dc.html");
   const contribution = read("Contribute.dc.html");
   const maintenance = read("144-Stages-Maintenance.dc.html");
-  assert.match(autism, /Our exploratory framework/i);
-  assert.match(autism, /not final answers or promises of a particular outcome/i);
-  assert.match(autism, /does not diagnose, treat, cure, or promise neurological changes/i);
+  assert.match(autism, /Higher-Dimensional Hospital is a spiritual and consciousness-based framework/i);
+  assert.match(autism, /guided audio, focused intention, and an overnight energetic practice/i);
+  assert.match(autism, /Wellbeing Disclaimer/i);
   assert.match(autism, /Complete the free weekly registration/i);
-  assert.match(autism, /photo, name, age, and country/i);
+  assert.match(autism, /recent photo, full name, age, and country/i);
   assert.match(autism, /no Zoom link or live attendance requirement/i);
   assert.match(autism, /data-supported-apply="\/apply\?reason=family&amp;program=autism-family-support"/);
   assert.match(youth, /reviewed first/i);
