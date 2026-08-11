@@ -34,7 +34,7 @@ REQUIRED_SECURITY_HEADERS = {
 }
 # Transaction-return pages are reachable only from a completed Checkout session.
 # They are deliberately routable, but must not become discovery/sitemap content.
-PRIVATE_ROUTES = {"/payment-confirmation", "/young-people-wellbeing", "/144-stages-maintenance", "/contribute"}
+PRIVATE_ROUTES = {"/payment-confirmation", "/young-people-wellbeing", "/144-stages-maintenance"}
 
 
 class DocumentParser(HTMLParser):
@@ -162,8 +162,8 @@ def validate_discovery_layer(
         route: target for route, target in route_map.items()
         if route not in PRIVATE_ROUTES
     }
-    if len(discovery_routes) != 37:
-        errors.append(f"vercel.json: expected 37 canonical routes, found {len(discovery_routes)}")
+    if len(discovery_routes) != 38:
+        errors.append(f"vercel.json: expected 38 canonical routes, found {len(discovery_routes)}")
 
     redirects = config.get("redirects", [])
     redirect_map = {
