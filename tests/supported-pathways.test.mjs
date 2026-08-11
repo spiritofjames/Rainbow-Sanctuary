@@ -25,6 +25,8 @@ test("sensitive pathways and optional contributions stay safely gated", () => {
   assert.match(autism, /does not diagnose, treat, cure, or promise neurological changes/i);
   assert.match(youth, /reviewed first/i);
   assert.match(youth, /not a crisis or emergency service/i);
-  assert.match(contribution, /Contributions are not live yet/i);
+  assert.match(contribution, /Before accepting live contributions/i);
+  assert.match(contribution, /data-donation-form/);
+  assert.match(read("api\/stripe\/create-donation-checkout.mjs"), /STRIPE_DONATION_CHECKOUT_APPROVED/);
   assert.match(maintenance, /accepted participants only/i);
 });

@@ -9,6 +9,10 @@ export const config = {
   api: { bodyParser: false }
 };
 
+function isOptionalContribution(event) {
+  return event?.data?.object?.metadata?.contribution === "true";
+}
+
 export default async function handler(request, response) {
   if (request.method !== "POST") {
     response.setHeader("Allow", "POST");
@@ -31,7 +35,8 @@ export default async function handler(request, response) {
     let bookingEmail = { sent: false, reason: "not-applicable" };
     if (
       ["checkout.session.completed", "checkout.session.async_payment_succeeded"].includes(event.type) &&
-      !isInternalPaymentTest(event)
+      !isInternalPaymentTest(event) &&
+      !isOptionalContribution(event)
     ) {
       const hubspot = await mirrorHubSpotPurchase(event, process.env);
       await attemptPurchaseOperationsNotification(event, hubspot, process.env);

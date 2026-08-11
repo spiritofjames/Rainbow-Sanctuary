@@ -109,7 +109,8 @@ const ogImages = {
   "Earth-Healing-Zone.dc.html": "/assets/editorial/earth-healing-stewardship-v1.jpg",
   "Events-Retreats.dc.html": "/assets/retreat-panama-coast-aerial.jpg",
   "Group-Healing.dc.html": "/assets/editorial/group-healing-zoom.jpg",
-  "Autism-Family-Support.dc.html": "/assets/editorial/autism-family-support-v1.jpg",
+  "Autism-Family-Support.dc.html": "/assets/editorial/autism-family-support-hero-v2.png",
+  "Young-People-Wellbeing.dc.html": "/assets/editorial/young-people-wellbeing-hero-v2.png",
   "Spiral-Journey.dc.html": "/assets/editorial/home-spiral-editorial.jpg"
 };
 
