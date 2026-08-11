@@ -114,7 +114,17 @@
             <label class="rs-consent-field" for="consultation-photo-consent"><input id="consultation-photo-consent" name="photoConsent" type="checkbox" required="true" /><span>I consent to Rainbow Sanctuary using this image solely to review and, if accepted, support this private-healing request. I understand it is not used for medical diagnosis or identity verification.</span></label>
           </sc-if>
 
-          <sc-if value="{{ !isPrivateHealing }}" hint-placeholder-val="{{ true }}">
+          <sc-if value="{{ isAutismRegistration }}" hint-placeholder-val="{{ false }}">
+            <div class="rs-application-form__heading"><span>Step 3 · Participant registration</span><h2>Tell us who to add to the weekly list.</h2></div>
+            <div class="rs-field"><label for="participant-name">Participant’s name</label><input id="participant-name" name="participantName" autocomplete="off" type="text" required="true" maxlength="120" value="{{ participantName }}" onChange="{{ onParticipantNameChange }}" /><p class="rs-field-help">Please use the name you would like us to use for this free weekly wellbeing practice.</p></div>
+            <div class="rs-field"><label for="participant-age">Participant’s age</label><input id="participant-age" name="participantAge" inputmode="numeric" type="number" min="1" max="120" required="true" value="{{ participantAge }}" onChange="{{ onParticipantAgeChange }}" /></div>
+            <div class="rs-field"><label for="participant-country">Country</label><input id="participant-country" name="participantCountry" autocomplete="country-name" type="text" required="true" maxlength="80" value="{{ participantCountry }}" onChange="{{ onParticipantCountryChange }}" /></div>
+            <div class="rs-field rs-file-field"><label for="participant-photo">Recent participant photo</label><input id="participant-photo" name="headshot" type="file" accept="image/jpeg,image/png,image/webp" required="true" onChange="{{ onPhotoChange }}" /><p class="rs-field-help">JPG, PNG, or WebP; maximum 2 MB. The image is stored privately and automatically deleted after 30 days.</p><sc-if value="{{ photoName }}"><p class="rs-file-selected">Selected: {{ photoName }}</p></sc-if></div>
+            <label class="rs-consent-field" for="autism-photo-consent"><input id="autism-photo-consent" name="photoConsent" type="checkbox" required="true" /><span>I am the participant or their parent or legal guardian, and consent to Rainbow Sanctuary using this image only to register the participant for this weekly wellbeing practice. I understand it is not used for diagnosis, treatment, or identity verification.</span></label>
+            <label class="rs-consent-field" for="autism-preparation-consent"><input id="autism-preparation-consent" name="preparationConsent" type="checkbox" required="true" /><span>I understand that the practice takes place every Tuesday at 23:00 Beijing time (UTC+8). By the corresponding local time, the participant will be in a restful, familiar space; for children, this means being settled for sleep no later than 22:00 Beijing time where practical for the family.</span></label>
+          </sc-if>
+
+          <sc-if value="{{ isGeneralEnquiry }}" hint-placeholder-val="{{ true }}">
             <div class="rs-application-form__heading"><span>Step 3 · Your enquiry</span><h2>What would you like us to understand?</h2></div>
             <div class="rs-field"><label for="consultation-message">Message</label><textarea id="consultation-message" name="message" rows="5" required="true" value="{{ message }}" onChange="{{ onMessageChange }}"></textarea><p class="rs-field-help">A parent or legal guardian should make child-related enquiries. Do not include unnecessary identifying information about a child.</p></div>
           </sc-if>
@@ -142,10 +152,10 @@
           <div class="rs-application-acknowledgement__card">
             <button class="rs-application-acknowledgement__close" type="button" aria-label="Close request received message" onClick="{{ dismissAcknowledgement }}">×</button>
             <div class="rs-payment-confirmation__mark" aria-hidden="true">✓</div>
-            <span class="rs-application-kicker">Request received</span>
-            <h2 id="request-received-title">Thank you for sharing your context.</h2>
-            <p id="request-received-summary">A Rainbow Sanctuary team member will review your request and reach out through WhatsApp with the next step. We will also send a confirmation to the email address you provided.</p>
-            <p class="rs-application-acknowledgement__note">For Private Healing, a response or scheduling link confirms only the next conversation or appointment described in that message.</p>
+            <span class="rs-application-kicker">{{ acknowledgementKicker }}</span>
+            <h2 id="request-received-title">{{ acknowledgementTitle }}</h2>
+            <p id="request-received-summary">{{ acknowledgementSummary }}</p>
+            <p class="rs-application-acknowledgement__note">{{ acknowledgementNote }}</p>
             <button class="rs-entry-button rs-entry-button--primary" type="button" onClick="{{ dismissAcknowledgement }}">Continue</button>
           </div>
         </section>
@@ -153,8 +163,8 @@
 
       <sc-if value="{{ acknowledgementClosed }}" hint-placeholder-val="{{ false }}">
         <div class="rs-application-success">
-          <span class="rs-application-kicker">Request received</span><h2>Your request is with our team.</h2>
-          <p>We will follow up through WhatsApp and email with the appropriate next step.</p>
+          <span class="rs-application-kicker">{{ acknowledgementKicker }}</span><h2>{{ closedAcknowledgementTitle }}</h2>
+          <p>{{ closedAcknowledgementSummary }}</p>
         </div>
       </sc-if>
 
@@ -217,7 +227,7 @@
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { name: '', email: '', whatsapp: '', reason: '', privateSession: '', currentChallenges: '', intendedOutcome: '', message: '', photoFile: null, photoName: '', submissionId: '', submittedAt: '', submitted: false, showAcknowledgement: false, acknowledgementClosed: false, submitting: false, configurationPending: false, error: '' };
+    this.state = { name: '', email: '', whatsapp: '', reason: '', program: '', privateSession: '', currentChallenges: '', intendedOutcome: '', participantName: '', participantAge: '', participantCountry: '', message: '', photoFile: null, photoName: '', submissionId: '', submittedAt: '', submitted: false, showAcknowledgement: false, acknowledgementClosed: false, submitting: false, configurationPending: false, error: '' };
   }
 
   componentDidMount() {
@@ -228,7 +238,7 @@ class Component extends DCLogic {
     const program = params.get('program');
     const eventMessage = event === 'awakening-inner-light-2026' ? 'I would like to register interest in the Awakening Your Inner Light retreat, 1–7 October 2026 in Bocas del Toro.' : '';
     const programMessage = program ? `I am interested in ${program.replaceAll('-', ' ')}.` : '';
-    if (reason || privateSession || eventMessage || programMessage) this.setState({ reason: reason || (privateSession ? 'private-healing' : ''), privateSession: privateSession || '', message: eventMessage || programMessage });
+    if (reason || privateSession || eventMessage || programMessage) this.setState({ reason: reason || (privateSession ? 'private-healing' : ''), program: program || '', privateSession: privateSession || '', message: eventMessage || programMessage });
   }
 
   renderVals() {
@@ -237,19 +247,31 @@ class Component extends DCLogic {
       email: this.state.email,
       whatsapp: this.state.whatsapp,
       reason: this.state.reason,
+      program: this.state.program,
       privateSession: this.state.privateSession,
       currentChallenges: this.state.currentChallenges,
       intendedOutcome: this.state.intendedOutcome,
+      participantName: this.state.participantName,
+      participantAge: this.state.participantAge,
+      participantCountry: this.state.participantCountry,
       message: this.state.message,
       photoName: this.state.photoName,
       isPrivateHealing: this.state.reason === 'private-healing',
+      isAutismRegistration: this.state.reason === 'family' && this.state.program === 'autism-family-support',
+      isGeneralEnquiry: this.state.reason !== 'private-healing' && !(this.state.reason === 'family' && this.state.program === 'autism-family-support'),
       submitted: this.state.submitted,
       showAcknowledgement: this.state.showAcknowledgement,
       acknowledgementClosed: this.state.acknowledgementClosed,
       submitting: this.state.submitting,
       configurationPending: this.state.configurationPending,
       error: this.state.error,
-      submitLabel: this.state.submitting ? 'Sending securely…' : (this.state.reason === 'private-healing' ? 'Submit application' : 'Send enquiry'),
+      acknowledgementKicker: this.state.reason === 'family' && this.state.program === 'autism-family-support' ? 'Registration received' : 'Request received',
+      acknowledgementTitle: this.state.reason === 'family' && this.state.program === 'autism-family-support' ? 'The participant is registered for the weekly list.' : 'Thank you for sharing your context.',
+      acknowledgementSummary: this.state.reason === 'family' && this.state.program === 'autism-family-support' ? 'We have recorded this free weekly registration and will send a confirmation to the parent or guardian email provided.' : 'A Rainbow Sanctuary team member will review your request and reach out through WhatsApp with the next step. We will also send a confirmation to the email address you provided.',
+      acknowledgementNote: this.state.reason === 'family' && this.state.program === 'autism-family-support' ? 'Please keep a restful, familiar space at the corresponding local time for Tuesday 23:00 Beijing time (UTC+8). This non-clinical wellbeing practice does not replace healthcare, educational, therapeutic, or crisis support.' : 'For Private Healing, a response or scheduling link confirms only the next conversation or appointment described in that message.',
+      closedAcknowledgementTitle: this.state.reason === 'family' && this.state.program === 'autism-family-support' ? 'Registration is complete.' : 'Your request is with our team.',
+      closedAcknowledgementSummary: this.state.reason === 'family' && this.state.program === 'autism-family-support' ? 'The participant has been added to the weekly registration list. Please check the confirmation email for the schedule and preparation note.' : 'We will follow up through WhatsApp and email with the appropriate next step.',
+      submitLabel: this.state.submitting ? 'Sending securely…' : (this.state.reason === 'family' && this.state.program === 'autism-family-support' ? 'Complete free registration' : (this.state.reason === 'private-healing' ? 'Submit application' : 'Send enquiry')),
       onNameChange: (e) => this.setState({ name: e.target.value, configurationPending: false, error: '' }),
       onEmailChange: (e) => this.setState({ email: e.target.value, configurationPending: false, error: '' }),
       onWhatsappChange: (e) => this.setState({ whatsapp: e.target.value, configurationPending: false, error: '' }),
@@ -257,6 +279,9 @@ class Component extends DCLogic {
       onPrivateSessionChange: (e) => this.setState({ privateSession: e.target.value, error: '' }),
       onChallengesChange: (e) => this.setState({ currentChallenges: e.target.value, error: '' }),
       onOutcomeChange: (e) => this.setState({ intendedOutcome: e.target.value, error: '' }),
+      onParticipantNameChange: (e) => this.setState({ participantName: e.target.value, error: '' }),
+      onParticipantAgeChange: (e) => this.setState({ participantAge: e.target.value, error: '' }),
+      onParticipantCountryChange: (e) => this.setState({ participantCountry: e.target.value, error: '' }),
       onMessageChange: (e) => this.setState({ message: e.target.value, configurationPending: false, error: '' }),
       onPhotoChange: (e) => {
         const file = e.target.files && e.target.files[0];
@@ -273,11 +298,13 @@ class Component extends DCLogic {
         e.preventDefault();
         const formConfig = window.RAINBOW_SANCTUARY_CONFIG && window.RAINBOW_SANCTUARY_CONFIG.form;
         const isPrivate = this.state.reason === 'private-healing';
+        const isAutismRegistration = this.state.reason === 'family' && this.state.program === 'autism-family-support';
+        const requiresProtectedPhoto = isPrivate || isAutismRegistration;
         if (!/^\+[1-9][0-9\s().-]{6,20}$/.test(this.state.whatsapp.trim())) {
           this.setState({ error: 'Please enter your WhatsApp number with its international country code, beginning with +.' });
           return;
         }
-        if (isPrivate && !this.state.photoFile) {
+        if (requiresProtectedPhoto && !this.state.photoFile) {
           this.setState({ error: 'Please add the requested recent headshot, or contact the team to discuss an accessible alternative.' });
           return;
         }
@@ -302,30 +329,35 @@ class Component extends DCLogic {
           const sourceQuery = sourceParameters.toString();
           const privateMessage = isPrivate
             ? `Requested session: ${this.state.privateSession}\n\nCurrent context:\n${this.state.currentChallenges.trim()}\n\nIntended outcome:\n${this.state.intendedOutcome.trim()}`
-            : this.state.message;
+            : (isAutismRegistration
+              ? `Autism & Family Support weekly registration\n\nParticipant name: ${this.state.participantName.trim()}\nAge: ${this.state.participantAge}\nCountry: ${this.state.participantCountry.trim()}\n\nPreparation confirmation: Parent or guardian confirms a restful, familiar space at the corresponding local time for Tuesday 23:00 Beijing time (UTC+8).`
+              : this.state.message);
           const payload = {
             clientEventId: submissionId,
             email: this.state.email,
             message: privateMessage,
             name: this.state.name,
             privacyAccepted: true,
-            photoConsent: isPrivate,
+            photoConsent: requiresProtectedPhoto,
             privacyPolicyVersion: window.RAINBOW_SANCTUARY_CONFIG?.legal?.privacyPolicyVersion || '9 August 2026',
             currentChallenges: isPrivate ? this.state.currentChallenges.trim() : undefined,
             intendedOutcome: isPrivate ? this.state.intendedOutcome.trim() : undefined,
+            participantName: isAutismRegistration ? this.state.participantName.trim() : undefined,
+            participantAge: isAutismRegistration ? this.state.participantAge : undefined,
+            participantCountry: isAutismRegistration ? this.state.participantCountry.trim() : undefined,
             reason: this.state.reason,
-            program: isPrivate ? this.state.privateSession : undefined,
+            program: isPrivate ? this.state.privateSession : (isAutismRegistration ? 'autism-family-support' : undefined),
             sourcePage: window.location.pathname + (sourceQuery ? `?${sourceQuery}` : ''),
             submittedAt,
             whatsapp: this.state.whatsapp.trim()
           };
-          const requestBody = isPrivate ? new FormData() : JSON.stringify(payload);
-          if (isPrivate) {
+          const requestBody = requiresProtectedPhoto ? new FormData() : JSON.stringify(payload);
+          if (requiresProtectedPhoto) {
             requestBody.append('payload', JSON.stringify(payload));
             requestBody.append('headshot', this.state.photoFile, this.state.photoFile.name);
           }
           const headers = { 'Accept': 'application/json' };
-          if (!isPrivate) headers['Content-Type'] = 'application/json';
+          if (!requiresProtectedPhoto) headers['Content-Type'] = 'application/json';
           const response = await fetch(formConfig.endpoint, {
             method: formConfig.method || 'POST',
             headers,

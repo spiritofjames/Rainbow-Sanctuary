@@ -26,6 +26,10 @@ export function normalizePublicIntake(input, receivedAt = new Date(), options = 
   if (input.reason === "private-healing" && options.allowPrivateHealing !== true) {
     throw new Error("Private healing requires the approved confidential intake provider.");
   }
+  const isAutismRegistration = input.reason === "family" && input.program === "autism-family-support";
+  if (isAutismRegistration && options.allowAutismRegistration !== true) {
+    throw new Error("Autism registration requires the approved confidential intake provider.");
+  }
   const displayName = clean(input.name);
   const email = clean(input.email).toLowerCase();
   const phone = clean(input.whatsapp);
@@ -36,6 +40,9 @@ export function normalizePublicIntake(input, receivedAt = new Date(), options = 
   const area = clean(input.reason);
   if (area === "private-healing" && input.photoConsent !== true) {
     throw new Error("Private headshot consent is required.");
+  }
+  if (isAutismRegistration && input.photoConsent !== true) {
+    throw new Error("Protected participant photo consent is required.");
   }
   let program = clean(input.program) || null;
   if (!program && sourcePage.startsWith("/")) {
@@ -103,7 +110,8 @@ export async function forwardWebsiteIntake(
     throw new Error("CRM intake is not configured.");
   }
   const body = JSON.stringify(normalizePublicIntake(input, clock(), {
-    allowPrivateHealing: environment.HUBSPOT_PRIVATE_INTAKE_ENABLED === "true"
+    allowPrivateHealing: environment.HUBSPOT_PRIVATE_INTAKE_ENABLED === "true",
+    allowAutismRegistration: environment.HUBSPOT_PRIVATE_INTAKE_ENABLED === "true"
   }));
   const timestamp = clockSeconds();
   const signature = createHmac("sha256", secret).update(`${timestamp}.${body}`).digest("hex");

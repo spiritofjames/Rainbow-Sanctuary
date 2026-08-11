@@ -28,7 +28,9 @@
     selected = item;
     title.textContent = item.title;
     details.textContent = `${localDateTime(item)}. ${item.venue || "Preparation details follow review."}`;
-    const parameters = new URLSearchParams({ program: prefix, event: item.id });
+    const existingParameters = new URLSearchParams(applyPath.split("?")[1] || "");
+    const parameters = new URLSearchParams({ event: item.id });
+    if (!existingParameters.get("program")) parameters.set("program", prefix);
     action.href = `${applyPath}${applyPath.includes("?") ? "&" : "?"}${parameters.toString()}`;
     action.hidden = false;
     renderCalendar();

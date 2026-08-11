@@ -49,6 +49,34 @@ export function enquiryOperationsMessage(intake, hubspot, environment) {
   };
 }
 
+export function autismRegistrationReceipt(intake) {
+  const content = {
+    preheader: "Autism & Family Support registration is complete.",
+    eyebrow: "Weekly registration complete",
+    heading: "The participant is on the weekly list.",
+    greeting: `Hello ${escapeHtml(intake.displayName)},`,
+    paragraphs: [
+      "We have received the free Autism & Family Support registration and added the participant to the weekly list.",
+      "The practice is held each Tuesday at 23:00 Beijing time (UTC+8). At the corresponding local time, please create a restful, familiar space. There is no Zoom session or live attendance requirement."
+    ],
+    details: [
+      { label: "Pathway", value: "Autism & Family Support" },
+      { label: "Reference", value: escapeHtml(intake.eventId) }
+    ],
+    callout: "This is a non-clinical wellbeing practice and does not replace healthcare, educational, therapeutic, or crisis support.",
+    closing: "Rainbow Sanctuary"
+  };
+  return {
+    html: emailHtml(content),
+    identity: "general",
+    idempotencyKey: `intake:${intake.eventId}:autism-registration`,
+    subject: "Autism & Family Support registration confirmed",
+    tags: [{ name: "workflow", value: "autism_registration" }],
+    text: emailText(content),
+    to: intake.email
+  };
+}
+
 export function purchaseOperationsMessage(stripeEvent, hubspot, environment) {
   const handoff = crmPaymentHandoff(stripeEvent, {
     allowLive: livePaymentProcessingAllowed(environment)
@@ -101,6 +129,16 @@ export async function attemptEnquiryOperationsNotification(
       reason: "operations-notification-unavailable"
     });
     return { reason: "operations-notification-unavailable", sent: false };
+  }
+}
+
+export async function attemptAutismRegistrationReceipt(intake, environment, resendClient, logger = console) {
+  try {
+    const result = await sendOperationalEmail(autismRegistrationReceipt(intake), environment, resendClient);
+    return result;
+  } catch (error) {
+    logger.error("autism_registration_receipt_error", { reason: "receipt-unavailable" });
+    return { reason: "receipt-unavailable", sent: false };
   }
 }
 

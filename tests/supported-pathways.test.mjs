@@ -23,6 +23,10 @@ test("sensitive pathways stay safely gated and contributions use approved Stripe
   assert.match(autism, /Our exploratory framework/i);
   assert.match(autism, /not final answers or promises of a particular outcome/i);
   assert.match(autism, /does not diagnose, treat, cure, or promise neurological changes/i);
+  assert.match(autism, /Complete the free weekly registration/i);
+  assert.match(autism, /photo, name, age, and country/i);
+  assert.match(autism, /no Zoom link or live attendance requirement/i);
+  assert.match(autism, /data-supported-apply="\/apply\?reason=family&amp;program=autism-family-support"/);
   assert.match(youth, /reviewed first/i);
   assert.match(youth, /not a crisis or emergency service/i);
   assert.match(contribution, /https:\/\/donate\.stripe\.com\/fZuaEXeIh1mdazHeZ53Nm00/);
@@ -33,6 +37,17 @@ test("sensitive pathways stay safely gated and contributions use approved Stripe
   assert.match(read("scripts\/publish-discovery-layer.mjs"), /"Contribute\.dc\.html": "\/contribute"/);
   assert.match(read("api\/stripe\/create-donation-checkout.mjs"), /STRIPE_DONATION_CHECKOUT_APPROVED/);
   assert.match(maintenance, /accepted participants only/i);
+});
+
+test("homepage promotional mosaic alternates wide and compact desktop cards without separate section spacing", () => {
+  const home = read("Home.dc.html");
+  assert.equal((home.match(/class="rs-home-promotions"/g) || []).length, 1);
+  assert.match(home, /rs-home-promo--retreat rs-home-promo--wide/);
+  assert.match(home, /rs-home-promo--group-healing rs-home-promo--compact/);
+  assert.match(home, /rs-home-promo--autism rs-home-promo--compact/);
+  assert.match(home, /rs-home-promo--youth rs-home-promo--wide/);
+  assert.match(home, /grid-template-columns: repeat\(3, minmax\(0,1fr\)\)/);
+  assert.match(home, /\.rs-home-promo--wide \{ grid-column: span 2; \}/);
 });
 
 test("every rendered site footer offers a contribution pathway", () => {
