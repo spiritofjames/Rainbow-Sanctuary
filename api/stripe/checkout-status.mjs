@@ -1,8 +1,24 @@
 import Stripe from "stripe";
 import { assertCheckoutConfiguration } from "../_lib/checkout-policy.mjs";
 import { sendJson } from "../_lib/http.mjs";
+import { isOptionalContributionSession } from "../_lib/optional-contribution.mjs";
 
 const CHECKOUT_SESSION_PATTERN = /^cs_(?:test|live)_[A-Za-z0-9]+$/;
+
+function assertStatusConfiguration(environment) {
+  try {
+    assertCheckoutConfiguration(environment);
+    return;
+  } catch (checkoutError) {
+    const donationsEnabled = environment.STRIPE_DONATION_CHECKOUT_ENABLED === "true" &&
+      environment.STRIPE_DONATION_CHECKOUT_APPROVED === "true" &&
+      environment.STRIPE_SECRET_KEY;
+    if (!donationsEnabled) throw checkoutError;
+    const liveKey = ["sk_live_", "rk_live_"].some((prefix) => environment.STRIPE_SECRET_KEY.startsWith(prefix));
+    if (environment.VERCEL_ENV === "production" && (!liveKey || environment.STRIPE_DONATION_TAX_STATUS_APPROVED !== "true")) throw checkoutError;
+    if (environment.VERCEL_ENV !== "production" && liveKey) throw checkoutError;
+  }
+}
 
 export default async function handler(request, response) {
   if (request.method !== "GET") {
@@ -16,7 +32,7 @@ export default async function handler(request, response) {
   }
 
   try {
-    assertCheckoutConfiguration(process.env);
+    assertStatusConfiguration(process.env);
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const session = await stripe.checkout.sessions.retrieve(sessionId);
     const paid = session.payment_status === "paid";
@@ -32,7 +48,8 @@ export default async function handler(request, response) {
       offer,
       amount,
       currency,
-      internalTest: session.metadata?.internal_payment_test === "true"
+      internalTest: session.metadata?.internal_payment_test === "true",
+      contribution: isOptionalContributionSession(session, process.env)
     });
   } catch (error) {
     console.error("checkout_status_error", { message: error.message });

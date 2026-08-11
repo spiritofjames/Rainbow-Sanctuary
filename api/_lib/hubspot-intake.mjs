@@ -16,6 +16,7 @@ const AREA_LABELS = new Map([
 
 const PROGRAM_LABELS = new Map([
   ["adult-potential-development", "Adult Potential Development"],
+  ["autism-family-support", "Autism & Family Support"],
   ["awakening-inner-light-2026", "Awakening Your Inner Light Retreat 2026"],
   ["childrens-potential-coach-certification", "Children’s Potential Coach Certification"],
   ["crystal-healing", "Crystal Healing"],
@@ -69,6 +70,20 @@ function privateHealingNote({ intake, retention, application }) {
   ].join("");
 }
 
+function autismRegistrationNote({ intake, retention, application }) {
+  const days = retention.slice(1, -1);
+  return [
+    "<h3>Autism &amp; Family Support registration</h3>",
+    `<p><strong>Participant name</strong><br>${escapeHtml(application?.participantName)}</p>`,
+    `<p><strong>Age</strong><br>${escapeHtml(application?.participantAge)}</p>`,
+    `<p><strong>Country</strong><br>${escapeHtml(application?.participantCountry)}</p>`,
+    `<p><strong>Parent or guardian contact</strong><br>${escapeHtml(intake.displayName)} · WhatsApp: ${escapeHtml(intake.phone)}</p>`,
+    "<p><strong>Schedule and preparation</strong><br>Weekly Tuesday, 11:00 PM Beijing time (UTC+8). Parent or guardian confirmed a restful, familiar space at the corresponding local time.</p>",
+    `<p><strong>Participant photo</strong><br>Attached to this restricted note. It is automatically deleted after ${days} days. Do not download or duplicate outside the approved case workflow.</p>`,
+    `<p><small>Parent or guardian consent recorded · Registration reference: ${escapeHtml(intake.eventId)}</small></p>`
+  ].join("");
+}
+
 function requireConfiguration(environment) {
   const token = environment.HUBSPOT_ACCESS_TOKEN;
   const ownerId = environment.HUBSPOT_OWNER_ID;
@@ -97,10 +112,11 @@ async function responseJson(response, failureMessage) {
 }
 
 async function attachPrivateHeadshot({ application, attachment, contactId, intake, ownerId, retention, token }, fetchImplementation) {
+  const isAutismRegistration = intake.program === "autism-family-support";
   const uploadBody = new FormData();
   uploadBody.append("file", new Blob([attachment.buffer], { type: attachment.mimeType }), `${intake.eventId}.${attachment.extension}`);
   uploadBody.append("fileName", `${intake.eventId}.${attachment.extension}`);
-  uploadBody.append("folderPath", "/rainbow-sanctuary/private-healing-intake");
+  uploadBody.append("folderPath", isAutismRegistration ? "/rainbow-sanctuary/autism-family-registration" : "/rainbow-sanctuary/private-healing-intake");
   uploadBody.append("options", JSON.stringify({
     access: "PRIVATE",
     duplicateValidationScope: "EXACT_FOLDER",
@@ -126,7 +142,9 @@ async function attachPrivateHeadshot({ application, attachment, contactId, intak
       }],
       properties: {
         hs_attachment_ids: String(uploaded.id),
-        hs_note_body: privateHealingNote({ application, intake, retention }),
+        hs_note_body: isAutismRegistration
+          ? autismRegistrationNote({ application, intake, retention })
+          : privateHealingNote({ application, intake, retention }),
         hs_timestamp: intake.occurredAt,
         hubspot_owner_id: ownerId
       }

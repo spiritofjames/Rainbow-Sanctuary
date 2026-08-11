@@ -120,6 +120,42 @@ test("private healing uploads a private expiring file and attaches it to Ethel's
   assert.match(note.properties.hs_note_body, /30 days/);
 });
 
+test("Autism registration uses the same private thirty-day storage with a structured guardian note", async () => {
+  const calls = [];
+  const autismIntake = {
+    ...intake,
+    area: "family",
+    eventId: "12e9e9fd-367f-4f92-a6d2-bbe8e977d398",
+    program: "autism-family-support",
+    requestMessage: "Autism & Family Support weekly registration",
+    sourcePage: "/apply?reason=family&program=autism-family-support"
+  };
+  const privateEnvironment = {
+    ...environment,
+    HUBSPOT_PRIVATE_INTAKE_ENABLED: "true",
+    HUBSPOT_PRIVATE_INTAKE_TTL: "P30D"
+  };
+  const attachment = {
+    buffer: Buffer.from([0xff, 0xd8, 0xff, 0xdb, 0x00, 0x43, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05]),
+    extension: "jpg",
+    mimeType: "image/jpeg"
+  };
+  await mirrorHubSpotIntake(autismIntake, privateEnvironment, async (url, options) => {
+    calls.push({ options, url });
+    if (url.endsWith("contacts/batch/upsert")) return { json: async () => ({ results: [{ id: "41001" }] }), ok: true, status: 200 };
+    if (url.endsWith("/files/2026-03/files")) return { json: async () => ({ id: "51001" }), ok: true, status: 201 };
+    return { ok: true, status: 200 };
+  }, attachment, { participantAge: 9, participantCountry: "Panama", participantName: "Alex" });
+
+  assert.equal(calls[1].options.body.get("folderPath"), "/rainbow-sanctuary/autism-family-registration");
+  const note = JSON.parse(calls[2].options.body);
+  assert.match(note.properties.hs_note_body, /Autism &amp; Family Support registration/);
+  assert.match(note.properties.hs_note_body, /Alex/);
+  assert.match(note.properties.hs_note_body, /Panama/);
+  assert.match(note.properties.hs_note_body, /11:00 PM Beijing time/);
+  assert.match(note.properties.hs_note_body, /30 days/);
+});
+
 test("private attachment fails before side effects when the private intake gate is absent", async () => {
   let called = false;
   await assert.rejects(

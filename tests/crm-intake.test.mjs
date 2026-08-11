@@ -82,6 +82,23 @@ test("private healing stays gated unless its confidential provider and photo con
   assert.equal(privateIntake.program, "karma");
 });
 
+test("Autism & Family Support registration is a separately gated, parent-contact intake", () => {
+  const autism = {
+    ...submission,
+    message: "Autism & Family Support weekly registration\n\nParticipant name: Alex\nAge: 9\nCountry: Panama",
+    photoConsent: true,
+    program: "autism-family-support",
+    reason: "family",
+    sourcePage: "/apply?reason=family&program=autism-family-support"
+  };
+  assert.throws(() => normalizePublicIntake(autism, receivedAt), /autism registration/i);
+  const normalized = normalizePublicIntake(autism, receivedAt, { allowAutismRegistration: true });
+  assert.equal(normalized.area, "family");
+  assert.equal(normalized.program, "autism-family-support");
+  assert.equal(normalized.displayName, "Generated Visitor");
+  assert.match(normalized.requestMessage, /Participant name: Alex/);
+});
+
 test("unsafe or unconsented submissions fail closed", () => {
   assert.throws(() => normalizePublicIntake({ ...submission, privacyAccepted: false }, receivedAt), /consent/i);
   assert.throws(() => normalizePublicIntake({ ...submission, message: "card=4242 4242 4242 4242" }, receivedAt), /prohibited/i);
@@ -128,7 +145,7 @@ test("Preview CRM handoff uses a short-lived Vercel trusted-source token", async
   assert.equal(sent.options.headers["x-vercel-trusted-oidc-idp-token"], "short-lived-preview-oidc-token");
 });
 
-test("the enquiry form uses JSON for ordinary requests and multipart only for private headshots", async () => {
+test("the enquiry form uses JSON for ordinary requests and private multipart only for approved protected photo paths", async () => {
   const [form, config] = await Promise.all([
     readFile(new URL("../Book-Consultation.dc.html", import.meta.url), "utf8"),
     readFile(new URL("../site-config.js", import.meta.url), "utf8")
@@ -146,6 +163,9 @@ test("the enquiry form uses JSON for ordinary requests and multipart only for pr
   assert.doesNotMatch(form, /Private Healing intake is still protected/);
   assert.match(form, /new FormData\(\)/);
   assert.match(form, /requestBody\.append\('headshot'/);
+  assert.match(form, /isAutismRegistration/);
+  assert.match(form, /participantName/);
+  assert.match(form, /Complete free registration/);
   assert.match(form, /maximum 2 MB/);
   assert.match(form, /automatically deleted after 30 days/);
 });

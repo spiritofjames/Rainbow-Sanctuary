@@ -4,6 +4,7 @@ import { forwardStripeEvent, isInternalPaymentTest } from "../_lib/webhook-deliv
 import { sendPurchaseConfirmation } from "../_lib/group-healing-booking-email.mjs";
 import { mirrorHubSpotPurchase } from "../_lib/hubspot-payment.mjs";
 import { attemptPurchaseOperationsNotification } from "../_lib/operations-notification.mjs";
+import { isOptionalContributionSession } from "../_lib/optional-contribution.mjs";
 
 export const config = {
   api: { bodyParser: false }
@@ -31,7 +32,8 @@ export default async function handler(request, response) {
     let bookingEmail = { sent: false, reason: "not-applicable" };
     if (
       ["checkout.session.completed", "checkout.session.async_payment_succeeded"].includes(event.type) &&
-      !isInternalPaymentTest(event)
+      !isInternalPaymentTest(event) &&
+      !isOptionalContributionSession(event?.data?.object, process.env)
     ) {
       const hubspot = await mirrorHubSpotPurchase(event, process.env);
       await attemptPurchaseOperationsNotification(event, hubspot, process.env);

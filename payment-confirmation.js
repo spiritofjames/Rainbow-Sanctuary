@@ -2,6 +2,7 @@
   const params = new URLSearchParams(window.location.search);
   const sessionId = params.get("session_id") || "";
   const internalTest = params.get("internal_test") === "1";
+  const contributionReturn = params.get("contribution") === "1";
   const title = document.getElementById("payment-confirmation-title");
   const summary = document.getElementById("payment-confirmation-summary");
   const details = document.getElementById("payment-confirmation-details");
@@ -23,7 +24,7 @@
   }
 
   function showDetails(result) {
-    const offer = knownOfferNames[result.offer] || "Rainbow Sanctuary programme";
+    const offer = result.contribution ? "Optional contribution" : (knownOfferNames[result.offer] || "Rainbow Sanctuary programme");
     const amount = formatAmount(result.amount, result.currency);
     details.innerHTML = `<div><dt>Payment status</dt><dd>Paid</dd></div><div><dt>Programme</dt><dd>${offer}</dd></div>${amount ? `<div><dt>Total paid</dt><dd>${amount}</dd></div>` : ""}`;
     details.classList.remove("is-hidden");
@@ -55,6 +56,16 @@
         summary.textContent = "The USD 1 test payment was received. This test does not create a booking, programme place, client record, or Rainbow Sanctuary confirmation email.";
         help.textContent = "This internal verification is complete.";
         showDetails(result);
+        return;
+      }
+
+      if (contributionReturn || result.contribution) {
+        title.textContent = "Thank you for supporting access.";
+        summary.textContent = "Your optional contribution has been received. Stripe will send your receipt to the email address used at checkout.";
+        next.querySelector("h2").textContent = "What happens next";
+        next.querySelector("p").textContent = "Your contribution helps Rainbow Sanctuary keep selected group pathways accessible. It does not reserve a place or require any next step from you.";
+        showDetails(result);
+        next.classList.remove("is-hidden");
         return;
       }
 

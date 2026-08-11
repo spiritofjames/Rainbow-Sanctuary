@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   attemptEnquiryOperationsNotification,
   attemptPurchaseOperationsNotification,
+  autismRegistrationReceipt,
   enquiryOperationsMessage,
   purchaseOperationsMessage,
   sendEnquiryOperationsNotification
@@ -51,6 +52,16 @@ test("enquiry notification is minimal, linked to HubSpot and duplicate-safe", ()
   assert.match(message.html, /Open contact in HubSpot/);
   assert.doesNotMatch(message.html, /Sensitive context/);
   assert.doesNotMatch(message.text, /visitor@example\.test/);
+});
+
+test("Autism registration receipt confirms the weekly list without promising review, Zoom, or clinical support", () => {
+  const message = autismRegistrationReceipt({ ...intake, area: "family", program: "autism-family-support" });
+  assert.equal(message.to, "visitor@example.test");
+  assert.equal(message.idempotencyKey, `intake:${intake.eventId}:autism-registration`);
+  assert.match(message.text, /weekly list/i);
+  assert.match(message.text, /11:00 PM Beijing time/);
+  assert.doesNotMatch(message.text, /review|diagnos/i);
+  assert.match(message.text, /no Zoom session/i);
 });
 
 test("purchase notification uses the verified Stripe event and excludes payment method data", () => {

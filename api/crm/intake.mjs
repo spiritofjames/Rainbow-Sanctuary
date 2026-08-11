@@ -1,7 +1,7 @@
 import { assertAllowedOrigin } from "../_lib/checkout-policy.mjs";
 import { forwardWebsiteIntake, normalizePublicIntake } from "../_lib/crm-intake.mjs";
 import { mirrorHubSpotIntake } from "../_lib/hubspot-intake.mjs";
-import { attemptEnquiryOperationsNotification } from "../_lib/operations-notification.mjs";
+import { attemptAutismRegistrationReceipt, attemptEnquiryOperationsNotification } from "../_lib/operations-notification.mjs";
 import { parseJsonBody, sendJson } from "../_lib/http.mjs";
 import { parseMultipartIntake } from "../_lib/private-intake.mjs";
 
@@ -9,7 +9,7 @@ function safeFailureReason(error) {
   const message = String(error?.message || "").toLowerCase();
   if (message.includes("not enabled")) return "intake-disabled";
   if (message.includes("origin")) return "origin-policy";
-  if (message.includes("invalid") || message.includes("required") || message.includes("consent") || message.includes("prohibited")) {
+  if (message.includes("invalid") || message.includes("required") || message.includes("consent") || message.includes("prohibited") || message.includes("protected participant") || message.includes("autism registration")) {
     return "invalid-submission";
   }
   if (message.includes("crm intake is not configured")) return "crm-configuration";
@@ -36,6 +36,8 @@ function safeValidationDetail(error) {
   if (message.includes("consent")) return "consent";
   if (message.includes("prohibited")) return "prohibited-data";
   if (message.includes("headshot")) return "headshot";
+  if (message.includes("protected participant")) return "protected-participant-photo";
+  if (message.includes("autism registration")) return "autism-registration-gate";
   if (message.includes("private healing")) return "private-healing-gate";
   return null;
 }
@@ -57,6 +59,19 @@ function privateApplicationDetails(input, intake) {
   return { currentChallenges, intendedOutcome, session: intake.program };
 }
 
+function autismRegistrationDetails(input, intake) {
+  const participantName = String(input?.participantName || "").trim();
+  const participantCountry = String(input?.participantCountry || "").trim();
+  const participantAge = Number(input?.participantAge);
+  if (
+    intake.program !== "autism-family-support" ||
+    participantName.length < 1 || participantName.length > 120 ||
+    participantCountry.length < 1 || participantCountry.length > 80 ||
+    !Number.isInteger(participantAge) || participantAge < 1 || participantAge > 120
+  ) throw new Error("Invalid Autism registration details.");
+  return { participantAge, participantCountry, participantName };
+}
+
 export default async function handler(request, response) {
   if (request.method !== "POST") {
     response.setHeader("Allow", "POST");
@@ -72,22 +87,27 @@ export default async function handler(request, response) {
     });
     const { attachment, input } = await parseIntakeRequest(request);
     const isPrivate = input?.reason === "private-healing";
-    if (isPrivate && process.env.HUBSPOT_PRIVATE_INTAKE_ENABLED !== "true") {
+    const isAutismRegistration = input?.reason === "family" && input?.program === "autism-family-support";
+    const requiresProtectedAttachment = isPrivate || isAutismRegistration;
+    if (requiresProtectedAttachment && process.env.HUBSPOT_PRIVATE_INTAKE_ENABLED !== "true") {
       throw new Error("HubSpot private intake is not configured.");
     }
-    if (isPrivate && !attachment) throw new Error("Private headshot is required.");
-    if (!isPrivate && attachment) throw new Error("Invalid private intake request.");
+    if (requiresProtectedAttachment && !attachment) throw new Error("Protected participant photo is required.");
+    if (!requiresProtectedAttachment && attachment) throw new Error("Invalid private intake request.");
     const normalized = normalizePublicIntake(input, new Date(), {
-      allowPrivateHealing: isPrivate
+      allowPrivateHealing: isPrivate,
+      allowAutismRegistration: isAutismRegistration
     });
     const privateApplication = isPrivate ? privateApplicationDetails(input, normalized) : null;
+    const autismRegistration = isAutismRegistration ? autismRegistrationDetails(input, normalized) : null;
     await forwardWebsiteIntake(input, process.env);
-    const hubspot = await mirrorHubSpotIntake(normalized, process.env, fetch, attachment, privateApplication);
+    const hubspot = await mirrorHubSpotIntake(normalized, process.env, fetch, attachment, privateApplication || autismRegistration);
     await attemptEnquiryOperationsNotification(normalized, hubspot, process.env);
+    if (isAutismRegistration) await attemptAutismRegistrationReceipt(normalized, process.env);
     return sendJson(response, 202, { accepted: true });
   } catch (error) {
     const operationalFailure = /operations notification|operational recipient/i.test(error.message);
-    const expected = !operationalFailure && /not enabled|not configured|not allowed|origin|required|invalid|private healing|private headshot|consent|prohibited/i.test(error.message);
+    const expected = !operationalFailure && /not enabled|not configured|not allowed|origin|required|invalid|private healing|private headshot|protected participant|autism registration|consent|prohibited/i.test(error.message);
     console.error("crm_intake_error", {
       category: expected ? "rejected" : "upstream-unavailable",
       reason: safeFailureReason(error),

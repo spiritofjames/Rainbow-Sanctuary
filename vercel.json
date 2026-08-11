@@ -63,6 +63,11 @@
       "permanent": true
     },
     {
+      "source": "/Autism-Family-Support.dc.html",
+      "destination": "/autism-family-support",
+      "permanent": true
+    },
+    {
       "source": "/Awakening-Your-Inner-Light-2026.dc.html",
       "destination": "/awakening-your-inner-light-2026",
       "permanent": true
@@ -95,6 +100,11 @@
     {
       "source": "/Community-Stories.dc.html",
       "destination": "/community-stories",
+      "permanent": true
+    },
+    {
+      "source": "/Contribute.dc.html",
+      "destination": "/contribute",
       "permanent": true
     },
     {
@@ -221,6 +231,16 @@
       "source": "/Payment-Confirmation.dc.html",
       "destination": "/payment-confirmation",
       "permanent": true
+    },
+    {
+      "source": "/Young-People-Wellbeing.dc.html",
+      "destination": "/young-people-wellbeing",
+      "permanent": true
+    },
+    {
+      "source": "/144-Stages-Maintenance.dc.html",
+      "destination": "/144-stages-maintenance",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -243,6 +263,10 @@
     {
       "source": "/adult-potential-development",
       "destination": "/Adult-Potential-Development.dc.html"
+    },
+    {
+      "source": "/autism-family-support",
+      "destination": "/Autism-Family-Support.dc.html"
     },
     {
       "source": "/awakening-your-inner-light-2026",
@@ -271,6 +295,10 @@
     {
       "source": "/community-stories",
       "destination": "/Community-Stories.dc.html"
+    },
+    {
+      "source": "/contribute",
+      "destination": "/Contribute.dc.html"
     },
     {
       "source": "/cookie-policy",
@@ -371,6 +399,14 @@
     {
       "source": "/payment-confirmation",
       "destination": "/Payment-Confirmation.dc.html"
+    },
+    {
+      "source": "/young-people-wellbeing",
+      "destination": "/Young-People-Wellbeing.dc.html"
+    },
+    {
+      "source": "/144-stages-maintenance",
+      "destination": "/144-Stages-Maintenance.dc.html"
     }
   ]
 }
