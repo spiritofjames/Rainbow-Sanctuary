@@ -20,14 +20,6 @@
   };
   const localDateTime = (item) => new Intl.DateTimeFormat("en", { timeZone: viewerTimeZone, weekday:"long", day:"numeric", month:"long", year:"numeric", hour:"numeric", minute:"2-digit", hour12:true, timeZoneName:"short" }).format(new Date(item.startDateTime));
 
-  function normalizeAuthoredTimeCopy() {
-    page.querySelectorAll(".rs-supported-schedule").forEach((element) => {
-      element.textContent = element.textContent
-        .replace("23:00 Beijing (UTC+8)", "11:00 PM Beijing time (UTC+8)")
-        .replace("22:00 Beijing time", "10:00 PM Beijing time");
-    });
-  }
-
   function renderDetails(item) {
     const title = document.getElementById("supported-session-title");
     const details = document.getElementById("supported-session-details");
@@ -80,6 +72,5 @@
     if (sessions[0]) renderDetails(sessions[0]);
   }
 
-  normalizeAuthoredTimeCopy();
   Promise.resolve(window.RAINBOW_PUBLIC_EVENTS_READY).then(start).catch(() => start({ items: [] }));
 })();

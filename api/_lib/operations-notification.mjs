@@ -57,7 +57,7 @@ export function autismRegistrationReceipt(intake) {
     greeting: `Hello ${escapeHtml(intake.displayName)},`,
     paragraphs: [
       "We have received the free Autism & Family Support registration and added the participant to the weekly list.",
-      "The practice is held each Tuesday at 23:00 Beijing time (UTC+8). At the corresponding local time, please create a restful, familiar space. There is no Zoom session or live attendance requirement."
+      "The practice is held each Tuesday at 11:00 PM Beijing time (UTC+8). At the corresponding local time, please create a restful, familiar space. There is no Zoom session or live attendance requirement."
     ],
     details: [
       { label: "Pathway", value: "Autism & Family Support" },

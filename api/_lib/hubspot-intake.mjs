@@ -78,7 +78,7 @@ function autismRegistrationNote({ intake, retention, application }) {
     `<p><strong>Age</strong><br>${escapeHtml(application?.participantAge)}</p>`,
     `<p><strong>Country</strong><br>${escapeHtml(application?.participantCountry)}</p>`,
     `<p><strong>Parent or guardian contact</strong><br>${escapeHtml(intake.displayName)} · WhatsApp: ${escapeHtml(intake.phone)}</p>`,
-    "<p><strong>Schedule and preparation</strong><br>Weekly Tuesday, 23:00 Beijing time (UTC+8). Parent or guardian confirmed a restful, familiar space at the corresponding local time.</p>",
+    "<p><strong>Schedule and preparation</strong><br>Weekly Tuesday, 11:00 PM Beijing time (UTC+8). Parent or guardian confirmed a restful, familiar space at the corresponding local time.</p>",
     `<p><strong>Participant photo</strong><br>Attached to this restricted note. It is automatically deleted after ${days} days. Do not download or duplicate outside the approved case workflow.</p>`,
     `<p><small>Parent or guardian consent recorded · Registration reference: ${escapeHtml(intake.eventId)}</small></p>`
   ].join("");

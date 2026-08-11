@@ -152,7 +152,7 @@ test("Autism registration uses the same private thirty-day storage with a struct
   assert.match(note.properties.hs_note_body, /Autism &amp; Family Support registration/);
   assert.match(note.properties.hs_note_body, /Alex/);
   assert.match(note.properties.hs_note_body, /Panama/);
-  assert.match(note.properties.hs_note_body, /23:00 Beijing time/);
+  assert.match(note.properties.hs_note_body, /11:00 PM Beijing time/);
   assert.match(note.properties.hs_note_body, /30 days/);
 });
 
