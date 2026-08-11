@@ -54,7 +54,9 @@ test("supported session selection separates the date, format and registration ac
   const scheduler = read("supported-pathway-scheduler.js");
   const styles = read("supported-pathways.css");
   assert.match(scheduler, /hour12:true/);
-  assert.match(read("site-config.js"), /10:00 PM Beijing time/);
+  const siteConfig = read("site-config.js");
+  assert.match(siteConfig, /11:00 PM Beijing time \(UTC\+8\)/);
+  assert.match(siteConfig, /10:00 PM Beijing time/);
   assert.match(scheduler, /rs-supported-session-time/);
   assert.match(scheduler, /rs-supported-session-format/);
   assert.match(styles, /Selected supported-pathway sessions need a clearly scannable date/);
