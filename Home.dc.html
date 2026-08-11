@@ -213,6 +213,9 @@
     transition: transform 220ms ease, box-shadow 220ms ease;
   }
 
+  .rs-home-promo--wide { grid-column: auto; }
+  .rs-home-promo--compact { grid-column: auto; }
+
   .rs-home-promo:hover {
     transform: translateY(-3px);
     box-shadow: 0 26px 68px rgba(32,27,23,.15);
@@ -431,10 +434,17 @@
 
   @media (min-width: 760px) {
     .rs-home-promotions { padding: 30px 32px 58px; }
-    .rs-home-promotions__inner { grid-template-columns: minmax(0,1.7fr) minmax(310px,.8fr); gap: 18px; }
+    .rs-home-promotions__inner { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
     .rs-home-promo { min-height: 330px; }
+    .rs-home-promo--wide { grid-column: span 2; }
+    .rs-home-promo--compact { grid-column: span 1; }
+    .rs-home-promo--retreat { order: 1; }
+    .rs-home-promo--group-healing { order: 2; }
+    .rs-home-promo--autism { order: 3; }
+    .rs-home-promo--youth { order: 4; }
     .rs-home-promo__content { padding: 34px; }
-    .rs-home-promo--retreat h2 { font-size: clamp(42px,5vw,58px); }
+    .rs-home-promo--retreat h2,
+    .rs-home-promo--youth h2 { font-size: clamp(42px,5vw,58px); }
     .rs-home-promo--group h2 { font-size: clamp(32px,3vw,40px); }
     .rs-home-audience { padding: 64px 32px 80px; }
     .rs-home-audience__grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 24px; }
@@ -540,7 +550,7 @@
   <!-- CURRENT EXPERIENCES -->
   <section class="rs-home-promotions" aria-label="Upcoming Rainbow Sanctuary experiences">
     <div class="rs-home-promotions__inner">
-      <a class="rs-home-promo rs-home-promo--retreat" href="/awakening-your-inner-light-2026" aria-label="Explore Awakening Your Inner Light retreat, 1 to 7 October 2026 in Panama">
+      <a class="rs-home-promo rs-home-promo--retreat rs-home-promo--wide" href="/awakening-your-inner-light-2026" aria-label="Explore Awakening Your Inner Light retreat, 1 to 7 October 2026 in Panama">
         <img class="rs-home-promo__image" src="./assets/editorial/retreat-preparation-panama.jpg" alt="" width="1600" height="900" loading="eager" decoding="async">
         <div class="rs-home-promo__content">
           <span class="rs-home-promo__eyebrow">October 2026 · Panama</span>
@@ -550,7 +560,7 @@
         </div>
       </a>
 
-      <a class="rs-home-promo rs-home-promo--group" href="/group-healing#choose-session" aria-label="Choose the next online Group Healing session on 22 August 2026">
+      <a class="rs-home-promo rs-home-promo--group rs-home-promo--group-healing rs-home-promo--compact" href="/group-healing#choose-session" aria-label="Choose the next online Group Healing session on 22 August 2026">
         <img class="rs-home-promo__image" src="./assets/editorial/group-healing-zoom.jpg" alt="" width="1672" height="941" loading="eager" decoding="async">
         <div class="rs-home-promo__content">
           <span class="rs-home-promo__eyebrow">Online · $22 total</span>
@@ -559,16 +569,11 @@
           <span class="rs-home-promo__cta">Choose your session&nbsp;→</span>
         </div>
       </a>
-    </div>
-  </section>
-
-  <section class="rs-home-promotions" aria-label="New supportive group pathways">
-    <div class="rs-home-promotions__inner">
-      <a class="rs-home-promo rs-home-promo--group" href="/autism-family-support" aria-label="Explore Autism and Family Support">
+      <a class="rs-home-promo rs-home-promo--group rs-home-promo--autism rs-home-promo--compact" href="/autism-family-support" aria-label="Explore Autism and Family Support">
         <img class="rs-home-promo__image" src="./assets/editorial/autism-family-support-v1.jpg" alt="A young adult and parent sharing a calm moment at home" width="1672" height="941" loading="lazy" decoding="async">
         <div class="rs-home-promo__content"><span class="rs-home-promo__eyebrow">Weekly · free to join</span><h2>Autism &amp; family support</h2><p class="rs-home-promo__meta"><span>Tuesdays · 23:00 Beijing time</span><span>Optional contribution</span></p><span class="rs-home-promo__cta">Explore the pathway&nbsp;→</span></div>
       </a>
-      <a class="rs-home-promo rs-home-promo--group" href="/young-people-wellbeing" aria-label="Explore Young People’s Wellbeing Support">
+      <a class="rs-home-promo rs-home-promo--group rs-home-promo--youth rs-home-promo--wide" href="/young-people-wellbeing" aria-label="Explore Young People’s Wellbeing Support">
         <img class="rs-home-promo__image" src="./assets/editorial/young-adult-wellbeing-v1.jpg" alt="Two young adults quietly journaling in a warm evening room" width="1672" height="941" loading="lazy" decoding="async">
         <div class="rs-home-promo__content"><span class="rs-home-promo__eyebrow">Monthly · review first</span><h2>Young people’s wellbeing support</h2><p class="rs-home-promo__meta"><span>Up to age 25</span><span>First Tuesday · Beijing time</span></p><span class="rs-home-promo__cta">Understand the next step&nbsp;→</span></div>
       </a>
