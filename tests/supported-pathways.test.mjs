@@ -50,6 +50,16 @@ test("homepage promotional mosaic alternates wide and compact desktop cards with
   assert.match(home, /\.rs-home-promo--wide \{ grid-column: span 2; \}/);
 });
 
+test("supported session selection separates the date, format and registration action", () => {
+  const scheduler = read("supported-pathway-scheduler.js");
+  const styles = read("supported-pathways.css");
+  assert.match(scheduler, /hour12:true/);
+  assert.match(scheduler, /rs-supported-session-time/);
+  assert.match(scheduler, /rs-supported-session-format/);
+  assert.match(styles, /Selected supported-pathway sessions need a clearly scannable date/);
+  assert.match(styles, /rs-supported-session-summary\{margin:30px/);
+});
+
 test("every rendered site footer offers a contribution pathway", () => {
   const pages = fs.readdirSync(root)
     .filter((name) => name.endsWith(".dc.html"))
