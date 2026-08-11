@@ -289,6 +289,10 @@ window.RAINBOW_SANCTUARY_CONFIG = {
   const checkoutStatus = parameters.get("checkout");
   if (checkoutStatus !== "success" && checkoutStatus !== "cancelled") return;
 
+  // Group Healing owns its richer return notice (selected-session context and
+  // a dedicated dismiss action). Do not render a second generic payment notice.
+  if (window.location.pathname.replace(/\/$/, "") === "/group-healing") return;
+
   const render = () => {
     if (document.querySelector(".rs-commerce-return")) return;
     const notice = document.createElement("aside");
