@@ -5,3 +5,6 @@
 
 /* Closing contribution invitation: retain a single editorial line on wide screens and use the lotus-gold CTA accent. */
 .rs-contribute-close__inner{max-width:none;width:min(1540px,calc(100% - 64px))}.rs-contribute-close h2{white-space:nowrap;font-size:clamp(52px,5.4vw,84px);letter-spacing:-.025em}.rs-contribute-close .rs-contribute-action{background:#e6c75c;color:#25204f;border:1px solid #f7e8aa;box-shadow:0 14px 32px rgba(20,16,67,.26)}.rs-contribute-close .rs-contribute-action:hover{background:#f3dc80;color:#201b45}.rs-contribute-close .rs-contribute-action:focus-visible{outline-color:#f7e8aa}@media(max-width:1180px){.rs-contribute-close h2{white-space:normal}}@media(max-width:640px){.rs-contribute-close__inner{width:min(100% - 40px,1540px)}}
+
+/* A warm lotus-orange makes the contribution action visibly distinct from the violet invitation field. */
+.rs-contribute-close .rs-contribute-action{background:#f2a64b!important;color:#261d4f!important;border:2px solid #fff6df!important;box-shadow:0 16px 36px rgba(20,16,67,.38),inset 0 1px 0 rgba(255,255,255,.5)}.rs-contribute-close .rs-contribute-action:hover{background:#ffc36d!important;color:#1f173f!important}.rs-contribute-close .rs-contribute-action:focus-visible{outline-color:#fff!important}
