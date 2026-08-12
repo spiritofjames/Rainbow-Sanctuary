@@ -57,6 +57,18 @@ test("homepage promotional mosaic alternates wide and compact desktop cards with
   assert.match(home, /\.rs-home-promo--wide \{ grid-column: span 2; \}/);
 });
 
+test("homepage has an editorial contribution invitation near its closing content", () => {
+  const home = read("Home.dc.html");
+  const invitation = home.indexOf('class="rs-home-contribution"');
+  const closingCta = home.indexOf("<!-- CLOSING CTA -->");
+  assert.ok(invitation > -1);
+  assert.ok(invitation < closingCta);
+  assert.match(home, /Help keep the door open\./);
+  assert.match(home, /Much of this work is freely offered by the team\./);
+  assert.match(home, /href="\/contribute">Support shared access/);
+  assert.match(home, /Every contribution is voluntary\. Choose your own amount securely through Stripe\./);
+});
+
 test("supported session selection separates the date, format and registration action", () => {
   const scheduler = read("supported-pathway-scheduler.js");
   const styles = read("supported-pathways.css");

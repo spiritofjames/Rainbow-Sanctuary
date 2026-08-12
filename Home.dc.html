@@ -413,6 +413,102 @@
   .rs-home-audience__card--family { box-shadow: inset 0 3px 0 #68aa8c, 0 18px 60px rgba(41,37,36,.06); }
   .rs-home-audience__card--mission { box-shadow: inset 0 3px 0 #8e73d8, 0 18px 60px rgba(41,37,36,.06); }
 
+  /* A contribution invitation belongs near the end of the journey: it is an
+     editorial support note, deliberately distinct from the experience cards. */
+  .rs-home-contribution {
+    position: relative;
+    overflow: hidden;
+    padding: 72px 20px;
+    background:
+      radial-gradient(circle at 9% 16%, rgba(107,174,143,.22), transparent 32%),
+      radial-gradient(circle at 92% 80%, rgba(113,91,232,.18), transparent 34%),
+      #f7f6f1;
+  }
+
+  .rs-home-contribution::before {
+    position: absolute;
+    inset: 20px;
+    border: 1px solid rgba(46,106,88,.18);
+    border-radius: 32px;
+    content: "";
+    pointer-events: none;
+  }
+
+  .rs-home-contribution__inner {
+    position: relative;
+    display: grid;
+    gap: 28px;
+    width: min(980px, 100%);
+    margin: 0 auto;
+  }
+
+  .rs-home-contribution__copy { max-width: 630px; }
+
+  .rs-home-contribution__eyebrow {
+    display: block;
+    margin-bottom: 14px;
+    color: #2e6a58;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+  }
+
+  .rs-home-contribution h2 {
+    margin: 0;
+    color: #172d26;
+    font: 300 clamp(38px, 7vw, 58px)/.98 'EB Garamond', serif;
+    letter-spacing: -.035em;
+  }
+
+  .rs-home-contribution p {
+    margin: 18px 0 0;
+    color: #4f5b55;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  .rs-home-contribution__action {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .rs-home-contribution__link {
+    display: inline-flex;
+    min-height: 52px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 13px 24px;
+    background: #2e6a58;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 14px 30px rgba(31,74,61,.2);
+    transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+  }
+
+  .rs-home-contribution__link:hover {
+    background: #245747;
+    box-shadow: 0 18px 36px rgba(31,74,61,.27);
+    transform: translateY(-2px);
+  }
+
+  .rs-home-contribution__link:focus-visible {
+    outline: 3px solid rgba(46,106,88,.42);
+    outline-offset: 4px;
+  }
+
+  .rs-home-contribution__note {
+    max-width: 360px;
+    color: #65716b;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
   @media (max-width: 700px) {
     .rs-hero-motion-toggle { right: 16px; bottom: 16px; }
 
@@ -451,6 +547,9 @@
     .rs-home-audience__intro { margin-bottom: 46px; }
     .rs-home-audience__card { min-height: 290px; padding: 38px 36px; }
     .rs-home-audience__card--mission { grid-column: 1 / -1; min-height: 230px; }
+    .rs-home-contribution { padding: 92px 32px; }
+    .rs-home-contribution__inner { grid-template-columns: minmax(0,1.4fr) minmax(250px,.6fr); align-items:end; gap: 56px; }
+    .rs-home-contribution__action { align-items:flex-end; text-align:right; }
   }
 
   @media (min-width: 920px) {
@@ -765,6 +864,21 @@
       <h2>Rainbow Sanctuary is part of a larger movement.</h2>
       <p>Rainbow Sanctuary cultivates the inner and relational capacity for change. The Planetary Symbiosis Network carries that work outward into regenerative communities, Earth stewardship, and human-governed technology that helps people learn and coordinate.</p>
       <a class="rs-home-vision__link" href="/bigger-vision">Explore the Bigger Vision</a>
+    </div>
+  </section>
+
+  <!-- CONTRIBUTION INVITATION -->
+  <section class="rs-home-contribution" aria-labelledby="contribution-title">
+    <div class="rs-home-contribution__inner">
+      <div class="rs-home-contribution__copy">
+        <span class="rs-home-contribution__eyebrow">Support shared access</span>
+        <h2 id="contribution-title">Help keep the door open.</h2>
+        <p>Rainbow Sanctuary offers selected group practices, community pathways, and thoughtful support so that cost is not the only thing that decides who can take part. Much of this work is freely offered by the team. If you are able, your contribution helps keep that access open for someone else.</p>
+      </div>
+      <div class="rs-home-contribution__action">
+        <a class="rs-home-contribution__link" href="/contribute">Support shared access&nbsp;→</a>
+        <span class="rs-home-contribution__note">Every contribution is voluntary. Choose your own amount securely through Stripe.</span>
+      </div>
     </div>
   </section>
 
