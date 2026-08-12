@@ -15,6 +15,15 @@ separate links, so Ethel never edits an amount or uses a generic discount field.
 The catalogue is internal and must not be published on the website. Retreats,
 private healing and unpriced work remain outside it.
 
+Stripe Dashboard Payment Links may also be used as an internal operations
+fallback when a participant needs a simple reusable link. Every such link must
+be a fixed, one-time price and be entered in
+`STRIPE_STAFF_PAYMENT_LINK_MAP` as `plink_id:offer-id` before the link is ever
+sent. That exact allowlist hydrates the verified Stripe webhook with the approved
+offer/session identity; unlisted links are not treated as Rainbow programme
+payments. Use the accompanying `ETHEL-PAYMENT-LINK-REGISTER.md` as the
+operational register.
+
 The advertised totals use an internal 4% + USD 0.50 payment-processing allowance
 and are rounded up to a clear whole-USD price (nearest USD 5 for programme prices).
 This is absorbed into one advertised total rather than added as a card surcharge.
@@ -34,6 +43,9 @@ It is not a statement of Stripe's exact fee for every card or market.
   offer/session metadata before opening Stripe-hosted Checkout.
   Ethel sends one only after confirming the person and option. Promotion codes,
   customer-adjustable amounts and quantities stay disabled.
+- A Dashboard Payment Link is permitted only when its ID is explicitly mapped to
+  the same fixed offer in `STRIPE_STAFF_PAYMENT_LINK_MAP`, it requires customer
+  name and email, and the total matches the server-owned catalogue exactly.
 - Production also requires a live key and `STRIPE_LIVE_CHECKOUT_APPROVED=true`.
 - Production additionally requires `STRIPE_AUTOMATIC_TAX_ENABLED=true` and
   `STRIPE_TAX_DISPLAY_APPROVED=true`. Do not set either until the operating
