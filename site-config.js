@@ -1,21 +1,18 @@
-const regenerationMaintenanceSessions = [
-  "2026-08-17", "2026-08-24", "2026-08-31", "2026-09-07", "2026-09-14", "2026-09-21", "2026-09-28",
-  "2026-10-05", "2026-10-12", "2026-10-19", "2026-10-26", "2026-11-02", "2026-11-09", "2026-11-16"
-].map((date) => ({
-  id: `regeneration-maintenance-${date}`,
+const regenerationMaintenanceProgramme = {
+  id: "regeneration-maintenance-2026-08-17",
   title: "Regeneration Maintenance",
   category: "group",
-  startDate: date,
-  startDateTime: `${date}T23:00:00+08:00`,
+  startDate: "2026-08-17",
+  startDateTime: "2026-08-17T23:00:00+08:00",
   timezone: "Asia/Shanghai",
   timezoneLabel: "Beijing time",
   location: "Remote practice",
   venue: "No live attendance required",
-  summary: "A scheduled Rainbow Sanctuary restorative practice held while participants rest.",
-  price: "USD 50 per session",
+  summary: "A fixed-start maintenance practice for people who have completed ReGeneration Levels I and II.",
+  price: "USD 210 one month · USD 630 first three months",
   status: "open",
-  registrationUrl: "/144-stages-maintenance#choose-session"
-}));
+  registrationUrl: "/144-stages-maintenance#choose-commitment"
+};
 
 /*
  * Final-input configuration for Rainbow Sanctuary.
@@ -57,7 +54,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
   },
   pricing: {
     "group-healing": "USD 22 total · payment processing included",
-    "regeneration-maintenance": "USD 50 per session",
+    "regeneration-maintenance": "USD 210 one month · USD 630 first three months",
     "spiral-i": "USD 1,460 · Early Bird USD 1,045 · processing included",
     "spiral-ii": "USD 1,670 · Early Bird USD 1,355 · processing included",
     "spiral-iii": "USD 1,670 · Early Bird USD 1,460 · processing included",
@@ -97,9 +94,9 @@ window.RAINBOW_SANCTUARY_CONFIG = {
       checkoutUrl: ""
     },
     regenerationMaintenance: {
-      frequency: "Weekly through 16 November 2026",
+      frequency: "Fixed start 17 August 2026 · weekly through 16 November 2026",
       duration: "Overnight restorative practice",
-      price: "USD 50 per session",
+      price: "USD 210 one month · USD 630 first three months",
       checkoutEndpoint: "/api/stripe/create-checkout-session"
     },
     privateSchedules: {
@@ -209,7 +206,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
         status: "interest",
         registrationUrl: "/young-people-wellbeing"
       },
-      ...regenerationMaintenanceSessions,
+      regenerationMaintenanceProgramme,
       {
         id: "awakening-inner-light-2026",
         title: "Awakening Your Inner Light",

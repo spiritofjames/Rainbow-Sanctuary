@@ -159,9 +159,8 @@
 </header>
 <div aria-hidden="true" style="height:73px;flex:0 0 73px;"></div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;activePage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;about&quot;,&quot;spiral&quot;,&quot;workshops&quot;,&quot;family&quot;,&quot;private&quot;,&quot;cert&quot;,&quot;events&quot;,&quot;vision&quot;,&quot;community&quot;]}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;activePage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;about&quot;,&quot;spiral&quot;,&quot;workshops&quot;,&quot;family&quot;,&quot;private&quot;,&quot;group&quot;,&quot;cert&quot;,&quot;events&quot;]}}">
 const RAW_NAV = [
-  { key: 'about', label: 'About', href: '/about', children: null },
   { key: 'spiral', label: 'Spiral Journey', href: '/spiral-journey', children: [
     { label: 'Start Here — Group Healing', href: '/group-healing' },
     { label: 'Overview', href: '/spiral-journey' },
@@ -182,12 +181,15 @@ const RAW_NAV = [
     { label: 'Family Information Field Restoration', href: '/family-information-field-restoration' },
     { label: 'DNA Activation', href: '/dna-activation' },
   ]},
-  { key: 'events', label: 'Events', href: '/events', children: null },
-  { key: 'community', label: 'Community', href: '/community-stories', children: null },
-  { key: 'vision', label: 'Bigger Vision', href: '/bigger-vision', children: [
-    { label: 'Planetary Symbiosis Network', href: '/bigger-vision' },
-    { label: 'Earth Healing Zone', href: '/earth-healing-zone' },
+  { key: 'group', label: 'Group Healing', href: '/group-healing', children: [
+    { label: 'Overview', href: '/group-healing' },
+    { label: 'Online Group Healing · $22', href: '/group-healing#choose-session' },
+    { label: 'Regeneration Maintenance', href: '/144-stages-maintenance' },
+    { label: 'Autism & Family Support', href: '/autism-family-support' },
+    { label: 'Young People’s Wellbeing Support', href: '/young-people-wellbeing' },
   ]},
+  { key: 'events', label: 'Events', href: '/events', children: null },
+  { key: 'about', label: 'About', href: '/about', children: null },
 ];
 
 class Component extends DCLogic {

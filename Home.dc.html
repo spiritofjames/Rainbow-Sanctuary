@@ -187,9 +187,20 @@
   }
 
   .rs-home-promotions {
-    padding: 24px 20px 48px;
+    padding: 0 20px 48px;
     background: #f5f5f5;
   }
+
+  .rs-home-retreat-feature {
+    padding: 48px 20px 24px;
+    background: #f5f5f5;
+  }
+
+  .rs-home-retreat-feature__inner { width: min(1200px, 100%); margin: 0 auto; }
+
+  .rs-home-retreat-feature .rs-home-promo { min-height: clamp(390px, 48vw, 560px); }
+  .rs-home-retreat-feature .rs-home-promo__content { max-width: 760px; }
+  .rs-home-retreat-feature .rs-home-promo h2 { font-size: clamp(45px, 8vw, 76px); }
 
   .rs-home-promotions__inner {
     display: grid;
@@ -433,15 +444,15 @@
   }
 
   @media (min-width: 760px) {
-    .rs-home-promotions { padding: 30px 32px 58px; }
+    .rs-home-retreat-feature { padding: 64px 32px 30px; }
+    .rs-home-promotions { padding: 0 32px 58px; }
     .rs-home-promotions__inner { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
     .rs-home-promo { min-height: 330px; }
     .rs-home-promo--wide { grid-column: span 2; }
     .rs-home-promo--compact { grid-column: span 1; }
-    .rs-home-promo--retreat { order: 1; }
-    .rs-home-promo--group-healing { order: 2; }
-    .rs-home-promo--autism { order: 3; }
-    .rs-home-promo--youth { order: 4; }
+    .rs-home-promo--group-healing { order: 1; }
+    .rs-home-promo--autism { order: 2; }
+    .rs-home-promo--youth { order: 3; }
     .rs-home-promo__content { padding: 34px; }
     .rs-home-promo--retreat h2,
     .rs-home-promo--youth h2 { font-size: clamp(42px,5vw,58px); }
@@ -547,20 +558,25 @@
     </div>
   </section>
 
-  <!-- CURRENT EXPERIENCES -->
-  <section class="rs-home-promotions" aria-label="Upcoming Rainbow Sanctuary experiences">
-    <div class="rs-home-promotions__inner">
-      <a class="rs-home-promo rs-home-promo--retreat rs-home-promo--wide" href="/awakening-your-inner-light-2026" aria-label="Explore Awakening Your Inner Light retreat, 1 to 7 October 2026 in Panama">
-        <img class="rs-home-promo__image" src="./assets/editorial/retreat-preparation-panama.jpg" alt="" width="1600" height="900" loading="eager" decoding="async">
+  <!-- IN-PERSON RETREAT -->
+  <section class="rs-home-retreat-feature" aria-label="Featured in-person retreat">
+    <div class="rs-home-retreat-feature__inner">
+      <a class="rs-home-promo rs-home-promo--retreat" href="/awakening-your-inner-light-2026" aria-label="Explore Awakening Your Inner Light retreat, 1 to 7 October 2026 in Panama">
+        <img class="rs-home-promo__image" src="./assets/editorial/retreat-preparation-panama.jpg" alt="Rainbow Sanctuary retreat participants gathering in a natural Panama setting" width="1600" height="900" loading="eager" decoding="async">
         <div class="rs-home-promo__content">
-          <span class="rs-home-promo__eyebrow">October 2026 · Panama</span>
+          <span class="rs-home-promo__eyebrow">Featured in-person retreat · October 2026 · Panama</span>
           <h2>Awakening Your Inner Light</h2>
           <p class="rs-home-promo__meta"><span>1–7 October 2026</span><span>Bocas del Toro</span><span>Seven-day retreat</span></p>
           <span class="rs-home-promo__cta">Explore the retreat</span>
         </div>
       </a>
+    </div>
+  </section>
 
-      <a class="rs-home-promo rs-home-promo--group rs-home-promo--group-healing rs-home-promo--compact" href="/group-healing#choose-session" aria-label="Choose the next online Group Healing session on 22 August 2026">
+  <!-- ONLINE AND REMOTE PATHWAYS -->
+  <section class="rs-home-promotions" aria-label="Upcoming Rainbow Sanctuary experiences">
+    <div class="rs-home-promotions__inner">
+      <a class="rs-home-promo rs-home-promo--group rs-home-promo--group-healing rs-home-promo--wide" href="/group-healing#choose-session" aria-label="Choose the next online Group Healing session on 22 August 2026">
         <img class="rs-home-promo__image" src="./assets/editorial/group-healing-zoom.jpg" alt="" width="1672" height="941" loading="eager" decoding="async">
         <div class="rs-home-promo__content">
           <span class="rs-home-promo__eyebrow">Online · $22 total</span>
