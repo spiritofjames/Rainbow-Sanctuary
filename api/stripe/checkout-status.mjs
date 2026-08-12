@@ -2,6 +2,7 @@ import Stripe from "stripe";
 import { assertCheckoutConfiguration } from "../_lib/checkout-policy.mjs";
 import { sendJson } from "../_lib/http.mjs";
 import { isOptionalContributionSession } from "../_lib/optional-contribution.mjs";
+import { staffPaymentLinkContext } from "../_lib/staff-payment-links.mjs";
 
 const CHECKOUT_SESSION_PATTERN = /^cs_(?:test|live)_[A-Za-z0-9]+$/;
 
@@ -36,7 +37,8 @@ export default async function handler(request, response) {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const session = await stripe.checkout.sessions.retrieve(sessionId);
     const paid = session.payment_status === "paid";
-    const offer = String(session.metadata?.offer_key || "");
+    const staticPaymentContext = staffPaymentLinkContext(session, process.env);
+    const offer = String(session.metadata?.offer_key || staticPaymentContext?.offerId || "");
     const amount = Number.isSafeInteger(session.amount_total) ? session.amount_total : null;
     const currency = /^[a-z]{3}$/i.test(String(session.currency || ""))
       ? String(session.currency).toUpperCase()

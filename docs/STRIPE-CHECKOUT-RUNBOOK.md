@@ -2,9 +2,11 @@
 
 ## Current scope
 
-The public website creates Stripe-hosted Checkout only for the confirmed USD 22
-Group Healing session. Programme pages remain enquiry-led and contain no public
-purchase button or programme Checkout entry point.
+The public website creates Stripe-hosted Checkout only for approved public
+journeys: the confirmed USD 22 Group Healing session and the USD 50
+Regeneration Maintenance Monday sessions. Other programme pages remain
+enquiry-led and contain no public purchase button or programme Checkout entry
+point.
 
 After a human conversation, Ethel may send the participant the exact persistent,
 signed staff payment link from the internal catalogue. It opens a fresh
@@ -12,6 +14,15 @@ Stripe-hosted Checkout for a fixed server-side offer. Standard and Early Bird ar
 separate links, so Ethel never edits an amount or uses a generic discount field.
 The catalogue is internal and must not be published on the website. Retreats,
 private healing and unpriced work remain outside it.
+
+Stripe Dashboard Payment Links may also be used as an internal operations
+fallback when a participant needs a simple reusable link. Every such link must
+be a fixed, one-time price and be entered in
+`STRIPE_STAFF_PAYMENT_LINK_MAP` as `plink_id:offer-id` before the link is ever
+sent. That exact allowlist hydrates the verified Stripe webhook with the approved
+offer/session identity; unlisted links are not treated as Rainbow programme
+payments. Use the accompanying `ETHEL-PAYMENT-LINK-REGISTER.md` as the
+operational register.
 
 The advertised totals use an internal 4% + USD 0.50 payment-processing allowance
 and are rounded up to a clear whole-USD price (nearest USD 5 for programme prices).
@@ -21,14 +32,20 @@ It is not a statement of Stripe's exact fee for every card or market.
 ## Safety gates
 
 - Preview and staging must use a Stripe sandbox secret key.
-- An event must be both public with `status: "open"` and included in
+- A Group Healing event must be public with `status: "open"` and included in
   `STRIPE_ALLOWED_GROUP_EVENT_IDS`.
-- `STRIPE_ALLOWED_OFFER_IDS` contains only `group-healing`; guessed programme
-  requests to the public website endpoint fail closed.
+- A Regeneration Maintenance Monday must be public with `status: "open"` and
+  included in `STRIPE_ALLOWED_REGENERATION_EVENT_IDS`.
+- `STRIPE_ALLOWED_OFFER_IDS` contains only the explicitly approved public
+  offer IDs (`group-healing,regeneration-maintenance`); guessed programme
+  requests to the public endpoint fail closed.
 - Staff payment invitations resolve to fixed server-side prices and governed
   offer/session metadata before opening Stripe-hosted Checkout.
   Ethel sends one only after confirming the person and option. Promotion codes,
   customer-adjustable amounts and quantities stay disabled.
+- A Dashboard Payment Link is permitted only when its ID is explicitly mapped to
+  the same fixed offer in `STRIPE_STAFF_PAYMENT_LINK_MAP`, it requires customer
+  name and email, and the total matches the server-owned catalogue exactly.
 - Production also requires a live key and `STRIPE_LIVE_CHECKOUT_APPROVED=true`.
 - Production additionally requires `STRIPE_AUTOMATIC_TAX_ENABLED=true` and
   `STRIPE_TAX_DISPLAY_APPROVED=true`. Do not set either until the operating
@@ -69,9 +86,9 @@ production condition below is accepted.
 ## Sandbox acceptance
 
 1. Open a confirmed test event by changing its public status to `open` and adding
-   its identifier to the staging allowlist.
+   its identifier to the matching staging allowlist.
 2. Select the session on staging and confirm Checkout shows the expected USD 22
-   Group Healing product.
+   Group Healing or USD 50 Regeneration Maintenance product.
 3. Complete a Stripe test-card payment.
 4. Confirm the success return, Stripe receipt, signed webhook delivery, duplicate
    webhook idempotency at the CRM gateway, and no public Zoom link.

@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   bookingConfirmationFromStripeEvent,
   programConfirmationFromStripeEvent,
+  regenerationMaintenanceConfirmationFromStripeEvent,
   sendBookingConfirmation
 } from "../api/_lib/group-healing-booking-email.mjs";
 
@@ -39,6 +40,25 @@ test("verified Group Healing payment builds a minimal, idempotent booking confir
   assert.equal(message.variables.EVENT_TITLE, "Grounding & Renewal");
   assert.match(message.variables.CALENDAR_URL, /^https:\/\/calendar\.google\.com\/calendar\/render\?/);
   assert.match(message.variables.LOCATION, /access details follow separately/i);
+});
+
+test("verified Regeneration Maintenance payment builds a date-specific confirmation", () => {
+  const event = checkoutEvent({
+    data: {
+      object: {
+        ...checkoutEvent().data.object,
+        amount_total: 5_000,
+        metadata: {
+          offer_key: "regeneration-maintenance",
+          event_id: "regeneration-maintenance-2026-08-17"
+        }
+      }
+    }
+  });
+  const message = regenerationMaintenanceConfirmationFromStripeEvent(event);
+  assert.equal(message.alias, "rs-regeneration-maintenance-confirmed");
+  assert.equal(message.variables.EVENT_TIME, "11:00 PM");
+  assert.match(message.variables.EVENT_DATE, /Monday, August 17, 2026/);
 });
 
 test("verified programme payment builds a minimal programme confirmation", () => {
