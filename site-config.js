@@ -128,7 +128,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
         // Protected staging uses Stripe test mode for generated Stage 1 CRM acceptance.
         // Do not promote this status to main until live checkout is separately approved.
         status: "open",
-        registrationUrl: "/group-healing#choose-session",
+        registrationUrl: "/online-group-healing#choose-session",
         checkoutUrl: ""
       },
       {
@@ -300,7 +300,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
 
   // Group Healing owns its richer return notice (selected-session context and
   // a dedicated dismiss action). Do not render a second generic payment notice.
-  if (window.location.pathname.replace(/\/$/, "") === "/group-healing") return;
+  if (window.location.pathname.replace(/\/$/, "") === "/online-group-healing") return;
 
   const render = () => {
     if (document.querySelector(".rs-commerce-return")) return;
