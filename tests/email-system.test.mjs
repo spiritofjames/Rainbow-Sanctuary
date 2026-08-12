@@ -111,3 +111,27 @@ test("operational email uses a fixed Rainbow identity, allowlisted recipient and
   assert.equal(call[0].to[0], "ethel@rainbowsanctuary.life");
   assert.equal(call[1].idempotencyKey, "intake:event-123:operations");
 });
+
+test("a delayed operational email keeps its schedule and a stable idempotency key", async () => {
+  let call;
+  const client = { emails: { send: async (...args) => { call = args; return { data: { id: "email_scheduled_123" }, error: null }; } } };
+  const scheduledAt = "2031-08-05T10:00:00.000Z";
+  const result = await sendOperationalEmail({
+    html: "<p>Optional contribution</p>",
+    identity: "contributions",
+    idempotencyKey: "intake:event-123:optional-contribution-follow-up",
+    scheduledAt,
+    subject: "An optional way to support free access",
+    text: "Optional contribution",
+    to: "reviewer@example.com"
+  }, {
+    RESEND_EMAIL_ENABLED: "true",
+    RESEND_API_KEY: "re_test",
+    RESEND_ALLOWED_RECIPIENTS: "reviewer@example.com",
+    VERCEL_ENV: "preview"
+  }, client);
+  assert.deepEqual(result, { sent: true, id: "email_scheduled_123" });
+  assert.equal(call[0].scheduledAt, scheduledAt);
+  assert.equal(call[0].replyTo, "payments@rainbowsanctuary.life");
+  assert.equal(call[1].idempotencyKey, "intake:event-123:optional-contribution-follow-up");
+});

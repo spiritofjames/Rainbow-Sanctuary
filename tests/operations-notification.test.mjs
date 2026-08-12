@@ -4,7 +4,9 @@ import {
   attemptEnquiryOperationsNotification,
   attemptPurchaseOperationsNotification,
   autismRegistrationReceipt,
+  attemptOptionalContributionFollowUp,
   enquiryOperationsMessage,
+  optionalContributionFollowUp,
   purchaseOperationsMessage,
   sendEnquiryOperationsNotification
 } from "../api/_lib/operations-notification.mjs";
@@ -13,7 +15,7 @@ const environment = {
   RAINBOW_OPERATIONS_EMAIL: "ethel@rainbowsanctuary.life",
   RESEND_EMAIL_ENABLED: "true",
   RESEND_API_KEY: "re_test",
-  RESEND_ALLOWED_RECIPIENTS: "ethel@rainbowsanctuary.life",
+  RESEND_ALLOWED_RECIPIENTS: "ethel@rainbowsanctuary.life,visitor@example.test",
   VERCEL_ENV: "preview"
 };
 const hubspot = {
@@ -62,6 +64,39 @@ test("Autism registration receipt confirms the weekly list without promising rev
   assert.match(message.text, /11:00 PM Beijing time/);
   assert.doesNotMatch(message.text, /review|diagnos/i);
   assert.match(message.text, /no Zoom session/i);
+});
+
+test("only free donation-based registration schedules one delayed contribution follow-up", async () => {
+  const registration = {
+    ...intake,
+    area: "family",
+    followUpAt: "2031-08-05T10:00:00.000Z",
+    privacyAcceptedAt: "2031-08-04T10:00:00.000Z",
+    program: "autism-family-support"
+  };
+  const message = optionalContributionFollowUp(registration);
+  assert.equal(message.to, "visitor@example.test");
+  assert.equal(message.scheduledAt, registration.followUpAt);
+  assert.equal(message.idempotencyKey, `intake:${intake.eventId}:optional-contribution-follow-up`);
+  assert.match(message.text, /amount is entirely your choice/i);
+  assert.match(message.text, /will not send another contribution invitation/i);
+  assert.match(message.text, /rainbowsanctuary\.life\/contribute/);
+  assert.throws(
+    () => optionalContributionFollowUp({ ...registration, program: "spiral-i" }),
+    /not eligible/i
+  );
+
+  let scheduled;
+  const result = await attemptOptionalContributionFollowUp(registration, environment, {
+    emails: { send: async (...args) => { scheduled = args; return { data: { id: "scheduled_123" }, error: null }; } }
+  });
+  assert.deepEqual(result, { sent: true, id: "scheduled_123" });
+  assert.equal(scheduled[0].scheduledAt, registration.followUpAt);
+  assert.equal(scheduled[1].idempotencyKey, message.idempotencyKey);
+  assert.deepEqual(
+    await attemptOptionalContributionFollowUp({ ...registration, program: "spiral-i" }, environment),
+    { reason: "not-a-free-donation-programme", sent: false }
+  );
 });
 
 test("purchase notification uses the verified Stripe event and excludes payment method data", () => {
