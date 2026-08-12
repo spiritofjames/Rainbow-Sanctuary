@@ -50,14 +50,15 @@ test("sensitive pathways stay safely gated, while approved direct registration r
   assert.match(read("regeneration-maintenance-checkout.js"), /create-checkout-session/);
 });
 
-test("homepage gives the in-person retreat a standalone feature before online pathways", () => {
+test("homepage separates recurring group pathways from the standalone in-person retreat", () => {
   const home = read("Home.dc.html");
   assert.equal((home.match(/class="rs-home-promotions"/g) || []).length, 1);
   assert.match(home, /rs-home-retreat-feature/);
   assert.match(home, /Featured in-person retreat/);
   assert.match(home, /rs-home-promo--retreat/);
-  assert.match(home, /rs-home-promo--group-healing rs-home-promo--wide/);
-  assert.match(home, /rs-home-promo--autism rs-home-promo--compact/);
+  assert.match(home, /rs-home-promo--maintenance rs-home-promo--wide/);
+  assert.match(home, /rs-home-promo--group-healing rs-home-promo--compact/);
+  assert.match(home, /one of the Planetary Symbiosis Network’s twelve physical anchors in Panama/);
   assert.match(home, /rs-home-promo--youth rs-home-promo--wide/);
   assert.match(home, /grid-template-columns: repeat\(3, minmax\(0,1fr\)\)/);
   assert.match(home, /\.rs-home-promo--wide \{ grid-column: span 2; \}/);
