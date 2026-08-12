@@ -5,6 +5,7 @@ import { sendPurchaseConfirmation } from "../_lib/group-healing-booking-email.mj
 import { mirrorHubSpotPurchase } from "../_lib/hubspot-payment.mjs";
 import { attemptPurchaseOperationsNotification } from "../_lib/operations-notification.mjs";
 import { isOptionalContributionSession } from "../_lib/optional-contribution.mjs";
+import { hydrateStaffPaymentLinkEvent } from "../_lib/staff-payment-links.mjs";
 
 export const config = {
   api: { bodyParser: false }
@@ -28,17 +29,18 @@ export default async function handler(request, response) {
       signature,
       process.env.STRIPE_WEBHOOK_SECRET
     );
-    const delivery = await forwardStripeEvent(event, process.env);
+    const governedEvent = hydrateStaffPaymentLinkEvent(event, process.env);
+    const delivery = await forwardStripeEvent(governedEvent, process.env);
     let bookingEmail = { sent: false, reason: "not-applicable" };
     if (
       ["checkout.session.completed", "checkout.session.async_payment_succeeded"].includes(event.type) &&
-      !isInternalPaymentTest(event) &&
-      !isOptionalContributionSession(event?.data?.object, process.env)
+      !isInternalPaymentTest(governedEvent) &&
+      !isOptionalContributionSession(governedEvent?.data?.object, process.env)
     ) {
-      const hubspot = await mirrorHubSpotPurchase(event, process.env);
-      await attemptPurchaseOperationsNotification(event, hubspot, process.env);
+      const hubspot = await mirrorHubSpotPurchase(governedEvent, process.env);
+      await attemptPurchaseOperationsNotification(governedEvent, hubspot, process.env);
       try {
-        bookingEmail = await sendPurchaseConfirmation(event, process.env);
+        bookingEmail = await sendPurchaseConfirmation(governedEvent, process.env);
       } catch (emailError) {
         // Payment, CRM state and the Stripe receipt must never depend on email delivery.
         // Do not log the recipient or other customer information.
