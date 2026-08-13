@@ -99,16 +99,10 @@
 .rs-checkout-panel .rs-entry-button { width: 100%; box-sizing: border-box; padding-inline: 12px; font-size: 12px; white-space: nowrap; }
 .rs-checkout-panel .rs-entry-button[hidden] { display: none; }
 .rs-checkout-panel .is-hidden, .rs-entry-section--scheduler > .rs-entry-shell > .is-hidden { display: none !important; }
-.rs-time-options { margin-top: 20px; }
-.rs-time-options > span { display: block; margin-bottom: 8px; color: #706a64; font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
-.rs-time-options button { display: flex; width: 100%; min-height: 54px; cursor: pointer; align-items: center; justify-content: space-between; border: 1px solid #b8acef; border-radius: 16px; padding: 10px 14px; background: #fff; color: #332878; font: inherit; text-align: left; }
-.rs-time-options button:hover, .rs-time-options button[aria-pressed="true"] { border-color: var(--entry-violet); background: #eeeafd; box-shadow: 0 8px 20px rgba(90,73,234,.12); }
-.rs-time-options button strong { font-size: 15px; }
-.rs-time-options button small { color: #6d6681; font-size: 11px; }
 .rs-checkout-panel .rs-checkout-link--pending { border-color: #b8acef; background: #dcd6fa; box-shadow: none; color: #514391; cursor: not-allowed; }
 .rs-checkout-panel .rs-checkout-link--pending::after { content: "Opening soon"; margin-left: auto; border-radius: 999px; padding: 3px 5px; background: rgba(255,255,255,.62); font-size: 7px; font-weight: 700; letter-spacing: .02em; text-transform: uppercase; }
 .rs-checkout-status { margin-top: 12px !important; font-size: 12px !important; }
-.rs-checkout-panel #group-checkout-details{display:grid;gap:14px;margin-top:24px}.rs-group-session-time,.rs-group-session-format{display:grid;gap:5px}.rs-group-session-time{font-size:20px;line-height:1.3;font-weight:700;color:#17302a}.rs-group-session-format{padding-top:14px;border-top:1px solid #e4deef;color:#5a554f;font-size:13px;line-height:1.5}.rs-checkout-panel #group-checkout-details small{font:700 10px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#706a64}.rs-checkout-panel .rs-time-options{margin-top:28px}.rs-checkout-panel .rs-booking-summary{margin-top:28px}.rs-checkout-panel .rs-checkout-steps{padding-top:22px;border-top:1px solid #e4deef}
+.rs-checkout-panel #group-checkout-details{display:grid;gap:14px;margin-top:24px}.rs-group-session-time,.rs-group-session-format{display:grid;gap:5px}.rs-group-session-time{font-size:20px;line-height:1.3;font-weight:700;color:#17302a}.rs-group-session-format{padding-top:14px;border-top:1px solid #e4deef;color:#5a554f;font-size:13px;line-height:1.5}.rs-checkout-panel #group-checkout-details small{font:700 10px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#706a64}.rs-checkout-panel .rs-booking-summary{margin-top:28px}.rs-checkout-panel .rs-checkout-steps{padding-top:22px;border-top:1px solid #e4deef}
 .rs-checkout-steps { display: grid; gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; }
 .rs-checkout-steps li { display: flex; gap: 10px; align-items: center; color: #514b59; font-size: 13px; }
 .rs-checkout-steps span { display: grid; width: 24px; height: 24px; flex: 0 0 24px; place-items: center; border-radius: 50%; background: #eee9fb; color: #4939c7; font-size: 10px; font-weight: 700; }

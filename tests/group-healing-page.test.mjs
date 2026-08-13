@@ -25,4 +25,9 @@ test("Online Group Healing owns the calendar, USD 22 checkout, and return notice
   assert.ok(siteConfig.includes('window.location.pathname.replace(/\\/$/, "") === "/online-group-healing"'));
   assert.match(scheduler, /rs-checkout-return/);
   assert.match(scheduler, /Dismiss checkout notice/);
+  assert.match(scheduler, /function selectDate\(id\)/);
+  assert.match(scheduler, /selectSession\(id\);/);
+  assert.doesNotMatch(scheduler, /data-group-time/);
+  assert.doesNotMatch(onlinePage, /Choose an available time/);
+  assert.match(onlinePage, /Select a date and its session time is selected automatically/);
 });

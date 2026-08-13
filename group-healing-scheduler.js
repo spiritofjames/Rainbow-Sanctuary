@@ -9,7 +9,6 @@
   let feedState = { generatedAt: eventsConfig.staticGeneratedAt || "", source: "approved-static", status: "degraded" };
   let visibleMonth = new Date(today.getFullYear(), today.getMonth(), 1);
   let chosenDateId = "";
-  let selectedId = "";
   let initialized = false;
 
   function applyFeed(result) {
@@ -129,29 +128,18 @@
     heading.appendChild(feedNotice);
   }
 
-  function showTimeOptions(id) {
+  function selectDate(id) {
     const item = upcoming.find((candidate) => candidate.id === id);
     if (!item) return;
     chosenDateId = id;
-    selectedId = "";
-    const title = document.getElementById("group-checkout-title");
-    const details = document.getElementById("group-checkout-details");
-    const options = document.getElementById("group-time-options");
-    const summary = document.getElementById("group-booking-summary");
-
-    title.textContent = "Choose an available time";
-    details.innerHTML = `<span class="rs-group-session-time"><small>Selected date</small>${escapeHtml(localDate(item))}</span><span class="rs-group-session-format"><small>Time zone</small>Times shown in ${escapeHtml(readableZone(viewerTimeZone))}.</span>`;
-    options.classList.remove("is-hidden");
-    options.innerHTML = `<span>Available time</span><button type="button" data-group-time="${escapeHtml(item.id)}" aria-pressed="false"><strong>${escapeHtml(localTime(item))}</strong><small>${escapeHtml(zoneOffset(eventInstant(item), viewerTimeZone) || readableZone(viewerTimeZone))}</small></button>`;
-    summary.classList.add("is-hidden");
-    options.querySelector("[data-group-time]")?.addEventListener("click", () => selectSession(id));
-    renderCalendar();
+    // Each published date has one authored session time. Selecting its date
+    // therefore selects that time immediately rather than requiring a duplicate click.
+    selectSession(id);
   }
 
   function selectSession(id) {
     const item = upcoming.find((candidate) => candidate.id === id);
     if (!item) return;
-    selectedId = id;
     const title = document.getElementById("group-checkout-title");
     const details = document.getElementById("group-checkout-details");
     const link = document.getElementById("group-checkout-link");
@@ -162,9 +150,6 @@
     title.textContent = item.title;
     details.innerHTML = `<span class="rs-group-session-time"><small>Selected date &amp; time</small>${escapeHtml(localDateTime(item))}</span><span class="rs-group-session-format"><small>Format</small>Live Zoom session</span><span class="rs-group-session-format"><small>Original schedule</small>${escapeHtml(sourceDateTime(item))}</span>`;
     summary.classList.remove("is-hidden");
-    document.querySelectorAll("[data-group-time]").forEach((button) => {
-      button.setAttribute("aria-pressed", String(button.dataset.groupTime === id));
-    });
     document.querySelectorAll("[data-group-calendar-session]").forEach((button) => {
       button.setAttribute("aria-pressed", String(button.dataset.groupCalendarSession === chosenDateId));
     });
@@ -191,6 +176,7 @@
         ? "This session is currently full. Choose another highlighted date."
         : "Online registration for this confirmed date is opening soon. Once available, this button will continue directly to secure $22 total payment—no consultation required.";
     }
+    renderCalendar();
   }
 
   async function beginCheckout(event) {
@@ -296,7 +282,7 @@
     }
     grid.innerHTML = cells.join("");
     grid.querySelectorAll("[data-group-calendar-session]").forEach((button) => {
-      button.addEventListener("click", () => showTimeOptions(button.dataset.groupCalendarSession));
+      button.addEventListener("click", () => selectDate(button.dataset.groupCalendarSession));
     });
   }
 
