@@ -58,7 +58,10 @@ export const OFFER_CATALOG = Object.freeze([
   offer({
     id: "group-healing",
     name: "Online Group Healing",
-    pagePath: "/group-healing",
+    // Payments begin on the specific booking page. Returning here after a
+    // cancelled checkout preserves the selected-session journey rather than
+    // sending a visitor back to the overview.
+    pagePath: "/online-group-healing",
     priceKey: "group-healing",
     variants: [
       variant({
