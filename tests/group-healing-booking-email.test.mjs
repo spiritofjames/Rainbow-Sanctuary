@@ -42,15 +42,15 @@ test("verified Group Healing payment builds a minimal, idempotent booking confir
   assert.match(message.variables.LOCATION, /access details follow separately/i);
 });
 
-test("verified Regeneration Maintenance payment builds a date-specific confirmation", () => {
+test("verified Regeneration Maintenance payment builds a commitment-specific confirmation", () => {
   const event = checkoutEvent({
     data: {
       object: {
         ...checkoutEvent().data.object,
-        amount_total: 5_000,
+        amount_total: 21_000,
         metadata: {
-          offer_key: "regeneration-maintenance",
-          event_id: "regeneration-maintenance-2026-08-17"
+          offer_key: "regeneration-maintenance-monthly",
+          event_id: "regeneration-maintenance-2026-08-17-monthly"
         }
       }
     }
@@ -58,7 +58,8 @@ test("verified Regeneration Maintenance payment builds a date-specific confirmat
   const message = regenerationMaintenanceConfirmationFromStripeEvent(event);
   assert.equal(message.alias, "rs-regeneration-maintenance-confirmed");
   assert.equal(message.variables.EVENT_TIME, "11:00 PM");
-  assert.match(message.variables.EVENT_DATE, /Monday, August 17, 2026/);
+  assert.match(message.variables.EVENT_DATE, /Monday, 17 August 2026/);
+  assert.equal(message.variables.COMMITMENT, "One-month commitment");
 });
 
 test("verified programme payment builds a minimal programme confirmation", () => {
