@@ -162,8 +162,8 @@ def validate_discovery_layer(
         route: target for route, target in route_map.items()
         if route not in PRIVATE_ROUTES
     }
-    if len(discovery_routes) != 38:
-        errors.append(f"vercel.json: expected 38 canonical routes, found {len(discovery_routes)}")
+    if len(discovery_routes) != 39:
+        errors.append(f"vercel.json: expected 39 canonical routes, found {len(discovery_routes)}")
 
     redirects = config.get("redirects", [])
     redirect_map = {

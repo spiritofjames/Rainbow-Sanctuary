@@ -1,9 +1,10 @@
 import { emailHtml, emailText, escapeHtml } from "../../emails/layout.mjs";
-import { sendOperationalEmail } from "./email-service.mjs";
+import { sendOperationalEmail, sendTransactionalEmail } from "./email-service.mjs";
 import { crmPaymentHandoff, isInternalPaymentTest, livePaymentProcessingAllowed } from "./webhook-delivery.mjs";
 import { resolveOfferVariant } from "./offer-catalog.mjs";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const FREE_DONATION_FOLLOW_UP_PROGRAMS = new Set(["autism-family-support"]);
 
 function operationsRecipient(environment) {
   const recipient = String(environment.RAINBOW_OPERATIONS_EMAIL || "").trim().toLowerCase();
@@ -18,6 +19,29 @@ function safeContactUrl(hubspot) {
     throw new Error("HubSpot contact link is unavailable for operations.");
   }
   return hubspot.contactUrl;
+}
+
+function intakePathwayLabel(intake) {
+  const source = String(intake.program || intake.area || "Rainbow Sanctuary enquiry").trim();
+  return source
+    .split(/[\s_-]+/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+}
+
+export function visitorIntakeReceipt(intake) {
+  const isPrivateHealing = intake.area === "private-healing";
+  const pathway = intakePathwayLabel(intake);
+  return {
+    alias: isPrivateHealing ? "rs-application-received" : "rs-enquiry-received",
+    idempotencyKey: `intake:${intake.eventId}:visitor-received`,
+    tags: [{ name: "workflow", value: isPrivateHealing ? "application" : "enquiry" }],
+    to: intake.email,
+    variables: isPrivateHealing
+      ? { NAME: intake.displayName, PATHWAY: pathway, REFERENCE_ID: intake.eventId }
+      : { ENQUIRY_TOPIC: pathway, NAME: intake.displayName, REFERENCE_ID: intake.eventId }
+  };
 }
 
 export function enquiryOperationsMessage(intake, hubspot, environment) {
@@ -72,6 +96,41 @@ export function autismRegistrationReceipt(intake) {
     idempotencyKey: `intake:${intake.eventId}:autism-registration`,
     subject: "Autism & Family Support registration confirmed",
     tags: [{ name: "workflow", value: "autism_registration" }],
+    text: emailText(content),
+    to: intake.email
+  };
+}
+
+export function optionalContributionFollowUp(intake) {
+  if (!FREE_DONATION_FOLLOW_UP_PROGRAMS.has(intake.program) || intake.privacyAcceptedAt === undefined) {
+    throw new Error("This registration is not eligible for a contribution follow-up.");
+  }
+  if (!Number.isFinite(Date.parse(intake.followUpAt))) {
+    throw new Error("A contribution follow-up schedule is required.");
+  }
+  const content = {
+    preheader: "An optional way to support free-access pathways.",
+    eyebrow: "A note from Rainbow Sanctuary",
+    heading: "Help keep free access open, if you wish.",
+    greeting: `Hello ${escapeHtml(intake.displayName)},`,
+    paragraphs: [
+      "Thank you for being part of Autism & Family Support. This is one optional follow-up, sent the day after registration because you gave permission for email follow-up.",
+      "If you would like to contribute, your gift helps us keep free, donation-based pathways open for families and people who need them. The amount is entirely your choice, and no contribution is expected."
+    ],
+    cta: { label: "Contribute if you wish", url: "https://rainbowsanctuary.life/contribute" },
+    callout: "No action is needed. We will not send another contribution invitation from this registration.",
+    closing: "With appreciation,<br>Rainbow Sanctuary"
+  };
+  return {
+    html: emailHtml(content),
+    identity: "contributions",
+    idempotencyKey: `intake:${intake.eventId}:optional-contribution-follow-up`,
+    scheduledAt: intake.followUpAt,
+    subject: "An optional way to support free access",
+    tags: [
+      { name: "workflow", value: "free_registration_contribution_follow_up" },
+      { name: "programme", value: "autism_family_support" }
+    ],
     text: emailText(content),
     to: intake.email
   };
@@ -132,6 +191,25 @@ export async function attemptEnquiryOperationsNotification(
   }
 }
 
+export async function attemptVisitorIntakeReceipt(intake, environment, resendClient, logger = console) {
+  try {
+    const result = await sendTransactionalEmail(visitorIntakeReceipt(intake), environment, resendClient);
+    if (!result.sent) {
+      logger.error("crm_intake_visitor_receipt_error", {
+        eventId: intake.eventId,
+        reason: result.reason || "receipt-unavailable"
+      });
+    }
+    return result;
+  } catch (error) {
+    logger.error("crm_intake_visitor_receipt_error", {
+      eventId: intake.eventId,
+      reason: "receipt-unavailable"
+    });
+    return { reason: "receipt-unavailable", sent: false };
+  }
+}
+
 export async function attemptAutismRegistrationReceipt(intake, environment, resendClient, logger = console) {
   try {
     const result = await sendOperationalEmail(autismRegistrationReceipt(intake), environment, resendClient);
@@ -139,6 +217,18 @@ export async function attemptAutismRegistrationReceipt(intake, environment, rese
   } catch (error) {
     logger.error("autism_registration_receipt_error", { reason: "receipt-unavailable" });
     return { reason: "receipt-unavailable", sent: false };
+  }
+}
+
+export async function attemptOptionalContributionFollowUp(intake, environment, resendClient, logger = console) {
+  if (!FREE_DONATION_FOLLOW_UP_PROGRAMS.has(intake.program)) {
+    return { reason: "not-a-free-donation-programme", sent: false };
+  }
+  try {
+    return await sendOperationalEmail(optionalContributionFollowUp(intake), environment, resendClient);
+  } catch (error) {
+    logger.error("optional_contribution_follow_up_error", { reason: "follow-up-unavailable" });
+    return { reason: "follow-up-unavailable", sent: false };
   }
 }
 

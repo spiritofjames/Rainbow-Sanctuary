@@ -66,6 +66,7 @@ const routes = {
   "Events-Retreats.dc.html": "/events",
   "Family-Information-Field-Restoration.dc.html": "/family-information-field-restoration",
   "Group-Healing.dc.html": "/group-healing",
+  "Online-Group-Healing.dc.html": "/online-group-healing",
   "Holographic-Healing.dc.html": "/holographic-healing",
   "Intuitive-Perception-Training.dc.html": "/intuitive-perception-training",
   "Personal-Karma-Reconciliation.dc.html": "/personal-karma-reconciliation",
@@ -110,6 +111,7 @@ const ogImages = {
   "Earth-Healing-Zone.dc.html": "/assets/editorial/earth-healing-stewardship-v1.jpg",
   "Events-Retreats.dc.html": "/assets/retreat-panama-coast-aerial.jpg",
   "Group-Healing.dc.html": "/assets/editorial/group-healing-zoom.jpg",
+  "Online-Group-Healing.dc.html": "/assets/editorial/group-healing-zoom.jpg",
   "Autism-Family-Support.dc.html": "/assets/editorial/autism-family-support-hero-v2.png",
   "Young-People-Wellbeing.dc.html": "/assets/editorial/young-people-wellbeing-hero-v2.png",
   "Spiral-Journey.dc.html": "/assets/editorial/home-spiral-editorial.jpg"
@@ -235,7 +237,7 @@ function schemaFor(file, title, description, canonical, image) {
     });
   }
 
-  if (file === "Group-Healing.dc.html") {
+  if (file === "Online-Group-Healing.dc.html") {
     graph.push({
       "@type": "Event",
       "@id": `${canonical}#event-2026-08-22`,
@@ -269,7 +271,7 @@ function schemaFor(file, title, description, canonical, image) {
         {
           "@type": "ListItem",
           position: 1,
-          url: `${origin}/group-healing`
+          url: `${origin}/online-group-healing`
         },
         {
           "@type": "ListItem",
@@ -416,7 +418,8 @@ const llms = `# Rainbow Sanctuary
 - [Home](${origin}/): Overview and current invitations
 - [About Rainbow Sanctuary](${origin}/about): The platform, community, and co-founder Stephanie Wu
 - [The Spiral Journey](${origin}/spiral-journey): Four progressive levels of personal and conscious development
-- [Online Group Healing](${origin}/group-healing): Accessible guided Zoom sessions
+- [Group Healing](${origin}/group-healing): Overview of shared healing pathways
+- [Online Group Healing](${origin}/online-group-healing): Accessible guided Zoom sessions
 - [Programs](${origin}/programs): Focused adult workshops and learning programs
 - [Children and Family](${origin}/children-and-family): Programs for children, teens, and families
 - [Practitioner Certification](${origin}/practitioner-certification): Responsible practitioner pathways
@@ -464,7 +467,7 @@ The site speaks about spiritual and energetic practices as part of Rainbow Sanct
 
 ### A gentle first experience
 
-Online Group Healing is the lowest-commitment entry point. Sessions are held on Zoom, are open to adults without prior experience, and may be attended as standalone experiences. The published total is USD 22 per session with payment processing included. See ${origin}/group-healing.
+Online Group Healing is the lowest-commitment entry point. Sessions are held online, are open to adults without prior experience, and may be attended as standalone experiences. The published total is USD 22 per session with payment processing included. See ${origin}/online-group-healing.
 
 ### Progressive personal development
 

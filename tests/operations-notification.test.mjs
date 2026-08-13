@@ -3,17 +3,21 @@ import assert from "node:assert/strict";
 import {
   attemptEnquiryOperationsNotification,
   attemptPurchaseOperationsNotification,
+  attemptOptionalContributionFollowUp,
+  attemptVisitorIntakeReceipt,
   autismRegistrationReceipt,
   enquiryOperationsMessage,
+  optionalContributionFollowUp,
   purchaseOperationsMessage,
-  sendEnquiryOperationsNotification
+  sendEnquiryOperationsNotification,
+  visitorIntakeReceipt
 } from "../api/_lib/operations-notification.mjs";
 
 const environment = {
   RAINBOW_OPERATIONS_EMAIL: "ethel@rainbowsanctuary.life",
   RESEND_EMAIL_ENABLED: "true",
   RESEND_API_KEY: "re_test",
-  RESEND_ALLOWED_RECIPIENTS: "ethel@rainbowsanctuary.life",
+  RESEND_ALLOWED_RECIPIENTS: "ethel@rainbowsanctuary.life,visitor@example.test",
   VERCEL_ENV: "preview"
 };
 const hubspot = {
@@ -54,6 +58,36 @@ test("enquiry notification is minimal, linked to HubSpot and duplicate-safe", ()
   assert.doesNotMatch(message.text, /visitor@example\.test/);
 });
 
+test("every accepted standard enquiry receives one privacy-safe acknowledgement", async () => {
+  const receipt = visitorIntakeReceipt(intake);
+  assert.equal(receipt.alias, "rs-enquiry-received");
+  assert.equal(receipt.idempotencyKey, `intake:${intake.eventId}:visitor-received`);
+  assert.deepEqual(receipt.variables, {
+    ENQUIRY_TOPIC: "Spiral I",
+    NAME: "Synthetic Visitor",
+    REFERENCE_ID: intake.eventId
+  });
+
+  let sent;
+  const result = await attemptVisitorIntakeReceipt(intake, environment, {
+    emails: { send: async (...args) => { sent = args; return { data: { id: "receipt_123" }, error: null }; } }
+  });
+  assert.deepEqual(result, { sent: true, id: "receipt_123" });
+  assert.equal(sent[0].to[0], intake.email);
+  assert.equal(sent[1].idempotencyKey, receipt.idempotencyKey);
+  assert.doesNotMatch(JSON.stringify(sent), /Sensitive context/);
+});
+
+test("private healing uses the application acknowledgement without exposing case details", () => {
+  const receipt = visitorIntakeReceipt({ ...intake, area: "private-healing", program: "personal-karma-reconciliation" });
+  assert.equal(receipt.alias, "rs-application-received");
+  assert.deepEqual(receipt.variables, {
+    NAME: "Synthetic Visitor",
+    PATHWAY: "Personal Karma Reconciliation",
+    REFERENCE_ID: intake.eventId
+  });
+});
+
 test("Autism registration receipt confirms the weekly list without promising review, Zoom, or clinical support", () => {
   const message = autismRegistrationReceipt({ ...intake, area: "family", program: "autism-family-support" });
   assert.equal(message.to, "visitor@example.test");
@@ -62,6 +96,39 @@ test("Autism registration receipt confirms the weekly list without promising rev
   assert.match(message.text, /11:00 PM Beijing time/);
   assert.doesNotMatch(message.text, /review|diagnos/i);
   assert.match(message.text, /no Zoom session/i);
+});
+
+test("only free donation-based registration schedules one delayed contribution follow-up", async () => {
+  const registration = {
+    ...intake,
+    area: "family",
+    followUpAt: "2031-08-05T10:00:00.000Z",
+    privacyAcceptedAt: "2031-08-04T10:00:00.000Z",
+    program: "autism-family-support"
+  };
+  const message = optionalContributionFollowUp(registration);
+  assert.equal(message.to, "visitor@example.test");
+  assert.equal(message.scheduledAt, registration.followUpAt);
+  assert.equal(message.idempotencyKey, `intake:${intake.eventId}:optional-contribution-follow-up`);
+  assert.match(message.text, /amount is entirely your choice/i);
+  assert.match(message.text, /will not send another contribution invitation/i);
+  assert.match(message.text, /rainbowsanctuary\.life\/contribute/);
+  assert.throws(
+    () => optionalContributionFollowUp({ ...registration, program: "spiral-i" }),
+    /not eligible/i
+  );
+
+  let scheduled;
+  const result = await attemptOptionalContributionFollowUp(registration, environment, {
+    emails: { send: async (...args) => { scheduled = args; return { data: { id: "scheduled_123" }, error: null }; } }
+  });
+  assert.deepEqual(result, { sent: true, id: "scheduled_123" });
+  assert.equal(scheduled[0].scheduledAt, registration.followUpAt);
+  assert.equal(scheduled[1].idempotencyKey, message.idempotencyKey);
+  assert.deepEqual(
+    await attemptOptionalContributionFollowUp({ ...registration, program: "spiral-i" }, environment),
+    { reason: "not-a-free-donation-programme", sent: false }
+  );
 });
 
 test("purchase notification uses the verified Stripe event and excludes payment method data", () => {
@@ -100,6 +167,21 @@ test("an optional operations notification cannot turn an accepted enquiry into a
   assert.deepEqual(logged, [{
     detail: { reason: "operations-notification-unavailable" },
     event: "crm_intake_notification_error"
+  }]);
+});
+
+test("an unavailable visitor acknowledgement never makes an accepted enquiry fail", async () => {
+  const logged = [];
+  const result = await attemptVisitorIntakeReceipt(
+    intake,
+    { ...environment, RESEND_EMAIL_ENABLED: "false" },
+    undefined,
+    { error: (event, detail) => logged.push({ detail, event }) }
+  );
+  assert.deepEqual(result, { reason: "disabled", sent: false });
+  assert.deepEqual(logged, [{
+    detail: { eventId: intake.eventId, reason: "disabled" },
+    event: "crm_intake_visitor_receipt_error"
   }]);
 });
 

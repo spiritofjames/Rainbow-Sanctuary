@@ -39,18 +39,18 @@ test("verified purchase maps to an Ethel-owned HubSpot customer contact", () => 
   });
 });
 
-test("a selected approved group-session date remains eligible for the payment mirror", () => {
-  const laterSession = {
+test("a fixed Maintenance commitment is eligible for the payment mirror", () => {
+  const maintenancePayment = {
     ...event,
     data: {
       object: {
         ...event.data.object,
-        metadata: { offer_key: "regeneration-maintenance", event_id: "regeneration-maintenance-2026-08-24" },
-        amount_total: 5000
+        metadata: { offer_key: "regeneration-maintenance-three-month", event_id: "regeneration-maintenance-2026-08-17-three-month" },
+        amount_total: 63000
       }
     }
   };
-  const properties = toHubSpotPurchaseProperties(laterSession, "166816652");
+  const properties = toHubSpotPurchaseProperties(maintenancePayment, "166816652");
   assert.equal(properties.area_of_interest, "Group healing");
   assert.equal(properties.program_or_offering, "Regeneration Maintenance");
 });

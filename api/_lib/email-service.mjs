@@ -10,6 +10,10 @@ const OPERATIONAL_IDENTITIES = Object.freeze({
   general: {
     from: "Rainbow Sanctuary <hello@rainbowsanctuary.life>",
     replyTo: "hello@rainbowsanctuary.life"
+  },
+  contributions: {
+    from: "Rainbow Sanctuary <hello@rainbowsanctuary.life>",
+    replyTo: "payments@rainbowsanctuary.life"
   }
 });
 
@@ -114,7 +118,7 @@ export async function sendTransactionalEmail(
 }
 
 export async function sendOperationalEmail(
-  { html, identity, idempotencyKey, subject, tags = [], text, to },
+  { html, identity, idempotencyKey, scheduledAt, subject, tags = [], text, to },
   environment = process.env,
   resendClient
 ) {
@@ -126,6 +130,9 @@ export async function sendOperationalEmail(
   if (![html, subject, text].every((value) => typeof value === "string" && value.trim())) {
     throw new Error("Operational email content is required.");
   }
+  if (scheduledAt !== undefined && (!Number.isFinite(Date.parse(scheduledAt)) || Date.parse(scheduledAt) <= Date.now())) {
+    throw new Error("A future ISO schedule is required for a delayed operational email.");
+  }
 
   const resend = resendClient || new Resend(environment.RESEND_API_KEY);
   const { data, error } = await resend.emails.send(
@@ -136,6 +143,7 @@ export async function sendOperationalEmail(
       subject,
       html,
       text,
+      ...(scheduledAt ? { scheduledAt } : {}),
       tags: [
         { name: "system", value: "rainbow-sanctuary" },
         { name: "message_type", value: "operations" },

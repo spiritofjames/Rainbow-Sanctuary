@@ -11,9 +11,8 @@ test("supported pathways use Beijing as the only authored source time", () => {
   assert.match(config, /autism-family-support-2026-08-18/);
   assert.match(config, /2026-08-18T23:00:00\+08:00/);
   assert.match(config, /young-people-wellbeing-2026-09-01/);
-  assert.match(config, /regeneration-maintenance-\$\{date\}/);
-  assert.match(config, /"2026-08-17"/);
-  assert.match(config, /startDateTime: `\$\{date\}T23:00:00\+08:00`/);
+  assert.match(config, /regeneration-maintenance-2026-08-17/);
+  assert.match(config, /startDateTime: "2026-08-17T23:00:00\+08:00"/);
   assert.match(config, /firstCycle: \{ frequency: "weekly", sessions: 14/);
 });
 
@@ -38,23 +37,51 @@ test("sensitive pathways stay safely gated, while approved direct registration r
   assert.doesNotMatch(contribution, /donation-selector\.js/);
   assert.match(read("scripts\/publish-discovery-layer.mjs"), /"Contribute\.dc\.html": "\/contribute"/);
   assert.match(read("api\/stripe\/create-donation-checkout.mjs"), /STRIPE_DONATION_CHECKOUT_APPROVED/);
-  assert.match(maintenance, /Regeneration Maintenance/);
-  assert.match(maintenance, /regeneration-maintenance-scheduler\.js/);
-  assert.match(maintenance, /USD 50 per session/);
-  assert.match(maintenance, /no live attendance required/i);
-  assert.match(read("regeneration-maintenance-scheduler.js"), /offerId: "regeneration-maintenance"/);
-  assert.match(read("regeneration-maintenance-scheduler.js"), /checkout\.stripe\.com/);
+  assert.match(maintenance, /144-Point Renewal Maintenance/);
+  assert.match(maintenance, /regeneration-maintenance-checkout\.js/);
+  assert.match(maintenance, /<span>\$<\/span>210/);
+  assert.match(maintenance, /<span>\$<\/span>630/);
+  assert.match(maintenance, /completed ReGeneration Level I and Level II/i);
+  assert.doesNotMatch(maintenance, /data-maintenance-eligibility/);
+  assert.doesNotMatch(read("regeneration-maintenance-checkout.js"), /data-maintenance-eligibility/);
+  assert.match(maintenance, /twelve-layer, 144-point framework/i);
+  assert.match(maintenance, /A three-part opening cycle/i);
+  assert.match(maintenance, /From weekly rhythm to twice-monthly care/i);
+  assert.match(maintenance, /Simple preparation/i);
+  assert.match(maintenance, /Clear details before you continue/i);
+  assert.doesNotMatch(maintenance, /regeneration-maintenance-scheduler\.js/);
+  assert.doesNotMatch(maintenance, /Support access for others/);
+  assert.match(maintenance, /live attendance required/i);
+  assert.match(maintenance, /rs-maintenance-price-card/);
+  assert.match(read("regeneration-maintenance-checkout.js"), /regeneration-maintenance-monthly/);
+  assert.match(read("regeneration-maintenance-checkout.js"), /regeneration-maintenance-2026-08-17-three-month/);
+  assert.match(read("regeneration-maintenance-checkout.js"), /create-checkout-session/);
 });
 
-test("homepage promotional mosaic alternates wide and compact desktop cards without separate section spacing", () => {
+test("homepage separates recurring group pathways from the standalone in-person retreat", () => {
   const home = read("Home.dc.html");
   assert.equal((home.match(/class="rs-home-promotions"/g) || []).length, 1);
-  assert.match(home, /rs-home-promo--retreat rs-home-promo--wide/);
+  assert.match(home, /rs-home-retreat-feature/);
+  assert.match(home, /Featured in-person retreat/);
+  assert.match(home, /rs-home-promo--retreat/);
+  assert.match(home, /rs-home-promo--maintenance rs-home-promo--wide/);
   assert.match(home, /rs-home-promo--group-healing rs-home-promo--compact/);
-  assert.match(home, /rs-home-promo--autism rs-home-promo--compact/);
+  assert.match(home, /one of the Planetary Symbiosis Network’s twelve physical anchors in Panama/);
   assert.match(home, /rs-home-promo--youth rs-home-promo--wide/);
   assert.match(home, /grid-template-columns: repeat\(3, minmax\(0,1fr\)\)/);
   assert.match(home, /\.rs-home-promo--wide \{ grid-column: span 2; \}/);
+});
+
+test("homepage has an editorial contribution invitation near its closing content", () => {
+  const home = read("Home.dc.html");
+  const invitation = home.indexOf('class="rs-home-contribution"');
+  const closingCta = home.indexOf("<!-- CLOSING CTA -->");
+  assert.ok(invitation > -1);
+  assert.ok(invitation < closingCta);
+  assert.match(home, /Help keep the door open\./);
+  assert.match(home, /Much of this work is freely offered by the team\./);
+  assert.match(home, /href="\/contribute">Support shared access/);
+  assert.match(home, /Every contribution is voluntary\. Choose your own amount securely through Stripe\./);
 });
 
 test("supported session selection separates the date, format and registration action", () => {

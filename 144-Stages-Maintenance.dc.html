@@ -3,89 +3,141 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Regeneration Maintenance | Rainbow Sanctuary</title>
-  <meta name="description" content="A scheduled remote Rainbow Sanctuary restorative practice, with clear preparation and direct $50 registration.">
+  <title>144-Point Renewal Maintenance | Rainbow Sanctuary</title>
+  <meta name="description" content="A fixed-start remote Rainbow Sanctuary continuation practice for graduates of ReGeneration Level I and Level II, held weekly for the first three months and then twice monthly.">
   <link rel="stylesheet" href="./site.css">
   <link rel="stylesheet" href="./group-journey.css">
   <link rel="stylesheet" href="./supported-pathways.css">
   <script src="./site-config.js"></script>
   <script src="./support.js"></script>
-  <script src="./public-event-feed.js" defer></script>
-  <script src="./regeneration-maintenance-scheduler.js" defer></script>
+  <script src="./regeneration-maintenance-checkout.js?v=20260813-livecheckout1" defer></script>
   <link rel="canonical" href="https://rainbowsanctuary.life/144-stages-maintenance">
   <meta name="robots" content="noindex,nofollow">
   <meta property="og:site_name" content="Rainbow Sanctuary">
   <meta property="og:url" content="https://rainbowsanctuary.life/144-stages-maintenance">
-  <meta property="og:title" content="Regeneration Maintenance | Rainbow Sanctuary">
-  <meta property="og:description" content="A scheduled remote Rainbow Sanctuary restorative practice, with clear preparation and direct $50 registration.">
+  <meta property="og:title" content="144-Point Renewal Maintenance | Rainbow Sanctuary">
+  <meta property="og:description" content="A fixed-start remote Rainbow Sanctuary continuation practice for graduates of ReGeneration Level I and Level II, held weekly for the first three months and then twice monthly.">
   <meta property="og:image" content="https://rainbowsanctuary.life/assets/editorial/regeneration-maintenance-collective-v1.png">
   <meta property="og:image:alt" content="A calm collective restorative practice at Rainbow Sanctuary">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Regeneration Maintenance | Rainbow Sanctuary">
-  <meta name="twitter:description" content="A scheduled remote Rainbow Sanctuary restorative practice, with clear preparation and direct $50 registration.">
+  <meta name="twitter:title" content="144-Point Renewal Maintenance | Rainbow Sanctuary">
+  <meta name="twitter:description" content="A fixed-start remote Rainbow Sanctuary continuation practice for graduates of ReGeneration Level I and Level II, held weekly for the first three months and then twice monthly.">
   <meta name="twitter:image" content="https://rainbowsanctuary.life/assets/editorial/regeneration-maintenance-collective-v1.png">
 </head>
 <body>
 <x-dc>
-  <dc-import name="SiteNavFixed" active-page=""></dc-import>
-  <main class="rs-supported-page rs-regeneration-page" data-regeneration-prefix="regeneration-maintenance">
+  <dc-import name="SiteNavFixed" active-page="group"></dc-import>
+  <main class="rs-supported-page rs-regeneration-page">
     <section class="rs-supported-hero">
       <div class="rs-supported-shell rs-supported-grid">
         <div>
-          <span class="rs-supported-kicker">Remote collective practice · no live attendance required</span>
-          <h1>Regeneration<br>Maintenance</h1>
-          <p>A scheduled Rainbow Sanctuary practice for quiet restoration, integration, and renewal across the physical, emotional, mental, and spiritual dimensions of life.</p>
+          <span class="rs-supported-kicker">For graduates of ReGeneration Level I &amp; II · fixed start · live attendance required</span>
+          <h1>144-Point Renewal<br>Maintenance</h1>
+          <p>A steady continuation practice for people who have completed the Rainbow Sanctuary ReGeneration pathway and want to keep giving their established renewal framework attention, rhythm, and space to integrate.</p>
           <p class="rs-supported-schedule">Mondays at 11:00 PM Beijing time (UTC+8) · starts 17 August 2026</p>
-          <a class="rs-supported-action" href="#choose-session">Choose a session · $50</a>
-          <a class="rs-supported-action rs-supported-action--quiet" href="/contribute">Support access for others</a>
+          <p class="rs-supported-schedule">For participants who have completed ReGeneration Level I and Level II.</p>
+          <a class="rs-supported-action" href="#choose-commitment">Choose your commitment</a>
         </div>
         <figure class="rs-supported-hero-media">
           <img src="./assets/editorial/regeneration-maintenance-collective-v1.png" width="1448" height="1086" alt="Adults sharing a calm collective restorative practice in a natural sanctuary setting">
-          <figcaption>Held with quiet intention and care</figcaption>
+          <figcaption>A live collective practice, held with quiet intention</figcaption>
         </figure>
       </div>
     </section>
 
-    <section id="choose-session" class="rs-supported-section rs-supported-section--calendar">
-      <div class="rs-supported-shell rs-supported-calendar">
-        <header class="rs-supported-session-intro">
-          <span class="rs-supported-kicker">Direct registration · USD 50 per session</span>
-          <h2>Choose a Monday and register securely.</h2>
-          <p>The initial cycle is held weekly from 17 August through 16 November 2026. After this cycle, twice-monthly dates will be published as they are confirmed.</p>
+    <section class="rs-supported-section rs-maintenance-purpose">
+      <div class="rs-supported-shell rs-maintenance-purpose__grid">
+        <header>
+          <span class="rs-supported-kicker">Why maintenance</span>
+          <h2>Give the practice time to become familiar.</h2>
         </header>
-        <div class="rs-booking-layout">
-          <div class="rs-booking-calendar" aria-label="Regeneration Maintenance session calendar">
-            <div class="rs-booking-calendar__head">
-              <button id="regeneration-calendar-prev" type="button" aria-label="Previous month">←</button>
-              <h3 id="regeneration-calendar-label" aria-live="polite"></h3>
-              <button id="regeneration-calendar-next" type="button" aria-label="Next month">→</button>
-            </div>
-            <div class="rs-booking-weekdays" aria-hidden="true"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
-            <div id="regeneration-calendar-grid" class="rs-booking-calendar__grid" role="grid" aria-labelledby="regeneration-calendar-label"></div>
-          </div>
-          <aside class="rs-checkout-panel" aria-live="polite">
-            <span class="rs-supported-kicker">Your selected session</span>
-            <h3 id="regeneration-checkout-title">Choose an available Monday</h3>
-            <p id="regeneration-checkout-details">Select a highlighted date to see it in your local time zone.</p>
-            <div id="regeneration-booking-summary" class="is-hidden">
-              <div class="rs-checkout-price"><span>Total</span><strong>$50 USD</strong></div>
-              <a id="regeneration-checkout-link" class="rs-supported-action rs-supported-action--large is-hidden">Continue to secure registration</a>
-              <p id="regeneration-checkout-status" class="rs-checkout-status">Payment is completed securely through Stripe. There is no live Zoom session.</p>
-              <p class="rs-supported-session-summary"><strong>Preparation:</strong> Please have a light dinner beforehand, then arrange a quiet, familiar space for the scheduled time. Details and confirmation are sent by email after payment.</p>
-            </div>
-          </aside>
+        <div class="rs-maintenance-prose">
+          <p>Within the Rainbow Sanctuary approach, the completed ReGeneration work is held through a twelve-layer, 144-point framework. Maintenance is the continuing space to return to that framework after the intensive programme has ended.</p>
+          <p>It is not a separate programme to rush through. It is a regular rhythm for noticing what supports your own sense of steadiness, refining the conditions around your practice, and allowing the work to settle gradually into everyday life.</p>
         </div>
       </div>
     </section>
 
-    <section class="rs-supported-section rs-supported-section--soft">
+    <section class="rs-supported-section rs-supported-section--soft rs-maintenance-cycle">
       <div class="rs-supported-shell">
-        <span class="rs-supported-kicker">The rhythm</span>
-        <h2>A regular practice, held quietly.</h2>
-        <div class="rs-supported-cards">
-          <article class="rs-supported-card"><h3>Initial three-month cycle</h3><p>Weekly Monday sessions run from 17 August through 16 November 2026, at 11:00 PM Beijing time (UTC+8).</p></article>
-          <article class="rs-supported-card"><h3>Rest rather than attendance</h3><p>This is a remote practice held while participants rest. There is no Zoom room, live call, or online check-in required.</p></article>
-          <article class="rs-supported-card"><h3>Ongoing maintenance</h3><p>After the initial cycle, the practice moves to twice monthly. The next confirmed dates will appear here before registration opens.</p></article>
+        <header class="rs-maintenance-heading">
+          <span class="rs-supported-kicker">First three months · weekly</span>
+          <h2>A three-part opening cycle.</h2>
+          <p>The opening phase is held every Monday from 17 August through 16 November 2026. Each month has a distinct emphasis while preserving one calm, consistent rhythm.</p>
+        </header>
+        <div class="rs-maintenance-timeline">
+          <article class="rs-maintenance-phase"><span>Month 01</span><h3>Settle the new rhythm</h3><p>Make room for the practice in a way that feels sustainable. Notice the routines, environments, and inner patterns that help you return to a more settled pace.</p></article>
+          <article class="rs-maintenance-phase"><span>Month 02</span><h3>Build continuity</h3><p>Continue with gentle consistency. This phase invites a closer relationship with rest, attention, and the daily choices that support your own experience of the work.</p></article>
+          <article class="rs-maintenance-phase"><span>Month 03</span><h3>Integrate into daily life</h3><p>Let the rhythm become more familiar. The focus is on carrying forward what feels useful, so the practice can remain present beyond the opening cycle.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="rs-supported-section rs-maintenance-continuation">
+      <div class="rs-supported-shell rs-maintenance-continuation__grid">
+        <div>
+          <span class="rs-supported-kicker">After the opening cycle</span>
+          <h2>From weekly rhythm to twice-monthly care.</h2>
+        </div>
+        <div class="rs-maintenance-prose">
+          <p>After the first three months, the Maintenance rhythm moves to twice monthly. Future dates will be shared with registered participants before the next cycle opens.</p>
+          <p>Everyone's relationship with a long-term practice is personal. The programme invites you to stay attentive to intention, rest, food, movement, and the rhythms of daily life in the way that is right for you.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="choose-commitment" class="rs-supported-section rs-supported-section--calendar">
+      <div class="rs-supported-shell">
+        <header class="rs-supported-session-intro">
+          <span class="rs-supported-kicker">Fixed-start registration</span>
+          <h2>Choose your maintenance commitment.</h2>
+          <p>The opening cycle begins Monday, 17 August 2026 and is held weekly through 16 November. This pathway is reserved for people who have completed ReGeneration Level I and Level II.</p>
+        </header>
+        <div class="rs-supported-cards rs-maintenance-price-cards" data-maintenance-checkout aria-live="polite">
+          <article class="rs-entry-price-card rs-maintenance-price-card">
+            <span class="rs-entry-kicker">One-month commitment</span>
+            <p class="rs-entry-price"><strong><span>$</span>210</strong><span>USD<small>total</small></span></p>
+            <p>One month of the opening maintenance cycle, beginning 17 August 2026. One-time payment; not an automatic subscription.</p>
+            <ul class="rs-entry-facts"><li>Fixed start on 17 August 2026</li><li>Live attendance is required</li><li>Practical joining details follow payment</li></ul>
+            <button class="rs-entry-button rs-entry-button--primary rs-maintenance-price-card__action" type="button" data-maintenance-offer="regeneration-maintenance-monthly">Continue to secure payment</button>
+          </article>
+          <article class="rs-entry-price-card rs-maintenance-price-card">
+            <span class="rs-entry-kicker">First three-month cycle</span>
+            <p class="rs-entry-price"><strong><span>$</span>630</strong><span>USD<small>total</small></span></p>
+            <p>The full opening cycle from 17 August through 16 November 2026. One-time payment; not an automatic subscription.</p>
+            <ul class="rs-entry-facts"><li>Weekly through 16 November 2026</li><li>Live attendance is required</li><li>Practical joining details follow payment</li></ul>
+            <button class="rs-entry-button rs-entry-button--primary rs-maintenance-price-card__action" type="button" data-maintenance-offer="regeneration-maintenance-three-month">Continue to secure payment</button>
+          </article>
+        </div>
+        <p class="rs-checkout-status" data-maintenance-status>Payment is completed securely through Stripe. Live attendance is required; practical joining details follow payment. There is no donation option for this programme.</p>
+      </div>
+    </section>
+
+    <section class="rs-supported-section rs-supported-section--soft rs-maintenance-preparation">
+      <div class="rs-supported-shell">
+        <header class="rs-maintenance-heading">
+          <span class="rs-supported-kicker">Simple preparation</span>
+          <h2>A regular practice, held in real time.</h2>
+        </header>
+        <div class="rs-maintenance-steps">
+          <article><span>01</span><h3>Keep the Monday rhythm</h3><p>The opening sessions are held each Monday at 11:00 PM Beijing time (UTC+8), beginning 17 August 2026. Please be ready to attend live.</p></article>
+          <article><span>02</span><h3>Prepare your space</h3><p>If it suits you, have a light dinner beforehand and create a quiet, familiar space for the scheduled time.</p></article>
+          <article><span>03</span><h3>Join at the scheduled time</h3><p>Live attendance is part of the Maintenance rhythm. Your payment confirmation contains the practical joining details for the cycle.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="rs-supported-section rs-maintenance-questions">
+      <div class="rs-supported-shell">
+        <header class="rs-maintenance-heading">
+          <span class="rs-supported-kicker">Questions &amp; answers</span>
+          <h2>Clear details before you continue.</h2>
+        </header>
+        <div class="rs-maintenance-faq">
+          <details open><summary>Who can register for Maintenance?<span aria-hidden="true">+</span></summary><p>Maintenance is for people who have completed both ReGeneration Level I and ReGeneration Level II.</p></details>
+          <details><summary>Do I need to join live?<span aria-hidden="true">+</span></summary><p>Yes. Live attendance is required for the scheduled Maintenance sessions. Practical joining details are shared after payment.</p></details>
+          <details><summary>What is the timing of the opening cycle?<span aria-hidden="true">+</span></summary><p>The fixed start is Monday, 17 August 2026. Sessions are weekly through 16 November 2026, at 11:00 PM Beijing time (UTC+8).</p></details>
+          <details><summary>Is this an automatic subscription?<span aria-hidden="true">+</span></summary><p>No. Both the one-month and first three-month commitments are one-time payments. The ongoing twice-monthly rhythm will be communicated before a later cycle opens.</p></details>
         </div>
       </div>
     </section>
