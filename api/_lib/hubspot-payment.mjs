@@ -28,7 +28,7 @@ async function responseJson(response) {
 export function toHubSpotPurchaseProperties(stripeEvent, ownerId, { allowLive = false } = {}) {
   const handoff = crmPaymentHandoff(stripeEvent, { allowLive });
   const variant = resolveOfferVariant(handoff.offerId);
-  const allowsSelectedEvent = ["group-healing", "regeneration-maintenance"].includes(variant.policy);
+  const allowsSelectedEvent = variant.policy === "group-healing";
   if (
     variant.amountMinor !== handoff.amountMinor ||
     (!allowsSelectedEvent && variant.sessionId !== handoff.sessionId)

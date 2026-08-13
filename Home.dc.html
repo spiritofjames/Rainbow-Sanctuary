@@ -187,9 +187,24 @@
   }
 
   .rs-home-promotions {
-    padding: 24px 20px 48px;
+    /* Keep the pathway mosaic visually distinct from the cinematic hero. */
+    padding: 32px 20px 48px;
     background: #f5f5f5;
   }
+
+  .rs-home-retreat-feature {
+    padding: 54px 20px 24px;
+    background: #f5f5f5;
+  }
+
+  .rs-home-retreat-feature__inner { width: min(1200px, 100%); margin: 0 auto; }
+  .rs-home-retreat-feature__intro { max-width: 660px; margin: 0 auto 28px; text-align: center; }
+  .rs-home-retreat-feature__intro span { color: #3f775f; font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+  .rs-home-retreat-feature__intro h2 { margin: 10px 0 12px; font-family: 'EB Garamond', serif; font-size: clamp(38px, 6vw, 62px); font-weight: 300; line-height: .98; }
+  .rs-home-retreat-feature__intro p { margin: 0; color: #625f5a; font-size: 16px; line-height: 1.65; }
+  .rs-home-retreat-feature .rs-home-promo { min-height: clamp(330px, 38vw, 480px); }
+  .rs-home-retreat-feature .rs-home-promo__content { max-width: 700px; }
+  .rs-home-retreat-feature .rs-home-promo h2 { font-size: clamp(40px, 6vw, 64px); }
 
   .rs-home-promotions__inner {
     display: grid;
@@ -249,6 +264,14 @@
   }
 
   .rs-home-promo--retreat { color: #fff; }
+
+  .rs-home-promo--maintenance { color: #fff; }
+
+  .rs-home-promo--maintenance::after {
+    background:
+      linear-gradient(90deg, rgba(8,28,22,.88), rgba(8,28,22,.46) 66%, rgba(8,28,22,.2)),
+      linear-gradient(0deg, rgba(8,28,22,.72), transparent 62%);
+  }
 
   .rs-home-promo--retreat .rs-home-promo__image { object-position: 57% center; }
 
@@ -433,12 +456,13 @@
   }
 
   @media (min-width: 760px) {
-    .rs-home-promotions { padding: 30px 32px 58px; }
+    .rs-home-retreat-feature { padding: 72px 32px 34px; }
+    .rs-home-promotions { padding: 56px 32px 58px; }
     .rs-home-promotions__inner { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
     .rs-home-promo { min-height: 330px; }
     .rs-home-promo--wide { grid-column: span 2; }
     .rs-home-promo--compact { grid-column: span 1; }
-    .rs-home-promo--retreat { order: 1; }
+    .rs-home-promo--maintenance { order: 1; }
     .rs-home-promo--group-healing { order: 2; }
     .rs-home-promo--autism { order: 3; }
     .rs-home-promo--youth { order: 4; }
@@ -541,29 +565,28 @@
         <p>When life feels heavy, growth feels stuck, your child needs support, or your inner work is ready to become service—find a grounded next step for healing, deeper practice, and conscious contribution.</p>
         <div class="rs-hero-actions" aria-label="Homepage starting actions">
           <a class="rs-hero-action rs-hero-action--primary" href="#find-your-path">Find your starting point</a>
-          <a class="rs-hero-action rs-hero-action--secondary" href="/group-healing">Try Group Healing · $22</a>
+          <a class="rs-hero-action rs-hero-action--secondary" href="/group-healing">Explore Group Healing</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CURRENT EXPERIENCES -->
+  <!-- ONLINE AND REMOTE PATHWAYS -->
   <section class="rs-home-promotions" aria-label="Upcoming Rainbow Sanctuary experiences">
     <div class="rs-home-promotions__inner">
-      <a class="rs-home-promo rs-home-promo--retreat rs-home-promo--wide" href="/awakening-your-inner-light-2026" aria-label="Explore Awakening Your Inner Light retreat, 1 to 7 October 2026 in Panama">
-        <img class="rs-home-promo__image" src="./assets/editorial/retreat-preparation-panama.jpg" alt="" width="1600" height="900" loading="eager" decoding="async">
+      <a class="rs-home-promo rs-home-promo--maintenance rs-home-promo--wide" href="/144-stages-maintenance" aria-label="Explore Regeneration Maintenance">
+        <img class="rs-home-promo__image" src="./assets/editorial/regeneration-maintenance-collective-v1.png" alt="A collective evening practice for renewal and regeneration" width="1600" height="900" loading="eager" decoding="async">
         <div class="rs-home-promo__content">
-          <span class="rs-home-promo__eyebrow">October 2026 · Panama</span>
-          <h2>Awakening Your Inner Light</h2>
-          <p class="rs-home-promo__meta"><span>1–7 October 2026</span><span>Bocas del Toro</span><span>Seven-day retreat</span></p>
-          <span class="rs-home-promo__cta">Explore the retreat</span>
+          <span class="rs-home-promo__eyebrow">Collective maintenance · Fixed start</span>
+          <h2>Regeneration Maintenance</h2>
+          <p class="rs-home-promo__meta"><span>Begins 17 August</span><span>For ReGeneration I &amp; II participants</span></p>
+          <span class="rs-home-promo__cta">Explore the programme&nbsp;→</span>
         </div>
       </a>
-
-      <a class="rs-home-promo rs-home-promo--group rs-home-promo--group-healing rs-home-promo--compact" href="/group-healing#choose-session" aria-label="Choose the next online Group Healing session on 22 August 2026">
+      <a class="rs-home-promo rs-home-promo--group rs-home-promo--group-healing rs-home-promo--compact" href="/online-group-healing#choose-session" aria-label="Choose the next Online Group Healing session">
         <img class="rs-home-promo__image" src="./assets/editorial/group-healing-zoom.jpg" alt="" width="1672" height="941" loading="eager" decoding="async">
         <div class="rs-home-promo__content">
-          <span class="rs-home-promo__eyebrow">Online · $22 total</span>
+          <span class="rs-home-promo__eyebrow">Online Group Healing</span>
           <h2>Join the next Group Healing</h2>
           <p class="rs-home-promo__meta"><span>22 August 2026</span><span>Shown in your time zone</span></p>
           <span class="rs-home-promo__cta">Choose your session&nbsp;→</span>
@@ -580,6 +603,22 @@
     </div>
   </section>
 
+  <!-- IN-PERSON RETREAT -->
+  <section class="rs-home-retreat-feature" aria-label="Featured in-person retreat">
+    <div class="rs-home-retreat-feature__inner">
+      <header class="rs-home-retreat-feature__intro"><span>In-person at a physical anchor</span><h2>Retreat into the living work.</h2><p>Rainbow Sanctuary retreats are held at one of the Planetary Symbiosis Network’s twelve physical anchors in Panama—an in-person setting for deeper practice, connection, and integration.</p></header>
+      <a class="rs-home-promo rs-home-promo--retreat" href="/awakening-your-inner-light-2026" aria-label="Explore Awakening Your Inner Light retreat, 1 to 7 October 2026 in Panama">
+        <img class="rs-home-promo__image" src="./assets/editorial/retreat-preparation-panama.jpg" alt="Rainbow Sanctuary retreat participants gathering in a natural Panama setting" width="1600" height="900" loading="lazy" decoding="async">
+        <div class="rs-home-promo__content">
+          <span class="rs-home-promo__eyebrow">Featured in-person retreat · October 2026 · Panama</span>
+          <h2>Awakening Your Inner Light</h2>
+          <p class="rs-home-promo__meta"><span>1–7 October 2026</span><span>Bocas del Toro</span><span>Seven-day retreat</span></p>
+          <span class="rs-home-promo__cta">Explore the retreat</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
   <!-- PERSONA-LED PATH ROUTER -->
   <section id="find-your-path" class="rs-home-audience" aria-labelledby="find-your-path-title">
     <div class="rs-home-audience__intro">
@@ -592,7 +631,7 @@
         <span>Relief &amp; renewal</span>
         <h3>You are tired of carrying everything alone.</h3>
         <p>Stress, exhaustion, a life transition, or the same emotional patterns keep returning. Begin with a gentle shared experience—or request private support when your situation needs individual attention.</p>
-        <a class="rs-home-audience__link" href="/group-healing">Start small with Group Healing · $22</a>
+        <a class="rs-home-audience__link" href="/group-healing">Explore Group Healing</a>
       </article>
       <article class="rs-home-audience__card rs-home-audience__card--depth">
         <span>Deeper inner work</span>
@@ -697,9 +736,9 @@
         <h2 style="font-family:'EB Garamond',serif;font-weight:300;font-size:36px;margin:16px 0 0;">Start with an experience. Continue when you are ready.</h2>
       </div>
 
-      <a href="/group-healing" style="display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;max-width:760px;margin:0 auto 32px;padding:22px 24px;border:1px solid #c8bdf5;border-radius:20px;background:#f0edff;color:#1d1933;text-decoration:none;">
+      <a href="/online-group-healing" style="display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;max-width:760px;margin:0 auto 32px;padding:22px 24px;border:1px solid #c8bdf5;border-radius:20px;background:#f0edff;color:#1d1933;text-decoration:none;">
         <span style="display:grid;width:42px;height:42px;place-items:center;border-radius:14px;background:#5a49ea;color:#fff;font-size:12px;font-weight:700;">START</span>
-        <span><strong style="display:block;font-family:'EB Garamond',serif;font-size:24px;font-weight:400;">Online Group Healing</strong><small style="color:#625f5a;font-size:13px;">Twice monthly · one rotating theme · $22 total</small></span>
+        <span><strong style="display:block;font-family:'EB Garamond',serif;font-size:24px;font-weight:400;">Online Group Healing</strong><small style="color:#625f5a;font-size:13px;">Twice monthly · one rotating theme</small></span>
         <span aria-hidden="true">→</span>
       </a>
 
@@ -793,7 +832,7 @@
           <a href="/" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Home</a>
           <a href="/about" style="font-size:15px;color:#4e4e4e;text-decoration:none;">About Stephanie</a>
           <a href="/spiral-journey" style="font-size:15px;color:#4e4e4e;text-decoration:none;">The Spiral Journey</a>
-          <a href="/group-healing" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Online Group Healing</a>
+          <a href="/online-group-healing" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Online Group Healing</a>
           <a href="/programs" style="font-size:15px;color:#4e4e4e;text-decoration:none;">Workshops &amp; Programs</a>
         </div>
         <div style="display:flex;flex-direction:column;gap:12px;">

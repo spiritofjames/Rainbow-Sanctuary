@@ -148,6 +148,11 @@
       "permanent": true
     },
     {
+      "source": "/Online-Group-Healing.dc.html",
+      "destination": "/online-group-healing",
+      "permanent": true
+    },
+    {
       "source": "/Holographic-Healing.dc.html",
       "destination": "/holographic-healing",
       "permanent": true
@@ -331,6 +336,10 @@
     {
       "source": "/group-healing",
       "destination": "/Group-Healing.dc.html"
+    },
+    {
+      "source": "/online-group-healing",
+      "destination": "/Online-Group-Healing.dc.html"
     },
     {
       "source": "/holographic-healing",

@@ -78,11 +78,19 @@ export const OFFER_CATALOG = Object.freeze([
     priceKey: "regeneration-maintenance",
     variants: [
       variant({
-        id: "regeneration-maintenance",
-        name: "Regeneration Maintenance — single session",
-        baseAmountUsd: 50,
-        amountUsd: 50,
-        sessionId: "regeneration-maintenance-2026-08-17",
+        id: "regeneration-maintenance-monthly",
+        name: "Regeneration Maintenance — one-month commitment",
+        baseAmountUsd: 210,
+        amountUsd: 210,
+        sessionId: "regeneration-maintenance-2026-08-17-monthly",
+        policy: "regeneration-maintenance"
+      }),
+      variant({
+        id: "regeneration-maintenance-three-month",
+        name: "Regeneration Maintenance — first three-month cycle",
+        baseAmountUsd: 630,
+        amountUsd: 630,
+        sessionId: "regeneration-maintenance-2026-08-17-three-month",
         policy: "regeneration-maintenance"
       })
     ]

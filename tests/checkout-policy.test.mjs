@@ -59,30 +59,30 @@ test("the server owns the Stripe price and amount", () => {
   assert.equal(parameters.success_url, "https://staging.rainbowsanctuary.life/payment-confirmation?payment=confirmed&session_id={CHECKOUT_SESSION_ID}");
 });
 
-test("Regeneration Maintenance can only use the explicitly opened Monday sessions", () => {
+test("Regeneration Maintenance uses one of two fixed server-owned commitments", () => {
   const environment = {
-    STRIPE_ALLOWED_OFFER_IDS: "regeneration-maintenance",
-    STRIPE_ALLOWED_REGENERATION_EVENT_IDS: "regeneration-maintenance-2026-08-17,regeneration-maintenance-2026-08-24"
+    STRIPE_ALLOWED_OFFER_IDS: "regeneration-maintenance-monthly,regeneration-maintenance-three-month"
   };
   const result = validateCheckoutRequest({
-    offerId: "regeneration-maintenance",
-    eventId: "regeneration-maintenance-2026-08-17",
+    offerId: "regeneration-maintenance-monthly",
+    eventId: "regeneration-maintenance-2026-08-17-monthly",
     requestId
   }, environment);
-  assert.equal(result.offer.amountMinor, 5_000);
-  assert.equal(result.eventId, "regeneration-maintenance-2026-08-17");
+  assert.equal(result.offer.amountMinor, 21_000);
+  assert.equal(result.eventId, "regeneration-maintenance-2026-08-17-monthly");
   assert.throws(() => validateCheckoutRequest({
-    offerId: "regeneration-maintenance",
+    offerId: "regeneration-maintenance-monthly",
     eventId: "regeneration-maintenance-unlisted",
     requestId
-  }, environment), /not open/);
+  }, environment), /Invalid programme payment reference/);
   const parameters = checkoutSessionParameters({
     eventId: result.eventId,
     offer: result.offer,
     origin: "https://staging.rainbowsanctuary.life"
   });
-  assert.equal(parameters.line_items[0].price_data.unit_amount, 5_000);
-  assert.match(parameters.custom_text.submit.message, /USD 50/);
+  assert.equal(parameters.line_items[0].price_data.unit_amount, 21_000);
+  assert.match(parameters.custom_text.submit.message, /Level I and Level II/);
+  assert.match(parameters.custom_text.submit.message, /one-time payment/i);
 });
 
 test("live keys are rejected outside production", () => {

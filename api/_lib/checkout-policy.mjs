@@ -28,13 +28,7 @@ export function validateCheckoutRequest(body, environment) {
   ) {
     throw new Error("Registration is not open for this event.");
   }
-  if (
-    offer.policy === "regeneration-maintenance" &&
-    !commaSeparatedSet(environment.STRIPE_ALLOWED_REGENERATION_EVENT_IDS).has(eventId)
-  ) {
-    throw new Error("Registration is not open for this event.");
-  }
-  if (!["group-healing", "regeneration-maintenance"].includes(offer.policy) && eventId !== offer.sessionId) {
+  if (offer.policy !== "group-healing" && eventId !== offer.sessionId) {
     throw new Error("Invalid programme payment reference.");
   }
 
@@ -111,7 +105,7 @@ function policyMessage(offer) {
   return offer.policy === "group-healing"
     ? "This booking is non-refundable and non-transferable. You may request one reschedule to an available Group Healing session by contacting bookings@rainbowsanctuary.life at least 24 hours before the booked session. Mandatory consumer rights and organizer cancellation are unaffected."
     : offer.policy === "regeneration-maintenance"
-      ? "This registration is for one scheduled Regeneration Maintenance session. The total shown at checkout is USD 50. Preparation details are sent by email. Mandatory consumer rights and organizer cancellation are unaffected."
+      ? "This fixed-start Regeneration Maintenance registration is reserved for people who have completed ReGeneration Level I and Level II. The chosen one-month or first three-month commitment is a one-time payment, not an automatic subscription. Preparation details are sent by email. Mandatory consumer rights and organizer cancellation are unaffected."
     : offer.policy === "internal-test"
       ? "This is an internal payment-system verification only. It does not reserve a session, programme place, or service."
     : "The total shown includes payment processing. Programme scheduling and participation details are confirmed separately. Mandatory consumer rights are unaffected.";
