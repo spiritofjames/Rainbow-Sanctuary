@@ -39,8 +39,8 @@ test("sensitive pathways stay safely gated, while approved direct registration r
   assert.match(read("api\/stripe\/create-donation-checkout.mjs"), /STRIPE_DONATION_CHECKOUT_APPROVED/);
   assert.match(maintenance, /144-Point Renewal Maintenance/);
   assert.match(maintenance, /regeneration-maintenance-checkout\.js/);
-  assert.match(maintenance, /USD 210/);
-  assert.match(maintenance, /USD 630/);
+  assert.match(maintenance, /<span>\$<\/span>210/);
+  assert.match(maintenance, /<span>\$<\/span>630/);
   assert.match(maintenance, /completed ReGeneration Level I and Level II/i);
   assert.match(maintenance, /twelve-layer, 144-point framework/i);
   assert.match(maintenance, /A three-part opening cycle/i);
@@ -49,7 +49,8 @@ test("sensitive pathways stay safely gated, while approved direct registration r
   assert.match(maintenance, /Clear details before you continue/i);
   assert.doesNotMatch(maintenance, /regeneration-maintenance-scheduler\.js/);
   assert.doesNotMatch(maintenance, /Support access for others/);
-  assert.match(maintenance, /no live attendance required/i);
+  assert.match(maintenance, /live attendance required/i);
+  assert.match(maintenance, /rs-maintenance-price-card/);
   assert.match(read("regeneration-maintenance-checkout.js"), /regeneration-maintenance-monthly/);
   assert.match(read("regeneration-maintenance-checkout.js"), /regeneration-maintenance-2026-08-17-three-month/);
   assert.match(read("regeneration-maintenance-checkout.js"), /create-checkout-session/);
