@@ -57,6 +57,7 @@ test("the server owns the Stripe price and amount", () => {
     type: "text"
   }]);
   assert.equal(parameters.success_url, "https://staging.rainbowsanctuary.life/payment-confirmation?payment=confirmed&session_id={CHECKOUT_SESSION_ID}");
+  assert.equal(parameters.cancel_url, "https://staging.rainbowsanctuary.life/online-group-healing?checkout=cancelled");
 });
 
 test("Regeneration Maintenance uses one of two fixed server-owned commitments", () => {

@@ -33,9 +33,13 @@
           requestId: crypto.randomUUID()
         })
       });
-      const payload = await response.json();
+      const payload = await response.json().catch(() => ({}));
       if (!response.ok || !payload.url) throw new Error(payload.error || "Secure checkout is temporarily unavailable.");
-      window.location.assign(payload.url);
+      const destination = new URL(payload.url);
+      if (destination.protocol !== "https:" || destination.hostname !== "checkout.stripe.com") {
+        throw new Error("The checkout destination could not be verified.");
+      }
+      window.location.assign(destination.href);
     } catch (error) {
       setStatus(error.message || "Secure checkout is temporarily unavailable. Please try again.", true);
       button.disabled = false;

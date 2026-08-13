@@ -224,7 +224,10 @@
       });
       const result = await response.json().catch(() => ({}));
       if (!response.ok || !result.url) {
-        throw new Error(result.error || "Secure checkout is temporarily unavailable.");
+        const isStaleSession = /registration is not open/i.test(String(result.error || ""));
+        throw new Error(isStaleSession
+          ? "This session is no longer available. Refresh the page to see the currently open dates."
+          : (result.error || "Secure checkout is temporarily unavailable."));
       }
       const destination = new URL(result.url);
       if (destination.protocol !== "https:" || destination.hostname !== "checkout.stripe.com") {
