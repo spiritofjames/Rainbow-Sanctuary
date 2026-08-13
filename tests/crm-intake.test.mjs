@@ -169,3 +169,19 @@ test("the enquiry form uses JSON for ordinary requests and private multipart onl
   assert.match(form, /maximum 2 MB/);
   assert.match(form, /automatically deleted after 30 days/);
 });
+
+test("the request-received dialog keeps phone controls reachable without scrolling the page behind it", async () => {
+  const [form, styles] = await Promise.all([
+    readFile(new URL("../Book-Consultation.dc.html", import.meta.url), "utf8"),
+    readFile(new URL("../application.css", import.meta.url), "utf8")
+  ]);
+
+  assert.match(form, /rs-application-acknowledgement__body/);
+  assert.match(form, /rs-application-acknowledgement__actions/);
+  assert.match(form, /rs-application-dialog-open/);
+  assert.match(form, /handleAcknowledgementKeydown/);
+  assert.match(styles, /body\.rs-application-dialog-open\s*\{[^}]*overflow:hidden/);
+  assert.match(styles, /max-height:calc\(100dvh - 48px\)/);
+  assert.match(styles, /rs-application-acknowledgement__body\s*\{[^}]*overflow-y:auto/);
+  assert.match(styles, /rs-application-acknowledgement__card\s*\{[^}]*overflow:hidden/);
+});
