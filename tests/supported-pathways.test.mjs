@@ -42,6 +42,8 @@ test("sensitive pathways stay safely gated, while approved direct registration r
   assert.match(maintenance, /<span>\$<\/span>210/);
   assert.match(maintenance, /<span>\$<\/span>630/);
   assert.match(maintenance, /completed ReGeneration Level I and Level II/i);
+  assert.doesNotMatch(maintenance, /data-maintenance-eligibility/);
+  assert.doesNotMatch(read("regeneration-maintenance-checkout.js"), /data-maintenance-eligibility/);
   assert.match(maintenance, /twelve-layer, 144-point framework/i);
   assert.match(maintenance, /A three-part opening cycle/i);
   assert.match(maintenance, /From weekly rhythm to twice-monthly care/i);

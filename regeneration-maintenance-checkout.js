@@ -1,8 +1,7 @@
 (() => {
   const root = document.querySelector("[data-maintenance-checkout]");
-  const eligibility = document.querySelector("[data-maintenance-eligibility]");
   const status = document.querySelector("[data-maintenance-status]");
-  if (!root || !eligibility || !status) return;
+  if (!root || !status) return;
 
   const setStatus = (message, error = false) => {
     status.textContent = message;
@@ -12,12 +11,6 @@
   root.addEventListener("click", async (event) => {
     const button = event.target.closest("[data-maintenance-offer]");
     if (!button) return;
-    if (!eligibility.checked) {
-      eligibility.focus();
-      setStatus("Please confirm that you have completed ReGeneration Level I and Level II before continuing.", true);
-      return;
-    }
-
     const offerId = button.dataset.maintenanceOffer;
     button.disabled = true;
     setStatus("Opening secure Stripe payment…");
