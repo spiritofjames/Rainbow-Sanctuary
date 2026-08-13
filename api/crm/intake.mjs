@@ -1,7 +1,12 @@
 import { assertAllowedOrigin } from "../_lib/checkout-policy.mjs";
 import { forwardWebsiteIntake, normalizePublicIntake } from "../_lib/crm-intake.mjs";
 import { mirrorHubSpotIntake } from "../_lib/hubspot-intake.mjs";
-import { attemptAutismRegistrationReceipt, attemptEnquiryOperationsNotification, attemptOptionalContributionFollowUp } from "../_lib/operations-notification.mjs";
+import {
+  attemptAutismRegistrationReceipt,
+  attemptEnquiryOperationsNotification,
+  attemptOptionalContributionFollowUp,
+  attemptVisitorIntakeReceipt
+} from "../_lib/operations-notification.mjs";
 import { parseJsonBody, sendJson } from "../_lib/http.mjs";
 import { parseMultipartIntake } from "../_lib/private-intake.mjs";
 
@@ -102,11 +107,13 @@ export default async function handler(request, response) {
     const autismRegistration = isAutismRegistration ? autismRegistrationDetails(input, normalized) : null;
     await forwardWebsiteIntake(input, process.env);
     const hubspot = await mirrorHubSpotIntake(normalized, process.env, fetch, attachment, privateApplication || autismRegistration);
-    await attemptEnquiryOperationsNotification(normalized, hubspot, process.env);
     if (isAutismRegistration) {
       await attemptAutismRegistrationReceipt(normalized, process.env);
       await attemptOptionalContributionFollowUp(normalized, process.env);
+    } else {
+      await attemptVisitorIntakeReceipt(normalized, process.env);
     }
+    await attemptEnquiryOperationsNotification(normalized, hubspot, process.env);
     return sendJson(response, 202, { accepted: true });
   } catch (error) {
     const operationalFailure = /operations notification|operational recipient/i.test(error.message);

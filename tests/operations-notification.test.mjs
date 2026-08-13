@@ -3,12 +3,14 @@ import assert from "node:assert/strict";
 import {
   attemptEnquiryOperationsNotification,
   attemptPurchaseOperationsNotification,
-  autismRegistrationReceipt,
   attemptOptionalContributionFollowUp,
+  attemptVisitorIntakeReceipt,
+  autismRegistrationReceipt,
   enquiryOperationsMessage,
   optionalContributionFollowUp,
   purchaseOperationsMessage,
-  sendEnquiryOperationsNotification
+  sendEnquiryOperationsNotification,
+  visitorIntakeReceipt
 } from "../api/_lib/operations-notification.mjs";
 
 const environment = {
@@ -54,6 +56,36 @@ test("enquiry notification is minimal, linked to HubSpot and duplicate-safe", ()
   assert.match(message.html, /Open contact in HubSpot/);
   assert.doesNotMatch(message.html, /Sensitive context/);
   assert.doesNotMatch(message.text, /visitor@example\.test/);
+});
+
+test("every accepted standard enquiry receives one privacy-safe acknowledgement", async () => {
+  const receipt = visitorIntakeReceipt(intake);
+  assert.equal(receipt.alias, "rs-enquiry-received");
+  assert.equal(receipt.idempotencyKey, `intake:${intake.eventId}:visitor-received`);
+  assert.deepEqual(receipt.variables, {
+    ENQUIRY_TOPIC: "Spiral I",
+    NAME: "Synthetic Visitor",
+    REFERENCE_ID: intake.eventId
+  });
+
+  let sent;
+  const result = await attemptVisitorIntakeReceipt(intake, environment, {
+    emails: { send: async (...args) => { sent = args; return { data: { id: "receipt_123" }, error: null }; } }
+  });
+  assert.deepEqual(result, { sent: true, id: "receipt_123" });
+  assert.equal(sent[0].to[0], intake.email);
+  assert.equal(sent[1].idempotencyKey, receipt.idempotencyKey);
+  assert.doesNotMatch(JSON.stringify(sent), /Sensitive context/);
+});
+
+test("private healing uses the application acknowledgement without exposing case details", () => {
+  const receipt = visitorIntakeReceipt({ ...intake, area: "private-healing", program: "personal-karma-reconciliation" });
+  assert.equal(receipt.alias, "rs-application-received");
+  assert.deepEqual(receipt.variables, {
+    NAME: "Synthetic Visitor",
+    PATHWAY: "Personal Karma Reconciliation",
+    REFERENCE_ID: intake.eventId
+  });
 });
 
 test("Autism registration receipt confirms the weekly list without promising review, Zoom, or clinical support", () => {
@@ -135,6 +167,21 @@ test("an optional operations notification cannot turn an accepted enquiry into a
   assert.deepEqual(logged, [{
     detail: { reason: "operations-notification-unavailable" },
     event: "crm_intake_notification_error"
+  }]);
+});
+
+test("an unavailable visitor acknowledgement never makes an accepted enquiry fail", async () => {
+  const logged = [];
+  const result = await attemptVisitorIntakeReceipt(
+    intake,
+    { ...environment, RESEND_EMAIL_ENABLED: "false" },
+    undefined,
+    { error: (event, detail) => logged.push({ detail, event }) }
+  );
+  assert.deepEqual(result, { reason: "disabled", sent: false });
+  assert.deepEqual(logged, [{
+    detail: { eventId: intake.eventId, reason: "disabled" },
+    event: "crm_intake_visitor_receipt_error"
   }]);
 });
 

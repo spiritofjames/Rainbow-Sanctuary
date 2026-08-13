@@ -1,5 +1,5 @@
 import { emailHtml, emailText, escapeHtml } from "../../emails/layout.mjs";
-import { sendOperationalEmail } from "./email-service.mjs";
+import { sendOperationalEmail, sendTransactionalEmail } from "./email-service.mjs";
 import { crmPaymentHandoff, isInternalPaymentTest, livePaymentProcessingAllowed } from "./webhook-delivery.mjs";
 import { resolveOfferVariant } from "./offer-catalog.mjs";
 
@@ -19,6 +19,29 @@ function safeContactUrl(hubspot) {
     throw new Error("HubSpot contact link is unavailable for operations.");
   }
   return hubspot.contactUrl;
+}
+
+function intakePathwayLabel(intake) {
+  const source = String(intake.program || intake.area || "Rainbow Sanctuary enquiry").trim();
+  return source
+    .split(/[\s_-]+/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+}
+
+export function visitorIntakeReceipt(intake) {
+  const isPrivateHealing = intake.area === "private-healing";
+  const pathway = intakePathwayLabel(intake);
+  return {
+    alias: isPrivateHealing ? "rs-application-received" : "rs-enquiry-received",
+    idempotencyKey: `intake:${intake.eventId}:visitor-received`,
+    tags: [{ name: "workflow", value: isPrivateHealing ? "application" : "enquiry" }],
+    to: intake.email,
+    variables: isPrivateHealing
+      ? { NAME: intake.displayName, PATHWAY: pathway, REFERENCE_ID: intake.eventId }
+      : { ENQUIRY_TOPIC: pathway, NAME: intake.displayName, REFERENCE_ID: intake.eventId }
+  };
 }
 
 export function enquiryOperationsMessage(intake, hubspot, environment) {
@@ -165,6 +188,25 @@ export async function attemptEnquiryOperationsNotification(
       reason: "operations-notification-unavailable"
     });
     return { reason: "operations-notification-unavailable", sent: false };
+  }
+}
+
+export async function attemptVisitorIntakeReceipt(intake, environment, resendClient, logger = console) {
+  try {
+    const result = await sendTransactionalEmail(visitorIntakeReceipt(intake), environment, resendClient);
+    if (!result.sent) {
+      logger.error("crm_intake_visitor_receipt_error", {
+        eventId: intake.eventId,
+        reason: result.reason || "receipt-unavailable"
+      });
+    }
+    return result;
+  } catch (error) {
+    logger.error("crm_intake_visitor_receipt_error", {
+      eventId: intake.eventId,
+      reason: "receipt-unavailable"
+    });
+    return { reason: "receipt-unavailable", sent: false };
   }
 }
 
