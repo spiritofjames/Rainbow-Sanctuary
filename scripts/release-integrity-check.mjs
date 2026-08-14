@@ -37,4 +37,27 @@ if (!Array.isArray(manifest.icons) || !manifest.icons.length) {
   throw new Error('Release integrity check failed. Site manifest has no favicon entries.');
 }
 
-console.log(`Release integrity passed: ${requiredFiles.length} required files, reminder cron, and favicon manifest are present.`);
+const navigationFiles = ['SiteNavFixed.dc.html', 'SiteNavLotus.dc.html', 'SiteNavCinematic.dc.html'];
+const requiredNavigationItems = [
+  "{ key: 'group', label: 'Group Healing'",
+  "{ label: 'Online Group Healing', href: '/online-group-healing' }",
+  "{ label: 'Regeneration Maintenance', href: '/144-stages-maintenance' }",
+  "{ label: 'Autism & Family Support', href: '/autism-family-support' }",
+  "{ label: 'Young People’s Wellbeing Support', href: '/young-people-wellbeing' }",
+];
+
+for (const file of navigationFiles) {
+  const source = readFileSync(file, 'utf8');
+  const missingItems = requiredNavigationItems.filter((item) => !source.includes(item));
+  if (missingItems.length) {
+    throw new Error(`Release integrity check failed. ${file} is missing required navigation:\n${missingItems.join('\n')}`);
+  }
+  if (source.includes("key: 'community'") || source.includes("key: 'vision'") || source.includes("label: 'Bigger Vision'")) {
+    throw new Error(`Release integrity check failed. ${file} contains retired primary navigation items.`);
+  }
+  if (source.indexOf("key: 'about'") < source.indexOf("key: 'events'")) {
+    throw new Error(`Release integrity check failed. ${file} does not keep About at the end of the primary navigation.`);
+  }
+}
+
+console.log(`Release integrity passed: ${requiredFiles.length} required files, reminder cron, favicon manifest, and primary navigation are present.`);
