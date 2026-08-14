@@ -1,0 +1,19 @@
+{
+  "name": "Rainbow Sanctuary",
+  "short_name": "Rainbow Sanctuary",
+  "icons": [
+    {
+      "src": "/assets/brand/favicon-lotus-64.png?v=20260814-brand1",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/brand/apple-touch-icon.png?v=20260814-brand1",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#5748e8",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}
