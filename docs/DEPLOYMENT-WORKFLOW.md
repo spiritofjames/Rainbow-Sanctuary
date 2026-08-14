@@ -51,14 +51,19 @@ that omits the security headers.
    `docs/PHASE-4-STAGING-ACCEPTANCE.md`, attach evidence, and record each named
    approval. An incomplete checklist means `NO-GO`.
 2. Record the current production deployment and commit as the rollback target.
-3. Open a pull request from `staging` to `main`.
-4. Complete every production item in the pull-request template.
-5. Resolve every review conversation.
-6. The release owner merges the pull request.
-7. Watch the Vercel production deployment until it is Ready.
-8. Verify the homepage, clean routes, one legacy redirect, navigation, sitemap,
+3. First merge the latest `main` into `staging`, rerun the full quality gate,
+   and perform acceptance testing again. This prevents a long-lived staging
+   branch from reintroducing older files during promotion.
+4. Open a pull request from the updated `staging` branch to `main`.
+5. Complete every production item in the pull-request template.
+6. Resolve every review conversation.
+7. The release owner merges the pull request.
+8. Watch the Vercel production deployment until it is Ready.
+9. Verify the homepage, clean routes, one legacy redirect, navigation, sitemap,
    robots, LLM discovery files, primary calls to action, legal pages, and HTTPS.
-9. Add the release to `docs/RELEASE-LOG.md`.
+10. Fast-forward `staging` to the newly merged `main` commit after production is
+    verified, so the next release starts from the same source.
+11. Add the release to `docs/RELEASE-LOG.md`.
 
 Merging the `staging` → `main` pull request is the explicit production approval.
 
@@ -70,8 +75,8 @@ Merging the `staging` → `main` pull request is the explicit production approva
   validation, discovery-layer reproducibility, and the release-integrity check.
 - The release-integrity check fails if the favicon, critical public pages,
   payment/intake endpoints, or the Maintenance reminder cron are absent.
-- Production is deployed from the immutable commit checked out by GitHub
-  Actions—not from an agent or developer's local filesystem.
+- Vercel's native Git integration deploys the immutable commit merged into
+  protected `main`—never an agent or developer's local filesystem.
 - Every production promotion is recorded in `docs/RELEASE-LOG.md` with its
   commit and prior deployment, so an intentional rollback target is explicit.
 
