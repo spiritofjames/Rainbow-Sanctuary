@@ -7,10 +7,10 @@ enquiry, requested support, applied, booked, paid, or joined a program. It is no
 a newsletter or marketing list. Resend is outbound-only; replies continue to
 Google Workspace and arrive in the shared Gmail inbox under the existing labels.
 
-The public site's sensitive healing application is deliberately not connected to
-email automation yet. A headshot and private health or life context must first
-have an approved secure intake store, access policy, retention period, deletion
-process, and CRM handoff. Email must never carry that material.
+Every accepted public form receives exactly one immediate acknowledgement after
+its safe CRM and HubSpot handoff. For private healing, the acknowledgement is
+sent only after the protected attachment process accepts the submission. It
+never includes enquiry text, case details, a headshot, or other attachment data.
 
 ## Sender routing
 
@@ -33,10 +33,10 @@ template and a disabled event automation contract.
 
 | Stage | Event | Template | Trigger owner |
 | --- | --- | --- | --- |
-| Enquiry | `rs.enquiry.received` | `rs-enquiry-received` | Website/CRM after safe enquiry capture |
+| Enquiry | `rs.enquiry.received` | `rs-enquiry-received` | Website/CRM after safe enquiry capture and HubSpot handoff |
 | Support | `rs.support.received` | `rs-support-received` | Support intake |
 | Privacy | `rs.privacy.requested` | `rs-privacy-request-received` | Restricted privacy intake |
-| Application | `rs.application.received` | `rs-application-received` | CRM after secure storage |
+| Application | `rs.application.received` | `rs-application-received` | Website/CRM after secure intake handoff |
 | Application | `rs.application.more_information` | `rs-application-more-information` | Human reviewer |
 | Application | `rs.application.accepted` | `rs-application-accepted` | Human reviewer |
 | Application | `rs.application.declined` | `rs-application-declined` | Human reviewer |
@@ -78,6 +78,12 @@ owner must first pass acceptance.
    alert using the source event ID as the Resend idempotency key. The alert links
    to the owned HubSpot contact and excludes enquiry text, attachments, email
    addresses and payment-method data.
+10. Each accepted website form sends one visitor acknowledgement using the same
+    intake event ID. General and group enquiries use `rs-enquiry-received`;
+    private healing uses `rs-application-received`; Autism & Family Support keeps
+    its specialised registration confirmation so a visitor never receives two
+    immediate acknowledgements. Its optional contribution follow-up remains a
+    separate consent-based message scheduled for the next day.
 
 ## Interim HubSpot visibility
 

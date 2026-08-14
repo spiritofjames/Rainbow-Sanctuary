@@ -6,6 +6,15 @@ const scriptsDir = path.dirname(fileURLToPath(import.meta.url));
 const siteDir = path.resolve(scriptsDir, "..");
 const origin = "https://rainbowsanctuary.life";
 const lastmod = "2026-07-31";
+// Keep operational jobs in the generated Vercel configuration. Discovery
+// publishing runs as part of every release, so dropping this would silently
+// disable the Monday Maintenance reminder.
+const crons = [
+  {
+    path: "/api/jobs/regeneration-maintenance-reminders",
+    schedule: "15 1 * * 1"
+  }
+];
 const headers = [
   {
     source: "/assets/documents/awakening-your-inner-light-retreat-2026.pdf",
@@ -372,7 +381,7 @@ const rewrites = Object.entries(allRoutes).map(([file, route]) => ({
 
 fs.writeFileSync(
   path.join(siteDir, "vercel.json"),
-  `${JSON.stringify({ trailingSlash: false, headers, redirects, rewrites }, null, 2)}\n`
+  `${JSON.stringify({ trailingSlash: false, crons, headers, redirects, rewrites }, null, 2)}\n`
 );
 
 const sitemap = [

@@ -8,6 +8,7 @@
     "email:preview": "node scripts/build-email-preview.mjs",
     "resend:sync": "node scripts/sync-resend.mjs",
     "stripe:payment-links": "node scripts/generate-payment-invite-catalog.mjs",
+    "release:check": "node scripts/release-integrity-check.mjs",
     "validate": "npm test && npm run email:check && python3 scripts/validate_site.py && node scripts/publish-discovery-layer.mjs && git diff --exit-code"
   },
   "dependencies": {
