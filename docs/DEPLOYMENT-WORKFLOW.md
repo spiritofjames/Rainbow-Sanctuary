@@ -26,6 +26,12 @@
 
 Do not push directly to `staging` or `main`.
 
+Do not run `vercel --prod` from a laptop, temporary directory, or uncommitted
+worktree. It bypasses the review trail and can replace the live site with an
+older local snapshot. An emergency production release still starts as a Git
+commit and pull request; the `Release production` workflow is the only normal
+way to assign the public production domain.
+
 ## Canonical routes and discovery files
 
 `scripts/publish-discovery-layer.mjs` is the source-controlled publishing step for:
@@ -55,6 +61,19 @@ that omits the security headers.
 9. Add the release to `docs/RELEASE-LOG.md`.
 
 Merging the `staging` → `main` pull request is the explicit production approval.
+
+## Production guardrails
+
+- `main` is protected: changes require the `validate-static-site` GitHub check,
+  no force pushes, and resolved review conversations.
+- The quality workflow runs unit tests, the email-template check, static-page
+  validation, discovery-layer reproducibility, and the release-integrity check.
+- The release-integrity check fails if the favicon, critical public pages,
+  payment/intake endpoints, or the Maintenance reminder cron are absent.
+- Production is deployed from the immutable commit checked out by GitHub
+  Actions—not from an agent or developer's local filesystem.
+- Every production promotion is recorded in `docs/RELEASE-LOG.md` with its
+  commit and prior deployment, so an intentional rollback target is explicit.
 
 ## Ownership
 
