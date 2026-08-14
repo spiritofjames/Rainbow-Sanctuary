@@ -148,15 +148,21 @@
       </sc-if>
 
       <sc-if value="{{ showAcknowledgement }}" hint-placeholder-val="{{ false }}">
-        <section class="rs-application-acknowledgement" role="dialog" aria-modal="true" aria-labelledby="request-received-title" aria-describedby="request-received-summary">
+        <section class="rs-application-acknowledgement" role="dialog" aria-modal="true" aria-labelledby="request-received-title" aria-describedby="request-received-summary" tabindex="-1" onKeyDown="{{ handleAcknowledgementKeydown }}">
           <div class="rs-application-acknowledgement__card">
-            <button class="rs-application-acknowledgement__close" type="button" aria-label="Close request received message" onClick="{{ dismissAcknowledgement }}">×</button>
-            <div class="rs-payment-confirmation__mark" aria-hidden="true">✓</div>
-            <span class="rs-application-kicker">{{ acknowledgementKicker }}</span>
-            <h2 id="request-received-title">{{ acknowledgementTitle }}</h2>
-            <p id="request-received-summary">{{ acknowledgementSummary }}</p>
-            <p class="rs-application-acknowledgement__note">{{ acknowledgementNote }}</p>
-            <button class="rs-entry-button rs-entry-button--primary" type="button" onClick="{{ dismissAcknowledgement }}">Continue</button>
+            <div class="rs-application-acknowledgement__topbar">
+              <button class="rs-application-acknowledgement__close" type="button" aria-label="Close request received message" onClick="{{ dismissAcknowledgement }}">×</button>
+            </div>
+            <div class="rs-application-acknowledgement__body">
+              <div class="rs-payment-confirmation__mark" aria-hidden="true">✓</div>
+              <span class="rs-application-kicker">{{ acknowledgementKicker }}</span>
+              <h2 id="request-received-title">{{ acknowledgementTitle }}</h2>
+              <p id="request-received-summary">{{ acknowledgementSummary }}</p>
+              <p class="rs-application-acknowledgement__note">{{ acknowledgementNote }}</p>
+            </div>
+            <div class="rs-application-acknowledgement__actions">
+              <button class="rs-entry-button rs-entry-button--primary" type="button" onClick="{{ dismissAcknowledgement }}">Continue</button>
+            </div>
           </div>
         </section>
       </sc-if>
@@ -228,9 +234,11 @@ class Component extends DCLogic {
   constructor(props) {
     super(props);
     this.state = { name: '', email: '', whatsapp: '', reason: '', program: '', privateSession: '', currentChallenges: '', intendedOutcome: '', participantName: '', participantAge: '', participantCountry: '', message: '', photoFile: null, photoName: '', submissionId: '', submittedAt: '', submitted: false, showAcknowledgement: false, acknowledgementClosed: false, submitting: false, configurationPending: false, error: '' };
+    this.acknowledgementReturnFocus = null;
   }
 
   componentDidMount() {
+    document.body.classList.remove('rs-application-dialog-open');
     const params = new URLSearchParams(window.location.search);
     const reason = params.get('reason');
     const privateSession = params.get('session');
@@ -239,6 +247,21 @@ class Component extends DCLogic {
     const eventMessage = event === 'awakening-inner-light-2026' ? 'I would like to register interest in the Awakening Your Inner Light retreat, 1–7 October 2026 in Bocas del Toro.' : '';
     const programMessage = program ? `I am interested in ${program.replaceAll('-', ' ')}.` : '';
     if (reason || privateSession || eventMessage || programMessage) this.setState({ reason: reason || (privateSession ? 'private-healing' : ''), program: program || '', privateSession: privateSession || '', message: eventMessage || programMessage });
+  }
+
+  openAcknowledgement() {
+    const activeElement = document.activeElement;
+    this.acknowledgementReturnFocus = activeElement instanceof HTMLElement ? activeElement : null;
+    document.body.classList.add('rs-application-dialog-open');
+    window.requestAnimationFrame(() => document.querySelector('.rs-application-acknowledgement__close')?.focus());
+  }
+
+  dismissAcknowledgement() {
+    document.body.classList.remove('rs-application-dialog-open');
+    const returnFocus = this.acknowledgementReturnFocus;
+    this.acknowledgementReturnFocus = null;
+    this.setState({ showAcknowledgement: false, acknowledgementClosed: true });
+    window.requestAnimationFrame(() => returnFocus?.focus());
   }
 
   renderVals() {
@@ -293,7 +316,10 @@ class Component extends DCLogic {
         }
         this.setState({ photoFile: file || null, photoName: file ? file.name : '', error: '' });
       },
-      dismissAcknowledgement: () => this.setState({ showAcknowledgement: false, acknowledgementClosed: true }),
+      dismissAcknowledgement: () => this.dismissAcknowledgement(),
+      handleAcknowledgementKeydown: (event) => {
+        if (event.key === 'Escape') this.dismissAcknowledgement();
+      },
       handleSubmit: async (e) => {
         e.preventDefault();
         const formConfig = window.RAINBOW_SANCTUARY_CONFIG && window.RAINBOW_SANCTUARY_CONFIG.form;
@@ -369,6 +395,7 @@ class Component extends DCLogic {
             throw failure;
           }
           this.setState({ submitted: true, showAcknowledgement: true, acknowledgementClosed: false, submitting: false });
+          this.openAcknowledgement();
         } catch (error) {
           const message = error && error.status === 400
             ? 'We could not validate this enquiry. Please refresh the page, check the required fields, and try once more.'
