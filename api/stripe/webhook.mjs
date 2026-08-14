@@ -20,15 +20,22 @@ export default async function handler(request, response) {
     return sendJson(response, 503, { error: "Webhook is not configured." });
   }
 
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+  let event;
   try {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const rawBody = await readRawBody(request);
-    const signature = request.headers["stripe-signature"];
-    const event = stripe.webhooks.constructEvent(
+    event = stripe.webhooks.constructEvent(
       rawBody,
-      signature,
+      request.headers["stripe-signature"],
       process.env.STRIPE_WEBHOOK_SECRET
     );
+  } catch (error) {
+    // An invalid signature must be rejected without asking Stripe to retry it.
+    console.error("stripe_webhook_signature_error", { message: error.message });
+    return sendJson(response, 400, { error: "Webhook signature could not be verified." });
+  }
+
+  try {
     const governedEvent = hydrateStaffPaymentLinkEvent(event, process.env);
     let delivery = { forwarded: false, ignored: true, reason: "not-applicable" };
     let bookingEmail = { sent: false, reason: "not-applicable" };
