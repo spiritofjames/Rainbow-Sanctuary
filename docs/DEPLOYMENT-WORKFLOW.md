@@ -29,8 +29,8 @@ Do not push directly to `staging` or `main`.
 Do not run `vercel --prod` from a laptop, temporary directory, or uncommitted
 worktree. It bypasses the review trail and can replace the live site with an
 older local snapshot. An emergency production release still starts as a Git
-commit and pull request; the `Release production` workflow is the only normal
-way to assign the public production domain.
+commit and pull request. Vercel's Git integration promotes only the verified,
+protected `main` branch to the public production domain.
 
 ## Canonical routes and discovery files
 
