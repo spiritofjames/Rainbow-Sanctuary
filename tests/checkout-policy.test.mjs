@@ -88,6 +88,42 @@ test("Regeneration Maintenance uses one of two fixed server-owned commitments", 
   assert.match(parameters.custom_text.submit.message, /one-time payment/i);
 });
 
+test("Maintenance uses its configured persistent Stripe Price when supplied", () => {
+  const { offer } = validateCheckoutRequest({
+    offerId: "regeneration-maintenance-three-month",
+    eventId: "regeneration-maintenance-2026-08-17-three-month",
+    requestId
+  }, {
+    STRIPE_ALLOWED_OFFER_IDS: "regeneration-maintenance-three-month"
+  });
+  const parameters = checkoutSessionParameters({
+    eventId: offer.sessionId,
+    offer,
+    origin: "https://staging.rainbowsanctuary.life",
+    environment: {
+      STRIPE_REGENERATION_MAINTENANCE_THREE_MONTH_PRICE_ID: "price_1RainbowMaintenance630"
+    }
+  });
+  assert.deepEqual(parameters.line_items, [{ price: "price_1RainbowMaintenance630", quantity: 1 }]);
+  assert.equal(parameters.line_items[0].price_data, undefined);
+});
+
+test("Maintenance rejects a malformed configured Stripe Price ID", () => {
+  const { offer } = validateCheckoutRequest({
+    offerId: "regeneration-maintenance-monthly",
+    eventId: "regeneration-maintenance-2026-08-17-monthly",
+    requestId
+  }, {
+    STRIPE_ALLOWED_OFFER_IDS: "regeneration-maintenance-monthly"
+  });
+  assert.throws(() => checkoutSessionParameters({
+    eventId: offer.sessionId,
+    offer,
+    origin: "https://staging.rainbowsanctuary.life",
+    environment: { STRIPE_REGENERATION_MAINTENANCE_MONTHLY_PRICE_ID: "not-a-price" }
+  }), /not configured/);
+});
+
 test("live keys are rejected outside production", () => {
   assert.throws(() => assertCheckoutConfiguration({
     STRIPE_CHECKOUT_ENABLED: "true",

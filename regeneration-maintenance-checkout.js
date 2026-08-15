@@ -2,6 +2,8 @@
   const root = document.querySelector("[data-maintenance-checkout]");
   const status = document.querySelector("[data-maintenance-status]");
   if (!root || !status) return;
+  const defaultStatus = status.textContent;
+  let openingCheckout = false;
 
   const setStatus = (message, error = false) => {
     status.textContent = message;
@@ -22,11 +24,33 @@
     });
   };
 
+  const restoreCheckoutControls = () => {
+    openingCheckout = false;
+    root.querySelectorAll("[data-maintenance-offer]").forEach((button) => {
+      button.disabled = false;
+      button.removeAttribute("aria-busy");
+    });
+    status.classList.remove("is-error");
+    status.textContent = defaultStatus;
+  };
+
+  // Browsers commonly restore this page from their back-forward cache when a
+  // visitor leaves Stripe without paying. Reset the temporary disabled state
+  // so the same checkout option can always be opened again.
+  window.addEventListener("pageshow", restoreCheckoutControls);
+  window.addEventListener("focus", restoreCheckoutControls);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) restoreCheckoutControls();
+  });
+
   root.addEventListener("click", async (event) => {
     const button = event.target.closest("[data-maintenance-offer]");
-    if (!button) return;
+    if (!button || openingCheckout) return;
+    event.preventDefault();
     const offerId = button.dataset.maintenanceOffer;
+    openingCheckout = true;
     button.disabled = true;
+    button.setAttribute("aria-busy", "true");
     setStatus("Opening secure Stripe payment…");
     try {
       const response = await fetch("/api/stripe/create-checkout-session", {
@@ -49,7 +73,9 @@
       window.location.assign(destination.href);
     } catch (error) {
       setStatus(error.message || "Secure checkout is temporarily unavailable. Please try again.", true);
+      openingCheckout = false;
       button.disabled = false;
+      button.removeAttribute("aria-busy");
     }
   });
 })();
