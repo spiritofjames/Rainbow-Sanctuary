@@ -3,6 +3,7 @@ import { assertCheckoutConfiguration } from "../_lib/checkout-policy.mjs";
 import { sendJson } from "../_lib/http.mjs";
 import { isOptionalContributionSession } from "../_lib/optional-contribution.mjs";
 import { staffPaymentLinkContext } from "../_lib/staff-payment-links.mjs";
+import { resolveOfferVariant } from "../_lib/offer-catalog.mjs";
 
 const CHECKOUT_SESSION_PATTERN = /^cs_(?:test|live)_[A-Za-z0-9]+$/;
 
@@ -39,6 +40,12 @@ export default async function handler(request, response) {
     const paid = session.payment_status === "paid";
     const staticPaymentContext = staffPaymentLinkContext(session, process.env);
     const offer = String(session.metadata?.offer_key || staticPaymentContext?.offerId || "");
+    let programmeName = "";
+    try {
+      programmeName = offer ? resolveOfferVariant(offer).name : "";
+    } catch (_) {
+      // A status endpoint must still return a paid Stripe receipt for an older offer.
+    }
     const amount = Number.isSafeInteger(session.amount_total) ? session.amount_total : null;
     const currency = /^[a-z]{3}$/i.test(String(session.currency || ""))
       ? String(session.currency).toUpperCase()
@@ -48,6 +55,7 @@ export default async function handler(request, response) {
     return sendJson(response, 200, {
       state: paid ? "paid" : "pending",
       offer,
+      programmeName,
       amount,
       currency,
       internalTest: session.metadata?.internal_payment_test === "true",

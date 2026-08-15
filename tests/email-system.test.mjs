@@ -40,7 +40,7 @@ test("Production delivery requires a separate explicit approval", () => {
   );
 });
 
-test("send uses the server-owned template identity and stable idempotency key", async () => {
+test("send uses the source-controlled email content and stable idempotency key", async () => {
   let call;
   const client = { emails: { send: async (...args) => { call = args; return { data: { id: "email_123" }, error: null }; } } };
   const result = await sendTransactionalEmail({
@@ -55,7 +55,10 @@ test("send uses the server-owned template identity and stable idempotency key", 
     RESEND_ALLOWED_RECIPIENTS: "reviewer@example.com"
   }, client);
   assert.deepEqual(result, { sent: true, id: "email_123" });
-  assert.equal(call[0].template.id, template.alias);
+  assert.equal(call[0].template, undefined);
+  assert.equal(call[0].subject, "We received your Rainbow Sanctuary enquiry");
+  assert.match(call[0].html, /Value for NAME/);
+  assert.match(call[0].text, /Value for NAME/);
   assert.equal(call[0].from, template.from);
   assert.equal(call[0].replyTo, template.replyTo);
   assert.equal(call[1].idempotencyKey, "enquiry:RS-2026-0042:received");

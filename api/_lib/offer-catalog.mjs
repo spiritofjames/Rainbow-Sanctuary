@@ -84,7 +84,7 @@ export const OFFER_CATALOG = Object.freeze([
     variants: [
       variant({
         id: "regeneration-maintenance-monthly",
-        name: "Regeneration Maintenance — one-month commitment",
+        name: "ReGeneration Maintenance — Four-Week Opening Cycle",
         baseAmountUsd: 210,
         amountUsd: 210,
         sessionId: "regeneration-maintenance-2026-08-17-monthly",
@@ -93,7 +93,7 @@ export const OFFER_CATALOG = Object.freeze([
       }),
       variant({
         id: "regeneration-maintenance-three-month",
-        name: "Regeneration Maintenance — first three-month cycle",
+        name: "ReGeneration Maintenance — Twelve-Week Opening Cycle",
         baseAmountUsd: 630,
         amountUsd: 630,
         sessionId: "regeneration-maintenance-2026-08-17-three-month",
