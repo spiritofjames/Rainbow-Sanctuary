@@ -2,6 +2,7 @@ import { resolveOfferVariant } from "./offer-catalog.mjs";
 
 const EVENT_ID_PATTERN = /^[a-z0-9][a-z0-9-]{2,79}$/;
 const REQUEST_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const STRIPE_PRICE_ID_PATTERN = /^price_[a-zA-Z0-9]+$/;
 
 function commaSeparatedSet(value) {
   return new Set(String(value || "").split(",").map((item) => item.trim()).filter(Boolean));
@@ -111,7 +112,18 @@ function policyMessage(offer) {
     : "The total shown includes payment processing. Programme scheduling and participation details are confirmed separately. Mandatory consumer rights are unaffected.";
 }
 
-export function checkoutSessionParameters({ eventId, offer, origin, taxEnabled = false }) {
+function configuredStripePriceId(offer, environment) {
+  if (!offer.stripePriceEnvironmentKey) return "";
+  const priceId = String(environment?.[offer.stripePriceEnvironmentKey] || "").trim();
+  if (!priceId) return "";
+  if (!STRIPE_PRICE_ID_PATTERN.test(priceId)) {
+    throw new Error("This payment option is not configured.");
+  }
+  return priceId;
+}
+
+export function checkoutSessionParameters({ eventId, offer, origin, taxEnabled = false, environment = {} }) {
+  const persistentPriceId = configuredStripePriceId(offer, environment);
   const priceData = {
     currency: offer.currency,
     product_data: {
@@ -127,10 +139,10 @@ export function checkoutSessionParameters({ eventId, offer, origin, taxEnabled =
 
   const parameters = {
     mode: "payment",
-    line_items: [{
-      price_data: priceData,
-      quantity: 1
-    }],
+    line_items: [persistentPriceId
+      ? { price: persistentPriceId, quantity: 1 }
+      : { price_data: priceData, quantity: 1 }
+    ],
     client_reference_id: eventId,
     customer_creation: "always",
     billing_address_collection: "auto",

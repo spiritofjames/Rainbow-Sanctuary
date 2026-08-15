@@ -26,6 +26,7 @@ export default async function handler(request, response) {
         eventId,
         offer,
         origin,
+        environment: process.env,
         taxEnabled: process.env.STRIPE_AUTOMATIC_TAX_ENABLED === "true" &&
           process.env.STRIPE_TAX_DISPLAY_APPROVED === "true"
       }),

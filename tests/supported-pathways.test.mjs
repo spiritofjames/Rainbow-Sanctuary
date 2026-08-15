@@ -56,6 +56,9 @@ test("sensitive pathways stay safely gated, while approved direct registration r
   assert.match(read("regeneration-maintenance-checkout.js"), /regeneration-maintenance-monthly/);
   assert.match(read("regeneration-maintenance-checkout.js"), /regeneration-maintenance-2026-08-17-three-month/);
   assert.match(read("regeneration-maintenance-checkout.js"), /create-checkout-session/);
+  assert.match(read("regeneration-maintenance-checkout.js"), /pageshow/);
+  assert.match(read("regeneration-maintenance-checkout.js"), /visibilitychange/);
+  assert.match(read("regeneration-maintenance-checkout.js"), /restoreCheckoutControls/);
 });
 
 test("homepage separates recurring group pathways from the standalone in-person retreat", () => {

@@ -34,7 +34,8 @@ const variant = ({
   amountUsd,
   sessionId,
   policy = "program-purchase",
-  internalPaymentTest = false
+  internalPaymentTest = false,
+  stripePriceEnvironmentKey = ""
 }) => Object.freeze({
   id,
   name,
@@ -42,6 +43,7 @@ const variant = ({
   amountMinor: amountUsd * 100,
   currency: "usd",
   internalPaymentTest,
+  stripePriceEnvironmentKey,
   sessionId,
   policy
 });
@@ -86,7 +88,8 @@ export const OFFER_CATALOG = Object.freeze([
         baseAmountUsd: 210,
         amountUsd: 210,
         sessionId: "regeneration-maintenance-2026-08-17-monthly",
-        policy: "regeneration-maintenance"
+        policy: "regeneration-maintenance",
+        stripePriceEnvironmentKey: "STRIPE_REGENERATION_MAINTENANCE_MONTHLY_PRICE_ID"
       }),
       variant({
         id: "regeneration-maintenance-three-month",
@@ -94,7 +97,8 @@ export const OFFER_CATALOG = Object.freeze([
         baseAmountUsd: 630,
         amountUsd: 630,
         sessionId: "regeneration-maintenance-2026-08-17-three-month",
-        policy: "regeneration-maintenance"
+        policy: "regeneration-maintenance",
+        stripePriceEnvironmentKey: "STRIPE_REGENERATION_MAINTENANCE_THREE_MONTH_PRICE_ID"
       })
     ]
   }),

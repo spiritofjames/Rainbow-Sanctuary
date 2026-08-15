@@ -3,10 +3,34 @@
 ## Current scope
 
 The public website creates Stripe-hosted Checkout only for approved public
-journeys: the confirmed USD 22 Group Healing session and the USD 50
-Regeneration Maintenance Monday sessions. Other programme pages remain
+journeys: the confirmed USD 22 Group Healing session and ReGeneration
+Maintenance commitments (USD 210 for four Mondays or USD 630 for the first
+twelve-week cycle). Other programme pages remain
 enquiry-led and contain no public purchase button or programme Checkout entry
 point.
+
+### ReGeneration Maintenance product catalogue
+
+Create one live Stripe Product named **ReGeneration Maintenance — 144-Point
+Renewal** with two fixed, one-time USD Prices:
+
+- **USD 210** — one-month commitment (17 August–7 September 2026; four Mondays)
+- **USD 630** — first three-month cycle (17 August–2 November 2026; twelve Mondays)
+
+Copy the two **Price IDs** (`price_…`), not the Product ID (`prod_…`), into
+the matching protected Vercel variables:
+
+```text
+STRIPE_REGENERATION_MAINTENANCE_MONTHLY_PRICE_ID
+STRIPE_REGENERATION_MAINTENANCE_THREE_MONTH_PRICE_ID
+```
+
+When both are set, the website creates each fresh, Stripe-hosted Checkout
+session from the persistent Price. The browser never receives a secret or an
+amount it can alter. This also makes a Stripe promotion code restricted to this
+Product valid for both commitments. Until the two variables are set, the legacy
+server-owned dynamic-price fallback remains available so live payments are not
+interrupted during the catalogue migration.
 
 After a human conversation, Ethel may send the participant the exact persistent,
 signed staff payment link from the internal catalogue. It opens a fresh
@@ -90,7 +114,7 @@ production condition below is accepted.
 1. Open a confirmed test event by changing its public status to `open` and adding
    its identifier to the matching staging allowlist.
 2. Select the session on staging and confirm Checkout shows the expected USD 22
-   Group Healing or USD 50 Regeneration Maintenance product.
+   Group Healing or the correct fixed ReGeneration Maintenance commitment.
 3. Complete a Stripe test-card payment.
 4. Confirm the success return, Stripe receipt, signed webhook delivery, HubSpot
    contact association, duplicate webhook safety, and no public Zoom link.
