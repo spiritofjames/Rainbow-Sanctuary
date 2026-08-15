@@ -118,15 +118,23 @@ test("internal payment test events never enter the CRM handoff", async () => {
 test("sandbox events can be verified without forwarding while CRM is governed off", async () => {
   assert.deepEqual(await forwardStripeEvent(checkoutEvent, {}), {
     forwarded: false,
-    ignored: false
+    ignored: false,
+    reason: "legacy-crm-not-configured"
   });
 });
 
-test("live payment events fail closed if CRM delivery is absent", async () => {
+test("live payment events require either HubSpot or the legacy CRM gateway", async () => {
   await assert.rejects(
     () => forwardStripeEvent({ ...checkoutEvent, livemode: true }, {}),
-    /not configured/
+    /No live payment CRM/
   );
+  assert.deepEqual(await forwardStripeEvent({ ...checkoutEvent, livemode: true }, {
+    HUBSPOT_INTAKE_ENABLED: "true"
+  }), {
+    forwarded: false,
+    ignored: false,
+    reason: "legacy-crm-not-configured"
+  });
 });
 
 test("CRM delivery requires HTTPS and a strong distinct handoff secret", async () => {

@@ -20,17 +20,24 @@ export default async function handler(request, response) {
     return sendJson(response, 503, { error: "Webhook is not configured." });
   }
 
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+  let event;
   try {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const rawBody = await readRawBody(request);
-    const signature = request.headers["stripe-signature"];
-    const event = stripe.webhooks.constructEvent(
+    event = stripe.webhooks.constructEvent(
       rawBody,
-      signature,
+      request.headers["stripe-signature"],
       process.env.STRIPE_WEBHOOK_SECRET
     );
+  } catch (error) {
+    // An invalid signature must be rejected without asking Stripe to retry it.
+    console.error("stripe_webhook_signature_error", { message: error.message });
+    return sendJson(response, 400, { error: "Webhook signature could not be verified." });
+  }
+
+  try {
     const governedEvent = hydrateStaffPaymentLinkEvent(event, process.env);
-    const delivery = await forwardStripeEvent(governedEvent, process.env);
+    let delivery = { forwarded: false, ignored: true, reason: "not-applicable" };
     let bookingEmail = { sent: false, reason: "not-applicable" };
     if (
       ["checkout.session.completed", "checkout.session.async_payment_succeeded"].includes(event.type) &&
@@ -51,17 +58,32 @@ export default async function handler(request, response) {
         bookingEmail = { sent: false, reason: "failed" };
       }
     }
+    try {
+      // The legacy gateway is a secondary mirror. HubSpot has already received
+      // the verified purchase above, so its temporary absence cannot strand a
+      // paid participant or make Stripe repeatedly charge/retry a completed sale.
+      delivery = await forwardStripeEvent(governedEvent, process.env);
+    } catch (crmError) {
+      console.error("stripe_legacy_crm_mirror_error", {
+        eventId: event.id,
+        message: crmError.message
+      });
+      delivery = { forwarded: false, ignored: false, reason: "legacy-crm-failed" };
+    }
     console.info("stripe_event_received", {
       eventId: event.id,
       type: event.type,
       forwarded: delivery.forwarded,
       ignored: delivery.ignored,
+      deliveryReason: delivery.reason || null,
       bookingEmailSent: bookingEmail.sent,
       bookingEmailReason: bookingEmail.reason || null
     });
     return sendJson(response, 200, { received: true });
   } catch (error) {
     console.error("stripe_webhook_error", { message: error.message });
-    return sendJson(response, 400, { error: "Webhook delivery failed." });
+    // Signature failures are rejected by Stripe before this point. A verified
+    // event that cannot reach HubSpot must return a retryable error instead.
+    return sendJson(response, 500, { error: "Webhook processing failed." });
   }
 }
