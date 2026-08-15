@@ -8,6 +8,20 @@
     status.classList.toggle("is-error", error);
   };
 
+  // `crypto.randomUUID()` is not present in some embedded and older mobile
+  // browsers. The server needs a UUID-shaped id for request tracing, so keep
+  // Checkout available there instead of failing before the request begins.
+  const requestId = () => {
+    if (globalThis.crypto && typeof globalThis.crypto.randomUUID === "function") {
+      return globalThis.crypto.randomUUID();
+    }
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (character) => {
+      const value = Math.floor(Math.random() * 16);
+      const nibble = character === "x" ? value : ((value & 0x3) | 0x8);
+      return nibble.toString(16);
+    });
+  };
+
   root.addEventListener("click", async (event) => {
     const button = event.target.closest("[data-maintenance-offer]");
     if (!button) return;
@@ -23,7 +37,7 @@
           eventId: offerId === "regeneration-maintenance-monthly"
             ? "regeneration-maintenance-2026-08-17-monthly"
             : "regeneration-maintenance-2026-08-17-three-month",
-          requestId: crypto.randomUUID()
+          requestId: requestId()
         })
       });
       const payload = await response.json().catch(() => ({}));
