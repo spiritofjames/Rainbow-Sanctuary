@@ -13,7 +13,7 @@ test("supported pathways use Beijing as the only authored source time", () => {
   assert.match(config, /young-people-wellbeing-2026-09-01/);
   assert.match(config, /regeneration-maintenance-2026-08-17/);
   assert.match(config, /startDateTime: "2026-08-17T23:00:00\+08:00"/);
-  assert.match(config, /firstCycle: \{ frequency: "weekly", sessions: 14/);
+  assert.match(config, /firstCycle: \{ frequency: "weekly", sessions: 12, endsOn: "2026-11-02" \}/);
 });
 
 test("sensitive pathways stay safely gated, while approved direct registration remains server-governed", () => {
