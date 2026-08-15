@@ -59,6 +59,8 @@ test("sensitive pathways stay safely gated, while approved direct registration r
   assert.match(read("regeneration-maintenance-checkout.js"), /pageshow/);
   assert.match(read("regeneration-maintenance-checkout.js"), /visibilitychange/);
   assert.match(read("regeneration-maintenance-checkout.js"), /restoreCheckoutControls/);
+  assert.match(read("regeneration-maintenance-checkout.js"), /document\.addEventListener\("click"/);
+  assert.doesNotMatch(read("regeneration-maintenance-checkout.js"), /root\.addEventListener\("click"/);
 });
 
 test("homepage separates recurring group pathways from the standalone in-person retreat", () => {

@@ -1,11 +1,14 @@
 (() => {
-  const root = document.querySelector("[data-maintenance-checkout]");
-  const status = document.querySelector("[data-maintenance-status]");
-  if (!root || !status) return;
-  const defaultStatus = status.textContent;
+  const offerSelector = "[data-maintenance-offer]";
+  const statusSelector = "[data-maintenance-status]";
+  const defaultStatus = "Payment is completed securely through Stripe. There is nothing to join or attend; a practical reminder is sent on each scheduled day. There is no donation option for this programme.";
   let openingCheckout = false;
 
+  const statusElement = () => document.querySelector(statusSelector);
+
   const setStatus = (message, error = false) => {
+    const status = statusElement();
+    if (!status) return;
     status.textContent = message;
     status.classList.toggle("is-error", error);
   };
@@ -26,26 +29,21 @@
 
   const restoreCheckoutControls = () => {
     openingCheckout = false;
-    root.querySelectorAll("[data-maintenance-offer]").forEach((button) => {
+    document.querySelectorAll(offerSelector).forEach((button) => {
       button.disabled = false;
       button.removeAttribute("aria-busy");
     });
-    status.classList.remove("is-error");
-    status.textContent = defaultStatus;
+    setStatus(defaultStatus);
   };
 
-  // Browsers commonly restore this page from their back-forward cache when a
-  // visitor leaves Stripe without paying. Reset the temporary disabled state
-  // so the same checkout option can always be opened again.
-  window.addEventListener("pageshow", restoreCheckoutControls);
-  window.addEventListener("focus", restoreCheckoutControls);
-  document.addEventListener("visibilitychange", () => {
-    if (!document.hidden) restoreCheckoutControls();
-  });
-
-  root.addEventListener("click", async (event) => {
-    const button = event.target.closest("[data-maintenance-offer]");
+  // The design runtime may replace the price-card subtree after this deferred
+  // script loads. Delegate from document instead of retaining that short-lived
+  // node, so the real rendered buttons work on desktop and mobile.
+  document.addEventListener("click", async (event) => {
+    const target = event.target instanceof Element ? event.target : event.target?.parentElement;
+    const button = target?.closest(offerSelector);
     if (!button || openingCheckout) return;
+
     event.preventDefault();
     const offerId = button.dataset.maintenanceOffer;
     openingCheckout = true;
@@ -77,5 +75,15 @@
       button.disabled = false;
       button.removeAttribute("aria-busy");
     }
+  }, true);
+
+  // Browsers commonly restore this page from their back-forward cache when a
+  // visitor leaves Stripe without paying. Reset the temporary disabled state
+  // so the same checkout option can always be opened again.
+  window.addEventListener("pageshow", restoreCheckoutControls);
+  window.addEventListener("focus", restoreCheckoutControls);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) restoreCheckoutControls();
   });
+
 })();
