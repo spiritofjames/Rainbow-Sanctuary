@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { emailByAlias } from "../../emails/catalog.mjs";
+import { escapeHtml } from "../../emails/layout.mjs";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const OPERATIONAL_IDENTITIES = Object.freeze({
@@ -16,6 +17,18 @@ const OPERATIONAL_IDENTITIES = Object.freeze({
     replyTo: "payments@rainbowsanctuary.life"
   }
 });
+
+function renderEmailValue(value, html = false) {
+  const rendered = String(value ?? "");
+  return html ? escapeHtml(rendered) : rendered;
+}
+
+function renderSourceControlledTemplate(content, variables, { html = false } = {}) {
+  return String(content).replace(/\{\{\{([A-Z0-9_]+)\}\}\}/g, (token, key) => {
+    if (!Object.hasOwn(variables, key)) return token;
+    return renderEmailValue(variables[key], html);
+  });
+}
 
 function booleanValue(value) {
   return String(value || "").toLowerCase() === "true";
@@ -101,10 +114,11 @@ export async function sendTransactionalEmail(
       from: policy.template.from,
       replyTo: policy.template.replyTo,
       to: [to],
-      template: {
-        id: policy.template.alias,
-        variables
-      },
+      // Keep transactional layouts in the repository. A checkout must never
+      // depend on a separately-created Resend dashboard template existing.
+      subject: renderSourceControlledTemplate(policy.template.subject, variables),
+      html: renderSourceControlledTemplate(policy.template.html, variables, { html: true }),
+      text: renderSourceControlledTemplate(policy.template.text, variables),
       tags: [
         { name: "system", value: "rainbow-sanctuary" },
         { name: "template", value: policy.template.alias.replaceAll("-", "_") },

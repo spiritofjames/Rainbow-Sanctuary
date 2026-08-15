@@ -24,7 +24,7 @@
   }
 
   function showDetails(result) {
-    const offer = result.contribution ? "Optional contribution" : (knownOfferNames[result.offer] || "Rainbow Sanctuary programme");
+    const offer = result.contribution ? "Optional contribution" : (result.programmeName || knownOfferNames[result.offer] || "Rainbow Sanctuary programme");
     const amount = formatAmount(result.amount, result.currency);
     details.innerHTML = `<div><dt>Payment status</dt><dd>Paid</dd></div><div><dt>Programme</dt><dd>${offer}</dd></div>${amount ? `<div><dt>Total paid</dt><dd>${amount}</dd></div>` : ""}`;
     details.classList.remove("is-hidden");

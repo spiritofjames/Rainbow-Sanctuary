@@ -24,7 +24,8 @@ test("sends only to paid live participants whose commitment covers today's exact
     resendClient: { emails: { send: async (payload, options) => { sent.push([payload, options]); return { data: { id: "email_123" }, error: null }; } } }
   });
   assert.deepEqual(result, { eventId: "regeneration-maintenance-2026-08-17", inspected: 4, matched: 1, sent: 1, skipped: 0 });
-  assert.equal(sent[0][0].template.id, "rs-regeneration-maintenance-day-of-reminder");
+  assert.equal(sent[0][0].template, undefined);
+  assert.equal(sent[0][0].subject, "Tonight: your Regeneration Maintenance practice");
   assert.equal(sent[0][1].idempotencyKey, "maintenance-day-of:regeneration-maintenance-2026-08-17:cs_live_maintenance_123");
 });
 

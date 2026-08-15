@@ -120,6 +120,7 @@ export function regenerationMaintenanceConfirmationFromStripeEvent(stripeEvent, 
     to: handoff.customer.email,
     variables: {
       NAME: handoff.customer.displayName,
+      PROGRAM_NAME: offer.name,
       EVENT_DATE: event.date,
       EVENT_TIME: event.time,
       TIMEZONE: event.timezone,

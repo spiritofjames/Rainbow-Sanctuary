@@ -59,6 +59,7 @@ test("verified Regeneration Maintenance payment builds a commitment-specific con
   assert.equal(message.alias, "rs-regeneration-maintenance-confirmed");
   assert.equal(message.variables.EVENT_TIME, "11:00 PM");
   assert.match(message.variables.EVENT_DATE, /Monday, 17 August 2026/);
+  assert.equal(message.variables.PROGRAM_NAME, "ReGeneration Maintenance — Four-Week Opening Cycle");
   assert.equal(message.variables.COMMITMENT, "One-month commitment");
   assert.deepEqual(message.variables.SESSION_DATES.split("; "), [
     "Monday, 17 August 2026", "Monday, 24 August 2026", "Monday, 31 August 2026", "Monday, 7 September 2026"
@@ -135,6 +136,7 @@ test("staging booking confirmation remains restricted to the explicit Resend all
   }, client);
   assert.deepEqual(result, { sent: true, id: "email_booking_123" });
   assert.equal(sent.length, 1);
-  assert.equal(sent[0][0].template.id, "rs-booking-confirmed");
+  assert.equal(sent[0][0].template, undefined);
+  assert.equal(sent[0][0].subject, "Your Rainbow Sanctuary booking is confirmed");
   assert.equal(sent[0][1].idempotencyKey, "stripe:evt_test_booking_123:booking-confirmed");
 });
