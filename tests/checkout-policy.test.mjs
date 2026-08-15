@@ -47,6 +47,7 @@ test("the server owns the Stripe price and amount", () => {
   assert.equal(parameters.client_reference_id, "group-healing-2026-08-22");
   assert.equal(parameters.metadata.event_id, "group-healing-2026-08-22");
   assert.equal(parameters.metadata.policy_key, "group-healing");
+  assert.equal(parameters.allow_promotion_codes, true);
   assert.match(parameters.custom_text.submit.message, /non-refundable/i);
   assert.match(parameters.custom_text.submit.message, /one reschedule/i);
   assert.match(parameters.custom_text.submit.message, /non-transferable/i);
@@ -82,6 +83,7 @@ test("Regeneration Maintenance uses one of two fixed server-owned commitments", 
     origin: "https://staging.rainbowsanctuary.life"
   });
   assert.equal(parameters.line_items[0].price_data.unit_amount, 21_000);
+  assert.equal(parameters.allow_promotion_codes, true);
   assert.match(parameters.custom_text.submit.message, /Level I and Level II/);
   assert.match(parameters.custom_text.submit.message, /one-time payment/i);
 });

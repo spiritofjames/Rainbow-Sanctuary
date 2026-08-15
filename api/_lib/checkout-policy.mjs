@@ -134,6 +134,7 @@ export function checkoutSessionParameters({ eventId, offer, origin, taxEnabled =
     client_reference_id: eventId,
     customer_creation: "always",
     billing_address_collection: "auto",
+    allow_promotion_codes: true,
     consent_collection: { terms_of_service: "required" },
     custom_text: {
       submit: { message: policyMessage(offer) }
