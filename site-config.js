@@ -94,7 +94,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
       checkoutUrl: ""
     },
     regenerationMaintenance: {
-      frequency: "Fixed start 17 August 2026 · weekly through 16 November 2026",
+      frequency: "Fixed start 17 August 2026 · 12 weekly dates through 2 November 2026",
       duration: "Overnight restorative practice",
       price: "USD 210 one month · USD 630 first three months",
       checkoutEndpoint: "/api/stripe/create-checkout-session"
@@ -103,7 +103,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
       "144-stages-maintenance": {
         timezone: "Asia/Shanghai",
         startDateTime: "2026-08-17T23:00:00+08:00",
-        firstCycle: { frequency: "weekly", sessions: 14, endsOn: "2026-11-16" },
+        firstCycle: { frequency: "weekly", sessions: 12, endsOn: "2026-11-02" },
         afterFirstCycle: { frequency: "twice-monthly", status: "requires-team-approved-dates" },
         deliveryMode: "remote-no-attendance",
         operationsCalendar: "private-only"

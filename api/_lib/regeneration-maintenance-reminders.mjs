@@ -1,13 +1,9 @@
 import { sendTransactionalEmail } from "./email-service.mjs";
 import { hydrateStaffPaymentLinkEvent } from "./staff-payment-links.mjs";
+import { regenerationMaintenanceDatesForSession } from "./regeneration-maintenance-cycle.mjs";
 
 const BEIJING_TIME_ZONE = "Asia/Shanghai";
 const MAX_STRIPE_PAGES = 20;
-const OPENING_CYCLE_DATES = Object.freeze([
-  "2026-08-17", "2026-08-24", "2026-08-31", "2026-09-07", "2026-09-14", "2026-09-21", "2026-09-28",
-  "2026-10-05", "2026-10-12", "2026-10-19", "2026-10-26", "2026-11-02", "2026-11-09", "2026-11-16"
-]);
-const MONTHLY_OPENING_DATES = Object.freeze(OPENING_CYCLE_DATES.slice(0, 4));
 
 function beijingDate(now) {
   const fields = new Intl.DateTimeFormat("en-CA", {
@@ -31,12 +27,6 @@ function participantDetails(session) {
   const customName = (session.custom_fields || []).find((field) => field.key === "client_display_name")?.text?.value;
   const name = String(customName || session.customer_details?.name || "there").trim() || "there";
   return { email, name };
-}
-
-function datesCoveredByCommitment(sessionId) {
-  if (sessionId === "regeneration-maintenance-2026-08-17-monthly") return MONTHLY_OPENING_DATES;
-  if (sessionId === "regeneration-maintenance-2026-08-17-three-month") return OPENING_CYCLE_DATES;
-  return [];
 }
 
 function checkoutEventFromSession(session) {
@@ -71,7 +61,7 @@ export async function sendRegenerationMaintenanceDayOfReminders({ stripe, enviro
       counters.inspected += 1;
       const object = hydrateStaffPaymentLinkEvent(checkoutEventFromSession(session), environment).data.object;
       const offerKey = String(object.metadata?.offer_key || "");
-      const coveredDates = datesCoveredByCommitment(String(object.metadata?.event_id || ""));
+      const coveredDates = regenerationMaintenanceDatesForSession(String(object.metadata?.event_id || ""));
       if (object.payment_status !== "paid" || !object.livemode || !offerKey.startsWith("regeneration-maintenance-") || !coveredDates.includes(date)) continue;
 
       const participant = participantDetails(object);
