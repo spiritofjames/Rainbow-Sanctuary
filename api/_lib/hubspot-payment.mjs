@@ -90,8 +90,15 @@ export async function mirrorHubSpotPurchase(stripeEvent, environment, fetchImple
   const properties = toHubSpotPurchaseProperties(stripeEvent, ownerId, {
     allowLive: livePaymentProcessingAllowed(environment)
   });
-  let contactId = await upsertContact(properties, stripeEvent.id, token, fetchImplementation);
+  let contactId = "";
   let fallbackUsed = false;
+  try {
+    contactId = await upsertContact(properties, stripeEvent.id, token, fetchImplementation);
+  } catch (error) {
+    // Portal-specific fields can be missing or differently typed. A paid
+    // participant must still be captured using only HubSpot native fields.
+    fallbackUsed = true;
+  }
   if (!contactId) {
     fallbackUsed = true;
     contactId = await upsertContact(
