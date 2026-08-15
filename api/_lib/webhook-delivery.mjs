@@ -124,8 +124,13 @@ export async function forwardStripeEvent(
   const endpoint = environment.CRM_STRIPE_EVENT_URL;
   const secret = environment.CRM_STRIPE_EVENT_SECRET;
   if (!endpoint || !secret) {
-    if (event.livemode) throw new Error("Live CRM payment delivery is not configured.");
-    return { forwarded: false, ignored: false };
+    // HubSpot is the live operating CRM. The legacy PSN gateway is an optional
+    // mirror while it remains available; it must not prevent a verified payment
+    // from reaching the team in HubSpot.
+    if (event.livemode && environment.HUBSPOT_INTAKE_ENABLED !== "true") {
+      throw new Error("No live payment CRM is configured.");
+    }
+    return { forwarded: false, ignored: false, reason: "legacy-crm-not-configured" };
   }
   let endpointUrl;
   try {

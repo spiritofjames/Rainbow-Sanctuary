@@ -51,7 +51,9 @@ It is not a statement of Stripe's exact fee for every card or market.
   `STRIPE_TAX_DISPLAY_APPROVED=true`. Do not set either until the operating
   entity, Stripe account country, tax registrations and product tax treatment
   have been reviewed.
-- Live webhooks fail closed until the governed CRM event endpoint is configured.
+- Live webhooks fail closed until the governed HubSpot payment mirror is enabled
+  and configured. The legacy PSN CRM event gateway is a secondary signed mirror;
+  its absence must not strand an otherwise verified payment in Stripe.
 - The CRM handoff contains only the client's full name and normalized email plus
   Stripe/object identifiers, the internal session and offer identifiers, amount,
   currency, and occurrence time. It excludes addresses, phone numbers, payment
@@ -90,8 +92,8 @@ production condition below is accepted.
 2. Select the session on staging and confirm Checkout shows the expected USD 22
    Group Healing or USD 50 Regeneration Maintenance product.
 3. Complete a Stripe test-card payment.
-4. Confirm the success return, Stripe receipt, signed webhook delivery, duplicate
-   webhook idempotency at the CRM gateway, and no public Zoom link.
+4. Confirm the success return, Stripe receipt, signed webhook delivery, HubSpot
+   contact association, duplicate webhook safety, and no public Zoom link.
 5. Test cancellation, declined payment, asynchronous failure where applicable,
    refund, duplicate delivery, and an event not on the allowlist.
 6. Restore any synthetic event data before production promotion.
@@ -118,6 +120,7 @@ send it until its eligibility and deadline have been confirmed for that person.
 Do not enable live Group Healing Checkout or issue live staff payment links until
 the operating legal entity and contact routes are published, the privacy and terms
 pages name Stripe, the event capacity and Zoom fulfilment owner are confirmed, the
-CRM payment event gateway has passed sandbox tests, and the tax gates above are
+HubSpot payment mirror has passed sandbox tests, a post-payment Zoom fulfilment
+owner is confirmed, and the tax gates above are
 approved. Each programme also requires its own schedule/fulfilment and
 cancellation/refund terms before Ethel receives its live link.
