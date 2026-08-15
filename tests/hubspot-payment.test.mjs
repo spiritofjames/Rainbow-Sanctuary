@@ -105,6 +105,19 @@ test("a partial HubSpot response falls back to core contact fields", async () =>
   assert.equal(result.fallbackUsed, true);
 });
 
+test("a rejected custom-property upsert still creates the paid participant with core fields", async () => {
+  const calls = [];
+  const result = await mirrorHubSpotPurchase(event, environment, async (_url, options) => {
+    calls.push(JSON.parse(options.body));
+    if (calls.length === 1) return { json: async () => ({ message: "Property program_or_offering does not exist" }), ok: false, status: 400 };
+    return { json: async () => ({ results: [{ id: "42003" }] }), ok: true, status: 200 };
+  });
+  assert.equal(calls.length, 2);
+  assert.deepEqual(Object.keys(calls[1].inputs[0].properties).sort(), ["email", "firstname", "hubspot_owner_id", "lastname", "lifecyclestage"]);
+  assert.equal(result.contactId, "42003");
+  assert.equal(result.fallbackUsed, true);
+});
+
 test("payment mirror fails closed for catalogue mismatches or missing configuration", async () => {
   assert.throws(() => toHubSpotPurchaseProperties({
     ...event,
