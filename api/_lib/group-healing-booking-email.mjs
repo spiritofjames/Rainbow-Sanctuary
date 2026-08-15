@@ -1,6 +1,7 @@
 import { crmPaymentHandoff, isInternalPaymentTest, livePaymentProcessingAllowed } from "./webhook-delivery.mjs";
 import { sendTransactionalEmail } from "./email-service.mjs";
 import { resolveOfferVariant } from "./offer-catalog.mjs";
+import { regenerationMaintenanceDatesForSession } from "./regeneration-maintenance-cycle.mjs";
 
 const APPROVED_GROUP_HEALING_EVENTS = new Map([
   ["group-healing-2026-08-22", {
@@ -38,6 +39,12 @@ function googleCalendarUrl(event) {
     location: "Online"
   });
   return `https://calendar.google.com/calendar/render?${parameters.toString()}`;
+}
+
+function maintenanceDateList(sessionId) {
+  return regenerationMaintenanceDatesForSession(sessionId).map((date) => new Intl.DateTimeFormat("en-GB", {
+    weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Shanghai"
+  }).format(new Date(`${date}T23:00:00+08:00`))).join("; ");
 }
 
 export function bookingConfirmationFromStripeEvent(stripeEvent, { allowLive = false } = {}) {
@@ -117,7 +124,8 @@ export function regenerationMaintenanceConfirmationFromStripeEvent(stripeEvent, 
       EVENT_TIME: event.time,
       TIMEZONE: event.timezone,
       REFERENCE_ID: handoff.bookingReference,
-      COMMITMENT: event.commitment
+      COMMITMENT: event.commitment,
+      SESSION_DATES: maintenanceDateList(handoff.sessionId)
     },
     idempotencyKey: `stripe:${handoff.stripeEventId}:regeneration-maintenance-confirmed`,
     tags: [

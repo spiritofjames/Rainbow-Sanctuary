@@ -28,6 +28,20 @@ test("sends only to paid live participants whose commitment covers today's exact
   assert.equal(sent[0][1].idempotencyKey, "maintenance-day-of:regeneration-maintenance-2026-08-17:cs_live_maintenance_123");
 });
 
+test("the twelve-week commitment does not receive a reminder after 2 November", async () => {
+  const sent = [];
+  const result = await sendRegenerationMaintenanceDayOfReminders({
+    stripe: { checkout: { sessions: { list: async () => ({ has_more: false, data: [session({
+      metadata: { offer_key: "regeneration-maintenance-three-month", event_id: "regeneration-maintenance-2026-08-17-three-month" }
+    })] }) } } },
+    now: new Date("2026-11-09T01:15:00.000Z"),
+    environment: { RESEND_EMAIL_ENABLED: "true", RESEND_API_KEY: "test", VERCEL_ENV: "preview", RESEND_ALLOWED_RECIPIENTS: "participant@example.com" },
+    resendClient: { emails: { send: async (payload) => { sent.push(payload); return { data: { id: "email_123" }, error: null }; } } }
+  });
+  assert.deepEqual(result, { eventId: "regeneration-maintenance-2026-11-09", inspected: 1, matched: 0, sent: 0, skipped: 0 });
+  assert.equal(sent.length, 0);
+});
+
 test("requires the cron secret", () => {
   const secret = "a".repeat(32);
   assert.equal(cronRequestIsAuthorized({ headers: { authorization: `Bearer ${secret}` } }, { CRON_SECRET: secret }), true);

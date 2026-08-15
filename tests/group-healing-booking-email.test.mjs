@@ -60,6 +60,28 @@ test("verified Regeneration Maintenance payment builds a commitment-specific con
   assert.equal(message.variables.EVENT_TIME, "11:00 PM");
   assert.match(message.variables.EVENT_DATE, /Monday, 17 August 2026/);
   assert.equal(message.variables.COMMITMENT, "One-month commitment");
+  assert.deepEqual(message.variables.SESSION_DATES.split("; "), [
+    "Monday, 17 August 2026", "Monday, 24 August 2026", "Monday, 31 August 2026", "Monday, 7 September 2026"
+  ]);
+});
+
+test("three-month Maintenance confirmation lists exactly twelve purchased Monday dates", () => {
+  const event = checkoutEvent({
+    data: {
+      object: {
+        ...checkoutEvent().data.object,
+        amount_total: 63_000,
+        metadata: {
+          offer_key: "regeneration-maintenance-three-month",
+          event_id: "regeneration-maintenance-2026-08-17-three-month"
+        }
+      }
+    }
+  });
+  const message = regenerationMaintenanceConfirmationFromStripeEvent(event);
+  const dates = message.variables.SESSION_DATES.split("; ");
+  assert.equal(dates.length, 12);
+  assert.equal(dates.at(-1), "Monday, 2 November 2026");
 });
 
 test("verified programme payment builds a minimal programme confirmation", () => {
