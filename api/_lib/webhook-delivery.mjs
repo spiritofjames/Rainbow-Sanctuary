@@ -71,6 +71,10 @@ export function crmPaymentHandoff(event, { allowLive = false } = {}) {
   }
 
   const object = event.data?.object || {};
+  // Checkout's amount_total is the amount actually paid. A legitimate Stripe
+  // promotion can lower that figure, so retain the original subtotal for
+  // approved-price validation.
+  const amountSubtotalMinor = object.amount_subtotal ?? object.amount_total;
   const customerEmail = String(object.customer_details?.email || "").trim().toLowerCase();
   const customerDisplayName = checkoutDisplayName(object);
   const paymentIntentId = typeof object.payment_intent === "string"
@@ -84,6 +88,9 @@ export function crmPaymentHandoff(event, { allowLive = false } = {}) {
     object.payment_status !== "paid" ||
     !Number.isInteger(object.amount_total) ||
     object.amount_total <= 0 ||
+    !Number.isInteger(amountSubtotalMinor) ||
+    amountSubtotalMinor <= 0 ||
+    object.amount_total > amountSubtotalMinor ||
     String(object.currency || "").toLowerCase() !== "usd" ||
     !EMAIL_PATTERN.test(customerEmail) ||
     customerDisplayName.length < 1 ||
@@ -96,6 +103,7 @@ export function crmPaymentHandoff(event, { allowLive = false } = {}) {
 
   return {
     amountMinor: object.amount_total,
+    amountSubtotalMinor,
     bookingReference: object.id,
     currency: "USD",
     customer: {
@@ -110,6 +118,12 @@ export function crmPaymentHandoff(event, { allowLive = false } = {}) {
     sessionId,
     stripeEventId: event.id
   };
+}
+
+export function checkoutAmountMatchesApprovedPrice(handoff, approvedAmountMinor) {
+  return handoff.amountSubtotalMinor === approvedAmountMinor &&
+    handoff.amountMinor > 0 &&
+    handoff.amountMinor <= handoff.amountSubtotalMinor;
 }
 
 export async function forwardStripeEvent(
