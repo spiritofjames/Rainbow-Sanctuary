@@ -1,4 +1,4 @@
-import { crmPaymentHandoff, isInternalPaymentTest, livePaymentProcessingAllowed } from "./webhook-delivery.mjs";
+import { checkoutAmountMatchesApprovedPrice, crmPaymentHandoff, isInternalPaymentTest, livePaymentProcessingAllowed } from "./webhook-delivery.mjs";
 import { sendTransactionalEmail } from "./email-service.mjs";
 import { resolveOfferVariant } from "./offer-catalog.mjs";
 import { regenerationMaintenanceDatesForSession } from "./regeneration-maintenance-cycle.mjs";
@@ -52,7 +52,7 @@ export function bookingConfirmationFromStripeEvent(stripeEvent, { allowLive = fa
   const offer = resolveOfferVariant("group-healing");
   const event = APPROVED_GROUP_HEALING_EVENTS.get(handoff.sessionId);
   if (!event) throw new Error("No approved booking email catalog entry exists for this event.");
-  if (handoff.offerId !== offer.id || handoff.amountMinor !== offer.amountMinor) {
+  if (handoff.offerId !== offer.id || !checkoutAmountMatchesApprovedPrice(handoff, offer.amountMinor)) {
     throw new Error("The Group Healing payment does not match the approved catalogue.");
   }
 
@@ -83,7 +83,7 @@ export function programConfirmationFromStripeEvent(stripeEvent, { allowLive = fa
   if (
     offer.policy === "group-healing" ||
     handoff.sessionId !== offer.sessionId ||
-    handoff.amountMinor !== offer.amountMinor
+    !checkoutAmountMatchesApprovedPrice(handoff, offer.amountMinor)
   ) {
     throw new Error("No approved programme email catalog entry exists for this purchase.");
   }
@@ -112,7 +112,7 @@ export function regenerationMaintenanceConfirmationFromStripeEvent(stripeEvent, 
   const offer = resolveOfferVariant(handoff.offerId);
   const event = APPROVED_REGENERATION_MAINTENANCE_EVENTS.get(handoff.sessionId);
   if (!event) throw new Error("No approved Regeneration Maintenance email catalog entry exists for this event.");
-  if (handoff.offerId !== offer.id || handoff.amountMinor !== offer.amountMinor) {
+  if (handoff.offerId !== offer.id || !checkoutAmountMatchesApprovedPrice(handoff, offer.amountMinor)) {
     throw new Error("The Regeneration Maintenance payment does not match the approved catalogue.");
   }
   return {

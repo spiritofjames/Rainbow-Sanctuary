@@ -1,4 +1,4 @@
-import { crmPaymentHandoff, isInternalPaymentTest, livePaymentProcessingAllowed } from "./webhook-delivery.mjs";
+import { checkoutAmountMatchesApprovedPrice, crmPaymentHandoff, isInternalPaymentTest, livePaymentProcessingAllowed } from "./webhook-delivery.mjs";
 import { resolveOfferVariant } from "./offer-catalog.mjs";
 
 const HUBSPOT_API_ORIGIN = "https://api.hubapi.com";
@@ -21,8 +21,43 @@ function requireConfiguration(environment) {
   return { ownerId, portalId, token };
 }
 
-async function responseJson(response) {
-  try { return await response.json(); } catch { throw new Error("HubSpot payment contact upsert returned an invalid response."); }
+async function contactIdFromResponse(response) {
+  try {
+    const body = await response.json();
+    const contactId = String(body?.results?.[0]?.id || "");
+    return NUMERIC_ID_PATTERN.test(contactId) ? contactId : "";
+  } catch {
+    return "";
+  }
+}
+
+function coreContactProperties(properties) {
+  // These are HubSpot-native fields. A missing custom portal field must never
+  // prevent a paid participant from appearing in the team's contact records.
+  return {
+    email: properties.email,
+    firstname: properties.firstname,
+    hubspot_owner_id: properties.hubspot_owner_id,
+    lastname: properties.lastname,
+    lifecyclestage: properties.lifecyclestage
+  };
+}
+
+async function upsertContact(properties, stripeEventId, token, fetchImplementation) {
+  const response = await fetchImplementation(`${HUBSPOT_API_ORIGIN}/crm/v3/objects/contacts/batch/upsert`, {
+    body: JSON.stringify({
+      inputs: [{
+        id: properties.email,
+        idProperty: "email",
+        objectWriteTraceId: stripeEventId,
+        properties
+      }]
+    }),
+    headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
+    method: "POST"
+  });
+  if (!response.ok) throw new Error(`HubSpot payment contact upsert failed with status ${response.status}.`);
+  return contactIdFromResponse(response);
 }
 
 export function toHubSpotPurchaseProperties(stripeEvent, ownerId, { allowLive = false } = {}) {
@@ -30,7 +65,7 @@ export function toHubSpotPurchaseProperties(stripeEvent, ownerId, { allowLive = 
   const variant = resolveOfferVariant(handoff.offerId);
   const allowsSelectedEvent = variant.policy === "group-healing";
   if (
-    variant.amountMinor !== handoff.amountMinor ||
+    !checkoutAmountMatchesApprovedPrice(handoff, variant.amountMinor) ||
     (!allowsSelectedEvent && variant.sessionId !== handoff.sessionId)
   ) {
     throw new Error("The HubSpot payment mirror does not match the approved catalogue.");
@@ -39,7 +74,7 @@ export function toHubSpotPurchaseProperties(stripeEvent, ownerId, { allowLive = 
   return {
     area_of_interest: ["group-healing", "regeneration-maintenance"].includes(variant.policy) ? "Group healing" : "Program guidance",
     email: handoff.customer.email,
-    enquiry_details: `Payment received for ${variant.name}. Reference: ${handoff.bookingReference}. Financial authority: Stripe and the private Rainbow CRM.`,
+    enquiry_details: `Payment received for ${variant.name}. Paid USD ${(handoff.amountMinor / 100).toFixed(2)}. Reference: ${handoff.bookingReference}. Financial authority: Stripe and the private Rainbow CRM.`,
     firstname,
     hubspot_owner_id: ownerId,
     lastname,
@@ -55,26 +90,23 @@ export async function mirrorHubSpotPurchase(stripeEvent, environment, fetchImple
   const properties = toHubSpotPurchaseProperties(stripeEvent, ownerId, {
     allowLive: livePaymentProcessingAllowed(environment)
   });
-  const response = await fetchImplementation(`${HUBSPOT_API_ORIGIN}/crm/v3/objects/contacts/batch/upsert`, {
-    body: JSON.stringify({
-      inputs: [{
-        id: properties.email,
-        idProperty: "email",
-        objectWriteTraceId: stripeEvent.id,
-        properties
-      }]
-    }),
-    headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
-    method: "POST"
-  });
-  if (!response.ok) throw new Error(`HubSpot payment contact upsert failed with status ${response.status}.`);
-  const upserted = await responseJson(response);
-  const contactId = String(upserted.results?.[0]?.id || "");
-  if (!NUMERIC_ID_PATTERN.test(contactId)) throw new Error("HubSpot payment contact upsert returned an invalid response.");
+  let contactId = await upsertContact(properties, stripeEvent.id, token, fetchImplementation);
+  let fallbackUsed = false;
+  if (!contactId) {
+    fallbackUsed = true;
+    contactId = await upsertContact(
+      coreContactProperties(properties),
+      `${stripeEvent.id}-core-contact`,
+      token,
+      fetchImplementation
+    );
+  }
+  if (!contactId) throw new Error("HubSpot payment contact upsert did not return a contact identifier.");
   return {
     contactId,
     contactUrl: `https://app-na2.hubspot.com/contacts/${portalId}/record/0-1/${contactId}`,
     enabled: true,
+    fallbackUsed,
     ownerId
   };
 }
