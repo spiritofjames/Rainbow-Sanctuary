@@ -25,6 +25,7 @@ const checkoutEvent = {
       }],
       payment_intent: "pi_test_123",
       payment_status: "paid",
+      amount_subtotal: 2200,
       amount_total: 2200,
       currency: "usd",
       metadata: {
@@ -47,6 +48,7 @@ test("the CRM envelope excludes customer PII", () => {
 test("the strict CRM handoff includes only the client identity needed for operations", () => {
   assert.deepEqual(crmPaymentHandoff(checkoutEvent), {
     amountMinor: 2200,
+    amountSubtotalMinor: 2200,
     bookingReference: "cs_test_123",
     currency: "USD",
     customer: {
@@ -61,6 +63,16 @@ test("the strict CRM handoff includes only the client identity needed for operat
     sessionId: "group-healing-2026-08-22",
     stripeEventId: "evt_test_123"
   });
+});
+
+test("CRM handoff preserves the approved subtotal when Stripe applies a promotion", () => {
+  const promoted = {
+    ...checkoutEvent,
+    data: { object: { ...checkoutEvent.data.object, amount_subtotal: 21000, amount_total: 100 } }
+  };
+  const handoff = crmPaymentHandoff(promoted);
+  assert.equal(handoff.amountMinor, 100);
+  assert.equal(handoff.amountSubtotalMinor, 21000);
 });
 
 test("CRM handoff rejects unapproved live, unpaid or incomplete client events", () => {
