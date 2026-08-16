@@ -4,6 +4,7 @@ import { forwardStripeEvent, isInternalPaymentTest } from "../_lib/webhook-deliv
 import { sendPurchaseConfirmation } from "../_lib/group-healing-booking-email.mjs";
 import { mirrorHubSpotPurchase } from "../_lib/hubspot-payment.mjs";
 import { attemptPurchaseOperationsNotification } from "../_lib/operations-notification.mjs";
+import { syncGroupHealingRegistrationToOperationsCalendar } from "../_lib/google-calendar-operations.mjs";
 import { isOptionalContributionSession } from "../_lib/optional-contribution.mjs";
 import { hydrateStaffPaymentLinkEvent } from "../_lib/staff-payment-links.mjs";
 
@@ -39,6 +40,7 @@ export default async function handler(request, response) {
     const governedEvent = hydrateStaffPaymentLinkEvent(event, process.env);
     let delivery = { forwarded: false, ignored: true, reason: "not-applicable" };
     let bookingEmail = { sent: false, reason: "not-applicable" };
+    let operationsCalendar = { synced: false, reason: "not-applicable" };
     if (
       ["checkout.session.completed", "checkout.session.async_payment_succeeded"].includes(event.type) &&
       !isInternalPaymentTest(governedEvent) &&
@@ -46,6 +48,24 @@ export default async function handler(request, response) {
     ) {
       const hubspot = await mirrorHubSpotPurchase(governedEvent, process.env);
       await attemptPurchaseOperationsNotification(governedEvent, hubspot, process.env);
+      try {
+        // This internal event deliberately contains an Operations-only booking
+        // ledger. Clients are never Calendar attendees, preventing guest-list
+        // disclosure and avoiding unintended Google invitations.
+        operationsCalendar = await syncGroupHealingRegistrationToOperationsCalendar(
+          governedEvent,
+          hubspot,
+          process.env
+        );
+      } catch (calendarError) {
+        // The payment is already recorded in HubSpot. Calendar visibility is an
+        // operational convenience and must never make Stripe retry a paid sale.
+        console.error("stripe_operations_calendar_sync_error", {
+          eventId: event.id,
+          message: calendarError.message
+        });
+        operationsCalendar = { synced: false, reason: "failed" };
+      }
       try {
         bookingEmail = await sendPurchaseConfirmation(governedEvent, process.env);
       } catch (emailError) {
@@ -77,7 +97,9 @@ export default async function handler(request, response) {
       ignored: delivery.ignored,
       deliveryReason: delivery.reason || null,
       bookingEmailSent: bookingEmail.sent,
-      bookingEmailReason: bookingEmail.reason || null
+      bookingEmailReason: bookingEmail.reason || null,
+      operationsCalendarSynced: operationsCalendar.synced,
+      operationsCalendarReason: operationsCalendar.reason || null
     });
     return sendJson(response, 200, { received: true });
   } catch (error) {

@@ -31,3 +31,13 @@ test("Online Group Healing owns the calendar, USD 22 checkout, and return notice
   assert.doesNotMatch(onlinePage, /Choose an available time/);
   assert.match(onlinePage, /Select a date and its session time is selected automatically/);
 });
+
+test("Online Group Healing calendar is isolated to its dedicated weekly schedule", () => {
+  assert.doesNotMatch(onlinePage, /public-event-feed\.js/);
+  assert.match(onlinePage, /every Saturday at 8:00 PM Singapore time/);
+  assert.match(siteConfig, /frequency: "Weekly"/);
+  assert.match(siteConfig, /weeklySchedule:/);
+  assert.match(scheduler, /function applyDedicatedSchedule\(\)/);
+  assert.match(scheduler, /Do not use `RAINBOW_PUBLIC_EVENTS_READY` here/);
+  assert.doesNotMatch(scheduler, /function applyFeed\(/);
+});
