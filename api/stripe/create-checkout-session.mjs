@@ -3,6 +3,7 @@ import {
   assertAllowedOrigin,
   assertCheckoutConfiguration,
   checkoutSessionParameters,
+  configuredStripePriceId,
   validateCheckoutRequest
 } from "../_lib/checkout-policy.mjs";
 import { parseJsonBody, sendJson } from "../_lib/http.mjs";
@@ -20,12 +21,14 @@ export default async function handler(request, response) {
       parseJsonBody(request),
       process.env
     );
+    const priceId = configuredStripePriceId(offer, process.env);
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const session = await stripe.checkout.sessions.create(
       checkoutSessionParameters({
         eventId,
         offer,
         origin,
+        priceId,
         taxEnabled: process.env.STRIPE_AUTOMATIC_TAX_ENABLED === "true" &&
           process.env.STRIPE_TAX_DISPLAY_APPROVED === "true"
       }),

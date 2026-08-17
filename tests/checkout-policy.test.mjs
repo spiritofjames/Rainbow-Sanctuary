@@ -4,6 +4,7 @@ import {
   assertAllowedOrigin,
   assertCheckoutConfiguration,
   checkoutSessionParameters,
+  configuredStripePriceId,
   validateCheckoutRequest
 } from "../api/_lib/checkout-policy.mjs";
 
@@ -11,14 +12,14 @@ const requestId = "7fc6a4ba-6f9a-4a7e-9e98-ef0b7bf9379e";
 
 test("only explicitly opened event identifiers are accepted", () => {
   const environment = {
-    STRIPE_ALLOWED_GROUP_EVENT_IDS: "group-healing-2026-08-22",
+    STRIPE_ALLOWED_GROUP_EVENT_IDS: "group-healing-2026-08-18",
     STRIPE_ALLOWED_OFFER_IDS: "group-healing"
   };
   const result = validateCheckoutRequest(
-    { eventId: "group-healing-2026-08-22", requestId },
+    { eventId: "group-healing-2026-08-18", requestId },
     environment
   );
-  assert.equal(result.eventId, "group-healing-2026-08-22");
+  assert.equal(result.eventId, "group-healing-2026-08-18");
   assert.equal(result.offerId, "group-healing");
   assert.equal(result.requestId, requestId);
   assert.equal(result.offer.amountMinor, 2_200);
@@ -28,25 +29,47 @@ test("only explicitly opened event identifiers are accepted", () => {
   );
 });
 
+test("the authored weekly Group Healing schedule is accepted without opening unrelated events", () => {
+  const requestId = "d32ce74b-223d-4aea-974c-7c5db4619809";
+  const environment = {
+    STRIPE_ALLOWED_OFFER_IDS: "group-healing",
+    STRIPE_ALLOWED_GROUP_EVENT_IDS: "group-healing-2026-08-18"
+  };
+
+  const accepted = validateCheckoutRequest(
+    { offerId: "group-healing", eventId: "group-healing-weekly-2026-08-25", requestId },
+    environment
+  );
+  assert.equal(accepted.eventId, "group-healing-weekly-2026-08-25");
+  assert.throws(
+    () => validateCheckoutRequest(
+      { offerId: "group-healing", eventId: "group-healing-weekly-2026-08-26", requestId },
+      environment
+    ),
+    /Registration is not open/
+  );
+});
+
 test("the server owns the Stripe price and amount", () => {
   const { offer } = validateCheckoutRequest({
-    eventId: "group-healing-2026-08-22",
+    eventId: "group-healing-2026-08-18",
     offerId: "group-healing",
     requestId
   }, {
-    STRIPE_ALLOWED_GROUP_EVENT_IDS: "group-healing-2026-08-22",
+    STRIPE_ALLOWED_GROUP_EVENT_IDS: "group-healing-2026-08-18",
     STRIPE_ALLOWED_OFFER_IDS: "group-healing"
   });
   const parameters = checkoutSessionParameters({
-    eventId: "group-healing-2026-08-22",
+    eventId: "group-healing-2026-08-18",
     offer,
-    origin: "https://staging.rainbowsanctuary.life"
+    origin: "https://staging.rainbowsanctuary.life",
+    priceId: "price_groupHealing22"
   });
-  assert.equal(parameters.line_items[0].price_data.unit_amount, 2_200);
-  assert.equal(parameters.line_items[0].price_data.currency, "usd");
-  assert.equal(parameters.client_reference_id, "group-healing-2026-08-22");
-  assert.equal(parameters.metadata.event_id, "group-healing-2026-08-22");
+  assert.equal(parameters.line_items[0].price, "price_groupHealing22");
+  assert.equal(parameters.client_reference_id, "group-healing-2026-08-18");
+  assert.equal(parameters.metadata.event_id, "group-healing-2026-08-18");
   assert.equal(parameters.metadata.policy_key, "group-healing");
+  assert.equal(parameters.allow_promotion_codes, true);
   assert.match(parameters.custom_text.submit.message, /non-refundable/i);
   assert.match(parameters.custom_text.submit.message, /one reschedule/i);
   assert.match(parameters.custom_text.submit.message, /non-transferable/i);
@@ -57,6 +80,21 @@ test("the server owns the Stripe price and amount", () => {
     type: "text"
   }]);
   assert.match(parameters.success_url, /^https:\/\/staging\.rainbowsanctuary\.life\//);
+});
+
+test("Group Healing Checkout only accepts a configured Stripe price", () => {
+  const { offer } = validateCheckoutRequest({
+    eventId: "group-healing-2026-08-18",
+    offerId: "group-healing",
+    requestId
+  }, {
+    STRIPE_ALLOWED_GROUP_EVENT_IDS: "group-healing-2026-08-18",
+    STRIPE_ALLOWED_OFFER_IDS: "group-healing"
+  });
+  assert.equal(configuredStripePriceId(offer, {
+    STRIPE_GROUP_HEALING_PRICE_ID: "price_groupHealing22"
+  }), "price_groupHealing22");
+  assert.throws(() => configuredStripePriceId(offer, {}), /not configured/);
 });
 
 test("live keys are rejected outside production", () => {

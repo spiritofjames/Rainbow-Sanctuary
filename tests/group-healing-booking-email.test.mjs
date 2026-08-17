@@ -23,7 +23,7 @@ function checkoutEvent(overrides = {}) {
         custom_fields: [{ key: "client_display_name", text: { value: "Reviewer" } }],
         metadata: {
           offer_key: "group-healing",
-          event_id: "group-healing-2026-08-22"
+          event_id: "group-healing-2026-08-18"
         }
       }
     },
@@ -37,8 +37,29 @@ test("verified Group Healing payment builds a minimal, idempotent booking confir
   assert.equal(message.to, "reviewer@example.com");
   assert.equal(message.idempotencyKey, "stripe:evt_test_booking_123:booking-confirmed");
   assert.equal(message.variables.EVENT_TITLE, "Grounding & Renewal");
+  assert.equal(message.variables.EVENT_DATE, "Tuesday, 18 August 2026");
+  assert.equal(message.variables.EVENT_TIME, "9:00 PM");
   assert.match(message.variables.CALENDAR_URL, /^https:\/\/calendar\.google\.com\/calendar\/render\?/);
   assert.match(message.variables.LOCATION, /access details follow separately/i);
+});
+
+test("a scheduled weekly Group Healing payment receives its exact Tuesday date", () => {
+  const message = bookingConfirmationFromStripeEvent(checkoutEvent({
+    id: "evt_weekly_group_healing",
+    data: {
+      object: {
+        ...checkoutEvent().data.object,
+        id: "cs_weekly_group_healing",
+        payment_intent: "pi_weekly_group_healing",
+        metadata: { offer_key: "group-healing", event_id: "group-healing-weekly-2026-08-25" },
+        customer_details: { email: "maya@example.com", name: "Maya" },
+        custom_fields: [{ key: "client_display_name", text: { value: "Maya" } }]
+      }
+    }
+  }));
+
+  assert.equal(message.variables.EVENT_DATE, "Tuesday, 25 August 2026");
+  assert.equal(message.variables.EVENT_TIME, "9:00 PM");
 });
 
 test("verified programme payment builds a minimal programme confirmation", () => {

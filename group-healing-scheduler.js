@@ -12,13 +12,52 @@
   let selectedId = "";
   let initialized = false;
 
-  function applyFeed(result) {
-    feedState = result || feedState;
-    sessions = Array.isArray(result?.items)
-      ? result.items
-        .filter((item) => item && item.category === "group" && item.startDate && item.status !== "cancelled")
-        .sort((a, b) => eventInstant(a) - eventInstant(b))
-      : [];
+  function isoDate(date) {
+    return [date.getFullYear(), String(date.getMonth() + 1).padStart(2, "0"), String(date.getDate()).padStart(2, "0")].join("-");
+  }
+
+  function weeklySessionItems() {
+    const confirmed = Array.isArray(groupConfig.sessions) ? groupConfig.sessions.slice() : [];
+    const schedule = groupConfig.weeklySchedule;
+    if (!schedule?.startDate || !Number.isInteger(schedule.sessionCount) || schedule.sessionCount < 1) return confirmed;
+
+    const start = eventDate(schedule.startDate);
+    const generated = Array.from({ length: schedule.sessionCount }, (_, index) => {
+      const date = new Date(start.getFullYear(), start.getMonth(), start.getDate() + (index * 7));
+      const dateValue = isoDate(date);
+      return {
+        id: `group-healing-weekly-${dateValue}`,
+        title: schedule.title || "Weekly Online Group Healing",
+        startDate: dateValue,
+        startDateTime: `${dateValue}T${schedule.time || "21:00"}:00+08:00`,
+        time: schedule.time || "21:00",
+        timezone: schedule.timezone || eventsConfig.timezone || "Asia/Makassar",
+        timezoneLabel: schedule.timezoneLabel || "Asia/Makassar / Beijing time",
+        location: "Online",
+        venue: "Zoom",
+        summary: "A weekly guided Group Healing session.",
+        duration: groupConfig.duration || "Approximately 60 minutes",
+        price: groupConfig.price || "USD 22",
+        status: schedule.status || "scheduled",
+        registrationUrl: ""
+      };
+    });
+    const confirmedDates = new Set(confirmed.map((item) => item?.startDate));
+    return confirmed.concat(generated.filter((item) => !confirmedDates.has(item.startDate)));
+  }
+
+  function applyDedicatedSchedule() {
+    // Do not use `RAINBOW_PUBLIC_EVENTS_READY` here. That feed is for the
+    // general events calendar and may contain retreats, programmes, and team
+    // activity. This page deliberately exposes only the Group Healing rhythm.
+    feedState = {
+      generatedAt: "",
+      source: "dedicated-group-healing-schedule",
+      status: "ready"
+    };
+    sessions = weeklySessionItems()
+      .filter((item) => item && item.startDate && item.status !== "cancelled")
+      .sort((a, b) => eventInstant(a) - eventInstant(b));
     upcoming = sessions.filter((item) => eventInstant(item) >= now || eventDate(item.endDate || item.startDate) >= today);
     const first = upcoming[0] ? calendarDate(upcoming[0]) : today;
     visibleMonth = new Date(first.getFullYear(), first.getMonth(), 1);
@@ -68,7 +107,7 @@
     return `${localDate(item)} at ${localTime(item)} (${readableZone(viewerTimeZone)}${offset ? `, ${offset}` : ""})`;
   }
   function sourceDateTime(item) {
-    const zone = item.timezone || eventsConfig.timezone || "Asia/Singapore";
+    const zone = item.timezone || eventsConfig.timezone || "Asia/Makassar";
     const label = item.timezoneLabel || readableZone(zone);
     if (!item.startDateTime) return `${item.time || "Time to be confirmed"} · ${label}`;
     const date = new Intl.DateTimeFormat("en", {
@@ -113,16 +152,16 @@
     const heading = document.querySelector("#choose-session .rs-entry-heading");
     if (!heading || heading.querySelector(".rs-timezone-notice")) return;
     const introduction = heading.querySelector("p");
-    if (introduction) introduction.textContent = "Available twice-monthly dates appear in the calendar. Select a confirmed session to see it in your time zone; direct Stripe checkout appears here when registration opens.";
+    if (introduction) introduction.textContent = "Group Healing begins Tuesday, 18 August at 9:00 PM Asia/Makassar / Beijing time (GMT+8), then continues weekly at the same time. Select a confirmed session to see it in your time zone; direct Stripe checkout appears here when registration opens.";
     const notice = document.createElement("p");
     notice.className = "rs-timezone-notice";
-    notice.innerHTML = `<span aria-hidden="true">◷</span><span>Times are automatically shown in <strong>${escapeHtml(readableZone(viewerTimeZone))}</strong>, your detected time zone. The original schedule remains visible in Singapore time (GMT+8).</span>`;
+    notice.innerHTML = `<span aria-hidden="true">◷</span><span>Times are automatically shown in <strong>${escapeHtml(readableZone(viewerTimeZone))}</strong>, your detected time zone. The original schedule remains visible in Asia/Makassar / Beijing time (GMT+8).</span>`;
     heading.appendChild(notice);
     const feedNotice = document.createElement("p");
     feedNotice.className = "rs-timezone-notice";
     feedNotice.setAttribute("role", "status");
     feedNotice.innerHTML = feedState.status === "ready"
-      ? `<span aria-hidden="true">✓</span><span>Live CRM schedule · updated ${escapeHtml(new Date(feedState.generatedAt).toLocaleString("en"))}.</span>`
+      ? `<span aria-hidden="true">✓</span><span>Weekly Group Healing schedule · Tuesdays at 9:00 PM Asia/Makassar / Beijing time (GMT+8).</span>`
       : feedState.status === "degraded"
         ? `<span aria-hidden="true">◷</span><span>Showing the ${feedState.source === "last-known-safe" ? "last known safe schedule" : "approved static schedule"} · timestamp ${escapeHtml(new Date(feedState.generatedAt).toLocaleString("en"))}.</span>`
         : `<span aria-hidden="true">!</span><span>The public schedule is unavailable. No unverified dates are being shown.</span>`;
@@ -291,7 +330,7 @@
       const details = document.getElementById("group-checkout-details");
       const status = document.getElementById("group-checkout-status");
       if (title) title.textContent = "New dates are being prepared";
-      if (details) details.textContent = "Confirmed twice-monthly sessions will appear in this calendar as soon as booking opens.";
+      if (details) details.textContent = "Confirmed weekly Tuesday sessions will appear in this calendar as soon as booking opens.";
       if (status) status.textContent = "No consultation or enquiry is required. Return here to choose, pay, and register directly.";
       return;
     }
@@ -321,8 +360,8 @@
     return true;
   }
 
-  function start(result) {
-    applyFeed(result);
+  function start() {
+    applyDedicatedSchedule();
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once:true });
     if (!init()) {
       const observer = new MutationObserver(() => {
@@ -332,7 +371,5 @@
     }
   }
 
-  Promise.resolve(window.RAINBOW_PUBLIC_EVENTS_READY)
-    .then(start)
-    .catch(() => start({ items: [], source: "none", status: "unavailable" }));
+  start();
 })();

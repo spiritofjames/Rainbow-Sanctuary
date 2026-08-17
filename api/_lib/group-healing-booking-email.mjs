@@ -1,24 +1,16 @@
 import { crmPaymentHandoff } from "./webhook-delivery.mjs";
 import { sendTransactionalEmail } from "./email-service.mjs";
 import { resolveOfferVariant } from "./offer-catalog.mjs";
-
-const APPROVED_GROUP_HEALING_EVENTS = new Map([
-  ["group-healing-2026-08-22", {
-    title: "Grounding & Renewal",
-    start: "2026-08-22T20:00:00+08:00",
-    end: "2026-08-22T21:00:00+08:00",
-    date: "Saturday, 22 August 2026",
-    time: "8:00 PM",
-    timezone: "Asia/Makassar (UTC+8)",
-    location: "Online via Zoom — access details follow separately"
-  }]
-]);
+import { groupHealingScheduleDetails } from "./group-healing-schedule.mjs";
 
 function googleCalendarUrl(event) {
+  const start = event.start.replace(/[-:]/g, "").replace("+08:00", "");
+  const end = event.end.replace(/[-:]/g, "").replace("+08:00", "");
   const parameters = new URLSearchParams({
     action: "TEMPLATE",
     text: `Rainbow Sanctuary — ${event.title}`,
-    dates: "20260822T120000Z/20260822T130000Z",
+    dates: `${start}/${end}`,
+    ctz: "Asia/Makassar",
     details: "Your Rainbow Sanctuary Group Healing booking is confirmed. Zoom access details are sent separately through the participant communication process.",
     location: "Online"
   });
@@ -28,7 +20,7 @@ function googleCalendarUrl(event) {
 export function bookingConfirmationFromStripeEvent(stripeEvent) {
   const handoff = crmPaymentHandoff(stripeEvent);
   const offer = resolveOfferVariant("group-healing");
-  const event = APPROVED_GROUP_HEALING_EVENTS.get(handoff.sessionId);
+  const event = groupHealingScheduleDetails(handoff.sessionId);
   if (!event) throw new Error("No approved booking email catalog entry exists for this event.");
   if (handoff.offerId !== offer.id || handoff.amountMinor !== offer.amountMinor) {
     throw new Error("The Group Healing payment does not match the approved catalogue.");

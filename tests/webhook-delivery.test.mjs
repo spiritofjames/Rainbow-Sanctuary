@@ -26,7 +26,7 @@ const checkoutEvent = {
       amount_total: 2200,
       currency: "usd",
       metadata: {
-        event_id: "group-healing-2026-08-22",
+        event_id: "group-healing-2026-08-18",
         offer_key: "group-healing"
       }
     }
@@ -36,7 +36,7 @@ const checkoutEvent = {
 test("the CRM envelope excludes customer PII", () => {
   const payload = safeStripeEvent(checkoutEvent);
   assert.equal(payload.stripe_event_id, "evt_test_123");
-  assert.equal(payload.event_id, "group-healing-2026-08-22");
+  assert.equal(payload.event_id, "group-healing-2026-08-18");
   assert.equal(payload.amount_total, 2200);
   assert.equal(JSON.stringify(payload).includes("private@example.com"), false);
   assert.equal(JSON.stringify(payload).includes("Private Person"), false);
@@ -56,7 +56,7 @@ test("the strict CRM handoff includes only the client identity needed for operat
     offerId: "group-healing",
     providerPaymentId: "pi_test_123",
     schemaVersion: "rainbow.payment-handoff.v1",
-    sessionId: "group-healing-2026-08-22",
+    sessionId: "group-healing-2026-08-18",
     stripeEventId: "evt_test_123"
   });
 });

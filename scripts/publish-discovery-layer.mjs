@@ -209,11 +209,11 @@ function schemaFor(file, title, description, canonical, image) {
   if (file === "Group-Healing.dc.html") {
     graph.push({
       "@type": "Event",
-      "@id": `${canonical}#event-2026-08-22`,
+      "@id": `${canonical}#event-2026-08-18`,
       name: "Grounding & Renewal — Online Group Session",
       description: "A guided online group wellbeing session for grounding, reflection, rest, and shared intention.",
       image,
-      startDate: "2026-08-22T20:00:00+08:00",
+      startDate: "2026-08-18T21:00:00+08:00",
       eventStatus: "https://schema.org/EventScheduled",
       eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
       location: {

@@ -69,34 +69,45 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     staticCacheVersion: "events-1",
     timezone: "Asia/Singapore",
     groupHealing: {
-      frequency: "Twice monthly",
+      frequency: "Weekly",
       duration: "Approximately 60 minutes",
       price: "USD 22",
       checkoutEndpoint: "/api/stripe/create-checkout-session",
-      checkoutUrl: ""
+      checkoutUrl: "",
+      // This schedule is intentionally separate from `events.items`: the
+      // visitor-facing Group Healing calendar must never inherit retreats,
+      // team events, or other public listings from the shared events feed.
+      weeklySchedule: {
+        title: "Weekly Online Group Healing",
+        startDate: "2026-08-25",
+        time: "21:00",
+        timezone: "Asia/Makassar",
+        timezoneLabel: "Asia/Makassar / Beijing time",
+        sessionCount: 52,
+        status: "scheduled"
+      },
+      sessions: [
+        {
+          id: "group-healing-2026-08-18",
+          title: "Grounding & Renewal",
+          startDate: "2026-08-18",
+          startDateTime: "2026-08-18T21:00:00+08:00",
+          time: "21:00",
+          timezone: "Asia/Makassar",
+          timezoneLabel: "Asia/Makassar / Beijing time",
+          location: "Online",
+          venue: "Zoom",
+          summary: "A guided Group Healing session for grounding, rest, and renewal.",
+          duration: "Approximately 60 minutes",
+          price: "USD 22",
+          status: "open",
+          registrationUrl: "/group-healing#choose-session",
+          checkoutUrl: ""
+        }
+      ]
     },
     publicCalendarUrl: "",
     items: [
-      {
-        id: "group-healing-2026-08-22",
-        title: "Grounding & Renewal",
-        category: "group",
-        startDate: "2026-08-22",
-        startDateTime: "2026-08-22T20:00:00+08:00",
-        time: "20:00",
-        timezone: "Asia/Singapore",
-        timezoneLabel: "Singapore time",
-        location: "Online",
-        venue: "Zoom",
-        summary: "A guided Group Healing session for grounding, rest, and renewal.",
-        duration: "Approximately 60 minutes",
-        price: "USD 22",
-        // Protected staging uses Stripe test mode for generated Stage 1 CRM acceptance.
-        // Do not promote this status to main until live checkout is separately approved.
-        status: "open",
-        registrationUrl: "/group-healing#choose-session",
-        checkoutUrl: ""
-      },
       {
         id: "awakening-inner-light-2026",
         title: "Awakening Your Inner Light",

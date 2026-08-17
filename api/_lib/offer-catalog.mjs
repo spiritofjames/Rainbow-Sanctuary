@@ -64,7 +64,7 @@ export const OFFER_CATALOG = Object.freeze([
         name: "Group Healing — single session",
         baseAmountUsd: 20,
         amountUsd: 22,
-        sessionId: "group-healing-2026-08-22",
+        sessionId: "group-healing-2026-08-18",
         policy: "group-healing"
       })
     ]

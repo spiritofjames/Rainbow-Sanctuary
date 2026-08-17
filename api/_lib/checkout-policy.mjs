@@ -1,4 +1,5 @@
 import { resolveOfferVariant } from "./offer-catalog.mjs";
+import { isApprovedGroupHealingEvent } from "./group-healing-schedule.mjs";
 
 const EVENT_ID_PATTERN = /^[a-z0-9][a-z0-9-]{2,79}$/;
 const REQUEST_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -24,7 +25,8 @@ export function validateCheckoutRequest(body, environment) {
   }
   if (
     offer.policy === "group-healing" &&
-    !commaSeparatedSet(environment.STRIPE_ALLOWED_GROUP_EVENT_IDS).has(eventId)
+    !commaSeparatedSet(environment.STRIPE_ALLOWED_GROUP_EVENT_IDS).has(eventId) &&
+    !isApprovedGroupHealingEvent(eventId)
   ) {
     throw new Error("Registration is not open for this event.");
   }
@@ -99,13 +101,22 @@ export function assertAllowedPaymentInviteOrigin(request, environment) {
   throw new Error("Request origin is not allowed.");
 }
 
+export function configuredStripePriceId(offer, environment) {
+  if (offer.policy !== "group-healing") return "";
+  const priceId = String(environment.STRIPE_GROUP_HEALING_PRICE_ID || "").trim();
+  if (!/^price_[a-zA-Z0-9]+$/.test(priceId)) {
+    throw new Error("Dedicated Group Healing Stripe price is not configured.");
+  }
+  return priceId;
+}
+
 function policyMessage(offer) {
   return offer.policy === "group-healing"
     ? "This booking is non-refundable and non-transferable. You may request one reschedule to an available Group Healing session by contacting bookings@rainbowsanctuary.life at least 24 hours before the booked session. Mandatory consumer rights and organizer cancellation are unaffected."
     : "The total shown includes payment processing. Programme scheduling and participation details are confirmed separately. Mandatory consumer rights are unaffected.";
 }
 
-export function checkoutSessionParameters({ eventId, offer, origin, taxEnabled = false }) {
+export function checkoutSessionParameters({ eventId, offer, origin, taxEnabled = false, priceId = "" }) {
   const priceData = {
     currency: offer.currency,
     product_data: {
@@ -121,10 +132,10 @@ export function checkoutSessionParameters({ eventId, offer, origin, taxEnabled =
 
   const parameters = {
     mode: "payment",
-    line_items: [{
-      price_data: priceData,
-      quantity: 1
-    }],
+    line_items: [priceId
+      ? { price: priceId, quantity: 1 }
+      : { price_data: priceData, quantity: 1 }
+    ],
     client_reference_id: eventId,
     customer_creation: "always",
     billing_address_collection: "auto",
@@ -155,6 +166,7 @@ export function checkoutSessionParameters({ eventId, offer, origin, taxEnabled =
     success_url: `${origin}${offer.offer.pagePath}?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}${offer.offer.pagePath}?checkout=cancelled`
   };
+  if (offer.policy === "group-healing") parameters.allow_promotion_codes = true;
   if (taxEnabled) parameters.automatic_tax = { enabled: true };
   return parameters;
 }
