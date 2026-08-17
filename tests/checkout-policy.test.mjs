@@ -82,7 +82,7 @@ test("the server owns the Stripe price and amount", () => {
   assert.match(parameters.success_url, /^https:\/\/staging\.rainbowsanctuary\.life\//);
 });
 
-test("Group Healing Checkout only accepts a configured Stripe price", () => {
+test("Group Healing Checkout uses the approved catalogue Stripe price when no deployment override exists", () => {
   const { offer } = validateCheckoutRequest({
     eventId: "group-healing-2026-08-18",
     offerId: "group-healing",
@@ -94,7 +94,10 @@ test("Group Healing Checkout only accepts a configured Stripe price", () => {
   assert.equal(configuredStripePriceId(offer, {
     STRIPE_GROUP_HEALING_PRICE_ID: "price_groupHealing22"
   }), "price_groupHealing22");
-  assert.throws(() => configuredStripePriceId(offer, {}), /not configured/);
+  assert.equal(
+    configuredStripePriceId(offer, {}),
+    "price_1U5T0nHrqlaOfUb7gorSAoaJ"
+  );
 });
 
 test("live keys are rejected outside production", () => {

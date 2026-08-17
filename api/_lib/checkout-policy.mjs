@@ -1,4 +1,4 @@
-import { resolveOfferVariant } from "./offer-catalog.mjs";
+import { GROUP_HEALING_STRIPE_PRICE_ID, resolveOfferVariant } from "./offer-catalog.mjs";
 import { isApprovedGroupHealingEvent } from "./group-healing-schedule.mjs";
 
 const EVENT_ID_PATTERN = /^[a-z0-9][a-z0-9-]{2,79}$/;
@@ -103,7 +103,9 @@ export function assertAllowedPaymentInviteOrigin(request, environment) {
 
 export function configuredStripePriceId(offer, environment) {
   if (offer.policy !== "group-healing") return "";
-  const priceId = String(environment.STRIPE_GROUP_HEALING_PRICE_ID || "").trim();
+  const priceId = String(
+    environment.STRIPE_GROUP_HEALING_PRICE_ID || GROUP_HEALING_STRIPE_PRICE_ID
+  ).trim();
   if (!/^price_[a-zA-Z0-9]+$/.test(priceId)) {
     throw new Error("Dedicated Group Healing Stripe price is not configured.");
   }

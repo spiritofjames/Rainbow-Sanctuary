@@ -1,5 +1,11 @@
 const MONEY_PATTERN = /^[a-z0-9][a-z0-9-]{2,79}$/;
 
+// Stripe Price IDs are safe public identifiers, not credentials. Keeping the
+// approved Group Healing price with its offer prevents a missing deployment
+// variable from silently turning a date-specific booking into an unusable
+// Checkout session. An environment value may still intentionally override it.
+export const GROUP_HEALING_STRIPE_PRICE_ID = "price_1U5T0nHrqlaOfUb7gorSAoaJ";
+
 export const PAYMENT_PROCESSING_ALLOWANCE = Object.freeze({
   rateBasisPoints: 400,
   fixedMinor: 50,
