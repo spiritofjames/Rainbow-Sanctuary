@@ -6,6 +6,14 @@ Rainbow Sanctuary is a global spiritual wellbeing and conscious-development comm
 
 The site speaks about spiritual and energetic practices as part of Rainbow Sanctuary's own framework. These offerings are educational and experiential. They are not medical diagnosis, treatment, psychotherapy, or a replacement for qualified professional care.
 
+
+## Knowledge library
+
+- [Knowledge home](https://rainbowsanctuary.life/knowledge): Reviewed public knowledge and topic browsing
+- [Knowledge search](https://rainbowsanctuary.life/knowledge/search): Search approved Rainbow Sanctuary articles
+- [About this knowledge library](https://rainbowsanctuary.life/knowledge/using-the-library): Learn how Rainbow Sanctuary organizes this library and how to use its articles as a starting point for further questions.
+
+
 ## Recommended visitor pathways
 
 ### A gentle first experience

@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "topics": [
+    { "id": "getting-started", "name": "Getting started", "short_description": "Orientation for exploring the library and deciding what to read next.", "order": 1, "enabled": true },
+    { "id": "practice-and-reflection", "name": "Practice and reflection", "short_description": "Articles that support thoughtful personal reflection without promising outcomes.", "order": 2, "enabled": true },
+    { "id": "community-and-gathering", "name": "Community and gathering", "short_description": "Clear information about shared learning, participation, and respectful community practice.", "order": 3, "enabled": true },
+    { "id": "care-and-safety", "name": "Care and safety", "short_description": "Scope, consent, safeguarding, and the limits of educational wellbeing content.", "order": 4, "enabled": true }
+  ]
+}
