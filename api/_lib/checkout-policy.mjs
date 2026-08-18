@@ -1,5 +1,6 @@
 import { resolveOfferVariant } from "./offer-catalog.mjs";
 import { isApprovedGroupHealingEvent } from "./group-healing-schedule.mjs";
+import { groupHealingZoomJoinUrl } from "./group-healing-zoom.mjs";
 
 const EVENT_ID_PATTERN = /^[a-z0-9][a-z0-9-]{2,79}$/;
 const REQUEST_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -31,6 +32,7 @@ export function validateCheckoutRequest(body, environment) {
   ) {
     throw new Error("Registration is not open for this event.");
   }
+  if (offer.policy === "group-healing") groupHealingZoomJoinUrl(environment);
   if (offer.policy !== "group-healing" && eventId !== offer.sessionId) {
     throw new Error("Invalid programme payment reference.");
   }
@@ -154,12 +156,6 @@ export function checkoutSessionParameters({ eventId, offer, origin, taxEnabled =
     custom_text: {
       submit: { message: policyMessage(offer) }
     },
-    custom_fields: [{
-      key: "client_display_name",
-      label: { custom: "Full name", type: "custom" },
-      optional: false,
-      type: "text"
-    }],
     metadata: {
       offer_key: offer.id,
       event_id: eventId,

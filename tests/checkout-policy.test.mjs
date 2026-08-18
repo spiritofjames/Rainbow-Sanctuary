@@ -12,7 +12,8 @@ const requestId = "7fc6a4ba-6f9a-4a7e-9e98-ef0b7bf9379e";
 test("only explicitly opened event identifiers are accepted", () => {
   const environment = {
     STRIPE_ALLOWED_GROUP_EVENT_IDS: "group-healing-2026-08-18",
-    STRIPE_ALLOWED_OFFER_IDS: "group-healing"
+    STRIPE_ALLOWED_OFFER_IDS: "group-healing",
+    GROUP_HEALING_ZOOM_JOIN_URL: "https://rainbowsanctuary.zoom.us/j/123456789?pwd=secure"
   };
   const result = validateCheckoutRequest(
     { eventId: "group-healing-2026-08-18", requestId },
@@ -35,7 +36,8 @@ test("the server owns the Stripe price and amount", () => {
     requestId
   }, {
     STRIPE_ALLOWED_GROUP_EVENT_IDS: "group-healing-2026-08-18",
-    STRIPE_ALLOWED_OFFER_IDS: "group-healing"
+    STRIPE_ALLOWED_OFFER_IDS: "group-healing",
+    GROUP_HEALING_ZOOM_JOIN_URL: "https://rainbowsanctuary.zoom.us/j/123456789?pwd=secure"
   });
   const parameters = checkoutSessionParameters({
     eventId: "group-healing-2026-08-18",
@@ -50,12 +52,7 @@ test("the server owns the Stripe price and amount", () => {
   assert.match(parameters.custom_text.submit.message, /non-refundable/i);
   assert.match(parameters.custom_text.submit.message, /one reschedule/i);
   assert.match(parameters.custom_text.submit.message, /non-transferable/i);
-  assert.deepEqual(parameters.custom_fields, [{
-    key: "client_display_name",
-    label: { custom: "Full name", type: "custom" },
-    optional: false,
-    type: "text"
-  }]);
+  assert.equal(parameters.custom_fields, undefined);
   assert.equal(parameters.success_url, "https://staging.rainbowsanctuary.life/payment-confirmation?payment=confirmed&session_id={CHECKOUT_SESSION_ID}");
   assert.equal(parameters.cancel_url, "https://staging.rainbowsanctuary.life/online-group-healing?checkout=cancelled");
 });
@@ -63,8 +60,20 @@ test("the server owns the Stripe price and amount", () => {
 test("weekly Group Healing session identifiers are validated by the authored schedule", () => {
   const result = validateCheckoutRequest({
     eventId: "group-healing-weekly-2026-08-25", offerId: "group-healing", requestId
-  }, { STRIPE_ALLOWED_OFFER_IDS: "group-healing" });
+  }, {
+    STRIPE_ALLOWED_OFFER_IDS: "group-healing",
+    GROUP_HEALING_ZOOM_JOIN_URL: "https://rainbowsanctuary.zoom.us/j/123456789?pwd=secure"
+  });
   assert.equal(result.eventId, "group-healing-weekly-2026-08-25");
+});
+
+test("Group Healing checkout stays closed until a secure Zoom link is configured", () => {
+  assert.throws(() => validateCheckoutRequest({
+    eventId: "group-healing-2026-08-18", offerId: "group-healing", requestId
+  }, {
+    STRIPE_ALLOWED_GROUP_EVENT_IDS: "group-healing-2026-08-18",
+    STRIPE_ALLOWED_OFFER_IDS: "group-healing"
+  }), /Zoom access is not configured/);
 });
 
 test("Regeneration Maintenance uses one of two fixed server-owned commitments", () => {

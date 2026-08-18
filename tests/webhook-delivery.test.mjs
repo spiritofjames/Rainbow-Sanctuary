@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   crmPaymentHandoff,
+  checkoutAmountMatchesApprovedPrice,
   forwardStripeEvent,
   isInternalPaymentTest,
   livePaymentProcessingAllowed,
@@ -18,11 +19,7 @@ const checkoutEvent = {
     object: {
       id: "cs_test_123",
       customer_details: { email: "private@example.com", name: "Private Person" },
-      custom_fields: [{
-        key: "client_display_name",
-        text: { value: "Generated Client" },
-        type: "text"
-      }],
+      custom_fields: [],
       payment_intent: "pi_test_123",
       payment_status: "paid",
       amount_subtotal: 2200,
@@ -52,7 +49,7 @@ test("the strict CRM handoff includes only the client identity needed for operat
     bookingReference: "cs_test_123",
     currency: "USD",
     customer: {
-      displayName: "Generated Client",
+      displayName: "Private Person",
       email: "private@example.com"
     },
     eventId: "evt_test_123",
@@ -73,6 +70,23 @@ test("CRM handoff preserves the approved subtotal when Stripe applies a promotio
   const handoff = crmPaymentHandoff(promoted);
   assert.equal(handoff.amountMinor, 100);
   assert.equal(handoff.amountSubtotalMinor, 21000);
+});
+
+test("CRM handoff accepts a Stripe-confirmed 100% promotion using the Checkout Session as its payment reference", () => {
+  const fullyDiscounted = {
+    ...checkoutEvent,
+    data: { object: {
+      ...checkoutEvent.data.object,
+      payment_intent: null,
+      amount_subtotal: 2200,
+      amount_total: 0
+    } }
+  };
+  const handoff = crmPaymentHandoff(fullyDiscounted);
+  assert.equal(handoff.amountMinor, 0);
+  assert.equal(handoff.amountSubtotalMinor, 2200);
+  assert.equal(handoff.providerPaymentId, "cs_test_123");
+  assert.equal(checkoutAmountMatchesApprovedPrice(handoff, 2200), true);
 });
 
 test("CRM handoff rejects unapproved live, unpaid or incomplete client events", () => {
