@@ -1,4 +1,5 @@
 import { resolveOfferVariant } from "./offer-catalog.mjs";
+import { isApprovedGroupHealingEvent } from "./group-healing-schedule.mjs";
 
 const EVENT_ID_PATTERN = /^[a-z0-9][a-z0-9-]{2,79}$/;
 const REQUEST_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -25,6 +26,7 @@ export function validateCheckoutRequest(body, environment) {
   }
   if (
     offer.policy === "group-healing" &&
+    !isApprovedGroupHealingEvent(eventId) &&
     !commaSeparatedSet(environment.STRIPE_ALLOWED_GROUP_EVENT_IDS).has(eventId)
   ) {
     throw new Error("Registration is not open for this event.");
@@ -113,8 +115,9 @@ function policyMessage(offer) {
 }
 
 function configuredStripePriceId(offer, environment) {
-  if (!offer.stripePriceEnvironmentKey) return "";
-  const priceId = String(environment?.[offer.stripePriceEnvironmentKey] || "").trim();
+  const priceId = String(
+    (offer.stripePriceEnvironmentKey && environment?.[offer.stripePriceEnvironmentKey]) || offer.stripePriceId || ""
+  ).trim();
   if (!priceId) return "";
   if (!STRIPE_PRICE_ID_PATTERN.test(priceId)) {
     throw new Error("This payment option is not configured.");

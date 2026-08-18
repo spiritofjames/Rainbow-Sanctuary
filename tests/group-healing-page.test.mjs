@@ -18,6 +18,7 @@ test("Group Healing is a separate overview with pathways, Q&A, and an enquiry CT
 
 test("Online Group Healing owns the calendar, USD 22 checkout, and return notice", () => {
   assert.match(onlinePage, /id="group-calendar-grid"/);
+  assert.doesNotMatch(onlinePage, /public-event-feed\.js/);
   assert.match(onlinePage, /<strong>\$22 USD<\/strong>/);
   assert.match(onlinePage, /Payment is completed securely through Stripe\./);
   assert.doesNotMatch(onlinePage, /aria-label="20 US dollars"/);
@@ -26,6 +27,7 @@ test("Online Group Healing owns the calendar, USD 22 checkout, and return notice
   assert.match(scheduler, /rs-checkout-return/);
   assert.match(scheduler, /Dismiss checkout notice/);
   assert.match(scheduler, /function selectDate\(id\)/);
+  assert.match(scheduler, /function weeklySessions\(\)/);
   assert.match(scheduler, /selectSession\(id\);/);
   assert.doesNotMatch(scheduler, /data-group-time/);
   assert.doesNotMatch(onlinePage, /Choose an available time/);

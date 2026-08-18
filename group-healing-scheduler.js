@@ -6,18 +6,50 @@
   const today = startOfDay(now);
   let sessions = [];
   let upcoming = [];
-  let feedState = { generatedAt: eventsConfig.staticGeneratedAt || "", source: "approved-static", status: "degraded" };
+  let feedState = { generatedAt: eventsConfig.staticGeneratedAt || "", source: "dedicated-group-schedule", status: "ready" };
   let visibleMonth = new Date(today.getFullYear(), today.getMonth(), 1);
   let chosenDateId = "";
   let initialized = false;
 
-  function applyFeed(result) {
-    feedState = result || feedState;
-    sessions = Array.isArray(result?.items)
-      ? result.items
-        .filter((item) => item && item.category === "group" && item.startDate && item.status !== "cancelled")
-        .sort((a, b) => eventInstant(a) - eventInstant(b))
-      : [];
+  function dateInMakassar(value) {
+    return new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Makassar", year: "numeric", month: "2-digit", day: "2-digit"
+    }).format(value);
+  }
+
+  function weeklySessions() {
+    const schedule = groupConfig.weeklySchedule || {};
+    const start = String(schedule.startDate || "");
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(start)) return [];
+    return Array.from({ length: Number(schedule.sessionCount) || 0 }, (_, index) => {
+      const date = new Date(`${start}T12:00:00Z`);
+      date.setUTCDate(date.getUTCDate() + index * 7);
+      const iso = date.toISOString().slice(0, 10);
+      return {
+        id: `group-healing-weekly-${iso}`,
+        title: schedule.title || "Weekly Group Healing",
+        category: "group",
+        startDate: iso,
+        startDateTime: `${iso}T${schedule.time || "21:00"}:00+08:00`,
+        time: schedule.time || "21:00",
+        timezone: schedule.timezone || "Asia/Makassar",
+        timezoneLabel: schedule.timezoneLabel || "Asia/Makassar / Beijing time",
+        location: "Online",
+        venue: "Zoom",
+        duration: groupConfig.duration || "Approximately 60 minutes",
+        price: groupConfig.price || "USD 22",
+        status: schedule.status || "open"
+      };
+    });
+  }
+
+  function applySchedule() {
+    sessions = [
+      ...(Array.isArray(groupConfig.sessions) ? groupConfig.sessions : []),
+      ...weeklySessions()
+    ]
+      .filter((item) => item && item.category === "group" && item.startDate && item.status !== "cancelled")
+      .sort((a, b) => eventInstant(a) - eventInstant(b));
     upcoming = sessions.filter((item) => eventInstant(item) >= now || eventDate(item.endDate || item.startDate) >= today);
     const first = upcoming[0] ? calendarDate(upcoming[0]) : today;
     visibleMonth = new Date(first.getFullYear(), first.getMonth(), 1);
@@ -112,7 +144,7 @@
     const heading = document.querySelector("#choose-session .rs-entry-heading");
     if (!heading || heading.querySelector(".rs-timezone-notice")) return;
     const introduction = heading.querySelector("p");
-    if (introduction) introduction.textContent = "Available twice-monthly dates appear in the calendar. Select a confirmed session to see it in your time zone; direct Stripe checkout appears here when registration opens.";
+    if (introduction) introduction.textContent = "Weekly dates appear in the calendar. Select a confirmed session to see it in your time zone, then continue directly to secure Stripe checkout.";
     const notice = document.createElement("p");
     notice.className = "rs-timezone-notice";
     notice.innerHTML = `<span aria-hidden="true">◷</span><span>Times are automatically shown in <strong>${escapeHtml(readableZone(viewerTimeZone))}</strong>, your detected time zone. The original schedule remains visible in Singapore time (GMT+8).</span>`;
@@ -121,7 +153,7 @@
     feedNotice.className = "rs-timezone-notice";
     feedNotice.setAttribute("role", "status");
     feedNotice.innerHTML = feedState.status === "ready"
-      ? `<span aria-hidden="true">✓</span><span>Live CRM schedule · updated ${escapeHtml(new Date(feedState.generatedAt).toLocaleString("en"))}.</span>`
+      ? `<span aria-hidden="true">✓</span><span>Dedicated Group Healing schedule · sessions are shown only in your local time zone.</span>`
       : feedState.status === "degraded"
         ? `<span aria-hidden="true">◷</span><span>Showing the ${feedState.source === "last-known-safe" ? "last known safe schedule" : "approved static schedule"} · timestamp ${escapeHtml(new Date(feedState.generatedAt).toLocaleString("en"))}.</span>`
         : `<span aria-hidden="true">!</span><span>The public schedule is unavailable. No unverified dates are being shown.</span>`;
@@ -295,7 +327,7 @@
       const details = document.getElementById("group-checkout-details");
       const status = document.getElementById("group-checkout-status");
       if (title) title.textContent = "New dates are being prepared";
-      if (details) details.textContent = "Confirmed twice-monthly sessions will appear in this calendar as soon as booking opens.";
+      if (details) details.textContent = "Confirmed weekly sessions will appear in this calendar as soon as booking opens.";
       if (status) status.textContent = "No consultation or enquiry is required. Return here to choose, pay, and register directly.";
       return;
     }
@@ -325,8 +357,8 @@
     return true;
   }
 
-  function start(result) {
-    applyFeed(result);
+  function start() {
+    applySchedule();
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once:true });
     if (!init()) {
       const observer = new MutationObserver(() => {
@@ -336,7 +368,5 @@
     }
   }
 
-  Promise.resolve(window.RAINBOW_PUBLIC_EVENTS_READY)
-    .then(start)
-    .catch(() => start({ items: [], source: "none", status: "unavailable" }));
+  start();
 })();

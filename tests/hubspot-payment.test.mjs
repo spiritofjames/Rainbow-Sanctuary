@@ -16,7 +16,7 @@ const event = {
     currency: "usd",
     customer_details: { email: "participant@example.com", name: "Participant Person" },
     custom_fields: [{ key: "client_display_name", text: { value: "Participant Person" } }],
-    metadata: { offer_key: "group-healing", event_id: "group-healing-2026-08-22" }
+    metadata: { offer_key: "group-healing", event_id: "group-healing-2026-08-18" }
   } }
 };
 
