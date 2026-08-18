@@ -38,7 +38,12 @@ function buttonBlock(cta) {
   return `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:28px 0 8px"><tr><td style="border-radius:999px;background:${colors.violet}"><a href="${cta.url}" style="display:inline-block;padding:13px 24px;color:#ffffff;font-family:Arial,sans-serif;font-size:15px;font-weight:600;line-height:20px;text-decoration:none">${escapeHtml(cta.label)} &nbsp;→</a></td></tr></table>`;
 }
 
-export function emailHtml({ preheader, eyebrow, heading, greeting, paragraphs, details, callout, cta, closing = "With care,<br>Rainbow Sanctuary" }) {
+function secondaryButtonBlock(cta) {
+  if (!cta) return "";
+  return `<p style="margin:14px 0 0;font-family:Arial,sans-serif;font-size:14px;line-height:20px"><a href="${cta.url}" style="color:${colors.green};font-weight:600">${escapeHtml(cta.label)} →</a></p>`;
+}
+
+export function emailHtml({ preheader, eyebrow, heading, greeting, paragraphs, details, callout, cta, secondaryCta, closing = "With care,<br>Rainbow Sanctuary" }) {
   const content = paragraphs.map((paragraph) => `<p style="margin:0 0 16px;color:${colors.body};font-family:Arial,sans-serif;font-size:16px;line-height:26px">${paragraph}</p>`).join("");
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light only"><title>${escapeHtml(heading)}</title></head>
@@ -55,7 +60,7 @@ export function emailHtml({ preheader, eyebrow, heading, greeting, paragraphs, d
       <p style="margin:0 0 12px;color:${colors.green};font-family:Arial,sans-serif;font-size:12px;font-weight:700;line-height:18px;letter-spacing:1px;text-transform:uppercase">${escapeHtml(eyebrow)}</p>
       <h1 style="margin:0 0 22px;color:${colors.ink};font-family:Georgia,'Times New Roman',serif;font-size:34px;font-weight:400;line-height:40px">${escapeHtml(heading)}</h1>
       <p style="margin:0 0 16px;color:${colors.ink};font-family:Arial,sans-serif;font-size:16px;line-height:26px">${greeting}</p>
-      ${content}${detailsTable(details)}${calloutBlock(callout)}${buttonBlock(cta)}
+      ${content}${detailsTable(details)}${calloutBlock(callout)}${buttonBlock(cta)}${secondaryButtonBlock(secondaryCta)}
       <p style="margin:28px 0 0;color:${colors.body};font-family:Arial,sans-serif;font-size:15px;line-height:24px">${closing}</p>
     </td></tr>
     <tr><td style="padding:24px 36px;background:#fafafa;border-top:1px solid ${colors.hairline}">
@@ -66,10 +71,11 @@ export function emailHtml({ preheader, eyebrow, heading, greeting, paragraphs, d
 </td></tr></table></body></html>`;
 }
 
-export function emailText({ eyebrow, heading, greeting, paragraphs, details = [], callout, cta, closing = "With care,\nRainbow Sanctuary" }) {
+export function emailText({ eyebrow, heading, greeting, paragraphs, details = [], callout, cta, secondaryCta, closing = "With care,\nRainbow Sanctuary" }) {
   const detailText = details.length ? `\n${details.map(({ label, value }) => `${label}: ${value}`).join("\n")}\n` : "";
   const ctaText = cta ? `\n${cta.label}: ${cta.url}\n` : "";
-  return `${eyebrow}\n${heading}\n\n${greeting}\n\n${paragraphs.join("\n\n")}${detailText}${callout ? `\n${callout}\n` : ""}${ctaText}\n${closing}\n\nPrivacy: https://rainbowsanctuary.life/privacy-policy\nSupport: support@rainbowsanctuary.life`;
+  const secondaryCtaText = secondaryCta ? `\n${secondaryCta.label}: ${secondaryCta.url}\n` : "";
+  return `${eyebrow}\n${heading}\n\n${greeting}\n\n${paragraphs.join("\n\n")}${detailText}${callout ? `\n${callout}\n` : ""}${ctaText}${secondaryCtaText}\n${closing}\n\nPrivacy: https://rainbowsanctuary.life/privacy-policy\nSupport: support@rainbowsanctuary.life`;
 }
 
 export const brandColors = colors;

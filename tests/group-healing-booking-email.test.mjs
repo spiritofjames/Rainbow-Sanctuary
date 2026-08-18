@@ -33,7 +33,7 @@ function checkoutEvent(overrides = {}) {
 }
 
 test("verified Group Healing payment builds a minimal, idempotent booking confirmation", () => {
-  const message = bookingConfirmationFromStripeEvent(checkoutEvent());
+  const message = bookingConfirmationFromStripeEvent(checkoutEvent(), { environment: { GROUP_HEALING_ZOOM_JOIN_URL: "https://rainbowsanctuary.zoom.us/j/123456789?pwd=secure" } });
   assert.equal(message.alias, "rs-booking-confirmed");
   assert.equal(message.to, "reviewer@example.com");
   assert.equal(message.idempotencyKey, "stripe:evt_test_booking_123:booking-confirmed");
@@ -41,7 +41,8 @@ test("verified Group Healing payment builds a minimal, idempotent booking confir
   assert.equal(message.variables.EVENT_TIME, "9:00 PM");
   assert.match(message.variables.EVENT_DATE, /Tuesday, 18 August 2026/);
   assert.match(message.variables.CALENDAR_URL, /^https:\/\/calendar\.google\.com\/calendar\/render\?/);
-  assert.match(message.variables.LOCATION, /access details follow separately/i);
+  assert.equal(message.variables.LOCATION, "Online via Zoom");
+  assert.match(message.variables.ACCESS_URL, /^https:\/\/rainbowsanctuary\.zoom\.us\//);
 });
 
 test("verified Regeneration Maintenance payment builds a commitment-specific confirmation", () => {
@@ -112,7 +113,7 @@ test("verified programme payment builds a minimal programme confirmation", () =>
 
 test("unapproved live, unpaid, or unknown events cannot create a booking confirmation", () => {
   assert.throws(() => bookingConfirmationFromStripeEvent(checkoutEvent({ livemode: true })), /approved Stripe Checkout/);
-  assert.doesNotThrow(() => bookingConfirmationFromStripeEvent(checkoutEvent({ livemode: true }), { allowLive: true }));
+  assert.doesNotThrow(() => bookingConfirmationFromStripeEvent(checkoutEvent({ livemode: true }), { allowLive: true, environment: { GROUP_HEALING_ZOOM_JOIN_URL: "https://rainbowsanctuary.zoom.us/j/123456789?pwd=secure" } }));
   assert.throws(() => bookingConfirmationFromStripeEvent(checkoutEvent({
     data: { object: { ...checkoutEvent().data.object, payment_status: "unpaid" } }
   })), /incomplete/);
@@ -134,7 +135,8 @@ test("staging booking confirmation remains restricted to the explicit Resend all
     RESEND_EMAIL_ENABLED: "true",
     RESEND_API_KEY: "re_test",
     RESEND_ALLOWED_RECIPIENTS: "reviewer@example.com",
-    VERCEL_ENV: "preview"
+    VERCEL_ENV: "preview",
+    GROUP_HEALING_ZOOM_JOIN_URL: "https://rainbowsanctuary.zoom.us/j/123456789?pwd=secure"
   }, client);
   assert.deepEqual(result, { sent: true, id: "email_booking_123" });
   assert.equal(sent.length, 1);
