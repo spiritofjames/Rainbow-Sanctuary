@@ -74,6 +74,41 @@
       "locale": "en"
     },
     {
+      "id": "life-from-dust-to-the-stars",
+      "title": "Life: From Dust to the Stars",
+      "summary": "A long-form meditation by Stephanie Wu on origin, growth, hardship, connection, awakening, and the relationship between human life and the cosmos.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/life-from-dust-to-the-stars",
+      "topic": {
+        "id": "consciousness-and-reflection",
+        "name": "Consciousness and reflection"
+      },
+      "contentType": "story",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "long-read",
+        "book",
+        "life",
+        "consciousness",
+        "reflection"
+      ],
+      "author": {
+        "id": "stephanie-wu",
+        "name": "Stephanie Wu",
+        "role": "Author"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-08-18",
+      "updatedAt": "2026-08-18",
+      "reviewDueAt": "2027-08-18",
+      "locale": "en"
+    },
+    {
       "id": "the-game-of-consciousness",
       "title": "The game of consciousness",
       "summary": "A reflective essay on meeting life with curiosity, compassion, responsibility, and room to grow.",

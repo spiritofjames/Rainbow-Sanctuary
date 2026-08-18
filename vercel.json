@@ -266,6 +266,11 @@
       "permanent": true
     },
     {
+      "source": "/Knowledge-Long-Reads.dc.html",
+      "destination": "/knowledge/long-reads",
+      "permanent": true
+    },
+    {
       "source": "/Knowledge-Search.dc.html",
       "destination": "/knowledge/search",
       "permanent": true
@@ -298,6 +303,11 @@
     {
       "source": "/Knowledge-co-creation-principles-for-rainbow-sanctuary.dc.html",
       "destination": "/knowledge/co-creation-principles-for-rainbow-sanctuary",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-life-from-dust-to-the-stars.dc.html",
+      "destination": "/knowledge/life-from-dust-to-the-stars",
       "permanent": true
     },
     {
@@ -501,6 +511,10 @@
       "destination": "/Knowledge-Articles.dc.html"
     },
     {
+      "source": "/knowledge/long-reads",
+      "destination": "/Knowledge-Long-Reads.dc.html"
+    },
+    {
       "source": "/knowledge/search",
       "destination": "/Knowledge-Search.dc.html"
     },
@@ -527,6 +541,10 @@
     {
       "source": "/knowledge/co-creation-principles-for-rainbow-sanctuary",
       "destination": "/Knowledge-co-creation-principles-for-rainbow-sanctuary.dc.html"
+    },
+    {
+      "source": "/knowledge/life-from-dust-to-the-stars",
+      "destination": "/Knowledge-life-from-dust-to-the-stars.dc.html"
     },
     {
       "source": "/knowledge/the-game-of-consciousness",
