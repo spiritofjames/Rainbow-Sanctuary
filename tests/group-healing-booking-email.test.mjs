@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   bookingConfirmationFromStripeEvent,
+  completedStripeEventFromCheckoutSession,
   programConfirmationFromStripeEvent,
   regenerationMaintenanceConfirmationFromStripeEvent,
   sendBookingConfirmation
@@ -36,7 +37,7 @@ test("verified Group Healing payment builds a minimal, idempotent booking confir
   const message = bookingConfirmationFromStripeEvent(checkoutEvent(), { environment: { GROUP_HEALING_ZOOM_JOIN_URL: "https://rainbowsanctuary.zoom.us/j/123456789?pwd=secure" } });
   assert.equal(message.alias, "rs-booking-confirmed");
   assert.equal(message.to, "reviewer@example.com");
-  assert.equal(message.idempotencyKey, "stripe:evt_test_booking_123:booking-confirmed");
+  assert.equal(message.idempotencyKey, "stripe-checkout:cs_test_booking_123:booking-confirmed");
   assert.equal(message.variables.EVENT_TITLE, "Grounding & Renewal");
   assert.equal(message.variables.EVENT_TIME, "9:00 PM");
   assert.match(message.variables.EVENT_DATE, /Tuesday, 18 August 2026/);
@@ -123,7 +124,7 @@ test("verified programme payment builds a minimal programme confirmation", () =>
   assert.equal(message.variables.START_DATE, "Schedule confirmed separately");
   assert.equal(
     message.idempotencyKey,
-    "stripe:evt_test_booking_123:program-enrollment-confirmed"
+    "stripe-checkout:cs_test_booking_123:program-enrollment-confirmed"
   );
 });
 
@@ -158,5 +159,16 @@ test("staging booking confirmation remains restricted to the explicit Resend all
   assert.equal(sent.length, 1);
   assert.equal(sent[0][0].template, undefined);
   assert.equal(sent[0][0].subject, "Your Rainbow Sanctuary booking is confirmed");
-  assert.equal(sent[0][1].idempotencyKey, "stripe:evt_test_booking_123:booking-confirmed");
+  assert.equal(sent[0][1].idempotencyKey, "stripe-checkout:cs_test_booking_123:booking-confirmed");
+});
+
+test("reconciliation builds a stable completed event from the original Checkout Session", () => {
+  const session = checkoutEvent().data.object;
+  const event = completedStripeEventFromCheckoutSession(session);
+  assert.equal(event.type, "checkout.session.completed");
+  assert.equal(event.data.object, session);
+  const message = bookingConfirmationFromStripeEvent(event, {
+    environment: { GROUP_HEALING_ZOOM_JOIN_URL: "https://rainbowsanctuary.zoom.us/j/123456789?pwd=secure" }
+  });
+  assert.equal(message.idempotencyKey, "stripe-checkout:cs_test_booking_123:booking-confirmed");
 });

@@ -60,6 +60,22 @@
     };
   }
 
+  async function reconcileConfirmation() {
+    const response = await fetch("/api/stripe/reconcile-booking-confirmation", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json"
+      },
+      body: JSON.stringify({ session_id: sessionId }),
+      cache: "no-store"
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || result.fulfilled !== true) {
+      throw new Error(result.error || "Confirmation email unavailable.");
+    }
+  }
+
   async function verify() {
     if (!sessionId) {
       title.textContent = "We couldn’t verify this payment return.";
@@ -99,6 +115,12 @@
         return;
       }
 
+      // The webhook sends this first in the normal path. Re-running it here
+      // against the verified Checkout Session is safe and idempotent, and
+      // recovers a confirmation if a customer reaches this page before a
+      // transient webhook retry succeeds.
+      await reconcileConfirmation();
+
       const copy = ordinaryPaymentCopy(result);
       title.textContent = copy.title;
       summary.textContent = copy.summary;
@@ -109,7 +131,7 @@
       next.classList.remove("is-hidden");
     } catch (_) {
       title.textContent = "We’re confirming your payment.";
-      summary.textContent = "Stripe returned you safely. If the confirmation takes longer than a few minutes, check your email receipt or contact us for help.";
+      summary.textContent = "Stripe returned you safely. We are preparing your confirmation email now. If it does not arrive within 10 minutes, check spam or contact bookings@rainbowsanctuary.life.";
     }
   }
 
