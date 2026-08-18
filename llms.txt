@@ -26,6 +26,14 @@
 - [Community Stories](https://rainbowsanctuary.life/community-stories): Published community experiences
 - [Donate to support access](https://rainbowsanctuary.life/contribute): Voluntary contributions that help keep selected pathways accessible
 
+
+## Knowledge library
+
+- [Knowledge home](https://rainbowsanctuary.life/knowledge): Reviewed public knowledge and topic browsing
+- [Knowledge search](https://rainbowsanctuary.life/knowledge/search): Search approved Rainbow Sanctuary articles
+- [About this knowledge library](https://rainbowsanctuary.life/knowledge/using-the-library): Learn how Rainbow Sanctuary organizes this library and how to use its articles as a starting point for further questions.
+
+
 ## Policies and scope
 
 - [Wellbeing disclaimer](https://rainbowsanctuary.life/wellbeing-disclaimer)

@@ -43,6 +43,7 @@ jobs:
 
       - name: Verify application and release-critical integrations
         run: |
+          npm run knowledge:build
           npm test
           npm run email:check
           npm run release:check

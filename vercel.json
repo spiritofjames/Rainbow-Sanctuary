@@ -16,6 +16,15 @@
   ],
   "headers": [
     {
+      "source": "/admin/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
       "source": "/assets/documents/awakening-your-inner-light-retreat-2026.pdf",
       "headers": [
         {
@@ -29,7 +38,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self'; connect-src 'self' https://api.github.com https://github.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
         },
         {
           "key": "Permissions-Policy",
@@ -247,6 +256,41 @@
       "permanent": true
     },
     {
+      "source": "/Knowledge.dc.html",
+      "destination": "/knowledge",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-Search.dc.html",
+      "destination": "/knowledge/search",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-Topic-getting-started.dc.html",
+      "destination": "/knowledge/topics/getting-started",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-Topic-practice-and-reflection.dc.html",
+      "destination": "/knowledge/topics/practice-and-reflection",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-Topic-community-and-gathering.dc.html",
+      "destination": "/knowledge/topics/community-and-gathering",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-Topic-care-and-safety.dc.html",
+      "destination": "/knowledge/topics/care-and-safety",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-using-the-library.dc.html",
+      "destination": "/knowledge/using-the-library",
+      "permanent": true
+    },
+    {
       "source": "/Payment-Confirmation.dc.html",
       "destination": "/payment-confirmation",
       "permanent": true
@@ -263,6 +307,10 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/admin",
+      "destination": "/admin/index.html"
+    },
     {
       "source": "/",
       "destination": "/Home.dc.html"
@@ -418,6 +466,34 @@
     {
       "source": "/programs",
       "destination": "/Workshops.dc.html"
+    },
+    {
+      "source": "/knowledge",
+      "destination": "/Knowledge.dc.html"
+    },
+    {
+      "source": "/knowledge/search",
+      "destination": "/Knowledge-Search.dc.html"
+    },
+    {
+      "source": "/knowledge/topics/getting-started",
+      "destination": "/Knowledge-Topic-getting-started.dc.html"
+    },
+    {
+      "source": "/knowledge/topics/practice-and-reflection",
+      "destination": "/Knowledge-Topic-practice-and-reflection.dc.html"
+    },
+    {
+      "source": "/knowledge/topics/community-and-gathering",
+      "destination": "/Knowledge-Topic-community-and-gathering.dc.html"
+    },
+    {
+      "source": "/knowledge/topics/care-and-safety",
+      "destination": "/Knowledge-Topic-care-and-safety.dc.html"
+    },
+    {
+      "source": "/knowledge/using-the-library",
+      "destination": "/Knowledge-using-the-library.dc.html"
     },
     {
       "source": "/payment-confirmation",

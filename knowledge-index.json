@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0",
+  "sourceCommit": "source-controlled",
+  "generatedAt": "2026-08-18T00:00:00.000Z",
+  "entries": [
+    {
+      "id": "using-the-library",
+      "title": "About this knowledge library",
+      "summary": "Learn how Rainbow Sanctuary organizes this library and how to use its articles as a starting point for further questions.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/using-the-library",
+      "topic": {
+        "id": "getting-started",
+        "name": "Getting started"
+      },
+      "contentType": "explainer",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "knowledge",
+        "orientation"
+      ],
+      "author": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-08-18",
+      "updatedAt": "2026-08-18",
+      "reviewDueAt": "2027-08-18",
+      "locale": "en"
+    }
+  ]
+}
