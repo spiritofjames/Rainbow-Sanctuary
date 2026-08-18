@@ -8,7 +8,10 @@ const GOOGLE_CALENDAR_API = "https://www.googleapis.com/calendar/v3";
 const DEFAULT_OPERATIONS_CALENDAR_ID = "c_8c06ed271e76489612837b0ff0e06b8c48b1c9205e4263903f6319f75db81b10@group.calendar.google.com";
 const DEFAULT_PSN_CALENDAR_ID = "c_9f46da2ecb079c736bd3a573a54f60074cbdefc406e861f333a2bba31133edb3@group.calendar.google.com";
 const DEFAULT_OPERATIONS_EVENT_ID = "m6galvun5efuib7knu6g6j6h2k";
-const DEFAULT_PSN_EVENT_ID = "rainbowsanctuarygrouph";
+// Google Calendar event IDs are restricted to base32-compatible lowercase
+// characters (a-v and 0-9). Keep this staff-only master ID deterministic so
+// the recurring PSN event can be safely upserted on every sync.
+const DEFAULT_PSN_EVENT_ID = "grouphealingpsn";
 
 function enabled(environment) {
   return environment.RAINBOW_OPERATIONS_CALENDAR_SYNC_ENABLED === "true";
