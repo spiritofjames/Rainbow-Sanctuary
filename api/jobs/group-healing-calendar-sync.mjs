@@ -11,7 +11,7 @@ export default async function handler(request, response) {
   try {
     return sendJson(response, 200, await ensureGroupHealingStaffCalendarEvents(process.env));
   } catch (error) {
-    console.error("group_healing_staff_calendar_sync_failed", { message: error.message });
-    return sendJson(response, 500, { error: "Staff calendar synchronization could not be completed." });
+    console.error("group_healing_host_calendar_privacy_sync_failed", { message: error.message });
+    return sendJson(response, 500, { error: "Group Healing host calendar privacy could not be updated." });
   }
 }

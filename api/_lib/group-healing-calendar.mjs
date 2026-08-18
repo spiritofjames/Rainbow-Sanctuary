@@ -1,17 +1,8 @@
-import { createHash } from "node:crypto";
 import { crmPaymentHandoff, isInternalPaymentTest, livePaymentProcessingAllowed } from "./webhook-delivery.mjs";
 import { groupHealingScheduleDetails } from "./group-healing-schedule.mjs";
-import { groupHealingZoomJoinUrl } from "./group-healing-zoom.mjs";
 
 const GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
 const GOOGLE_CALENDAR_API = "https://www.googleapis.com/calendar/v3";
-const DEFAULT_OPERATIONS_CALENDAR_ID = "c_8c06ed271e76489612837b0ff0e06b8c48b1c9205e4263903f6319f75db81b10@group.calendar.google.com";
-const DEFAULT_PSN_CALENDAR_ID = "c_9f46da2ecb079c736bd3a573a54f60074cbdefc406e861f333a2bba31133edb3@group.calendar.google.com";
-const DEFAULT_OPERATIONS_EVENT_ID = "m6galvun5efuib7knu6g6j6h2k";
-// Google Calendar event IDs are restricted to base32-compatible lowercase
-// characters (a-v and 0-9). Keep this staff-only master ID deterministic so
-// the recurring PSN event can be safely upserted on every sync.
-const DEFAULT_PSN_EVENT_ID = "grouphealingpsn";
 
 function enabled(environment) {
   return environment.RAINBOW_OPERATIONS_CALENDAR_SYNC_ENABLED === "true";
@@ -21,16 +12,11 @@ function configuration(environment) {
   const clientId = String(environment.GOOGLE_CALENDAR_CLIENT_ID || "").trim();
   const clientSecret = String(environment.GOOGLE_CALENDAR_CLIENT_SECRET || "").trim();
   const refreshToken = String(environment.GOOGLE_CALENDAR_REFRESH_TOKEN || "").trim();
+  const hostCalendarId = String(environment.GROUP_HEALING_HOST_CALENDAR_ID || "ethel@rainbowsanctuary.life").trim();
+  const hostEventId = String(environment.GROUP_HEALING_HOST_EVENT_ID || "55cb5htv7fan98lr4vanb5h37k").trim();
   if (!clientId || !clientSecret || !refreshToken) throw new Error("Google Calendar operations sync is not configured.");
-  return {
-    clientId,
-    clientSecret,
-    refreshToken,
-    operationsCalendarId: String(environment.RAINBOW_OPERATIONS_CALENDAR_ID || DEFAULT_OPERATIONS_CALENDAR_ID).trim(),
-    psnCalendarId: String(environment.PSN_TEAM_CALENDAR_ID || DEFAULT_PSN_CALENDAR_ID).trim(),
-    operationsEventId: String(environment.GROUP_HEALING_OPERATIONS_EVENT_ID || DEFAULT_OPERATIONS_EVENT_ID).trim(),
-    psnEventId: String(environment.GROUP_HEALING_PSN_EVENT_ID || DEFAULT_PSN_EVENT_ID).trim()
-  };
+  if (!hostCalendarId || !hostEventId) throw new Error("Group Healing host calendar is not configured.");
+  return { clientId, clientSecret, refreshToken, hostCalendarId, hostEventId };
 }
 
 async function accessToken(config, fetchImplementation) {
@@ -61,62 +47,72 @@ async function googleRequest(path, { method = "GET", body, token }, fetchImpleme
   return response.status === 204 ? {} : response.json();
 }
 
-function eventBody(event, zoomUrl) {
-  return {
-    summary: "Online Group Healing — Grounding & Renewal",
-    description: `Rainbow Sanctuary Online Group Healing\n\nWeekly guided Zoom session. Tuesday, 9:00 PM Asia/Makassar / Beijing (GMT+8).\n\nZoom host link (staff and paid participants only): ${zoomUrl}\n\nPaid participants are tracked in separate private roster entries. Do not add customers as Google Calendar guests.`,
-    location: "Zoom — private link in staff description and paid participant emails",
-    start: { dateTime: event.start, timeZone: "Asia/Makassar" },
-    end: { dateTime: event.end, timeZone: "Asia/Makassar" },
-    visibility: "private",
-    transparency: "opaque",
-    reminders: { useDefault: false, overrides: [{ method: "popup", minutes: 60 }] },
-    recurrence: ["RRULE:FREQ=WEEKLY;COUNT=53;BYDAY=TU"]
-  };
+function escaped(value) {
+  return encodeURIComponent(value);
 }
 
-function rosterEventId(stripeEventId, calendarId) {
-  return `rsg${createHash("sha256").update(`${stripeEventId}:${calendarId}`).digest("hex").slice(0, 42)}`;
+function occurrenceQuery(event) {
+  const parameters = new URLSearchParams({
+    timeMin: event.start,
+    timeMax: event.end,
+    maxResults: "5"
+  });
+  return parameters.toString();
 }
 
-function rosterBody({ handoff, event, zoomUrl }) {
-  return {
-    summary: `Paid Group Healing participant — ${handoff.customer.displayName}`,
-    description: `Internal Rainbow Sanctuary roster entry.\n\nParticipant: ${handoff.customer.displayName}\nEmail: ${handoff.customer.email}\nSession: ${event.title}\nScheduled: ${event.date}, ${event.time} ${event.timezone}\nBooking reference: ${handoff.bookingReference}\n\nZoom link (do not forward): ${zoomUrl}`,
-    start: { dateTime: event.start, timeZone: "Asia/Makassar" },
-    end: { dateTime: event.end, timeZone: "Asia/Makassar" },
-    visibility: "private",
-    transparency: "transparent",
-    extendedProperties: { private: { source: "rainbow-sanctuary-stripe", stripe_event_id: handoff.stripeEventId, booking_reference: handoff.bookingReference } }
-  };
+/** Resolves a booking to one occurrence, not the recurring master series. */
+async function selectedOccurrence(config, event, token, fetchImplementation) {
+  const response = await googleRequest(
+    `/calendars/${escaped(config.hostCalendarId)}/events/${escaped(config.hostEventId)}/instances?${occurrenceQuery(event)}`,
+    { token },
+    fetchImplementation
+  );
+  const selectedStart = Date.parse(event.start);
+  const matches = (response.items || []).filter(
+    (item) => Number.isFinite(selectedStart) && Date.parse(item?.start?.dateTime) === selectedStart
+  );
+  if (matches.length !== 1) throw new Error("The selected Group Healing calendar occurrence could not be found.");
+  return matches[0];
 }
 
-async function upsertEvent(calendarId, eventId, body, token, fetchImplementation) {
-  const encodedCalendar = encodeURIComponent(calendarId);
-  const encodedEvent = encodeURIComponent(eventId);
-  const existing = await googleRequest(`/calendars/${encodedCalendar}/events/${encodedEvent}`, { token }, fetchImplementation);
-  if (existing.missing) {
-    return googleRequest(`/calendars/${encodedCalendar}/events?sendUpdates=none`, { method: "POST", body: { id: eventId, ...body }, token }, fetchImplementation);
-  }
-  return googleRequest(`/calendars/${encodedCalendar}/events/${encodedEvent}?sendUpdates=none`, { method: "PATCH", body, token }, fetchImplementation);
+function attendeesWithParticipant(existingAttendees, customer) {
+  const normalized = customer.email.toLowerCase();
+  const attendees = Array.isArray(existingAttendees) ? existingAttendees : [];
+  if (attendees.some((attendee) => String(attendee.email || "").toLowerCase() === normalized)) return attendees;
+  return [...attendees, { email: customer.email, displayName: customer.displayName, responseStatus: "needsAction" }];
 }
 
-/** Ensures both private staff calendars contain the recurring Zoom-host event. */
+/**
+ * Checks Ethel's existing host series and locks its guest privacy. It never
+ * creates an alternate event, so Ethel has one unambiguous event to host.
+ */
 export async function ensureGroupHealingStaffCalendarEvents(environment = process.env, fetchImplementation = fetch) {
   if (!enabled(environment)) return { enabled: false, reason: "disabled" };
   const config = configuration(environment);
-  const zoomUrl = groupHealingZoomJoinUrl(environment);
-  const event = groupHealingScheduleDetails("group-healing-2026-08-18");
   const token = await accessToken(config, fetchImplementation);
-  const body = eventBody(event, zoomUrl);
-  await Promise.all([
-    upsertEvent(config.operationsCalendarId, config.operationsEventId, body, token, fetchImplementation),
-    upsertEvent(config.psnCalendarId, config.psnEventId, body, token, fetchImplementation)
-  ]);
-  return { enabled: true, operationsCalendarId: config.operationsCalendarId, psnCalendarId: config.psnCalendarId };
+  const host = await googleRequest(
+    `/calendars/${escaped(config.hostCalendarId)}/events/${escaped(config.hostEventId)}`,
+    { token },
+    fetchImplementation
+  );
+  if (host.missing) throw new Error("The configured Group Healing host event could not be found.");
+  await googleRequest(
+    `/calendars/${escaped(config.hostCalendarId)}/events/${escaped(config.hostEventId)}?sendUpdates=none`,
+    {
+      method: "PATCH",
+      body: { guestsCanModify: false, guestsCanInviteOthers: false, guestsCanSeeOtherGuests: false },
+      token
+    },
+    fetchImplementation
+  );
+  return { enabled: true, hostCalendarId: config.hostCalendarId, hostEventId: config.hostEventId };
 }
 
-/** Adds paid people as private, staff-only roster records—not event attendees. */
+/**
+ * Adds a paid customer to their selected Ethel-hosted Zoom occurrence. Google
+ * sends the event invitation; guests cannot edit, invite others, or see the
+ * guest list. A repeat webhook does not send a duplicate calendar invitation.
+ */
 export async function syncPaidGroupHealingParticipant(stripeEvent, environment = process.env, fetchImplementation = fetch) {
   if (isInternalPaymentTest(stripeEvent) || !enabled(environment)) return { enabled: false, reason: "disabled-or-test" };
   const handoff = crmPaymentHandoff(stripeEvent, { allowLive: livePaymentProcessingAllowed(environment) });
@@ -124,12 +120,18 @@ export async function syncPaidGroupHealingParticipant(stripeEvent, environment =
   const event = groupHealingScheduleDetails(handoff.sessionId);
   if (!event) throw new Error("Group Healing participant has no approved session.");
   const config = configuration(environment);
-  const zoomUrl = groupHealingZoomJoinUrl(environment);
   const token = await accessToken(config, fetchImplementation);
-  const body = rosterBody({ handoff, event, zoomUrl });
-  await Promise.all([
-    upsertEvent(config.operationsCalendarId, rosterEventId(handoff.stripeEventId, config.operationsCalendarId), body, token, fetchImplementation),
-    upsertEvent(config.psnCalendarId, rosterEventId(handoff.stripeEventId, config.psnCalendarId), body, token, fetchImplementation)
-  ]);
-  return { enabled: true, sessionId: handoff.sessionId, staffCalendars: 2 };
+  const occurrence = await selectedOccurrence(config, event, token, fetchImplementation);
+  const attendees = attendeesWithParticipant(occurrence.attendees, handoff.customer);
+  const alreadyInvited = attendees.length === (occurrence.attendees || []).length;
+  await googleRequest(
+    `/calendars/${escaped(config.hostCalendarId)}/events/${escaped(occurrence.id)}?sendUpdates=${alreadyInvited ? "none" : "all"}`,
+    {
+      method: "PATCH",
+      body: { attendees, guestsCanModify: false, guestsCanInviteOthers: false, guestsCanSeeOtherGuests: false },
+      token
+    },
+    fetchImplementation
+  );
+  return { enabled: true, sessionId: handoff.sessionId, occurrenceId: occurrence.id, invited: !alreadyInvited };
 }

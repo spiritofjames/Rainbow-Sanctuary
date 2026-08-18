@@ -40,7 +40,7 @@ export default async function handler(request, response) {
     const governedEvent = hydrateStaffPaymentLinkEvent(event, process.env);
     let delivery = { forwarded: false, ignored: true, reason: "not-applicable" };
     let bookingEmail = { sent: false, reason: "not-applicable" };
-    let calendarRoster = { enabled: false, reason: "not-applicable" };
+    let calendarInvitation = { enabled: false, reason: "not-applicable" };
     if (
       ["checkout.session.completed", "checkout.session.async_payment_succeeded"].includes(event.type) &&
       !isInternalPaymentTest(governedEvent) &&
@@ -64,13 +64,13 @@ export default async function handler(request, response) {
       const hubspot = await mirrorHubSpotPurchase(governedEvent, process.env);
       await attemptPurchaseOperationsNotification(governedEvent, hubspot, process.env);
       try {
-        calendarRoster = await syncPaidGroupHealingParticipant(governedEvent, process.env);
+        calendarInvitation = await syncPaidGroupHealingParticipant(governedEvent, process.env);
       } catch (calendarError) {
         // The verified payment and HubSpot record are authoritative. A staff
         // calendar outage must be visible for follow-up but must not block a
         // paid participant's confirmation or cause Stripe to retry a charge.
-        console.error("stripe_group_healing_calendar_roster_error", { eventId: event.id, message: calendarError.message });
-        calendarRoster = { enabled: false, reason: "failed" };
+        console.error("stripe_group_healing_calendar_invitation_error", { eventId: event.id, message: calendarError.message });
+        calendarInvitation = { enabled: false, reason: "failed" };
       }
     }
     try {
@@ -93,8 +93,8 @@ export default async function handler(request, response) {
       deliveryReason: delivery.reason || null,
       bookingEmailSent: bookingEmail.sent,
       bookingEmailReason: bookingEmail.reason || null,
-      calendarRosterEnabled: calendarRoster.enabled,
-      calendarRosterReason: calendarRoster.reason || null
+      calendarInvitationEnabled: calendarInvitation.enabled,
+      calendarInvitationReason: calendarInvitation.reason || null
     });
     return sendJson(response, 200, { received: true });
   } catch (error) {
