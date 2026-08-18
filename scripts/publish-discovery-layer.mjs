@@ -7,12 +7,20 @@ const siteDir = path.resolve(scriptsDir, "..");
 const origin = "https://rainbowsanctuary.life";
 const lastmod = "2026-07-31";
 // Keep operational jobs in the generated Vercel configuration. Discovery
-// publishing runs as part of every release, so dropping this would silently
-// disable the Monday Maintenance reminder.
+// publishing runs as part of every release, so dropping any of these would
+// silently disable paid-participant reminders or calendar privacy upkeep.
 const crons = [
   {
     path: "/api/jobs/regeneration-maintenance-reminders",
     schedule: "15 1 * * 1"
+  },
+  {
+    path: "/api/jobs/group-healing-reminders",
+    schedule: "0 12 * * 2"
+  },
+  {
+    path: "/api/jobs/group-healing-calendar-sync",
+    schedule: "5 12 * * *"
   }
 ];
 const headers = [
