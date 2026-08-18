@@ -3,7 +3,7 @@ id: draft-editorial-template
 title: Draft editorial template for a future reviewed article
 slug: draft-editorial-template
 summary: This internal draft demonstrates the structured fields an editor uses before an article has received human review and approval.
-topic: practice-and-reflection
+topic: consciousness-and-reflection
 content_type: explainer
 audiences: [everyone]
 tags: [draft, editorial]

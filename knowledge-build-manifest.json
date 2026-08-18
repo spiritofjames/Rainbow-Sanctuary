@@ -3,19 +3,163 @@
   "sourceCommit": "source-controlled",
   "generatedAt": "2026-08-18T00:00:00.000Z",
   "compilerVersion": "1.0.0",
-  "articleCount": 1,
+  "articleCount": 5,
   "excludedDraftCount": 1,
   "routes": {
     "Knowledge.dc.html": "/knowledge",
     "Knowledge-Articles.dc.html": "/knowledge/articles",
     "Knowledge-Search.dc.html": "/knowledge/search",
     "Knowledge-Topic-getting-started.dc.html": "/knowledge/topics/getting-started",
-    "Knowledge-Topic-practice-and-reflection.dc.html": "/knowledge/topics/practice-and-reflection",
-    "Knowledge-Topic-community-and-gathering.dc.html": "/knowledge/topics/community-and-gathering",
-    "Knowledge-Topic-care-and-safety.dc.html": "/knowledge/topics/care-and-safety",
+    "Knowledge-Topic-consciousness-and-reflection.dc.html": "/knowledge/topics/consciousness-and-reflection",
+    "Knowledge-Topic-co-creation-and-community.dc.html": "/knowledge/topics/co-creation-and-community",
+    "Knowledge-Topic-earth-stewardship.dc.html": "/knowledge/topics/earth-stewardship",
+    "Knowledge-a-living-vision-for-rainbow-sanctuary.dc.html": "/knowledge/a-living-vision-for-rainbow-sanctuary",
+    "Knowledge-co-creation-principles-for-rainbow-sanctuary.dc.html": "/knowledge/co-creation-principles-for-rainbow-sanctuary",
+    "Knowledge-the-game-of-consciousness.dc.html": "/knowledge/the-game-of-consciousness",
+    "Knowledge-twelve-reflections-on-collective-consciousness.dc.html": "/knowledge/twelve-reflections-on-collective-consciousness",
     "Knowledge-using-the-library.dc.html": "/knowledge/using-the-library"
   },
   "entries": [
+    {
+      "id": "a-living-vision-for-rainbow-sanctuary",
+      "title": "A living vision for Rainbow Sanctuary",
+      "summary": "Rainbow Sanctuary is an evolving place for learning, relationship, contribution, and care for the living world.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/a-living-vision-for-rainbow-sanctuary",
+      "topic": {
+        "id": "earth-stewardship",
+        "name": "Earth stewardship"
+      },
+      "contentType": "explainer",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "vision",
+        "stewardship",
+        "regeneration",
+        "sanctuary",
+        "planetary-symbiosis"
+      ],
+      "author": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-08-18",
+      "updatedAt": "2026-08-18",
+      "reviewDueAt": "2027-02-18",
+      "locale": "en"
+    },
+    {
+      "id": "co-creation-principles-for-rainbow-sanctuary",
+      "title": "Co-creation principles for Rainbow Sanctuary",
+      "summary": "The principles that guide contribution at Rainbow Sanctuary: shared intention, diverse gifts, responsibility, learning, and grounded care for place.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/co-creation-principles-for-rainbow-sanctuary",
+      "topic": {
+        "id": "co-creation-and-community",
+        "name": "Co-creation and community"
+      },
+      "contentType": "explainer",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "co-creation",
+        "community",
+        "contribution",
+        "governance",
+        "responsibility"
+      ],
+      "author": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-08-18",
+      "updatedAt": "2026-08-18",
+      "reviewDueAt": "2027-02-18",
+      "locale": "en"
+    },
+    {
+      "id": "the-game-of-consciousness",
+      "title": "The game of consciousness",
+      "summary": "A reflective essay on meeting life with curiosity, compassion, responsibility, and room to grow.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/the-game-of-consciousness",
+      "topic": {
+        "id": "consciousness-and-reflection",
+        "name": "Consciousness and reflection"
+      },
+      "contentType": "practice",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "consciousness",
+        "reflection",
+        "compassion",
+        "meaning",
+        "growth"
+      ],
+      "author": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-08-18",
+      "updatedAt": "2026-08-18",
+      "reviewDueAt": "2027-02-18",
+      "locale": "en"
+    },
+    {
+      "id": "twelve-reflections-on-collective-consciousness",
+      "title": "Twelve reflections on collective consciousness",
+      "summary": "A contemplative framework for noticing separation, fear, scarcity, conflict, and the possibilities of connection and shared responsibility.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/twelve-reflections-on-collective-consciousness",
+      "topic": {
+        "id": "consciousness-and-reflection",
+        "name": "Consciousness and reflection"
+      },
+      "contentType": "practice",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "reflection",
+        "consciousness",
+        "community",
+        "diversity",
+        "stewardship"
+      ],
+      "author": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-08-18",
+      "updatedAt": "2026-08-18",
+      "reviewDueAt": "2027-02-18",
+      "locale": "en"
+    },
     {
       "id": "using-the-library",
       "title": "About this knowledge library",

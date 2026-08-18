@@ -27,7 +27,7 @@ collections:
       - { name: title, label: Title, widget: string }
       - { name: slug, label: URL slug, widget: string, pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Use lowercase kebab-case.'] }
       - { name: summary, label: Answer-first summary, widget: text }
-      - { name: topic, label: Topic, widget: select, options: [getting-started, practice-and-reflection, community-and-gathering, care-and-safety] }
+      - { name: topic, label: Topic, widget: select, options: [getting-started, consciousness-and-reflection, co-creation-and-community, earth-stewardship] }
       - { name: content_type, label: Content type, widget: select, options: [explainer, practice, faq, glossary, program-guide, research-note, safety, story] }
       - { name: audiences, label: Audiences, widget: list, field: { name: audience, label: Audience, widget: string } }
       - { name: tags, label: Search tags, widget: list, field: { name: tag, label: Tag, widget: string } }
