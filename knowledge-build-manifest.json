@@ -2,12 +2,14 @@
   "schemaVersion": "1.0",
   "sourceCommit": "source-controlled",
   "generatedAt": "2026-08-18T00:00:00.000Z",
-  "compilerVersion": "1.0.0",
-  "articleCount": 5,
+  "compilerVersion": "1.1.0",
+  "articleCount": 6,
+  "longReadCount": 1,
   "excludedDraftCount": 1,
   "routes": {
     "Knowledge.dc.html": "/knowledge",
     "Knowledge-Articles.dc.html": "/knowledge/articles",
+    "Knowledge-Long-Reads.dc.html": "/knowledge/long-reads",
     "Knowledge-Search.dc.html": "/knowledge/search",
     "Knowledge-Topic-getting-started.dc.html": "/knowledge/topics/getting-started",
     "Knowledge-Topic-consciousness-and-reflection.dc.html": "/knowledge/topics/consciousness-and-reflection",
@@ -15,6 +17,7 @@
     "Knowledge-Topic-earth-stewardship.dc.html": "/knowledge/topics/earth-stewardship",
     "Knowledge-a-living-vision-for-rainbow-sanctuary.dc.html": "/knowledge/a-living-vision-for-rainbow-sanctuary",
     "Knowledge-co-creation-principles-for-rainbow-sanctuary.dc.html": "/knowledge/co-creation-principles-for-rainbow-sanctuary",
+    "Knowledge-life-from-dust-to-the-stars.dc.html": "/knowledge/life-from-dust-to-the-stars",
     "Knowledge-the-game-of-consciousness.dc.html": "/knowledge/the-game-of-consciousness",
     "Knowledge-twelve-reflections-on-collective-consciousness.dc.html": "/knowledge/twelve-reflections-on-collective-consciousness",
     "Knowledge-using-the-library.dc.html": "/knowledge/using-the-library"
@@ -88,6 +91,41 @@
       "firstPublishedAt": "2026-08-18",
       "updatedAt": "2026-08-18",
       "reviewDueAt": "2027-02-18",
+      "locale": "en"
+    },
+    {
+      "id": "life-from-dust-to-the-stars",
+      "title": "Life: From Dust to the Stars",
+      "summary": "A long-form meditation by Stephanie Wu on origin, growth, hardship, connection, awakening, and the relationship between human life and the cosmos.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/life-from-dust-to-the-stars",
+      "topic": {
+        "id": "consciousness-and-reflection",
+        "name": "Consciousness and reflection"
+      },
+      "contentType": "story",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "long-read",
+        "book",
+        "life",
+        "consciousness",
+        "reflection"
+      ],
+      "author": {
+        "id": "stephanie-wu",
+        "name": "Stephanie Wu",
+        "role": "Author"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-08-18",
+      "updatedAt": "2026-08-18",
+      "reviewDueAt": "2027-08-18",
       "locale": "en"
     },
     {

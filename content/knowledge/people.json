@@ -6,6 +6,12 @@
       "name": "Rainbow Sanctuary Editorial Team",
       "role": "Website editorial team",
       "active": true
+    },
+    {
+      "id": "stephanie-wu",
+      "name": "Stephanie Wu",
+      "role": "Author",
+      "active": true
     }
   ]
 }
