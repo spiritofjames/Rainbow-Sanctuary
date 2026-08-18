@@ -87,11 +87,38 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     // Beijing is the single authoring time zone for Rainbow Sanctuary's supported group pathways.
     timezone: "Asia/Shanghai",
     groupHealing: {
-      frequency: "Twice monthly",
+      frequency: "Weekly",
       duration: "Approximately 60 minutes",
       price: "USD 22",
       checkoutEndpoint: "/api/stripe/create-checkout-session",
-      checkoutUrl: ""
+      checkoutUrl: "",
+      sessions: [{
+        id: "group-healing-2026-08-18",
+        title: "Grounding & Renewal",
+        category: "group",
+        startDate: "2026-08-18",
+        startDateTime: "2026-08-18T21:00:00+08:00",
+        time: "21:00",
+        timezone: "Asia/Makassar",
+        timezoneLabel: "Asia/Makassar / Beijing time",
+        location: "Online",
+        venue: "Zoom",
+        summary: "A guided Group Healing session for grounding, rest, and renewal.",
+        duration: "Approximately 60 minutes",
+        price: "USD 22",
+        status: "open",
+        registrationUrl: "/online-group-healing#choose-session",
+        checkoutUrl: ""
+      }],
+      weeklySchedule: {
+        title: "Weekly Group Healing",
+        startDate: "2026-08-25",
+        time: "21:00",
+        timezone: "Asia/Makassar",
+        timezoneLabel: "Asia/Makassar / Beijing time",
+        sessionCount: 52,
+        status: "open"
+      }
     },
     regenerationMaintenance: {
       frequency: "Fixed start 17 August 2026 · 12 weekly dates through 2 November 2026",
@@ -112,14 +139,14 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     publicCalendarUrl: "",
     items: [
       {
-        id: "group-healing-2026-08-22",
+        id: "group-healing-2026-08-18",
         title: "Grounding & Renewal",
         category: "group",
-        startDate: "2026-08-22",
-        startDateTime: "2026-08-22T20:00:00+08:00",
-        time: "20:00",
-        timezone: "Asia/Singapore",
-        timezoneLabel: "Singapore time",
+        startDate: "2026-08-18",
+        startDateTime: "2026-08-18T21:00:00+08:00",
+        time: "21:00",
+        timezone: "Asia/Makassar",
+        timezoneLabel: "Asia/Makassar / Beijing time",
         location: "Online",
         venue: "Zoom",
         summary: "A guided Group Healing session for grounding, rest, and renewal.",

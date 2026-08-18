@@ -7,12 +7,20 @@ const siteDir = path.resolve(scriptsDir, "..");
 const origin = "https://rainbowsanctuary.life";
 const lastmod = "2026-07-31";
 // Keep operational jobs in the generated Vercel configuration. Discovery
-// publishing runs as part of every release, so dropping this would silently
-// disable the Monday Maintenance reminder.
+// publishing runs as part of every release, so dropping any of these would
+// silently disable paid-participant reminders or calendar privacy upkeep.
 const crons = [
   {
     path: "/api/jobs/regeneration-maintenance-reminders",
     schedule: "15 1 * * 1"
+  },
+  {
+    path: "/api/jobs/group-healing-reminders",
+    schedule: "0 12 * * 2"
+  },
+  {
+    path: "/api/jobs/group-healing-calendar-sync",
+    schedule: "5 12 * * *"
   }
 ];
 const headers = [
@@ -249,11 +257,11 @@ function schemaFor(file, title, description, canonical, image) {
   if (file === "Online-Group-Healing.dc.html") {
     graph.push({
       "@type": "Event",
-      "@id": `${canonical}#event-2026-08-22`,
+      "@id": `${canonical}#event-2026-08-18`,
       name: "Grounding & Renewal — Online Group Session",
       description: "A guided online group wellbeing session for grounding, reflection, rest, and shared intention.",
       image,
-      startDate: "2026-08-22T20:00:00+08:00",
+      startDate: "2026-08-18T21:00:00+08:00",
       eventStatus: "https://schema.org/EventScheduled",
       eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
       location: {
@@ -265,7 +273,7 @@ function schemaFor(file, title, description, canonical, image) {
         "@type": "Offer",
         price: "22",
         priceCurrency: "USD",
-        availability: "https://schema.org/PreOrder",
+        availability: "https://schema.org/InStock",
         url: `${canonical}#choose-session`
       }
     });

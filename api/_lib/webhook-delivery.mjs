@@ -80,14 +80,19 @@ export function crmPaymentHandoff(event, { allowLive = false } = {}) {
   const paymentIntentId = typeof object.payment_intent === "string"
     ? object.payment_intent
     : object.payment_intent?.id || "";
+  // Stripe does not create a PaymentIntent for a Checkout Session that is
+  // completely discounted by a valid promotion code. The Checkout Session is
+  // still the authoritative paid booking record in that case, so use it as
+  // the provider reference rather than rejecting a real participant.
+  const providerPaymentId = paymentIntentId || String(object.id || "");
   const offerId = String(object.metadata?.offer_key || "");
   const sessionId = String(object.metadata?.event_id || "");
-  const identifiers = [event.id, object.id, paymentIntentId, offerId, sessionId];
+  const identifiers = [event.id, object.id, providerPaymentId, offerId, sessionId];
 
   if (
     object.payment_status !== "paid" ||
     !Number.isInteger(object.amount_total) ||
-    object.amount_total <= 0 ||
+    object.amount_total < 0 ||
     !Number.isInteger(amountSubtotalMinor) ||
     amountSubtotalMinor <= 0 ||
     object.amount_total > amountSubtotalMinor ||
@@ -113,7 +118,7 @@ export function crmPaymentHandoff(event, { allowLive = false } = {}) {
     eventId: event.id,
     occurredAt: new Date(event.created * 1000).toISOString(),
     offerId,
-    providerPaymentId: paymentIntentId,
+    providerPaymentId,
     schemaVersion: "rainbow.payment-handoff.v1",
     sessionId,
     stripeEventId: event.id
@@ -122,7 +127,7 @@ export function crmPaymentHandoff(event, { allowLive = false } = {}) {
 
 export function checkoutAmountMatchesApprovedPrice(handoff, approvedAmountMinor) {
   return handoff.amountSubtotalMinor === approvedAmountMinor &&
-    handoff.amountMinor > 0 &&
+    handoff.amountMinor >= 0 &&
     handoff.amountMinor <= handoff.amountSubtotalMinor;
 }
 
