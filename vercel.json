@@ -276,18 +276,38 @@
       "permanent": true
     },
     {
-      "source": "/Knowledge-Topic-practice-and-reflection.dc.html",
-      "destination": "/knowledge/topics/practice-and-reflection",
+      "source": "/Knowledge-Topic-consciousness-and-reflection.dc.html",
+      "destination": "/knowledge/topics/consciousness-and-reflection",
       "permanent": true
     },
     {
-      "source": "/Knowledge-Topic-community-and-gathering.dc.html",
-      "destination": "/knowledge/topics/community-and-gathering",
+      "source": "/Knowledge-Topic-co-creation-and-community.dc.html",
+      "destination": "/knowledge/topics/co-creation-and-community",
       "permanent": true
     },
     {
-      "source": "/Knowledge-Topic-care-and-safety.dc.html",
-      "destination": "/knowledge/topics/care-and-safety",
+      "source": "/Knowledge-Topic-earth-stewardship.dc.html",
+      "destination": "/knowledge/topics/earth-stewardship",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-a-living-vision-for-rainbow-sanctuary.dc.html",
+      "destination": "/knowledge/a-living-vision-for-rainbow-sanctuary",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-co-creation-principles-for-rainbow-sanctuary.dc.html",
+      "destination": "/knowledge/co-creation-principles-for-rainbow-sanctuary",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-the-game-of-consciousness.dc.html",
+      "destination": "/knowledge/the-game-of-consciousness",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-twelve-reflections-on-collective-consciousness.dc.html",
+      "destination": "/knowledge/twelve-reflections-on-collective-consciousness",
       "permanent": true
     },
     {
@@ -489,16 +509,32 @@
       "destination": "/Knowledge-Topic-getting-started.dc.html"
     },
     {
-      "source": "/knowledge/topics/practice-and-reflection",
-      "destination": "/Knowledge-Topic-practice-and-reflection.dc.html"
+      "source": "/knowledge/topics/consciousness-and-reflection",
+      "destination": "/Knowledge-Topic-consciousness-and-reflection.dc.html"
     },
     {
-      "source": "/knowledge/topics/community-and-gathering",
-      "destination": "/Knowledge-Topic-community-and-gathering.dc.html"
+      "source": "/knowledge/topics/co-creation-and-community",
+      "destination": "/Knowledge-Topic-co-creation-and-community.dc.html"
     },
     {
-      "source": "/knowledge/topics/care-and-safety",
-      "destination": "/Knowledge-Topic-care-and-safety.dc.html"
+      "source": "/knowledge/topics/earth-stewardship",
+      "destination": "/Knowledge-Topic-earth-stewardship.dc.html"
+    },
+    {
+      "source": "/knowledge/a-living-vision-for-rainbow-sanctuary",
+      "destination": "/Knowledge-a-living-vision-for-rainbow-sanctuary.dc.html"
+    },
+    {
+      "source": "/knowledge/co-creation-principles-for-rainbow-sanctuary",
+      "destination": "/Knowledge-co-creation-principles-for-rainbow-sanctuary.dc.html"
+    },
+    {
+      "source": "/knowledge/the-game-of-consciousness",
+      "destination": "/Knowledge-the-game-of-consciousness.dc.html"
+    },
+    {
+      "source": "/knowledge/twelve-reflections-on-collective-consciousness",
+      "destination": "/Knowledge-twelve-reflections-on-collective-consciousness.dc.html"
     },
     {
       "source": "/knowledge/using-the-library",
