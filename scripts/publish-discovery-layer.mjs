@@ -249,11 +249,11 @@ function schemaFor(file, title, description, canonical, image) {
   if (file === "Online-Group-Healing.dc.html") {
     graph.push({
       "@type": "Event",
-      "@id": `${canonical}#event-2026-08-22`,
+      "@id": `${canonical}#event-2026-08-18`,
       name: "Grounding & Renewal — Online Group Session",
       description: "A guided online group wellbeing session for grounding, reflection, rest, and shared intention.",
       image,
-      startDate: "2026-08-22T20:00:00+08:00",
+      startDate: "2026-08-18T21:00:00+08:00",
       eventStatus: "https://schema.org/EventScheduled",
       eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
       location: {
@@ -265,7 +265,7 @@ function schemaFor(file, title, description, canonical, image) {
         "@type": "Offer",
         price: "22",
         priceCurrency: "USD",
-        availability: "https://schema.org/PreOrder",
+        availability: "https://schema.org/InStock",
         url: `${canonical}#choose-session`
       }
     });

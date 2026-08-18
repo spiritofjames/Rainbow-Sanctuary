@@ -77,6 +77,7 @@ export const OFFER_CATALOG = Object.freeze([
         policy: "group-healing",
         // This persistent Price enables product-scoped promotion codes while
         // server checkout keeps the chosen session in its metadata.
+        stripePriceEnvironmentKey: "STRIPE_GROUP_HEALING_PRICE_ID",
         stripePriceId: "price_1U5T0nHrqlaOfUb7gorSAoaJ"
       })
     ]
