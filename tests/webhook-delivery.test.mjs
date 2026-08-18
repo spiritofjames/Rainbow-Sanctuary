@@ -18,11 +18,7 @@ const checkoutEvent = {
     object: {
       id: "cs_test_123",
       customer_details: { email: "private@example.com", name: "Private Person" },
-      custom_fields: [{
-        key: "client_display_name",
-        text: { value: "Generated Client" },
-        type: "text"
-      }],
+      custom_fields: [],
       payment_intent: "pi_test_123",
       payment_status: "paid",
       amount_subtotal: 2200,
@@ -52,7 +48,7 @@ test("the strict CRM handoff includes only the client identity needed for operat
     bookingReference: "cs_test_123",
     currency: "USD",
     customer: {
-      displayName: "Generated Client",
+      displayName: "Private Person",
       email: "private@example.com"
     },
     eventId: "evt_test_123",

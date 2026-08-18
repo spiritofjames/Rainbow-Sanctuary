@@ -52,12 +52,7 @@ test("the server owns the Stripe price and amount", () => {
   assert.match(parameters.custom_text.submit.message, /non-refundable/i);
   assert.match(parameters.custom_text.submit.message, /one reschedule/i);
   assert.match(parameters.custom_text.submit.message, /non-transferable/i);
-  assert.deepEqual(parameters.custom_fields, [{
-    key: "client_display_name",
-    label: { custom: "Full name", type: "custom" },
-    optional: false,
-    type: "text"
-  }]);
+  assert.equal(parameters.custom_fields, undefined);
   assert.equal(parameters.success_url, "https://staging.rainbowsanctuary.life/payment-confirmation?payment=confirmed&session_id={CHECKOUT_SESSION_ID}");
   assert.equal(parameters.cancel_url, "https://staging.rainbowsanctuary.life/online-group-healing?checkout=cancelled");
 });

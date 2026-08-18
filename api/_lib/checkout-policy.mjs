@@ -156,12 +156,6 @@ export function checkoutSessionParameters({ eventId, offer, origin, taxEnabled =
     custom_text: {
       submit: { message: policyMessage(offer) }
     },
-    custom_fields: [{
-      key: "client_display_name",
-      label: { custom: "Full name", type: "custom" },
-      optional: false,
-      type: "text"
-    }],
     metadata: {
       offer_key: offer.id,
       event_id: eventId,
