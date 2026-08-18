@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0",
+  "people": [
+    {
+      "id": "rainbow-editorial",
+      "name": "Rainbow Sanctuary Editorial Team",
+      "role": "Website editorial team",
+      "active": true
+    }
+  ]
+}

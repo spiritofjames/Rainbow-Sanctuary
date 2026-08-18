@@ -16,6 +16,15 @@
   ],
   "headers": [
     {
+      "source": "/admin/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
       "source": "/assets/documents/awakening-your-inner-light-retreat-2026.pdf",
       "headers": [
         {
@@ -29,7 +38,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self'; connect-src 'self' https://api.github.com https://github.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
         },
         {
           "key": "Permissions-Policy",
@@ -247,6 +256,76 @@
       "permanent": true
     },
     {
+      "source": "/Knowledge.dc.html",
+      "destination": "/knowledge",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-Articles.dc.html",
+      "destination": "/knowledge/articles",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-Long-Reads.dc.html",
+      "destination": "/knowledge/long-reads",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-Search.dc.html",
+      "destination": "/knowledge/search",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-Topic-getting-started.dc.html",
+      "destination": "/knowledge/topics/getting-started",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-Topic-consciousness-and-reflection.dc.html",
+      "destination": "/knowledge/topics/consciousness-and-reflection",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-Topic-co-creation-and-community.dc.html",
+      "destination": "/knowledge/topics/co-creation-and-community",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-Topic-earth-stewardship.dc.html",
+      "destination": "/knowledge/topics/earth-stewardship",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-a-living-vision-for-rainbow-sanctuary.dc.html",
+      "destination": "/knowledge/a-living-vision-for-rainbow-sanctuary",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-co-creation-principles-for-rainbow-sanctuary.dc.html",
+      "destination": "/knowledge/co-creation-principles-for-rainbow-sanctuary",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-life-from-dust-to-the-stars.dc.html",
+      "destination": "/knowledge/life-from-dust-to-the-stars",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-the-game-of-consciousness.dc.html",
+      "destination": "/knowledge/the-game-of-consciousness",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-twelve-reflections-on-collective-consciousness.dc.html",
+      "destination": "/knowledge/twelve-reflections-on-collective-consciousness",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-using-the-library.dc.html",
+      "destination": "/knowledge/using-the-library",
+      "permanent": true
+    },
+    {
       "source": "/Payment-Confirmation.dc.html",
       "destination": "/payment-confirmation",
       "permanent": true
@@ -263,6 +342,10 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/admin",
+      "destination": "/admin/index.html"
+    },
     {
       "source": "/",
       "destination": "/Home.dc.html"
@@ -418,6 +501,62 @@
     {
       "source": "/programs",
       "destination": "/Workshops.dc.html"
+    },
+    {
+      "source": "/knowledge",
+      "destination": "/Knowledge.dc.html"
+    },
+    {
+      "source": "/knowledge/articles",
+      "destination": "/Knowledge-Articles.dc.html"
+    },
+    {
+      "source": "/knowledge/long-reads",
+      "destination": "/Knowledge-Long-Reads.dc.html"
+    },
+    {
+      "source": "/knowledge/search",
+      "destination": "/Knowledge-Search.dc.html"
+    },
+    {
+      "source": "/knowledge/topics/getting-started",
+      "destination": "/Knowledge-Topic-getting-started.dc.html"
+    },
+    {
+      "source": "/knowledge/topics/consciousness-and-reflection",
+      "destination": "/Knowledge-Topic-consciousness-and-reflection.dc.html"
+    },
+    {
+      "source": "/knowledge/topics/co-creation-and-community",
+      "destination": "/Knowledge-Topic-co-creation-and-community.dc.html"
+    },
+    {
+      "source": "/knowledge/topics/earth-stewardship",
+      "destination": "/Knowledge-Topic-earth-stewardship.dc.html"
+    },
+    {
+      "source": "/knowledge/a-living-vision-for-rainbow-sanctuary",
+      "destination": "/Knowledge-a-living-vision-for-rainbow-sanctuary.dc.html"
+    },
+    {
+      "source": "/knowledge/co-creation-principles-for-rainbow-sanctuary",
+      "destination": "/Knowledge-co-creation-principles-for-rainbow-sanctuary.dc.html"
+    },
+    {
+      "source": "/knowledge/life-from-dust-to-the-stars",
+      "destination": "/Knowledge-life-from-dust-to-the-stars.dc.html"
+    },
+    {
+      "source": "/knowledge/the-game-of-consciousness",
+      "destination": "/Knowledge-the-game-of-consciousness.dc.html"
+    },
+    {
+      "source": "/knowledge/twelve-reflections-on-collective-consciousness",
+      "destination": "/Knowledge-twelve-reflections-on-collective-consciousness.dc.html"
+    },
+    {
+      "source": "/knowledge/using-the-library",
+      "destination": "/Knowledge-using-the-library.dc.html"
     },
     {
       "source": "/payment-confirmation",

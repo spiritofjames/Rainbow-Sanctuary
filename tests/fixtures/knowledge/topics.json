@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "topics": [
+    {
+      "id": "getting-started",
+      "name": "Getting started",
+      "short_description": "Practical orientation for using the Rainbow Sanctuary knowledge library.",
+      "order": 1,
+      "enabled": true
+    }
+  ]
+}

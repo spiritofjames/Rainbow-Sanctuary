@@ -25,6 +25,15 @@ const crons = [
 ];
 const headers = [
   {
+    source: "/admin/(.*)",
+    headers: [
+      {
+        key: "X-Robots-Tag",
+        value: "noindex, nofollow, noarchive"
+      }
+    ]
+  },
+  {
     source: "/assets/documents/awakening-your-inner-light-retreat-2026.pdf",
     headers: [
       {
@@ -38,7 +47,7 @@ const headers = [
     headers: [
       {
         key: "Content-Security-Policy",
-        value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+        value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self'; connect-src 'self' https://api.github.com https://github.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
       },
       {
         key: "Permissions-Policy",
@@ -60,7 +69,7 @@ const headers = [
   }
 ];
 
-const routes = {
+const baseRoutes = {
   "Home.dc.html": "/",
   "About-Stephanie.dc.html": "/about",
   "1-1-Sessions.dc.html": "/private-healing",
@@ -102,6 +111,18 @@ const routes = {
   "Workshops.dc.html": "/programs"
 };
 
+const knowledgeManifestPath = path.join(siteDir, "knowledge-build-manifest.json");
+const knowledgeManifest = fs.existsSync(knowledgeManifestPath)
+  ? JSON.parse(fs.readFileSync(knowledgeManifestPath, "utf8"))
+  : { routes: {}, entries: [] };
+const knowledgeRoutes = Object.fromEntries(
+  Object.entries(knowledgeManifest.routes || {}).filter(([file, route]) =>
+    /^Knowledge(?:-(?:Topic-)?[A-Za-z0-9-]+)?\.dc\.html$/.test(file)
+    && /^\/knowledge(?:\/[a-z0-9-]+)*$/.test(route)
+  )
+);
+const routes = { ...baseRoutes, ...knowledgeRoutes };
+
 // Transaction returns are routable but must never be indexed or enter the sitemap.
 const privateRoutes = {
   "Payment-Confirmation.dc.html": "/payment-confirmation",
@@ -109,6 +130,10 @@ const privateRoutes = {
   "144-Stages-Maintenance.dc.html": "/144-stages-maintenance"
 };
 const allRoutes = { ...routes, ...privateRoutes };
+
+const knowledgeEntryByPath = new Map(
+  (knowledgeManifest.entries || []).map((entry) => [new URL(entry.canonicalUrl).pathname, entry])
+);
 
 const pageTypes = {
   "About-Stephanie.dc.html": "AboutPage",
@@ -162,6 +187,22 @@ function ensureContributionFooterLink(source) {
     return footer.replace(
       /<\/footer>/i,
       '<div class="rs-footer-donate-wrap"><a href="/contribute">Donate to support</a></div>\n</footer>'
+    );
+  });
+}
+
+function ensureKnowledgeFooterLink(source) {
+  return source.replace(/<footer\b[\s\S]*?<\/footer>/i, (footer) => {
+    if (/href=["']\/knowledge["']/i.test(footer)) return footer;
+    if (/class=["'][^"']*rs-footer-legal[^"']*["']/i.test(footer)) {
+      return footer.replace(
+        /(<nav\b[^>]*class=["'][^"']*rs-footer-legal[^"']*["'][^>]*>[\s\S]*?)(<\/nav>)/i,
+        '$1\n          <a href="/knowledge">Knowledge library</a>\n        $2'
+      );
+    }
+    return footer.replace(
+      /<\/footer>/i,
+      '<div class="rs-footer-knowledge-wrap"><a href="/knowledge">Knowledge library</a></div>\n</footer>'
     );
   });
 }
@@ -299,6 +340,23 @@ function schemaFor(file, title, description, canonical, image) {
     });
   }
 
+  const knowledgeEntry = knowledgeEntryByPath.get(new URL(canonical).pathname);
+  if (knowledgeEntry) {
+    graph.push({
+      "@type": "Article",
+      "@id": `${canonical}#article`,
+      headline: knowledgeEntry.title,
+      description: knowledgeEntry.summary,
+      mainEntityOfPage: canonical,
+      datePublished: knowledgeEntry.firstPublishedAt,
+      dateModified: knowledgeEntry.updatedAt,
+      inLanguage: knowledgeEntry.locale,
+      author: { "@type": "Person", name: knowledgeEntry.author.name, jobTitle: knowledgeEntry.author.role },
+      reviewedBy: { "@type": "Person", name: knowledgeEntry.reviewer.name, jobTitle: knowledgeEntry.reviewer.role },
+      publisher: { "@id": `${origin}/#organization` }
+    });
+  }
+
   return {
     "@context": "https://schema.org",
     "@graph": graph
@@ -312,7 +370,7 @@ for (const [file, route] of Object.entries(routes)) {
   for (const [oldFile, cleanRoute] of Object.entries(allRoutes)) {
     source = source.replaceAll(oldFile, cleanRoute);
   }
-  source = ensureContributionFooterLink(source);
+  source = ensureKnowledgeFooterLink(ensureContributionFooterLink(source));
 
   const title = extract(source, /<title>([\s\S]*?)<\/title>/i, "Rainbow Sanctuary");
   const description = extract(
@@ -354,7 +412,7 @@ for (const [file, route] of Object.entries(routes)) {
 for (const file of fs.readdirSync(siteDir).filter((name) => name.endsWith(".dc.html"))) {
   const filePath = path.join(siteDir, file);
   let source = fs.readFileSync(filePath, "utf8");
-  source = ensureContributionFooterLink(source).replace(/[ \t]+$/gm, "");
+  source = ensureKnowledgeFooterLink(ensureContributionFooterLink(source)).replace(/[ \t]+$/gm, "");
   fs.writeFileSync(filePath, source);
 }
 
@@ -382,10 +440,13 @@ const redirects = Object.entries(allRoutes).map(([file, route]) => ({
   permanent: true
 }));
 
-const rewrites = Object.entries(allRoutes).map(([file, route]) => ({
+const rewrites = [
+  { source: "/admin", destination: "/admin/index.html" },
+  ...Object.entries(allRoutes).map(([file, route]) => ({
   source: route,
   destination: `/${file}`
-}));
+}))
+];
 
 fs.writeFileSync(
   path.join(siteDir, "vercel.json"),
@@ -395,7 +456,10 @@ fs.writeFileSync(
 const sitemap = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-  ...Object.values(routes).map((route) => `  <url><loc>${origin}${route}</loc><lastmod>${lastmod}</lastmod></url>`),
+  ...Object.values(routes).filter((route) => route !== "/knowledge/search").map((route) => {
+    const entry = knowledgeEntryByPath.get(route);
+    return `  <url><loc>${origin}${route}</loc><lastmod>${entry?.updatedAt || lastmod}</lastmod></url>`;
+  }),
   "</urlset>",
   ""
 ].join("\n");
@@ -426,6 +490,10 @@ Sitemap: ${origin}/sitemap.xml
 `;
 fs.writeFileSync(path.join(siteDir, "robots.txt"), robots);
 
+const knowledgeLlms = (knowledgeManifest.entries || []).length
+  ? `\n## Knowledge library\n\n- [Knowledge home](${origin}/knowledge): Reviewed public knowledge and topic browsing\n- [Knowledge search](${origin}/knowledge/search): Search approved Rainbow Sanctuary articles\n${knowledgeManifest.entries.map((entry) => `- [${entry.title}](${entry.canonicalUrl}): ${entry.summary}`).join("\n")}\n`
+  : "";
+
 const llms = `# Rainbow Sanctuary
 
 > Rainbow Sanctuary is a global community offering spiritual wellbeing experiences, conscious-development programs, family support, practitioner pathways, online gatherings, and in-person retreats. Its work is educational and experiential and does not replace medical or mental-health care.
@@ -454,6 +522,8 @@ const llms = `# Rainbow Sanctuary
 - [Community Stories](${origin}/community-stories): Published community experiences
 - [Donate to support access](${origin}/contribute): Voluntary contributions that help keep selected pathways accessible
 
+${knowledgeLlms}
+
 ## Policies and scope
 
 - [Wellbeing disclaimer](${origin}/wellbeing-disclaimer)
@@ -479,6 +549,8 @@ const llmsFull = `# Rainbow Sanctuary — Extended Site Guide
 Rainbow Sanctuary is a global spiritual wellbeing and conscious-development community co-founded by Stephanie Wu. It brings together accessible online group experiences, a progressive four-level Spiral Journey, focused programs, children-and-family work, practitioner pathways, private sessions, retreats, and an Earth-centred regenerative vision.
 
 The site speaks about spiritual and energetic practices as part of Rainbow Sanctuary's own framework. These offerings are educational and experiential. They are not medical diagnosis, treatment, psychotherapy, or a replacement for qualified professional care.
+
+${knowledgeLlms}
 
 ## Recommended visitor pathways
 
