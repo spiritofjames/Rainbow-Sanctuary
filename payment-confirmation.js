@@ -30,6 +30,36 @@
     details.classList.remove("is-hidden");
   }
 
+  function ordinaryPaymentCopy(result) {
+    if (result.offer === "group-healing") {
+      return {
+        title: "Your Group Healing place is confirmed.",
+        summary: "Your Zoom access and session details are being sent to the email address used at checkout.",
+        nextHeading: "Your session details",
+        nextText: "Your confirmation email contains your private Zoom link, the session date and time, and an Add to Calendar link. We will send a reminder one hour before the session. No WhatsApp follow-up is required for this booking.",
+        helpText: "If you cannot find your confirmation within 10 minutes, check spam or contact bookings@rainbowsanctuary.life."
+      };
+    }
+
+    if (String(result.offer || "").startsWith("regeneration-maintenance-")) {
+      return {
+        title: "Your ReGeneration Maintenance place is confirmed.",
+        summary: "Your confirmation and the complete set of included dates are being sent to the email address used at checkout.",
+        nextHeading: "Your next steps",
+        nextText: "Your email confirms your commitment and includes the relevant dates and practical reminders. There is no Zoom call or live attendance for this programme.",
+        helpText: "If you cannot find your confirmation within 10 minutes, check spam or contact bookings@rainbowsanctuary.life."
+      };
+    }
+
+    return {
+      title: "Your payment has been received.",
+      summary: "Your purchase is confirmed. Programme or scheduling details will be sent to the email address used at checkout.",
+      nextHeading: "What happens next",
+      nextText: "Please check your email for your confirmation and next steps. If a direct conversation is needed for your chosen programme, the Rainbow Sanctuary team will contact you using the details you provided.",
+      helpText: "If you cannot find your confirmation within 10 minutes, check spam or contact bookings@rainbowsanctuary.life."
+    };
+  }
+
   async function verify() {
     if (!sessionId) {
       title.textContent = "We couldn’t verify this payment return.";
@@ -69,8 +99,12 @@
         return;
       }
 
-      title.textContent = "Your payment has been received.";
-      summary.textContent = "Thank you. Your place is now being prepared. A Rainbow Sanctuary team member will reach out through WhatsApp with the next steps, and we will also email your confirmation.";
+      const copy = ordinaryPaymentCopy(result);
+      title.textContent = copy.title;
+      summary.textContent = copy.summary;
+      next.querySelector("h2").textContent = copy.nextHeading;
+      next.querySelector("p").textContent = copy.nextText;
+      help.textContent = copy.helpText;
       showDetails(result);
       next.classList.remove("is-hidden");
     } catch (_) {

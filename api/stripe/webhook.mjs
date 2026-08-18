@@ -46,17 +46,10 @@ export default async function handler(request, response) {
       !isInternalPaymentTest(governedEvent) &&
       !isOptionalContributionSession(governedEvent?.data?.object, process.env)
     ) {
-      const hubspot = await mirrorHubSpotPurchase(governedEvent, process.env);
-      await attemptPurchaseOperationsNotification(governedEvent, hubspot, process.env);
-      try {
-        calendarRoster = await syncPaidGroupHealingParticipant(governedEvent, process.env);
-      } catch (calendarError) {
-        // The verified payment and HubSpot record are authoritative. A staff
-        // calendar outage must be visible for follow-up but must not block a
-        // paid participant's confirmation or cause Stripe to retry a charge.
-        console.error("stripe_group_healing_calendar_roster_error", { eventId: event.id, message: calendarError.message });
-        calendarRoster = { enabled: false, reason: "failed" };
-      }
+      // The participant confirmation is the first operational action after a
+      // verified Stripe payment. It is independently idempotent, so a later
+      // temporary CRM error cannot strand a paid person without their access
+      // details while Stripe retries the event.
       try {
         bookingEmail = await sendPurchaseConfirmation(governedEvent, process.env);
       } catch (emailError) {
@@ -67,6 +60,17 @@ export default async function handler(request, response) {
           message: emailError.message
         });
         bookingEmail = { sent: false, reason: "failed" };
+      }
+      const hubspot = await mirrorHubSpotPurchase(governedEvent, process.env);
+      await attemptPurchaseOperationsNotification(governedEvent, hubspot, process.env);
+      try {
+        calendarRoster = await syncPaidGroupHealingParticipant(governedEvent, process.env);
+      } catch (calendarError) {
+        // The verified payment and HubSpot record are authoritative. A staff
+        // calendar outage must be visible for follow-up but must not block a
+        // paid participant's confirmation or cause Stripe to retry a charge.
+        console.error("stripe_group_healing_calendar_roster_error", { eventId: event.id, message: calendarError.message });
+        calendarRoster = { enabled: false, reason: "failed" };
       }
     }
     try {

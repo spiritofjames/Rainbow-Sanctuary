@@ -45,6 +45,22 @@ test("verified Group Healing payment builds a minimal, idempotent booking confir
   assert.match(message.variables.ACCESS_URL, /^https:\/\/rainbowsanctuary\.zoom\.us\//);
 });
 
+test("a fully discounted but Stripe-confirmed Group Healing booking still receives Zoom access", () => {
+  const event = checkoutEvent({
+    data: { object: {
+      ...checkoutEvent().data.object,
+      payment_intent: null,
+      amount_subtotal: 2200,
+      amount_total: 0
+    } }
+  });
+  const message = bookingConfirmationFromStripeEvent(event, {
+    environment: { GROUP_HEALING_ZOOM_JOIN_URL: "https://rainbowsanctuary.zoom.us/j/123456789?pwd=secure" }
+  });
+  assert.equal(message.to, "reviewer@example.com");
+  assert.match(message.variables.ACCESS_URL, /^https:\/\/rainbowsanctuary\.zoom\.us\//);
+});
+
 test("verified Regeneration Maintenance payment builds a commitment-specific confirmation", () => {
   const event = checkoutEvent({
     data: {
