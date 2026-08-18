@@ -23,12 +23,19 @@ test('AC-001 / AC-002: compiles approved public content and excludes drafts from
   assert.equal(result.excludedDraftCount, 1);
 
   const article = await readFile(path.join(outputDir, 'Knowledge-using-the-library.dc.html'), 'utf8');
+  const landing = await readFile(path.join(outputDir, 'Knowledge.dc.html'), 'utf8');
+  const directory = await readFile(path.join(outputDir, 'Knowledge-Articles.dc.html'), 'utf8');
   const index = await readFile(path.join(outputDir, 'knowledge-index.json'), 'utf8');
   const manifest = await readFile(path.join(outputDir, 'knowledge-build-manifest.json'), 'utf8');
   const combined = `${article}\n${index}\n${manifest}`;
 
   assert.match(article, /data-pagefind-body/);
   assert.match(article, /About this knowledge library/);
+  assert.match(landing, /Recent articles/);
+  assert.match(landing, /href="\/knowledge\/articles">Explore all articles/);
+  assert.match(directory, /Explore all articles/);
+  assert.match(directory, /using-the-library/);
+  assert.match(manifest, /"Knowledge-Articles\.dc\.html": "\/knowledge\/articles"/);
   assert.doesNotMatch(combined, /PRIVATE_DRAFT_SENTINEL/);
   assert.doesNotMatch(combined, /private-source-path/);
 });

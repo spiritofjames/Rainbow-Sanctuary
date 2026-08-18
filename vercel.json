@@ -261,6 +261,11 @@
       "permanent": true
     },
     {
+      "source": "/Knowledge-Articles.dc.html",
+      "destination": "/knowledge/articles",
+      "permanent": true
+    },
+    {
       "source": "/Knowledge-Search.dc.html",
       "destination": "/knowledge/search",
       "permanent": true
@@ -470,6 +475,10 @@
     {
       "source": "/knowledge",
       "destination": "/Knowledge.dc.html"
+    },
+    {
+      "source": "/knowledge/articles",
+      "destination": "/Knowledge-Articles.dc.html"
     },
     {
       "source": "/knowledge/search",

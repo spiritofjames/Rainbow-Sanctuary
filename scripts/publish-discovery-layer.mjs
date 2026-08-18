@@ -191,6 +191,22 @@ function ensureContributionFooterLink(source) {
   });
 }
 
+function ensureKnowledgeFooterLink(source) {
+  return source.replace(/<footer\b[\s\S]*?<\/footer>/i, (footer) => {
+    if (/href=["']\/knowledge["']/i.test(footer)) return footer;
+    if (/class=["'][^"']*rs-footer-legal[^"']*["']/i.test(footer)) {
+      return footer.replace(
+        /(<nav\b[^>]*class=["'][^"']*rs-footer-legal[^"']*["'][^>]*>[\s\S]*?)(<\/nav>)/i,
+        '$1\n          <a href="/knowledge">Knowledge library</a>\n        $2'
+      );
+    }
+    return footer.replace(
+      /<\/footer>/i,
+      '<div class="rs-footer-knowledge-wrap"><a href="/knowledge">Knowledge library</a></div>\n</footer>'
+    );
+  });
+}
+
 const organization = {
   "@type": "Organization",
   "@id": `${origin}/#organization`,
@@ -354,7 +370,7 @@ for (const [file, route] of Object.entries(routes)) {
   for (const [oldFile, cleanRoute] of Object.entries(allRoutes)) {
     source = source.replaceAll(oldFile, cleanRoute);
   }
-  source = ensureContributionFooterLink(source);
+  source = ensureKnowledgeFooterLink(ensureContributionFooterLink(source));
 
   const title = extract(source, /<title>([\s\S]*?)<\/title>/i, "Rainbow Sanctuary");
   const description = extract(
@@ -396,7 +412,7 @@ for (const [file, route] of Object.entries(routes)) {
 for (const file of fs.readdirSync(siteDir).filter((name) => name.endsWith(".dc.html"))) {
   const filePath = path.join(siteDir, file);
   let source = fs.readFileSync(filePath, "utf8");
-  source = ensureContributionFooterLink(source).replace(/[ \t]+$/gm, "");
+  source = ensureKnowledgeFooterLink(ensureContributionFooterLink(source)).replace(/[ \t]+$/gm, "");
   fs.writeFileSync(filePath, source);
 }
 

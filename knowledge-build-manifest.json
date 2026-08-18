@@ -7,6 +7,7 @@
   "excludedDraftCount": 1,
   "routes": {
     "Knowledge.dc.html": "/knowledge",
+    "Knowledge-Articles.dc.html": "/knowledge/articles",
     "Knowledge-Search.dc.html": "/knowledge/search",
     "Knowledge-Topic-getting-started.dc.html": "/knowledge/topics/getting-started",
     "Knowledge-Topic-practice-and-reflection.dc.html": "/knowledge/topics/practice-and-reflection",
