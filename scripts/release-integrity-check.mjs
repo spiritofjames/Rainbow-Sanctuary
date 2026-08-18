@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 
 const requiredFiles = [
   'favicon.svg',
@@ -18,6 +18,7 @@ const requiredFiles = [
   'Online-Group-Healing.dc.html',
   '144-Stages-Maintenance.dc.html',
   'Knowledge.dc.html',
+  'Knowledge-Articles.dc.html',
   'Knowledge-Search.dc.html',
   'knowledge-build-manifest.json',
   'knowledge-index.json',
@@ -50,7 +51,6 @@ const requiredNavigationItems = [
   "{ label: 'Regeneration Maintenance', href: '/144-stages-maintenance' }",
   "{ label: 'Autism & Family Support', href: '/autism-family-support' }",
   "{ label: 'Young People’s Wellbeing Support', href: '/young-people-wellbeing' }",
-  "{ key: 'knowledge', label: 'Knowledge', href: '/knowledge', children: null }",
 ];
 
 for (const file of navigationFiles) {
@@ -67,6 +67,16 @@ for (const file of navigationFiles) {
   }
 }
 
+const footerPages = readdirSync('.').filter((file) => file.endsWith('.dc.html'))
+  .map((file) => [file, readFileSync(file, 'utf8')])
+  .filter(([, source]) => /<footer\b/i.test(source));
+for (const [file, source] of footerPages) {
+  const footer = source.match(/<footer\b[\s\S]*?<\/footer>/i)?.[0] || '';
+  if (!/href=["']\/knowledge["']/.test(footer)) {
+    throw new Error(`Release integrity check failed. ${file} footer is missing the Knowledge library link.`);
+  }
+}
+
 const knowledge = JSON.parse(readFileSync('knowledge-index.json', 'utf8'));
 if (!Array.isArray(knowledge.entries)) {
   throw new Error('Release integrity check failed. knowledge-index.json has no public entries array.');
@@ -80,4 +90,4 @@ for (const entry of knowledge.entries) {
   }
 }
 
-console.log(`Release integrity passed: ${requiredFiles.length} required files, knowledge artifacts, reminder cron, favicon manifest, and primary navigation are present.`);
+console.log(`Release integrity passed: ${requiredFiles.length} required files, knowledge artifacts, reminder cron, favicon manifest, primary navigation, and Knowledge footer links are present.`);
