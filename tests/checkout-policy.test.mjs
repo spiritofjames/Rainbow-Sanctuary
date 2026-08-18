@@ -11,14 +11,14 @@ const requestId = "7fc6a4ba-6f9a-4a7e-9e98-ef0b7bf9379e";
 
 test("only explicitly opened event identifiers are accepted", () => {
   const environment = {
-    STRIPE_ALLOWED_GROUP_EVENT_IDS: "group-healing-2026-08-22",
+    STRIPE_ALLOWED_GROUP_EVENT_IDS: "group-healing-2026-08-18",
     STRIPE_ALLOWED_OFFER_IDS: "group-healing"
   };
   const result = validateCheckoutRequest(
-    { eventId: "group-healing-2026-08-22", requestId },
+    { eventId: "group-healing-2026-08-18", requestId },
     environment
   );
-  assert.equal(result.eventId, "group-healing-2026-08-22");
+  assert.equal(result.eventId, "group-healing-2026-08-18");
   assert.equal(result.offerId, "group-healing");
   assert.equal(result.requestId, requestId);
   assert.equal(result.offer.amountMinor, 2_200);
@@ -30,22 +30,21 @@ test("only explicitly opened event identifiers are accepted", () => {
 
 test("the server owns the Stripe price and amount", () => {
   const { offer } = validateCheckoutRequest({
-    eventId: "group-healing-2026-08-22",
+    eventId: "group-healing-2026-08-18",
     offerId: "group-healing",
     requestId
   }, {
-    STRIPE_ALLOWED_GROUP_EVENT_IDS: "group-healing-2026-08-22",
+    STRIPE_ALLOWED_GROUP_EVENT_IDS: "group-healing-2026-08-18",
     STRIPE_ALLOWED_OFFER_IDS: "group-healing"
   });
   const parameters = checkoutSessionParameters({
-    eventId: "group-healing-2026-08-22",
+    eventId: "group-healing-2026-08-18",
     offer,
     origin: "https://staging.rainbowsanctuary.life"
   });
-  assert.equal(parameters.line_items[0].price_data.unit_amount, 2_200);
-  assert.equal(parameters.line_items[0].price_data.currency, "usd");
-  assert.equal(parameters.client_reference_id, "group-healing-2026-08-22");
-  assert.equal(parameters.metadata.event_id, "group-healing-2026-08-22");
+  assert.deepEqual(parameters.line_items, [{ price: "price_1U5T0nHrqlaOfUb7gorSAoaJ", quantity: 1 }]);
+  assert.equal(parameters.client_reference_id, "group-healing-2026-08-18");
+  assert.equal(parameters.metadata.event_id, "group-healing-2026-08-18");
   assert.equal(parameters.metadata.policy_key, "group-healing");
   assert.equal(parameters.allow_promotion_codes, true);
   assert.match(parameters.custom_text.submit.message, /non-refundable/i);
@@ -59,6 +58,13 @@ test("the server owns the Stripe price and amount", () => {
   }]);
   assert.equal(parameters.success_url, "https://staging.rainbowsanctuary.life/payment-confirmation?payment=confirmed&session_id={CHECKOUT_SESSION_ID}");
   assert.equal(parameters.cancel_url, "https://staging.rainbowsanctuary.life/online-group-healing?checkout=cancelled");
+});
+
+test("weekly Group Healing session identifiers are validated by the authored schedule", () => {
+  const result = validateCheckoutRequest({
+    eventId: "group-healing-weekly-2026-08-25", offerId: "group-healing", requestId
+  }, { STRIPE_ALLOWED_OFFER_IDS: "group-healing" });
+  assert.equal(result.eventId, "group-healing-weekly-2026-08-25");
 });
 
 test("Regeneration Maintenance uses one of two fixed server-owned commitments", () => {

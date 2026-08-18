@@ -35,7 +35,8 @@ const variant = ({
   sessionId,
   policy = "program-purchase",
   internalPaymentTest = false,
-  stripePriceEnvironmentKey = ""
+  stripePriceEnvironmentKey = "",
+  stripePriceId = ""
 }) => Object.freeze({
   id,
   name,
@@ -44,6 +45,7 @@ const variant = ({
   currency: "usd",
   internalPaymentTest,
   stripePriceEnvironmentKey,
+  stripePriceId,
   sessionId,
   policy
 });
@@ -71,8 +73,11 @@ export const OFFER_CATALOG = Object.freeze([
         name: "Group Healing — single session",
         baseAmountUsd: 20,
         amountUsd: 22,
-        sessionId: "group-healing-2026-08-22",
-        policy: "group-healing"
+        sessionId: "group-healing-2026-08-18",
+        policy: "group-healing",
+        // This persistent Price enables product-scoped promotion codes while
+        // server checkout keeps the chosen session in its metadata.
+        stripePriceId: "price_1U5T0nHrqlaOfUb7gorSAoaJ"
       })
     ]
   }),

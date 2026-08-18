@@ -24,7 +24,7 @@ function checkoutEvent(overrides = {}) {
         custom_fields: [{ key: "client_display_name", text: { value: "Reviewer" } }],
         metadata: {
           offer_key: "group-healing",
-          event_id: "group-healing-2026-08-22"
+          event_id: "group-healing-2026-08-18"
         }
       }
     },
@@ -38,6 +38,8 @@ test("verified Group Healing payment builds a minimal, idempotent booking confir
   assert.equal(message.to, "reviewer@example.com");
   assert.equal(message.idempotencyKey, "stripe:evt_test_booking_123:booking-confirmed");
   assert.equal(message.variables.EVENT_TITLE, "Grounding & Renewal");
+  assert.equal(message.variables.EVENT_TIME, "9:00 PM");
+  assert.match(message.variables.EVENT_DATE, /Tuesday, 18 August 2026/);
   assert.match(message.variables.CALENDAR_URL, /^https:\/\/calendar\.google\.com\/calendar\/render\?/);
   assert.match(message.variables.LOCATION, /access details follow separately/i);
 });
