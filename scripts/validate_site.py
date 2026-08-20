@@ -160,7 +160,9 @@ def validate_discovery_layer(
 ) -> None:
     discovery_routes = {
         route: target for route, target in route_map.items()
-        if route not in PRIVATE_ROUTES and route not in {"/admin", "/knowledge/search"}
+        if route not in PRIVATE_ROUTES
+        and route not in {"/admin", "/knowledge/search"}
+        and Path(target).name not in COMPONENT_PAGES
     }
     if len(discovery_routes) < 39:
         errors.append(f"vercel.json: expected at least the 39 baseline canonical routes, found {len(discovery_routes)}")
