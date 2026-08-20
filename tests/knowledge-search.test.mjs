@@ -37,4 +37,24 @@ test('search preserves an accessible empty-query and failure fallback', async ()
   assert.match(search, /Browse knowledge topics/);
   assert.match(page, /role="status" aria-live="polite"/);
   assert.match(page, /<noscript>/);
+  assert.match(page, /knowledge-search\.js\?v=20260820-knowledge2/);
+});
+
+test('search initializes after the asynchronous Design Components render', async () => {
+  const search = await read('knowledge-search.js');
+
+  assert.match(search, /const initializeKnowledgeSearch = \(form\) =>/);
+  assert.match(search, /form\.dataset\.knowledgeSearchReady/);
+  assert.match(search, /new MutationObserver\(initializeAvailableSearch\)/);
+  assert.match(search, /observer\.observe\(document\.body, \{ childList: true, subtree: true \}\)/);
+  assert.doesNotMatch(search, /^const form = document\.querySelector/m);
+});
+
+test('nested knowledge routes resolve the shared site navigation component', async () => {
+  const vercel = JSON.parse(await read('vercel.json'));
+
+  assert.ok(vercel.rewrites.some(({ source, destination }) =>
+    source === '/knowledge/SiteNavFixed.dc.html' && destination === '/SiteNavFixed.dc.html'));
+  assert.ok(vercel.rewrites.some(({ source, destination }) =>
+    source === '/knowledge/(.*)/SiteNavFixed.dc.html' && destination === '/SiteNavFixed.dc.html'));
 });

@@ -163,7 +163,7 @@ function pageShell({ title, description, body, canonicalPath, robots = 'index,fo
 <link rel="stylesheet" href="/knowledge.css?v=20260818-knowledge1">
 <script src="/site-config.js"></script>
 <script src="/support.js"></script>
-<script src="/knowledge-search.js?v=20260818-knowledge1" defer></script>
+<script src="/knowledge-search.js?v=20260820-knowledge2" defer></script>
 <!-- rs-discovery:start -->
 <link rel="canonical" href="${canonical}">
 <meta name="robots" content="${robots}">
