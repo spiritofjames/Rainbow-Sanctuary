@@ -16,7 +16,7 @@
   ],
   "headers": [
     {
-      "source": "/admin/(.*)",
+      "source": "/guardian/(.*)",
       "headers": [
         {
           "key": "X-Robots-Tag",
@@ -347,8 +347,8 @@
   ],
   "rewrites": [
     {
-      "source": "/admin",
-      "destination": "/admin/index.html"
+      "source": "/guardian",
+      "destination": "/guardian/index.html"
     },
     {
       "source": "/knowledge/SiteNavFixed.dc.html",

@@ -6,7 +6,7 @@ import MarkdownIt from 'markdown-it';
 const ARTICLE_STATUSES = new Set(['draft', 'in-review', 'approved', 'archived']);
 const CONTENT_TYPES = new Set(['explainer', 'practice', 'faq', 'glossary', 'program-guide', 'research-note', 'safety', 'story']);
 const CLAIM_LEVELS = new Set(['none', 'general-wellbeing', 'sensitive-health']);
-const RESERVED_SLUGS = new Set(['search', 'topics', 'admin', 'index']);
+const RESERVED_SLUGS = new Set(['search', 'topics', 'admin', 'guardian', 'index']);
 const origin = 'https://rainbowsanctuary.life';
 
 const markdown = new MarkdownIt({ html: false, linkify: true, typographer: true });
