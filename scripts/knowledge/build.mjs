@@ -13,6 +13,7 @@ const previousManifestPath = path.join(root, 'knowledge-build-manifest.json');
 const pagefindDir = path.join(root, 'pagefind');
 const pagefindInputManifestPath = path.join(root, 'pagefind-build-manifest.json');
 const pagefindVersion = '1.5.2';
+const pagefindGlob = 'Knowledge-[a-z]*.dc.html';
 const safeGeneratedName = (name) => /^Knowledge(?:-(?:Topic-)?[A-Za-z0-9-]+)?\.dc\.html$/.test(name);
 const pagefindWasmFiles = ['wasm.en.pagefind', 'wasm.unknown.pagefind'];
 
@@ -59,7 +60,8 @@ try {
   const previousPagefindInput = JSON.parse(await readFile(pagefindInputManifestPath, 'utf8'));
   await access(path.join(pagefindDir, 'pagefind-entry.json'));
   canReusePagefind = previousPagefindInput.inputHash === currentPagefindInputHash
-    && previousPagefindInput.pagefindVersion === pagefindVersion;
+    && previousPagefindInput.pagefindVersion === pagefindVersion
+    && previousPagefindInput.glob === pagefindGlob;
 } catch (error) {
   if (error.code !== 'ENOENT') throw error;
 }
@@ -69,13 +71,13 @@ try {
 // shards cannot affect the entry hash or ship alongside the active index.
 if (!canReusePagefind) {
   await rm(pagefindDir, { recursive: true, force: true });
-  await exec(path.join(root, 'node_modules/.bin/pagefind'), ['--site', root, '--glob', 'Knowledge-*.dc.html', '--force-language', 'en']);
+  await exec(path.join(root, 'node_modules/.bin/pagefind'), ['--site', root, '--glob', pagefindGlob, '--force-language', 'en']);
   for (const [name, contents] of existingPagefindWasm) {
     await writeFile(path.join(pagefindDir, name), contents);
   }
   await writeFile(
     pagefindInputManifestPath,
-    `${JSON.stringify({ pagefindVersion, inputHash: currentPagefindInputHash }, null, 2)}\n`
+    `${JSON.stringify({ pagefindVersion, glob: pagefindGlob, inputHash: currentPagefindInputHash }, null, 2)}\n`
   );
 }
 console.log(`Knowledge build complete: ${result.publicArticles.length} public article(s), ${result.excludedDraftCount} excluded draft or archived article(s).`);
