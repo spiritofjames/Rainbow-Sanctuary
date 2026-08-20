@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { access, readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 const read = (file) => readFile(new URL(`../${file}`, import.meta.url), 'utf8');
 
 test('editor is constrained to the protected staging workflow', async () => {
-  const config = await read('admin/config.yml');
+  const config = await read('guardian/config.yml');
 
   assert.match(config, /repo: spiritofjames\/Rainbow-Sanctuary/);
   assert.match(config, /branch: staging/);
@@ -17,7 +17,7 @@ test('editor is constrained to the protected staging workflow', async () => {
 });
 
 test('editor schema preserves the knowledge safety boundary', async () => {
-  const config = await read('admin/config.yml');
+  const config = await read('guardian/config.yml');
 
   assert.match(config, /pattern: \['\^\[a-z0-9\]\+\(\?:-\[a-z0-9\]\+\)\*\$'/);
   assert.match(config, /options: \[draft, in-review, approved, archived\]/);
@@ -31,25 +31,28 @@ test('editor schema preserves the knowledge safety boundary', async () => {
 });
 
 test('editor shell is private-by-discovery and loads only the vendored CMS bundle', async () => {
-  const [admin, vercel, support] = await Promise.all([
-    read('admin/index.html'),
+  const [guardian, vercel, support] = await Promise.all([
+    read('guardian/index.html'),
     read('vercel.json').then(JSON.parse),
     read('support.js'),
   ]);
 
-  assert.match(admin, /name="robots" content="noindex,nofollow,noarchive"/);
-  assert.match(admin, /<script src="\/admin\/sveltia-cms\.js"><\/script>/);
-  assert.doesNotMatch(admin, /<script[^>]+src="https?:\/\//);
+  assert.match(guardian, /name="robots" content="noindex,nofollow,noarchive"/);
+  assert.match(guardian, /<script src="\/guardian\/sveltia-cms\.js"><\/script>/);
+  assert.doesNotMatch(guardian, /<script[^>]+src="https?:\/\//);
 
-  const adminHeaders = vercel.headers.find(({ source }) => source === '/admin/(.*)');
-  assert.ok(adminHeaders, 'Vercel must apply private-discovery headers to /admin');
+  const guardianHeaders = vercel.headers.find(({ source }) => source === '/guardian/(.*)');
+  assert.ok(guardianHeaders, 'Vercel must apply private-discovery headers to /guardian');
   assert.equal(
-    adminHeaders.headers.find(({ key }) => key === 'X-Robots-Tag')?.value,
+    guardianHeaders.headers.find(({ key }) => key === 'X-Robots-Tag')?.value,
     'noindex, nofollow, noarchive',
   );
-  const adminCsp = adminHeaders.headers.find(({ key }) => key === 'Content-Security-Policy')?.value ?? '';
-  assert.match(adminCsp, /script-src 'self' 'unsafe-inline' 'unsafe-eval'/);
-  assert.doesNotMatch(adminCsp, /unpkg\.com/, 'the vendored editor must not allow external script sources');
+  const guardianCsp = guardianHeaders.headers.find(({ key }) => key === 'Content-Security-Policy')?.value ?? '';
+  assert.match(guardianCsp, /script-src 'self' 'unsafe-inline' 'unsafe-eval'/);
+  assert.doesNotMatch(guardianCsp, /unpkg\.com/, 'the vendored editor must not allow external script sources');
+
+  assert.equal(vercel.rewrites.some(({ source }) => source === '/admin'), false);
+  await assert.rejects(access(new URL('../admin', import.meta.url)));
 
   const globalHeaders = vercel.headers.find(({ source }) => source === '/(.*)');
   const csp = globalHeaders?.headers.find(({ key }) => key === 'Content-Security-Policy')?.value ?? '';

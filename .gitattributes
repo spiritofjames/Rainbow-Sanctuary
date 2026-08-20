@@ -1,4 +1,4 @@
 # Locally bundled, reproducible third-party browser assets. Keep repository
 # whitespace checks focused on authored sources rather than upstream minified code.
-admin/sveltia-cms.js -whitespace
+guardian/sveltia-cms.js -whitespace
 pagefind/** -whitespace
