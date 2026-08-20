@@ -21,7 +21,7 @@ if (form) {
       const response = await pagefind.search(query, { filters: {} });
       const records = await Promise.all(response.results.slice(0, 12).map((result) => result.data()));
       status.textContent = records.length ? `${records.length} result${records.length === 1 ? '' : 's'} for “${query}”.` : `No approved articles matched “${query}”. Try a broader phrase or browse a topic.`;
-      results.innerHTML = records.map((record) => `<article class="rs-knowledge-search-result"><p>${escapeHtml(record.meta?.topic || 'Knowledge')}</p><h2><a href="${escapeHtml(record.url)}">${escapeHtml(record.meta?.title || record.title)}</a></h2><p>${record.excerpt}</p></article>`).join('');
+      results.innerHTML = records.map((record) => `<article class="rs-knowledge-search-result"><p>${escapeHtml(record.meta?.topic || 'Knowledge')}</p><h2><a href="${escapeHtml(record.url)}">${escapeHtml(record.meta?.title || record.title)}</a></h2><p>${escapeHtml(record.excerpt)}</p></article>`).join('');
     } catch {
       status.textContent = 'Search is temporarily unavailable. You can still browse the knowledge topics.';
       results.innerHTML = '<p><a href="/knowledge">Browse knowledge topics</a></p>';
