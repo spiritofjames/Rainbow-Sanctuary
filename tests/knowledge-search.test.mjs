@@ -49,3 +49,12 @@ test('search initializes after the asynchronous Design Components render', async
   assert.match(search, /observer\.observe\(document\.body, \{ childList: true, subtree: true \}\)/);
   assert.doesNotMatch(search, /^const form = document\.querySelector/m);
 });
+
+test('nested knowledge routes resolve the shared site navigation component', async () => {
+  const vercel = JSON.parse(await read('vercel.json'));
+
+  assert.ok(vercel.rewrites.some(({ source, destination }) =>
+    source === '/knowledge/SiteNavFixed.dc.html' && destination === '/SiteNavFixed.dc.html'));
+  assert.ok(vercel.rewrites.some(({ source, destination }) =>
+    source === '/knowledge/(.*)/SiteNavFixed.dc.html' && destination === '/SiteNavFixed.dc.html'));
+});

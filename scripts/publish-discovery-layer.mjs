@@ -446,6 +446,8 @@ const redirects = Object.entries(allRoutes).map(([file, route]) => ({
 
 const rewrites = [
   { source: "/admin", destination: "/admin/index.html" },
+  { source: "/knowledge/SiteNavFixed.dc.html", destination: "/SiteNavFixed.dc.html" },
+  { source: "/knowledge/(.*)/SiteNavFixed.dc.html", destination: "/SiteNavFixed.dc.html" },
   ...Object.entries(allRoutes).map(([file, route]) => ({
   source: route,
   destination: `/${file}`

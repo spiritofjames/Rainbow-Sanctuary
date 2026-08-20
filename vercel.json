@@ -351,6 +351,14 @@
       "destination": "/admin/index.html"
     },
     {
+      "source": "/knowledge/SiteNavFixed.dc.html",
+      "destination": "/SiteNavFixed.dc.html"
+    },
+    {
+      "source": "/knowledge/(.*)/SiteNavFixed.dc.html",
+      "destination": "/SiteNavFixed.dc.html"
+    },
+    {
       "source": "/",
       "destination": "/Home.dc.html"
     },
