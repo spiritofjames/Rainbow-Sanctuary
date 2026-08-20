@@ -31,9 +31,10 @@ test('editor schema preserves the knowledge safety boundary', async () => {
 });
 
 test('editor shell is private-by-discovery and loads only the vendored CMS bundle', async () => {
-  const [admin, vercel] = await Promise.all([
+  const [admin, vercel, support] = await Promise.all([
     read('admin/index.html'),
     read('vercel.json').then(JSON.parse),
+    read('support.js'),
   ]);
 
   assert.match(admin, /name="robots" content="noindex,nofollow,noarchive"/);
@@ -46,12 +47,16 @@ test('editor shell is private-by-discovery and loads only the vendored CMS bundl
     adminHeaders.headers.find(({ key }) => key === 'X-Robots-Tag')?.value,
     'noindex, nofollow, noarchive',
   );
+  const adminCsp = adminHeaders.headers.find(({ key }) => key === 'Content-Security-Policy')?.value ?? '';
+  assert.match(adminCsp, /script-src 'self' 'unsafe-inline' 'unsafe-eval'/);
+  assert.doesNotMatch(adminCsp, /unpkg\.com/, 'the vendored editor must not allow external script sources');
 
   const globalHeaders = vercel.headers.find(({ source }) => source === '/(.*)');
   const csp = globalHeaders?.headers.find(({ key }) => key === 'Content-Security-Policy')?.value ?? '';
   assert.match(csp, /frame-ancestors 'none'/);
   assert.match(csp, /connect-src 'self' https:\/\/api\.github\.com https:\/\/github\.com/);
-  assert.doesNotMatch(csp, /unpkg\.com/, 'vendored CMS must not retain an unnecessary CDN script allowance');
+  assert.match(support, /https:\/\/unpkg\.com\/react@/);
+  assert.match(csp, /script-src[^;]+https:\/\/unpkg\.com/, 'the public-site React loader requires its pinned CDN allowance');
 });
 
 test('editor guide documents least privilege and the separate production decision', async () => {
