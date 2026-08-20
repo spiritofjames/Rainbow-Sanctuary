@@ -38,3 +38,13 @@ test('search preserves an accessible empty-query and failure fallback', async ()
   assert.match(page, /role="status" aria-live="polite"/);
   assert.match(page, /<noscript>/);
 });
+
+test('search initializes after the asynchronous Design Components render', async () => {
+  const search = await read('knowledge-search.js');
+
+  assert.match(search, /const initializeKnowledgeSearch = \(form\) =>/);
+  assert.match(search, /form\.dataset\.knowledgeSearchReady/);
+  assert.match(search, /new MutationObserver\(initializeAvailableSearch\)/);
+  assert.match(search, /observer\.observe\(document\.body, \{ childList: true, subtree: true \}\)/);
+  assert.doesNotMatch(search, /^const form = document\.querySelector/m);
+});
