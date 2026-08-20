@@ -37,6 +37,7 @@ test('search preserves an accessible empty-query and failure fallback', async ()
   assert.match(search, /Browse knowledge topics/);
   assert.match(page, /role="status" aria-live="polite"/);
   assert.match(page, /<noscript>/);
+  assert.match(page, /knowledge-search\.js\?v=20260820-knowledge2/);
 });
 
 test('search initializes after the asynchronous Design Components render', async () => {
