@@ -1,13 +1,16 @@
-const form = document.querySelector('[data-knowledge-search]');
+const escapeHtml = (value) => String(value || '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
 
-if (form) {
+const initializeKnowledgeSearch = (form) => {
+  if (form.dataset.knowledgeSearchReady === 'true') return;
+  form.dataset.knowledgeSearchReady = 'true';
   const input = form.querySelector('input[name="q"]');
-  const status = document.querySelector('.rs-knowledge-search-status');
-  const results = document.querySelector('.rs-knowledge-search-results');
+  const container = form.closest('.rs-knowledge-search-page') || document;
+  const status = container.querySelector('.rs-knowledge-search-status');
+  const results = container.querySelector('.rs-knowledge-search-results');
+  if (!input || !status || !results) return;
   const params = new URLSearchParams(location.search);
   input.value = params.get('q') || '';
 
-  const escapeHtml = (value) => String(value || '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
   const search = async (query) => {
     if (!query.trim()) {
       status.textContent = 'Enter a word or phrase to search approved articles.';
@@ -29,4 +32,12 @@ if (form) {
   };
   form.addEventListener('submit', (event) => { event.preventDefault(); const query = input.value.trim(); history.replaceState({}, '', query ? `/knowledge/search?q=${encodeURIComponent(query)}` : '/knowledge/search'); search(query); });
   search(input.value);
-}
+};
+
+const initializeAvailableSearch = () => {
+  document.querySelectorAll('[data-knowledge-search]').forEach(initializeKnowledgeSearch);
+};
+
+initializeAvailableSearch();
+const observer = new MutationObserver(initializeAvailableSearch);
+observer.observe(document.body, { childList: true, subtree: true });
