@@ -36,3 +36,18 @@ test("hydrates an allowed Stripe Dashboard payment event for the governed webhoo
     source: "rainbow-sanctuary-staff-payment-link"
   });
 });
+
+test("a mapped retreat payment link receives its approved option and retreat policy", () => {
+  const retreatEnvironment = {
+    STRIPE_STAFF_PAYMENT_LINK_MAP: "plink_retreatEarly:awakening-inner-light-retreat-2026-early-bird"
+  };
+  const event = hydrateStaffPaymentLinkEvent({
+    data: { object: { payment_link: "plink_retreatEarly", metadata: {} } }
+  }, retreatEnvironment);
+  assert.deepEqual(event.data.object.metadata, {
+    event_id: "awakening-inner-light-retreat-2026",
+    offer_key: "awakening-inner-light-retreat-2026-early-bird",
+    policy_key: "retreat-booking",
+    source: "rainbow-sanctuary-staff-payment-link"
+  });
+});

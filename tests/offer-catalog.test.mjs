@@ -14,7 +14,7 @@ test("the internal processing allowance grosses up and rounds customer prices", 
 
 test("every direct payment variant has a stable identity and server-owned USD amount", () => {
   const variants = OFFER_CATALOG.flatMap((entry) => entry.variants);
-  assert.equal(variants.length, 20);
+  assert.equal(variants.length, 22);
   assert.equal(new Set(variants.map((entry) => entry.id)).size, variants.length);
   for (const entry of variants) {
     assert.match(entry.id, /^[a-z0-9][a-z0-9-]+$/);
@@ -46,4 +46,14 @@ test("Regeneration Maintenance has two fixed server-owned commitment prices", ()
   assert.equal(monthly.policy, "regeneration-maintenance");
   assert.equal(threeMonth.policy, "regeneration-maintenance");
   assert.equal(monthly.offer.pagePath, "/144-stages-maintenance");
+});
+
+test("Awakening Your Inner Light direct booking options retain their approved prices", () => {
+  const earlyBird = resolveOfferVariant("awakening-inner-light-retreat-2026-early-bird");
+  const standard = resolveOfferVariant("awakening-inner-light-retreat-2026-standard");
+  assert.equal(earlyBird.amountMinor, 300_000);
+  assert.equal(standard.amountMinor, 350_000);
+  assert.equal(earlyBird.policy, "retreat-booking");
+  assert.equal(standard.policy, "retreat-booking");
+  assert.equal(standard.offer.pagePath, "/awakening-your-inner-light-2026");
 });
