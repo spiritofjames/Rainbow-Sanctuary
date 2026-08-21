@@ -20,6 +20,13 @@ const APPROVED_REGENERATION_MAINTENANCE_EVENTS = new Map([
   }]
 ]);
 
+const AWAKENING_INNER_LIGHT_RETREAT = Object.freeze({
+  dates: "1–7 October 2026",
+  location: "Bocas del Toro, Panama",
+  name: "Awakening Your Inner Light Retreat 2026",
+  url: "https://rainbowsanctuary.life/awakening-your-inner-light-2026"
+});
+
 function googleCalendarUrl(event, accessUrl) {
   const calendarDate = (value) => new Date(value).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
   const parameters = new URLSearchParams({
@@ -153,6 +160,36 @@ export function regenerationMaintenanceConfirmationFromStripeEvent(stripeEvent, 
   };
 }
 
+export function retreatBookingConfirmationFromStripeEvent(stripeEvent, { allowLive = false } = {}) {
+  const handoff = crmPaymentHandoff(stripeEvent, { allowLive });
+  const offer = resolveOfferVariant(handoff.offerId);
+  if (
+    offer.policy !== "retreat-booking" ||
+    handoff.sessionId !== offer.sessionId ||
+    !checkoutAmountMatchesApprovedPrice(handoff, offer.amountMinor)
+  ) {
+    throw new Error("The retreat payment does not match the approved catalogue.");
+  }
+  return {
+    alias: "rs-retreat-booking-confirmed",
+    to: handoff.customer.email,
+    variables: {
+      NAME: handoff.customer.displayName,
+      PAYMENT_OPTION: offer.name.replace(`${AWAKENING_INNER_LIGHT_RETREAT.name} — `, ""),
+      REFERENCE_ID: handoff.bookingReference,
+      RETREAT_DATES: AWAKENING_INNER_LIGHT_RETREAT.dates,
+      RETREAT_LOCATION: AWAKENING_INNER_LIGHT_RETREAT.location,
+      RETREAT_NAME: AWAKENING_INNER_LIGHT_RETREAT.name,
+      RETREAT_URL: AWAKENING_INNER_LIGHT_RETREAT.url
+    },
+    idempotencyKey: checkoutConfirmationKey(handoff, "retreat-booking-confirmed"),
+    tags: [
+      { name: "offer", value: handoff.offerId },
+      { name: "event", value: handoff.sessionId }
+    ]
+  };
+}
+
 export function purchaseConfirmationFromStripeEvent(stripeEvent, { allowLive = false, environment = process.env } = {}) {
   if (isInternalPaymentTest(stripeEvent)) {
     throw new Error("Internal payment tests do not create participant confirmation emails.");
@@ -160,6 +197,7 @@ export function purchaseConfirmationFromStripeEvent(stripeEvent, { allowLive = f
   const offerKey = String(stripeEvent.data?.object?.metadata?.offer_key || "");
   if (offerKey === "group-healing") return bookingConfirmationFromStripeEvent(stripeEvent, { allowLive, environment });
   if (offerKey.startsWith("regeneration-maintenance-")) return regenerationMaintenanceConfirmationFromStripeEvent(stripeEvent, { allowLive });
+  if (offerKey.startsWith("awakening-inner-light-retreat-2026-")) return retreatBookingConfirmationFromStripeEvent(stripeEvent, { allowLive });
   return programConfirmationFromStripeEvent(stripeEvent, { allowLive });
 }
 
