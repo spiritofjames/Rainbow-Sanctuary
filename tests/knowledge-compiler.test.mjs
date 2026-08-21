@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, readFile, readdir, rm } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -27,7 +27,8 @@ test('AC-001 / AC-002: compiles approved public content and excludes drafts from
   const directory = await readFile(path.join(outputDir, 'Knowledge-Articles.dc.html'), 'utf8');
   const index = await readFile(path.join(outputDir, 'knowledge-index.json'), 'utf8');
   const manifest = await readFile(path.join(outputDir, 'knowledge-build-manifest.json'), 'utf8');
-  const combined = `${article}\n${index}\n${manifest}`;
+  const generatedFiles = await readdir(outputDir);
+  const combined = (await Promise.all(generatedFiles.map((name) => readFile(path.join(outputDir, name), 'utf8')))).join('\n');
 
   assert.match(article, /data-pagefind-body/);
   assert.match(article, /About this knowledge library/);
@@ -38,6 +39,24 @@ test('AC-001 / AC-002: compiles approved public content and excludes drafts from
   assert.match(manifest, /"Knowledge-Articles\.dc\.html": "\/knowledge\/articles"/);
   assert.doesNotMatch(combined, /PRIVATE_DRAFT_SENTINEL/);
   assert.doesNotMatch(combined, /private-source-path/);
+});
+
+test('AC-003: approved content requires an auditable publication chronology and opaque source IDs', () => {
+  const valid = {
+    id: 'auditable-article', title: 'An adequately long auditable article title', slug: 'auditable-article',
+    summary: 'A sufficiently long summary that is only present to satisfy the article schema requirements.',
+    topic: 'getting-started', content_type: 'explainer', audiences: ['everyone'], tags: ['test'],
+    author_id: 'rainbow-editorial', reviewer_id: 'rainbow-editorial', source_ids: ['drive-opaque_ID-123'],
+    publication_status: 'approved', visibility: 'public', health_claim_level: 'none', medical_review_required: false,
+    locale: 'en', created_at: '2026-08-17', first_published_at: '2026-08-18', updated_at: '2026-08-19',
+    review_due_at: '2027-08-19', canonical_path: '/knowledge/auditable-article', body: '## Safe section\n\nA safe test body.',
+  };
+
+  assert.throws(() => validateArticle({ ...valid, first_published_at: '' }), /first_published_at/i);
+  assert.throws(() => validateArticle({ ...valid, created_at: '2026-08-20' }), /created_at/i);
+  assert.throws(() => validateArticle({ ...valid, first_published_at: '2026-08-16' }), /publication date/i);
+  assert.throws(() => validateArticle({ ...valid, source_ids: ['https://drive.google.com/private'] }), /opaque source ID/i);
+  assert.throws(() => validateArticle({ ...valid, source_ids: ['/Users/editor/private-note'] }), /opaque source ID/i);
 });
 
 test('AC-004: rejects raw HTML and sensitive-health content without medical review', () => {

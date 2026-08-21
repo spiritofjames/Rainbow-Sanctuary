@@ -23,6 +23,8 @@ const requiredFiles = [
   'knowledge-build-manifest.json',
   'knowledge-index.json',
   'knowledge-feed.xml',
+  'pagefind-build-manifest.json',
+  'pagefind/pagefind-entry.json',
   'pagefind/pagefind.js',
 ];
 
@@ -88,6 +90,15 @@ for (const entry of knowledge.entries) {
   if (JSON.stringify(entry).match(/source_ids|consent_record|private-source/i)) {
     throw new Error('Release integrity check failed. A private field appears in knowledge-index.json.');
   }
+}
+
+const pagefindBuild = JSON.parse(readFileSync('pagefind-build-manifest.json', 'utf8'));
+if (pagefindBuild.glob !== 'Knowledge-[a-z]*.dc.html') {
+  throw new Error('Release integrity check failed. Pagefind is not constrained to generated knowledge article pages.');
+}
+const pagefindEntry = JSON.parse(readFileSync('pagefind/pagefind-entry.json', 'utf8'));
+if (pagefindEntry.languages?.en?.page_count !== knowledge.entries.length) {
+  throw new Error('Release integrity check failed. Pagefind article count does not match the public knowledge index.');
 }
 
 console.log(`Release integrity passed: ${requiredFiles.length} required files, knowledge artifacts, reminder cron, favicon manifest, primary navigation, and Knowledge footer links are present.`);

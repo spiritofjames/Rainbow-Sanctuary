@@ -10,7 +10,7 @@ Only approved public articles are compiled. Drafts, archived entries, source IDs
 
 An editor must be an approved collaborator on `spiritofjames/Rainbow-Sanctuary` and use a fine-grained GitHub personal access token restricted to that repository. Grant only the minimum repository contents and pull-request permissions needed by the CMS. Do not paste a token into source files, issues, chat, or an untrusted browser.
 
-The editor is available at `/admin`. It is deliberately excluded from public discovery. If the token is revoked, access stops until the editor signs in with a new approved token.
+The editor is available at `/guardian`. It is deliberately excluded from public discovery. The route name reduces casual discovery but is not an authentication control; the approved GitHub token remains mandatory. If the token is revoked, access stops until the editor signs in with a new approved token.
 
 ## Article lifecycle
 

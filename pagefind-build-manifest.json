@@ -1,4 +1,5 @@
 {
   "pagefindVersion": "1.5.2",
-  "inputHash": "70b8a64075e1c7cbad566a41c29136fb699055ec280738d9f5f5d25ba3c0fc5b"
+  "glob": "Knowledge-[a-z]*.dc.html",
+  "inputHash": "be89e8c21cc2c23d1506814e7aea3c2147a852e15763b7e7decf53a10ca0e43a"
 }

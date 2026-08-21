@@ -6,7 +6,7 @@ import MarkdownIt from 'markdown-it';
 const ARTICLE_STATUSES = new Set(['draft', 'in-review', 'approved', 'archived']);
 const CONTENT_TYPES = new Set(['explainer', 'practice', 'faq', 'glossary', 'program-guide', 'research-note', 'safety', 'story']);
 const CLAIM_LEVELS = new Set(['none', 'general-wellbeing', 'sensitive-health']);
-const RESERVED_SLUGS = new Set(['search', 'topics', 'admin', 'index']);
+const RESERVED_SLUGS = new Set(['search', 'topics', 'admin', 'guardian', 'index']);
 const origin = 'https://rainbowsanctuary.life';
 
 const markdown = new MarkdownIt({ html: false, linkify: true, typographer: true });
@@ -104,11 +104,15 @@ export function validateArticle(raw) {
   if (!CLAIM_LEVELS.has(article.health_claim_level)) fail(`${article.id} has unsupported health claim level`);
   if (article.health_claim_level === 'sensitive-health' && !article.medical_review_required) fail(`${article.id} requires medical review`);
   if (!article.locale || !article.author_id || !article.reviewer_id || !article.topic) fail(`${article.id} is missing a required reference`);
+  if (article.source_ids.some((sourceId) => !/^[A-Za-z0-9][A-Za-z0-9_-]{2,159}$/.test(sourceId))) fail(`${article.id} source_ids must contain opaque source IDs only`);
   if (!article.body) fail(`${article.id} has no body`);
   if (/<\/?[a-z][^>]*>/i.test(article.body)) fail(`${article.id} raw HTML is not allowed`);
   if (/\b(?:script|iframe|object|embed)\b/i.test(article.body)) fail(`${article.id} contains a prohibited embedded element`);
   if (/\]\((?:javascript|data|vbscript):/i.test(article.body)) fail(`${article.id} contains an unsafe Markdown URL`);
   if (!article.body.match(/^##\s+/m)) fail(`${article.id} body must start its article hierarchy at H2`);
+  if (article.publication_status === 'approved' && !article.first_published_at) fail(`${article.id} first_published_at is required for approved content`);
+  if (article.created_at > article.updated_at) fail(`${article.id} created_at must not be after updated_at`);
+  if (article.first_published_at && article.first_published_at < article.created_at) fail(`${article.id} publication date is before created_at`);
   if (article.first_published_at && article.first_published_at > article.updated_at) fail(`${article.id} publication date is after update date`);
   if (article.review_due_at <= article.updated_at) fail(`${article.id} review_due_at must be after updated_at`);
   if (article.canonical_path !== `/knowledge/${article.slug}`) fail(`${article.id} canonical_path must be /knowledge/{slug}`);
@@ -159,7 +163,7 @@ function pageShell({ title, description, body, canonicalPath, robots = 'index,fo
 <link rel="stylesheet" href="/knowledge.css?v=20260818-knowledge1">
 <script src="/site-config.js"></script>
 <script src="/support.js"></script>
-<script src="/knowledge-search.js?v=20260818-knowledge1" defer></script>
+<script src="/knowledge-search.js?v=20260820-knowledge2" defer></script>
 <!-- rs-discovery:start -->
 <link rel="canonical" href="${canonical}">
 <meta name="robots" content="${robots}">
