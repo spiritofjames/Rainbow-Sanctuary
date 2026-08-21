@@ -126,6 +126,30 @@ export const OFFER_CATALOG = Object.freeze([
     ]
   }),
   offer({
+    id: "awakening-inner-light-retreat-2026",
+    name: "Awakening Your Inner Light Retreat 2026",
+    pagePath: "/awakening-your-inner-light-2026",
+    priceKey: "awakening-inner-light-retreat-2026",
+    variants: [
+      variant({
+        id: "awakening-inner-light-retreat-2026-early-bird",
+        name: "Awakening Your Inner Light Retreat 2026 — Early Bird",
+        baseAmountUsd: 3000,
+        amountUsd: 3000,
+        sessionId: "awakening-inner-light-retreat-2026",
+        policy: "retreat-booking"
+      }),
+      variant({
+        id: "awakening-inner-light-retreat-2026-standard",
+        name: "Awakening Your Inner Light Retreat 2026 — Standard",
+        baseAmountUsd: 3500,
+        amountUsd: 3500,
+        sessionId: "awakening-inner-light-retreat-2026",
+        policy: "retreat-booking"
+      })
+    ]
+  }),
+  offer({
     id: "spiral-i",
     name: "Spiral I — Foundations",
     pagePath: "/spiral-i",

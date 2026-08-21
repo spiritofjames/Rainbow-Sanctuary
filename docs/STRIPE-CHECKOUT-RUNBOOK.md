@@ -36,14 +36,18 @@ After a human conversation, Ethel may send the participant the exact persistent,
 signed staff payment link from the internal catalogue. It opens a fresh
 Stripe-hosted Checkout for a fixed server-side offer. Standard and Early Bird are
 separate links, so Ethel never edits an amount or uses a generic discount field.
-The catalogue is internal and must not be published on the website. Retreats,
-private healing and unpriced work remain outside it.
+The catalogue is internal and must not be published on the website. Private
+healing and unpriced work remain outside it; the approved October 2026 retreat
+payment exception is governed below.
 
 Stripe Dashboard Payment Links may also be used as an internal operations
-fallback when a participant needs a simple reusable link. Every such link must
-be a fixed, one-time price and be entered in
+fallback when a participant needs a simple reusable link. The approved October
+2026 retreat page is a narrow exception: it may present its two fixed payment
+links only to people who are already confirmed or personally invited, while new
+participants continue through the application path. Every such link must be a
+fixed, one-time price and be entered in
 `STRIPE_STAFF_PAYMENT_LINK_MAP` as `plink_id:offer-id` before the link is ever
-sent. That exact allowlist hydrates the verified Stripe webhook with the approved
+sent or published. That exact allowlist hydrates the verified Stripe webhook with the approved
 offer/session identity; unlisted links are not treated as Rainbow programme
 payments. Use the accompanying `ETHEL-PAYMENT-LINK-REGISTER.md` as the
 operational register.

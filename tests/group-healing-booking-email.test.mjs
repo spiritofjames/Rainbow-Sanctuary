@@ -5,6 +5,7 @@ import {
   completedStripeEventFromCheckoutSession,
   programConfirmationFromStripeEvent,
   regenerationMaintenanceConfirmationFromStripeEvent,
+  retreatBookingConfirmationFromStripeEvent,
   sendBookingConfirmation
 } from "../api/_lib/group-healing-booking-email.mjs";
 
@@ -103,6 +104,28 @@ test("three-month Maintenance confirmation lists exactly twelve purchased Monday
   const dates = message.variables.SESSION_DATES.split("; ");
   assert.equal(dates.length, 12);
   assert.equal(dates.at(-1), "Monday, 2 November 2026");
+});
+
+test("verified retreat booking gets an option-specific confirmation that preserves screening", () => {
+  const event = checkoutEvent({
+    data: {
+      object: {
+        ...checkoutEvent().data.object,
+        amount_total: 300_000,
+        metadata: {
+          offer_key: "awakening-inner-light-retreat-2026-early-bird",
+          event_id: "awakening-inner-light-retreat-2026"
+        }
+      }
+    }
+  });
+  const message = retreatBookingConfirmationFromStripeEvent(event);
+  assert.equal(message.alias, "rs-retreat-booking-confirmed");
+  assert.equal(message.variables.PAYMENT_OPTION, "Early Bird");
+  assert.equal(message.variables.RETREAT_DATES, "1–7 October 2026");
+  assert.equal(message.variables.RETREAT_LOCATION, "Bocas del Toro, Panama");
+  assert.equal(message.variables.RETREAT_URL, "https://rainbowsanctuary.life/awakening-your-inner-light-2026");
+  assert.equal(message.idempotencyKey, "stripe-checkout:cs_test_booking_123:retreat-booking-confirmed");
 });
 
 test("verified programme payment builds a minimal programme confirmation", () => {
