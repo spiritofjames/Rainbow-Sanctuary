@@ -300,6 +300,11 @@
       "permanent": true
     },
     {
+      "source": "/Knowledge-shared-practice-of-life.dc.html",
+      "destination": "/knowledge/shared-practice-of-life",
+      "permanent": true
+    },
+    {
       "source": "/Knowledge-a-living-vision-for-rainbow-sanctuary.dc.html",
       "destination": "/knowledge/a-living-vision-for-rainbow-sanctuary",
       "permanent": true
@@ -545,6 +550,10 @@
     {
       "source": "/knowledge/topics/earth-stewardship",
       "destination": "/Knowledge-Topic-earth-stewardship.dc.html"
+    },
+    {
+      "source": "/knowledge/shared-practice-of-life",
+      "destination": "/Knowledge-shared-practice-of-life.dc.html"
     },
     {
       "source": "/knowledge/a-living-vision-for-rainbow-sanctuary",
