@@ -4,6 +4,7 @@ import { resolveOfferVariant } from "./offer-catalog.mjs";
 import { regenerationMaintenanceDatesForSession } from "./regeneration-maintenance-cycle.mjs";
 import { groupHealingScheduleDetails } from "./group-healing-schedule.mjs";
 import { groupHealingZoomJoinUrl } from "./group-healing-zoom.mjs";
+import { displayKidsWeeklyPracticeDate, kidsWeeklyPracticeCommitment, kidsWeeklyPracticeDatesForSession } from "./kids-weekly-practice-schedule.mjs";
 
 const APPROVED_REGENERATION_MAINTENANCE_EVENTS = new Map([
   ["regeneration-maintenance-2026-08-17-monthly", {
@@ -160,6 +161,45 @@ export function regenerationMaintenanceConfirmationFromStripeEvent(stripeEvent, 
   };
 }
 
+function kidsWeeklyPracticeDateList(sessionId) {
+  return kidsWeeklyPracticeDatesForSession(sessionId).map(displayKidsWeeklyPracticeDate).join("; ");
+}
+
+export function kidsWeeklyPracticeConfirmationFromStripeEvent(stripeEvent, environment = {}, { allowLive = false } = {}) {
+  const handoff = crmPaymentHandoff(stripeEvent, { allowLive });
+  const offer = resolveOfferVariant(handoff.offerId);
+  const childName = String(handoff.customer.childName || "").trim();
+  const accessUrl = String(environment.KIDS_WEEKLY_PRACTICE_ZOOM_JOIN_URL || "").trim();
+  const sessionDates = kidsWeeklyPracticeDateList(handoff.sessionId);
+  if (
+    offer.policy !== "kids-weekly-practice" ||
+    handoff.sessionId !== offer.sessionId ||
+    !checkoutAmountMatchesApprovedPrice(handoff, offer.amountMinor) ||
+    !childName || !accessUrl || !sessionDates
+  ) {
+    throw new Error("The Children’s Weekly Practice confirmation is not configured.");
+  }
+  return {
+    alias: "rs-kids-weekly-practice-confirmed",
+    to: handoff.customer.email,
+    variables: {
+      NAME: handoff.customer.displayName,
+      CHILD_NAME: childName,
+      COMMITMENT: kidsWeeklyPracticeCommitment(handoff.sessionId),
+      SESSION_DATES: sessionDates,
+      EVENT_TIME: "8:00 PM",
+      TIMEZONE: "Singapore / Kuala Lumpur / China time (UTC+8)",
+      ACCESS_URL: accessUrl,
+      REFERENCE_ID: handoff.bookingReference
+    },
+    idempotencyKey: checkoutConfirmationKey(handoff, "kids-weekly-practice-confirmed"),
+    tags: [
+      { name: "offer", value: handoff.offerId },
+      { name: "event", value: handoff.sessionId }
+    ]
+  };
+}
+
 export function retreatBookingConfirmationFromStripeEvent(stripeEvent, { allowLive = false } = {}) {
   const handoff = crmPaymentHandoff(stripeEvent, { allowLive });
   const offer = resolveOfferVariant(handoff.offerId);
@@ -197,6 +237,7 @@ export function purchaseConfirmationFromStripeEvent(stripeEvent, { allowLive = f
   const offerKey = String(stripeEvent.data?.object?.metadata?.offer_key || "");
   if (offerKey === "group-healing") return bookingConfirmationFromStripeEvent(stripeEvent, { allowLive, environment });
   if (offerKey.startsWith("regeneration-maintenance-")) return regenerationMaintenanceConfirmationFromStripeEvent(stripeEvent, { allowLive });
+  if (offerKey.startsWith("kids-weekly-practice-")) return kidsWeeklyPracticeConfirmationFromStripeEvent(stripeEvent, environment, { allowLive });
   if (offerKey.startsWith("awakening-inner-light-retreat-2026-")) return retreatBookingConfirmationFromStripeEvent(stripeEvent, { allowLive });
   return programConfirmationFromStripeEvent(stripeEvent, { allowLive });
 }

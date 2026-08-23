@@ -71,10 +71,13 @@ export function toHubSpotPurchaseProperties(stripeEvent, ownerId, { allowLive = 
     throw new Error("The HubSpot payment mirror does not match the approved catalogue.");
   }
   const { firstname, lastname } = splitName(handoff.customer.displayName);
+  const childDetails = variant.policy === "kids-weekly-practice"
+    ? ` Child enrolment: ${handoff.customer.childName || "not supplied"}. Guardian WhatsApp: ${handoff.customer.guardianWhatsApp || "not supplied"}.`
+    : "";
   return {
-    area_of_interest: ["group-healing", "regeneration-maintenance"].includes(variant.policy) ? "Group healing" : "Program guidance",
+    area_of_interest: ["group-healing", "regeneration-maintenance", "kids-weekly-practice"].includes(variant.policy) ? "Group healing" : "Program guidance",
     email: handoff.customer.email,
-    enquiry_details: `Payment received for ${variant.name}. Paid USD ${(handoff.amountMinor / 100).toFixed(2)}. Reference: ${handoff.bookingReference}. Financial authority: Stripe and the private Rainbow CRM.`,
+    enquiry_details: `Payment received for ${variant.name}. Paid USD ${(handoff.amountMinor / 100).toFixed(2)}. Reference: ${handoff.bookingReference}. Financial authority: Stripe and the private Rainbow CRM.${childDetails}`,
     firstname,
     hubspot_owner_id: ownerId,
     lastname,

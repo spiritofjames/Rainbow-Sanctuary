@@ -30,52 +30,6 @@
     details.classList.remove("is-hidden");
   }
 
-  function ordinaryPaymentCopy(result) {
-    if (result.offer === "group-healing") {
-      return {
-        title: "Your Group Healing place is confirmed.",
-        summary: "Your Zoom access and session details are being sent to the email address used at checkout.",
-        nextHeading: "Your session details",
-        nextText: "Your confirmation email contains your private Zoom link, the session date and time, and an Add to Calendar link. We will send a reminder one hour before the session. No WhatsApp follow-up is required for this booking.",
-        helpText: "If you cannot find your confirmation within 10 minutes, check spam or contact bookings@rainbowsanctuary.life."
-      };
-    }
-
-    if (String(result.offer || "").startsWith("regeneration-maintenance-")) {
-      return {
-        title: "Your ReGeneration Maintenance place is confirmed.",
-        summary: "Your confirmation and the complete set of included dates are being sent to the email address used at checkout.",
-        nextHeading: "Your next steps",
-        nextText: "Your email confirms your commitment and includes the relevant dates and practical reminders. There is no Zoom call or live attendance for this programme.",
-        helpText: "If you cannot find your confirmation within 10 minutes, check spam or contact bookings@rainbowsanctuary.life."
-      };
-    }
-
-    return {
-      title: "Your payment has been received.",
-      summary: "Your purchase is confirmed. Programme or scheduling details will be sent to the email address used at checkout.",
-      nextHeading: "What happens next",
-      nextText: "Please check your email for your confirmation and next steps. If a direct conversation is needed for your chosen programme, the Rainbow Sanctuary team will contact you using the details you provided.",
-      helpText: "If you cannot find your confirmation within 10 minutes, check spam or contact bookings@rainbowsanctuary.life."
-    };
-  }
-
-  async function reconcileConfirmation() {
-    const response = await fetch("/api/stripe/reconcile-booking-confirmation", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        accept: "application/json"
-      },
-      body: JSON.stringify({ session_id: sessionId }),
-      cache: "no-store"
-    });
-    const result = await response.json().catch(() => ({}));
-    if (!response.ok || result.fulfilled !== true) {
-      throw new Error(result.error || "Confirmation email unavailable.");
-    }
-  }
-
   async function verify() {
     if (!sessionId) {
       title.textContent = "We couldn’t verify this payment return.";
@@ -115,23 +69,13 @@
         return;
       }
 
-      // The webhook sends this first in the normal path. Re-running it here
-      // against the verified Checkout Session is safe and idempotent, and
-      // recovers a confirmation if a customer reaches this page before a
-      // transient webhook retry succeeds.
-      await reconcileConfirmation();
-
-      const copy = ordinaryPaymentCopy(result);
-      title.textContent = copy.title;
-      summary.textContent = copy.summary;
-      next.querySelector("h2").textContent = copy.nextHeading;
-      next.querySelector("p").textContent = copy.nextText;
-      help.textContent = copy.helpText;
+      title.textContent = "Your payment has been received.";
+      summary.textContent = "Thank you. Your place is now being prepared. A Rainbow Sanctuary team member will reach out through WhatsApp with the next steps, and we will also email your confirmation.";
       showDetails(result);
       next.classList.remove("is-hidden");
     } catch (_) {
       title.textContent = "We’re confirming your payment.";
-      summary.textContent = "Stripe returned you safely. We are preparing your confirmation email now. If it does not arrive within 10 minutes, check spam or contact bookings@rainbowsanctuary.life.";
+      summary.textContent = "Stripe returned you safely. If the confirmation takes longer than a few minutes, check your email receipt or contact us for help.";
     }
   }
 
