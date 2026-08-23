@@ -14,7 +14,7 @@ test("the internal processing allowance grosses up and rounds customer prices", 
 
 test("every direct payment variant has a stable identity and server-owned USD amount", () => {
   const variants = OFFER_CATALOG.flatMap((entry) => entry.variants);
-  assert.equal(variants.length, 20);
+  assert.equal(variants.length, 22);
   assert.equal(new Set(variants.map((entry) => entry.id)).size, variants.length);
   for (const entry of variants) {
     assert.match(entry.id, /^[a-z0-9][a-z0-9-]+$/);
@@ -46,4 +46,14 @@ test("Regeneration Maintenance has two fixed server-owned commitment prices", ()
   assert.equal(monthly.policy, "regeneration-maintenance");
   assert.equal(threeMonth.policy, "regeneration-maintenance");
   assert.equal(monthly.offer.pagePath, "/144-stages-maintenance");
+});
+
+test("Kids Weekly Practice has fixed four- and twelve-week enrolment prices", () => {
+  const fourWeek = resolveOfferVariant("kids-weekly-practice-four-week");
+  const twelveWeek = resolveOfferVariant("kids-weekly-practice-twelve-week");
+  assert.equal(fourWeek.amountMinor, 8_000);
+  assert.equal(twelveWeek.amountMinor, 24_000);
+  assert.equal(fourWeek.policy, "kids-weekly-practice");
+  assert.equal(twelveWeek.policy, "kids-weekly-practice");
+  assert.equal(fourWeek.offer.pagePath, "/kids-weekly-practice");
 });

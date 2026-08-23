@@ -109,6 +109,34 @@ export const OFFER_CATALOG = Object.freeze([
     ]
   }),
   offer({
+    id: "kids-weekly-practice",
+    name: "Children’s Weekly Practice",
+    pagePath: "/kids-weekly-practice",
+    priceKey: "kids-weekly-practice",
+    variants: [
+      variant({
+        id: "kids-weekly-practice-four-week",
+        name: "Children’s Weekly Practice — 4-Week Cycle",
+        baseAmountUsd: 80,
+        amountUsd: 80,
+        sessionId: "kids-weekly-practice-2026-08-29-four-week",
+        policy: "kids-weekly-practice",
+        stripePriceEnvironmentKey: "STRIPE_KIDS_WEEKLY_PRACTICE_FOUR_WEEK_PRICE_ID",
+        stripePriceId: "price_1U7UcLHrqlaOfUb78mDMP5Wm"
+      }),
+      variant({
+        id: "kids-weekly-practice-twelve-week",
+        name: "Children’s Weekly Practice — 12-Week Cycle",
+        baseAmountUsd: 240,
+        amountUsd: 240,
+        sessionId: "kids-weekly-practice-2026-08-29-twelve-week",
+        policy: "kids-weekly-practice",
+        stripePriceEnvironmentKey: "STRIPE_KIDS_WEEKLY_PRACTICE_TWELVE_WEEK_PRICE_ID",
+        stripePriceId: "price_1U7UilHrqlaOfUb7fcNcrEnu"
+      })
+    ]
+  }),
+  offer({
     id: "internal-payment-test",
     name: "Internal checkout verification",
     pagePath: "/group-healing",

@@ -6,7 +6,7 @@ const FIRST_SESSION = Object.freeze({
   date: "Tuesday, 18 August 2026",
   time: "9:00 PM",
   timezone: "Asia/Makassar (UTC+8)",
-  location: "Online via Zoom"
+  location: "Online via Zoom — access details follow separately"
 });
 
 function weeklySession(date) {
@@ -22,7 +22,7 @@ function weeklySession(date) {
     date: display,
     time: "9:00 PM",
     timezone: "Asia/Makassar (UTC+8)",
-    location: "Online via Zoom"
+    location: "Online via Zoom — access details follow separately"
   });
 }
 
@@ -37,21 +37,4 @@ export function groupHealingScheduleDetails(eventId) {
 
 export function isApprovedGroupHealingEvent(eventId) {
   return Boolean(groupHealingScheduleDetails(eventId));
-}
-
-function makassarDate(now) {
-  const parts = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "Asia/Makassar",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit"
-  }).formatToParts(now);
-  const value = Object.fromEntries(parts.map(({ type, value: part }) => [type, part]));
-  return `${value.year}-${value.month}-${value.day}`;
-}
-
-/** Returns the specific weekly session taking place on the supplied Makassar date. */
-export function groupHealingSessionForDate(now = new Date()) {
-  const date = makassarDate(now);
-  return GROUP_HEALING_SCHEDULE.find((event) => event.start.startsWith(date)) || null;
 }

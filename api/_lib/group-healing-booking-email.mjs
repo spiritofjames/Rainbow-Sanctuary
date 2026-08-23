@@ -3,7 +3,7 @@ import { sendTransactionalEmail } from "./email-service.mjs";
 import { resolveOfferVariant } from "./offer-catalog.mjs";
 import { regenerationMaintenanceDatesForSession } from "./regeneration-maintenance-cycle.mjs";
 import { groupHealingScheduleDetails } from "./group-healing-schedule.mjs";
-import { groupHealingZoomJoinUrl } from "./group-healing-zoom.mjs";
+import { displayKidsWeeklyPracticeDate, kidsWeeklyPracticeCommitment, kidsWeeklyPracticeDatesForSession } from "./kids-weekly-practice-schedule.mjs";
 
 const APPROVED_REGENERATION_MAINTENANCE_EVENTS = new Map([
   ["regeneration-maintenance-2026-08-17-monthly", {
@@ -20,13 +20,13 @@ const APPROVED_REGENERATION_MAINTENANCE_EVENTS = new Map([
   }]
 ]);
 
-function googleCalendarUrl(event, accessUrl) {
+function googleCalendarUrl(event) {
   const calendarDate = (value) => new Date(value).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
   const parameters = new URLSearchParams({
     action: "TEMPLATE",
     text: `Rainbow Sanctuary — ${event.title}`,
     dates: `${calendarDate(event.start)}/${calendarDate(event.end)}`,
-    details: `Your Rainbow Sanctuary Group Healing booking is confirmed. Join securely with this Zoom link: ${accessUrl}`,
+    details: "Your Rainbow Sanctuary Group Healing booking is confirmed. Zoom access details are sent separately through the participant communication process.",
     location: "Online"
   });
   return `https://calendar.google.com/calendar/render?${parameters.toString()}`;
@@ -38,31 +38,7 @@ function maintenanceDateList(sessionId) {
   }).format(new Date(`${date}T23:00:00+08:00`))).join("; ");
 }
 
-// Stripe can retry the same webhook, and the secure return page can also
-// reconcile a verified Checkout Session after a transient webhook failure.
-// The Checkout Session is the booking itself, so it—not the delivery event—is
-// the stable identity for a participant confirmation. A repeat customer gets
-// a new Checkout Session and therefore a new confirmation.
-function checkoutConfirmationKey(handoff, suffix) {
-  return `stripe-checkout:${handoff.bookingReference}:${suffix}`;
-}
-
-export function completedStripeEventFromCheckoutSession(session) {
-  const sessionId = String(session?.id || "");
-  if (!/^cs_(?:test|live)_[A-Za-z0-9_]+$/.test(sessionId)) {
-    throw new Error("The Stripe Checkout Session could not be reconciled.");
-  }
-  const syntheticId = `evt_checkout_${sessionId.replace(/^cs_(?:test|live)_/, "")}`;
-  return {
-    id: syntheticId,
-    type: "checkout.session.completed",
-    created: Number.isInteger(session.created) ? session.created : Math.floor(Date.now() / 1000),
-    livemode: Boolean(session.livemode),
-    data: { object: session }
-  };
-}
-
-export function bookingConfirmationFromStripeEvent(stripeEvent, { allowLive = false, environment = process.env } = {}) {
+export function bookingConfirmationFromStripeEvent(stripeEvent, { allowLive = false } = {}) {
   const handoff = crmPaymentHandoff(stripeEvent, { allowLive });
   const offer = resolveOfferVariant("group-healing");
   const event = groupHealingScheduleDetails(handoff.sessionId);
@@ -70,7 +46,6 @@ export function bookingConfirmationFromStripeEvent(stripeEvent, { allowLive = fa
   if (handoff.offerId !== offer.id || !checkoutAmountMatchesApprovedPrice(handoff, offer.amountMinor)) {
     throw new Error("The Group Healing payment does not match the approved catalogue.");
   }
-  const accessUrl = groupHealingZoomJoinUrl(environment);
 
   return {
     alias: "rs-booking-confirmed",
@@ -82,11 +57,10 @@ export function bookingConfirmationFromStripeEvent(stripeEvent, { allowLive = fa
       EVENT_TIME: event.time,
       TIMEZONE: event.timezone,
       LOCATION: event.location,
-      ACCESS_URL: accessUrl,
-      CALENDAR_URL: googleCalendarUrl(event, accessUrl),
+      CALENDAR_URL: googleCalendarUrl(event),
       REFERENCE_ID: handoff.bookingReference
     },
-    idempotencyKey: checkoutConfirmationKey(handoff, "booking-confirmed"),
+    idempotencyKey: `stripe:${handoff.stripeEventId}:booking-confirmed`,
     tags: [
       { name: "offer", value: handoff.offerId },
       { name: "event", value: handoff.sessionId }
@@ -116,7 +90,7 @@ export function programConfirmationFromStripeEvent(stripeEvent, { allowLive = fa
       TIMEZONE: "Included with your programme schedule",
       PROGRAM_URL: `https://rainbowsanctuary.life${offer.offer.pagePath}`
     },
-    idempotencyKey: checkoutConfirmationKey(handoff, "program-enrollment-confirmed"),
+    idempotencyKey: `stripe:${handoff.stripeEventId}:program-enrollment-confirmed`,
     tags: [
       { name: "offer", value: handoff.offerId },
       { name: "session", value: handoff.sessionId }
@@ -145,7 +119,7 @@ export function regenerationMaintenanceConfirmationFromStripeEvent(stripeEvent, 
       COMMITMENT: event.commitment,
       SESSION_DATES: maintenanceDateList(handoff.sessionId)
     },
-    idempotencyKey: checkoutConfirmationKey(handoff, "regeneration-maintenance-confirmed"),
+    idempotencyKey: `stripe:${handoff.stripeEventId}:regeneration-maintenance-confirmed`,
     tags: [
       { name: "offer", value: handoff.offerId },
       { name: "event", value: handoff.sessionId }
@@ -153,28 +127,66 @@ export function regenerationMaintenanceConfirmationFromStripeEvent(stripeEvent, 
   };
 }
 
-export function purchaseConfirmationFromStripeEvent(stripeEvent, { allowLive = false, environment = process.env } = {}) {
+function kidsWeeklyPracticeDateList(sessionId) {
+  return kidsWeeklyPracticeDatesForSession(sessionId).map(displayKidsWeeklyPracticeDate).join("; ");
+}
+
+export function kidsWeeklyPracticeConfirmationFromStripeEvent(stripeEvent, environment = {}, { allowLive = false } = {}) {
+  const handoff = crmPaymentHandoff(stripeEvent, { allowLive });
+  const offer = resolveOfferVariant(handoff.offerId);
+  const childName = String(handoff.customer.childName || "").trim();
+  const accessUrl = String(environment.KIDS_WEEKLY_PRACTICE_ZOOM_JOIN_URL || "").trim();
+  const sessionDates = kidsWeeklyPracticeDateList(handoff.sessionId);
+  if (
+    offer.policy !== "kids-weekly-practice" ||
+    handoff.sessionId !== offer.sessionId ||
+    !checkoutAmountMatchesApprovedPrice(handoff, offer.amountMinor) ||
+    !childName || !accessUrl || !sessionDates
+  ) {
+    throw new Error("The Children’s Weekly Practice confirmation is not configured.");
+  }
+  return {
+    alias: "rs-kids-weekly-practice-confirmed",
+    to: handoff.customer.email,
+    variables: {
+      NAME: handoff.customer.displayName,
+      CHILD_NAME: childName,
+      COMMITMENT: kidsWeeklyPracticeCommitment(handoff.sessionId),
+      SESSION_DATES: sessionDates,
+      EVENT_TIME: "8:00 PM",
+      TIMEZONE: "Singapore / Kuala Lumpur / China time (UTC+8)",
+      ACCESS_URL: accessUrl,
+      REFERENCE_ID: handoff.bookingReference
+    },
+    idempotencyKey: `stripe:${handoff.stripeEventId}:kids-weekly-practice-confirmed`,
+    tags: [
+      { name: "offer", value: handoff.offerId },
+      { name: "event", value: handoff.sessionId }
+    ]
+  };
+}
+
+export function purchaseConfirmationFromStripeEvent(stripeEvent, environment = {}, { allowLive = false } = {}) {
   if (isInternalPaymentTest(stripeEvent)) {
     throw new Error("Internal payment tests do not create participant confirmation emails.");
   }
   const offerKey = String(stripeEvent.data?.object?.metadata?.offer_key || "");
-  if (offerKey === "group-healing") return bookingConfirmationFromStripeEvent(stripeEvent, { allowLive, environment });
+  if (offerKey === "group-healing") return bookingConfirmationFromStripeEvent(stripeEvent, { allowLive });
   if (offerKey.startsWith("regeneration-maintenance-")) return regenerationMaintenanceConfirmationFromStripeEvent(stripeEvent, { allowLive });
+  if (offerKey.startsWith("kids-weekly-practice-")) return kidsWeeklyPracticeConfirmationFromStripeEvent(stripeEvent, environment, { allowLive });
   return programConfirmationFromStripeEvent(stripeEvent, { allowLive });
 }
 
 export async function sendBookingConfirmation(stripeEvent, environment, resendClient) {
   const message = bookingConfirmationFromStripeEvent(stripeEvent, {
-    allowLive: livePaymentProcessingAllowed(environment),
-    environment
+    allowLive: livePaymentProcessingAllowed(environment)
   });
   return sendTransactionalEmail(message, environment, resendClient);
 }
 
 export async function sendPurchaseConfirmation(stripeEvent, environment, resendClient) {
-  const message = purchaseConfirmationFromStripeEvent(stripeEvent, {
-    allowLive: livePaymentProcessingAllowed(environment),
-    environment
+  const message = purchaseConfirmationFromStripeEvent(stripeEvent, environment, {
+    allowLive: livePaymentProcessingAllowed(environment)
   });
   return sendTransactionalEmail(message, environment, resendClient);
 }

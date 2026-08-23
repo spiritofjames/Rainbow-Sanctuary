@@ -6,12 +6,8 @@
       "schedule": "15 1 * * 1"
     },
     {
-      "path": "/api/jobs/group-healing-reminders",
-      "schedule": "0 12 * * 2"
-    },
-    {
-      "path": "/api/jobs/group-healing-calendar-sync",
-      "schedule": "5 12 * * *"
+      "path": "/api/jobs/kids-weekly-practice-reminders",
+      "schedule": "0 11 * * 6"
     }
   ],
   "headers": [
@@ -260,6 +256,11 @@
       "source": "/144-Stages-Maintenance.dc.html",
       "destination": "/144-stages-maintenance",
       "permanent": true
+    },
+    {
+      "source": "/Kids-Weekly-Practice.dc.html",
+      "destination": "/kids-weekly-practice",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -430,6 +431,10 @@
     {
       "source": "/144-stages-maintenance",
       "destination": "/144-Stages-Maintenance.dc.html"
+    },
+    {
+      "source": "/kids-weekly-practice",
+      "destination": "/Kids-Weekly-Practice.dc.html"
     }
   ]
 }

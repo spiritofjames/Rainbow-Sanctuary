@@ -162,8 +162,8 @@ def validate_discovery_layer(
         route: target for route, target in route_map.items()
         if route not in PRIVATE_ROUTES
     }
-    if len(discovery_routes) != 39:
-        errors.append(f"vercel.json: expected 39 canonical routes, found {len(discovery_routes)}")
+    if len(discovery_routes) != 40:
+        errors.append(f"vercel.json: expected 40 canonical routes, found {len(discovery_routes)}")
 
     redirects = config.get("redirects", [])
     redirect_map = {
@@ -205,7 +205,7 @@ def validate_discovery_layer(
         sitemap_urls = set(re.findall(r"<loc>([^<]+)</loc>", sitemap_path.read_text()))
         if sitemap_urls != expected_urls:
             errors.append(
-                "sitemap.xml: URLs do not exactly match the 36 canonical routes"
+                "sitemap.xml: URLs do not exactly match the canonical routes"
             )
     else:
         errors.append("sitemap.xml: missing")

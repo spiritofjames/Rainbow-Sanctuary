@@ -4,3 +4,5 @@ node_modules/
 .env.local
 .env.*.local
 emails/preview.html
+.gstack/
+.git.recovery-20260817/

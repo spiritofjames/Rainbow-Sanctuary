@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   bookingConfirmationFromStripeEvent,
-  completedStripeEventFromCheckoutSession,
+  kidsWeeklyPracticeConfirmationFromStripeEvent,
   programConfirmationFromStripeEvent,
   regenerationMaintenanceConfirmationFromStripeEvent,
   sendBookingConfirmation
@@ -34,32 +34,15 @@ function checkoutEvent(overrides = {}) {
 }
 
 test("verified Group Healing payment builds a minimal, idempotent booking confirmation", () => {
-  const message = bookingConfirmationFromStripeEvent(checkoutEvent(), { environment: { GROUP_HEALING_ZOOM_JOIN_URL: "https://rainbowsanctuary.zoom.us/j/123456789?pwd=secure" } });
+  const message = bookingConfirmationFromStripeEvent(checkoutEvent());
   assert.equal(message.alias, "rs-booking-confirmed");
   assert.equal(message.to, "reviewer@example.com");
-  assert.equal(message.idempotencyKey, "stripe-checkout:cs_test_booking_123:booking-confirmed");
+  assert.equal(message.idempotencyKey, "stripe:evt_test_booking_123:booking-confirmed");
   assert.equal(message.variables.EVENT_TITLE, "Grounding & Renewal");
   assert.equal(message.variables.EVENT_TIME, "9:00 PM");
   assert.match(message.variables.EVENT_DATE, /Tuesday, 18 August 2026/);
   assert.match(message.variables.CALENDAR_URL, /^https:\/\/calendar\.google\.com\/calendar\/render\?/);
-  assert.equal(message.variables.LOCATION, "Online via Zoom");
-  assert.match(message.variables.ACCESS_URL, /^https:\/\/rainbowsanctuary\.zoom\.us\//);
-});
-
-test("a fully discounted but Stripe-confirmed Group Healing booking still receives Zoom access", () => {
-  const event = checkoutEvent({
-    data: { object: {
-      ...checkoutEvent().data.object,
-      payment_intent: null,
-      amount_subtotal: 2200,
-      amount_total: 0
-    } }
-  });
-  const message = bookingConfirmationFromStripeEvent(event, {
-    environment: { GROUP_HEALING_ZOOM_JOIN_URL: "https://rainbowsanctuary.zoom.us/j/123456789?pwd=secure" }
-  });
-  assert.equal(message.to, "reviewer@example.com");
-  assert.match(message.variables.ACCESS_URL, /^https:\/\/rainbowsanctuary\.zoom\.us\//);
+  assert.match(message.variables.LOCATION, /access details follow separately/i);
 });
 
 test("verified Regeneration Maintenance payment builds a commitment-specific confirmation", () => {
@@ -105,6 +88,33 @@ test("three-month Maintenance confirmation lists exactly twelve purchased Monday
   assert.equal(dates.at(-1), "Monday, 2 November 2026");
 });
 
+test("Kids Weekly Practice confirmation keeps child details in the participant-only email", () => {
+  const event = checkoutEvent({
+    data: {
+      object: {
+        ...checkoutEvent().data.object,
+        amount_total: 8_000,
+        custom_fields: [
+          { key: "child_name", text: { value: "Ari" } },
+          { key: "guardian_whatsapp", text: { value: "+62 812 3456 7890" } }
+        ],
+        metadata: {
+          offer_key: "kids-weekly-practice-four-week",
+          event_id: "kids-weekly-practice-2026-08-29-four-week"
+        }
+      }
+    }
+  });
+  const message = kidsWeeklyPracticeConfirmationFromStripeEvent(event, {
+    KIDS_WEEKLY_PRACTICE_ZOOM_JOIN_URL: "https://zoom.us/j/123456789"
+  });
+  assert.equal(message.alias, "rs-kids-weekly-practice-confirmed");
+  assert.equal(message.variables.CHILD_NAME, "Ari");
+  assert.equal(message.variables.COMMITMENT, "Four weekly sessions");
+  assert.equal(message.variables.SESSION_DATES.split("; ").length, 4);
+  assert.equal(message.variables.ACCESS_URL, "https://zoom.us/j/123456789");
+});
+
 test("verified programme payment builds a minimal programme confirmation", () => {
   const event = checkoutEvent({
     data: {
@@ -124,13 +134,13 @@ test("verified programme payment builds a minimal programme confirmation", () =>
   assert.equal(message.variables.START_DATE, "Schedule confirmed separately");
   assert.equal(
     message.idempotencyKey,
-    "stripe-checkout:cs_test_booking_123:program-enrollment-confirmed"
+    "stripe:evt_test_booking_123:program-enrollment-confirmed"
   );
 });
 
 test("unapproved live, unpaid, or unknown events cannot create a booking confirmation", () => {
   assert.throws(() => bookingConfirmationFromStripeEvent(checkoutEvent({ livemode: true })), /approved Stripe Checkout/);
-  assert.doesNotThrow(() => bookingConfirmationFromStripeEvent(checkoutEvent({ livemode: true }), { allowLive: true, environment: { GROUP_HEALING_ZOOM_JOIN_URL: "https://rainbowsanctuary.zoom.us/j/123456789?pwd=secure" } }));
+  assert.doesNotThrow(() => bookingConfirmationFromStripeEvent(checkoutEvent({ livemode: true }), { allowLive: true }));
   assert.throws(() => bookingConfirmationFromStripeEvent(checkoutEvent({
     data: { object: { ...checkoutEvent().data.object, payment_status: "unpaid" } }
   })), /incomplete/);
@@ -152,23 +162,11 @@ test("staging booking confirmation remains restricted to the explicit Resend all
     RESEND_EMAIL_ENABLED: "true",
     RESEND_API_KEY: "re_test",
     RESEND_ALLOWED_RECIPIENTS: "reviewer@example.com",
-    VERCEL_ENV: "preview",
-    GROUP_HEALING_ZOOM_JOIN_URL: "https://rainbowsanctuary.zoom.us/j/123456789?pwd=secure"
+    VERCEL_ENV: "preview"
   }, client);
   assert.deepEqual(result, { sent: true, id: "email_booking_123" });
   assert.equal(sent.length, 1);
   assert.equal(sent[0][0].template, undefined);
   assert.equal(sent[0][0].subject, "Your Rainbow Sanctuary booking is confirmed");
-  assert.equal(sent[0][1].idempotencyKey, "stripe-checkout:cs_test_booking_123:booking-confirmed");
-});
-
-test("reconciliation builds a stable completed event from the original Checkout Session", () => {
-  const session = checkoutEvent().data.object;
-  const event = completedStripeEventFromCheckoutSession(session);
-  assert.equal(event.type, "checkout.session.completed");
-  assert.equal(event.data.object, session);
-  const message = bookingConfirmationFromStripeEvent(event, {
-    environment: { GROUP_HEALING_ZOOM_JOIN_URL: "https://rainbowsanctuary.zoom.us/j/123456789?pwd=secure" }
-  });
-  assert.equal(message.idempotencyKey, "stripe-checkout:cs_test_booking_123:booking-confirmed");
+  assert.equal(sent[0][1].idempotencyKey, "stripe:evt_test_booking_123:booking-confirmed");
 });
