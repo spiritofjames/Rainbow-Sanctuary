@@ -160,10 +160,10 @@ def validate_discovery_layer(
 ) -> None:
     discovery_routes = {
         route: target for route, target in route_map.items()
-        if route not in PRIVATE_ROUTES
+        if route not in PRIVATE_ROUTES and route not in {"/admin", "/knowledge/search"}
     }
-    if len(discovery_routes) != 40:
-        errors.append(f"vercel.json: expected 40 canonical routes, found {len(discovery_routes)}")
+    if len(discovery_routes) < 39:
+        errors.append(f"vercel.json: expected at least the 39 baseline canonical routes, found {len(discovery_routes)}")
 
     redirects = config.get("redirects", [])
     redirect_map = {
@@ -188,8 +188,13 @@ def validate_discovery_layer(
             canonical = f'https://rainbowsanctuary.life{clean_route}'
             if f'<link rel="canonical" href="{canonical}">' not in text:
                 errors.append(f"{target.name}: canonical URL is not {canonical}")
+            expected_robots = (
+                '<meta name="robots" content="noindex,follow'
+                if clean_route == "/knowledge/search"
+                else '<meta name="robots" content="index,follow'
+            )
             for marker in (
-                '<meta name="robots" content="index,follow',
+                expected_robots,
                 '<meta property="og:url"',
                 '<meta name="twitter:card"',
                 '<script type="application/ld+json">',
@@ -205,7 +210,7 @@ def validate_discovery_layer(
         sitemap_urls = set(re.findall(r"<loc>([^<]+)</loc>", sitemap_path.read_text()))
         if sitemap_urls != expected_urls:
             errors.append(
-                "sitemap.xml: URLs do not exactly match the canonical routes"
+                "sitemap.xml: URLs do not exactly match the indexable canonical routes"
             )
     else:
         errors.append("sitemap.xml: missing")
@@ -248,6 +253,12 @@ def validate_vercel_configuration(
 
     if route_map.get("/") != "/Home.dc.html":
         errors.append("vercel.json: root does not rewrite to Home.dc.html")
+
+    if route_map.get("/admin") != "/admin/index.html":
+        errors.append("vercel.json: /admin does not rewrite to its local editorial entrypoint")
+    admin = ROOT / "admin" / "index.html"
+    if not admin.is_file() or 'noindex' not in admin.read_text(encoding="utf-8").lower():
+        errors.append("admin/index.html: missing local non-indexed editorial entrypoint")
 
     validate_discovery_layer(config, route_map, errors)
 

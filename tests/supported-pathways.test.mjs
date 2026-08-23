@@ -113,7 +113,7 @@ test("Group Healing uses the same selected date and format hierarchy", () => {
   assert.match(styles, /rs-group-session-time/);
 });
 
-test("every rendered site footer offers a contribution pathway", () => {
+test("every rendered site footer offers contribution and knowledge pathways", () => {
   const pages = fs.readdirSync(root)
     .filter((name) => name.endsWith(".dc.html"))
     .map((name) => [name, read(name)])
@@ -122,5 +122,6 @@ test("every rendered site footer offers a contribution pathway", () => {
   for (const [name, source] of pages) {
     const footer = source.match(/<footer\b[\s\S]*?<\/footer>/i)?.[0] || "";
     assert.match(footer, /href=["']\/contribute["']/, `${name} footer should link to contributions`);
+    assert.match(footer, /href=["']\/knowledge["']/, `${name} footer should link to the Knowledge library`);
   }
 });

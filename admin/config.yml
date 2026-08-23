@@ -1,0 +1,51 @@
+app_title: Rainbow Sanctuary Editorial
+site_url: https://rainbowsanctuary.life
+display_url: https://rainbowsanctuary.life
+logo:
+  src: /assets/brand/lotus-mark-header.png
+backend:
+  name: github
+  repo: spiritofjames/Rainbow-Sanctuary
+  branch: staging
+  auth_methods: [token]
+  cms_label_prefix: rainbow-knowledge/
+publish_mode: editorial_workflow
+media_folder: assets/knowledge
+public_folder: /assets/knowledge
+collections:
+  - name: articles
+    label: Knowledge articles
+    label_singular: Knowledge article
+    folder: content/knowledge/articles
+    create: true
+    extension: md
+    format: frontmatter
+    slug: '{{slug}}'
+    summary: '{{title}} — {{publication_status}}'
+    fields:
+      - { name: id, label: Stable ID, widget: string, hint: 'Lowercase kebab-case; do not change after publication.' }
+      - { name: title, label: Title, widget: string }
+      - { name: slug, label: URL slug, widget: string, pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Use lowercase kebab-case.'] }
+      - { name: summary, label: Answer-first summary, widget: text }
+      - { name: topic, label: Topic, widget: select, options: [getting-started, consciousness-and-reflection, co-creation-and-community, earth-stewardship] }
+      - { name: content_type, label: Content type, widget: select, options: [explainer, practice, faq, glossary, program-guide, research-note, safety, story] }
+      - { name: audiences, label: Audiences, widget: list, field: { name: audience, label: Audience, widget: string } }
+      - { name: tags, label: Search tags, widget: list, field: { name: tag, label: Tag, widget: string } }
+      - { name: synonyms, label: Search synonyms, required: false, widget: list, field: { name: synonym, label: Synonym, widget: string } }
+      - { name: author_id, label: Author, widget: select, options: [rainbow-editorial] }
+      - { name: reviewer_id, label: Reviewer, widget: select, options: [rainbow-editorial] }
+      - { name: source_ids, label: Private source reference IDs, widget: list, hint: 'Opaque private IDs only; never paste a source URL, local path, or confidential note.', field: { name: source_id, label: Source ID, widget: string } }
+      - { name: publication_status, label: Publication status, widget: select, default: draft, options: [draft, in-review, approved, archived] }
+      - { name: visibility, widget: hidden, default: public }
+      - { name: health_claim_level, label: Health claim level, widget: select, default: none, options: [none, general-wellbeing, sensitive-health] }
+      - { name: medical_review_required, label: Medical review completed, widget: boolean, default: false, hint: 'Required for sensitive-health content.' }
+      - { name: consent_record_id, label: Consent record ID, required: false, widget: string, hint: 'Required for a personal story, direct quote, or identifying image.' }
+      - { name: locale, widget: hidden, default: en }
+      - { name: created_at, label: Created date, widget: datetime, format: YYYY-MM-DD, date_format: YYYY-MM-DD, time_format: false }
+      - { name: first_published_at, label: First published date, required: false, widget: datetime, format: YYYY-MM-DD, date_format: YYYY-MM-DD, time_format: false }
+      - { name: updated_at, label: Updated date, widget: datetime, format: YYYY-MM-DD, date_format: YYYY-MM-DD, time_format: false }
+      - { name: review_due_at, label: Review due date, widget: datetime, format: YYYY-MM-DD, date_format: YYYY-MM-DD, time_format: false }
+      - { name: featured, label: Feature on knowledge home, widget: boolean, default: false }
+      - { name: related_article_ids, label: Related article IDs, required: false, widget: list, field: { name: article_id, label: Article ID, widget: string } }
+      - { name: canonical_path, label: Canonical path, widget: string, hint: 'Must be exactly /knowledge/your-slug.' }
+      - { name: body, label: Article body, widget: markdown, hint: 'Begin article sections at Heading 2. Raw HTML and embedded media are rejected.' }
