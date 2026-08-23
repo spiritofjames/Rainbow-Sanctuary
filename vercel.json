@@ -187,7 +187,7 @@
     },
     {
       "source": "/Kids-Weekly-Practice.dc.html",
-      "destination": "/kids-weekly-practice",
+      "destination": "/children-weekly-practice",
       "permanent": true
     },
     {
@@ -465,7 +465,7 @@
       "destination": "/Intuitive-Perception-Training.dc.html"
     },
     {
-      "source": "/kids-weekly-practice",
+      "source": "/children-weekly-practice",
       "destination": "/Kids-Weekly-Practice.dc.html"
     },
     {

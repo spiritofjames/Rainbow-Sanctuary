@@ -65,5 +65,5 @@ test("Children’s Weekly Practice has fixed four- and twelve-week enrolment pri
   assert.equal(twelveWeek.amountMinor, 24_000);
   assert.equal(fourWeek.policy, "kids-weekly-practice");
   assert.equal(twelveWeek.policy, "kids-weekly-practice");
-  assert.equal(fourWeek.offer.pagePath, "/kids-weekly-practice");
+  assert.equal(fourWeek.offer.pagePath, "/children-weekly-practice");
 });
