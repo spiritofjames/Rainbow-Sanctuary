@@ -186,6 +186,11 @@
       "permanent": true
     },
     {
+      "source": "/Kids-Weekly-Practice.dc.html",
+      "destination": "/kids-weekly-practice",
+      "permanent": true
+    },
+    {
       "source": "/Personal-Karma-Reconciliation.dc.html",
       "destination": "/personal-karma-reconciliation",
       "permanent": true
@@ -344,11 +349,6 @@
       "source": "/144-Stages-Maintenance.dc.html",
       "destination": "/144-stages-maintenance",
       "permanent": true
-    },
-    {
-      "source": "/Kids-Weekly-Practice.dc.html",
-      "destination": "/kids-weekly-practice",
-      "permanent": true
     }
   ],
   "rewrites": [
@@ -463,6 +463,10 @@
     {
       "source": "/intuitive-perception-training",
       "destination": "/Intuitive-Perception-Training.dc.html"
+    },
+    {
+      "source": "/kids-weekly-practice",
+      "destination": "/Kids-Weekly-Practice.dc.html"
     },
     {
       "source": "/personal-karma-reconciliation",
@@ -591,10 +595,6 @@
     {
       "source": "/144-stages-maintenance",
       "destination": "/144-Stages-Maintenance.dc.html"
-    },
-    {
-      "source": "/kids-weekly-practice",
-      "destination": "/Kids-Weekly-Practice.dc.html"
     }
   ]
 }

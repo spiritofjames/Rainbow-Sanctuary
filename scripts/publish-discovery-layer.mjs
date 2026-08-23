@@ -13,6 +13,10 @@ const crons = [
   {
     path: "/api/jobs/regeneration-maintenance-reminders",
     schedule: "15 1 * * 1"
+  },
+  {
+    path: "/api/jobs/kids-weekly-practice-reminders",
+    schedule: "0 11 * * 6"
   }
 ];
 const headers = [
@@ -91,6 +95,7 @@ const baseRoutes = {
   "Online-Group-Healing.dc.html": "/online-group-healing",
   "Holographic-Healing.dc.html": "/holographic-healing",
   "Intuitive-Perception-Training.dc.html": "/intuitive-perception-training",
+  "Kids-Weekly-Practice.dc.html": "/kids-weekly-practice",
   "Personal-Karma-Reconciliation.dc.html": "/personal-karma-reconciliation",
   "Practitioner-Certification.dc.html": "/practitioner-certification",
   "Privacy-Policy.dc.html": "/privacy-policy",
@@ -144,6 +149,7 @@ const ogImages = {
   "Awakening-Your-Inner-Light-2026.dc.html": "/assets/retreat-panama-coast-aerial.jpg",
   "Bigger-Vision.dc.html": "/assets/editorial/psn-regenerative-future.jpg",
   "Children-Family.dc.html": "/assets/editorial/home-family-editorial.jpg",
+  "Kids-Weekly-Practice.dc.html": "/assets/editorial/children-weekly-practice-preparation.jpg",
   "Community-Stories.dc.html": "/assets/editorial/home-community-editorial.jpg",
   "Contribute.dc.html": "/assets/editorial/home-community-editorial.jpg",
   "Earth-Healing-Zone.dc.html": "/assets/editorial/earth-healing-stewardship-v1.jpg",
