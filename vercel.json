@@ -6,12 +6,8 @@
       "schedule": "15 1 * * 1"
     },
     {
-      "path": "/api/jobs/group-healing-reminders",
-      "schedule": "0 12 * * 2"
-    },
-    {
-      "path": "/api/jobs/group-healing-calendar-sync",
-      "schedule": "5 12 * * *"
+      "path": "/api/jobs/kids-weekly-practice-reminders",
+      "schedule": "0 11 * * 6"
     }
   ],
   "headers": [
@@ -187,6 +183,11 @@
     {
       "source": "/Intuitive-Perception-Training.dc.html",
       "destination": "/intuitive-perception-training",
+      "permanent": true
+    },
+    {
+      "source": "/Kids-Weekly-Practice.dc.html",
+      "destination": "/kids-weekly-practice",
       "permanent": true
     },
     {
@@ -462,6 +463,10 @@
     {
       "source": "/intuitive-perception-training",
       "destination": "/Intuitive-Perception-Training.dc.html"
+    },
+    {
+      "source": "/kids-weekly-practice",
+      "destination": "/Kids-Weekly-Practice.dc.html"
     },
     {
       "source": "/personal-karma-reconciliation",

@@ -7,20 +7,16 @@ const siteDir = path.resolve(scriptsDir, "..");
 const origin = "https://rainbowsanctuary.life";
 const lastmod = "2026-07-31";
 // Keep operational jobs in the generated Vercel configuration. Discovery
-// publishing runs as part of every release, so dropping any of these would
-// silently disable paid-participant reminders or calendar privacy upkeep.
+// publishing runs as part of every release, so dropping this would silently
+// disable the Monday Maintenance reminder.
 const crons = [
   {
     path: "/api/jobs/regeneration-maintenance-reminders",
     schedule: "15 1 * * 1"
   },
   {
-    path: "/api/jobs/group-healing-reminders",
-    schedule: "0 12 * * 2"
-  },
-  {
-    path: "/api/jobs/group-healing-calendar-sync",
-    schedule: "5 12 * * *"
+    path: "/api/jobs/kids-weekly-practice-reminders",
+    schedule: "0 11 * * 6"
   }
 ];
 const headers = [
@@ -99,6 +95,7 @@ const baseRoutes = {
   "Online-Group-Healing.dc.html": "/online-group-healing",
   "Holographic-Healing.dc.html": "/holographic-healing",
   "Intuitive-Perception-Training.dc.html": "/intuitive-perception-training",
+  "Kids-Weekly-Practice.dc.html": "/kids-weekly-practice",
   "Personal-Karma-Reconciliation.dc.html": "/personal-karma-reconciliation",
   "Practitioner-Certification.dc.html": "/practitioner-certification",
   "Privacy-Policy.dc.html": "/privacy-policy",
@@ -152,6 +149,7 @@ const ogImages = {
   "Awakening-Your-Inner-Light-2026.dc.html": "/assets/retreat-panama-coast-aerial.jpg",
   "Bigger-Vision.dc.html": "/assets/editorial/psn-regenerative-future.jpg",
   "Children-Family.dc.html": "/assets/editorial/home-family-editorial.jpg",
+  "Kids-Weekly-Practice.dc.html": "/assets/editorial/children-weekly-practice-preparation.jpg",
   "Community-Stories.dc.html": "/assets/editorial/home-community-editorial.jpg",
   "Contribute.dc.html": "/assets/editorial/home-community-editorial.jpg",
   "Earth-Healing-Zone.dc.html": "/assets/editorial/earth-healing-stewardship-v1.jpg",
