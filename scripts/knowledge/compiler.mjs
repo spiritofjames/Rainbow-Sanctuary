@@ -6,7 +6,7 @@ import MarkdownIt from 'markdown-it';
 const ARTICLE_STATUSES = new Set(['draft', 'in-review', 'approved', 'archived']);
 const CONTENT_TYPES = new Set(['explainer', 'practice', 'faq', 'glossary', 'program-guide', 'research-note', 'safety', 'story']);
 const CLAIM_LEVELS = new Set(['none', 'general-wellbeing', 'sensitive-health']);
-const RESERVED_SLUGS = new Set(['search', 'topics', 'admin', 'index']);
+const RESERVED_SLUGS = new Set(['search', 'topics', 'admin', 'guardian', 'index']);
 const origin = 'https://rainbowsanctuary.life';
 
 const markdown = new MarkdownIt({ html: false, linkify: true, typographer: true });
@@ -163,7 +163,7 @@ function pageShell({ title, description, body, canonicalPath, robots = 'index,fo
 <link rel="stylesheet" href="/knowledge.css?v=20260818-knowledge1">
 <script src="/site-config.js"></script>
 <script src="/support.js"></script>
-<script src="/knowledge-search.js?v=20260818-knowledge1" defer></script>
+<script src="/knowledge-search.js?v=20260820-knowledge2" defer></script>
 <!-- rs-discovery:start -->
 <link rel="canonical" href="${canonical}">
 <meta name="robots" content="${robots}">

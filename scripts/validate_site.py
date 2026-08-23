@@ -160,7 +160,9 @@ def validate_discovery_layer(
 ) -> None:
     discovery_routes = {
         route: target for route, target in route_map.items()
-        if route not in PRIVATE_ROUTES and route not in {"/admin", "/knowledge/search"}
+        if route not in PRIVATE_ROUTES
+        and route not in {"/guardian", "/knowledge/search"}
+        and Path(target).name not in COMPONENT_PAGES
     }
     if len(discovery_routes) < 39:
         errors.append(f"vercel.json: expected at least the 39 baseline canonical routes, found {len(discovery_routes)}")
@@ -254,11 +256,13 @@ def validate_vercel_configuration(
     if route_map.get("/") != "/Home.dc.html":
         errors.append("vercel.json: root does not rewrite to Home.dc.html")
 
-    if route_map.get("/admin") != "/admin/index.html":
-        errors.append("vercel.json: /admin does not rewrite to its local editorial entrypoint")
-    admin = ROOT / "admin" / "index.html"
-    if not admin.is_file() or 'noindex' not in admin.read_text(encoding="utf-8").lower():
-        errors.append("admin/index.html: missing local non-indexed editorial entrypoint")
+    if route_map.get("/guardian") != "/guardian/index.html":
+        errors.append("vercel.json: /guardian does not rewrite to its local editorial entrypoint")
+    guardian = ROOT / "guardian" / "index.html"
+    if not guardian.is_file() or 'noindex' not in guardian.read_text(encoding="utf-8").lower():
+        errors.append("guardian/index.html: missing local non-indexed editorial entrypoint")
+    if route_map.get("/admin") or (ROOT / "admin").exists():
+        errors.append("legacy /admin editorial entrypoint must not remain available")
 
     validate_discovery_layer(config, route_map, errors)
 
