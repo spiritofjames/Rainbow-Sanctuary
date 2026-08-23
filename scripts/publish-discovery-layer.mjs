@@ -95,7 +95,7 @@ const baseRoutes = {
   "Online-Group-Healing.dc.html": "/online-group-healing",
   "Holographic-Healing.dc.html": "/holographic-healing",
   "Intuitive-Perception-Training.dc.html": "/intuitive-perception-training",
-  "Kids-Weekly-Practice.dc.html": "/kids-weekly-practice",
+  "Kids-Weekly-Practice.dc.html": "/children-weekly-practice",
   "Personal-Karma-Reconciliation.dc.html": "/personal-karma-reconciliation",
   "Practitioner-Certification.dc.html": "/practitioner-certification",
   "Privacy-Policy.dc.html": "/privacy-policy",

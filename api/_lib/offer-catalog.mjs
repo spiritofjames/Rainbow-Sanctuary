@@ -111,7 +111,7 @@ export const OFFER_CATALOG = Object.freeze([
   offer({
     id: "kids-weekly-practice",
     name: "Children’s Weekly Practice",
-    pagePath: "/kids-weekly-practice",
+    pagePath: "/children-weekly-practice",
     priceKey: "kids-weekly-practice",
     variants: [
       variant({
