@@ -6,12 +6,8 @@
       "schedule": "15 1 * * 1"
     },
     {
-      "path": "/api/jobs/group-healing-reminders",
-      "schedule": "0 12 * * 2"
-    },
-    {
-      "path": "/api/jobs/group-healing-calendar-sync",
-      "schedule": "5 12 * * *"
+      "path": "/api/jobs/kids-weekly-practice-reminders",
+      "schedule": "0 11 * * 6"
     }
   ],
   "headers": [
@@ -190,6 +186,11 @@
       "permanent": true
     },
     {
+      "source": "/Kids-Weekly-Practice.dc.html",
+      "destination": "/kids-weekly-practice",
+      "permanent": true
+    },
+    {
       "source": "/Personal-Karma-Reconciliation.dc.html",
       "destination": "/personal-karma-reconciliation",
       "permanent": true
@@ -297,6 +298,11 @@
     {
       "source": "/Knowledge-Topic-earth-stewardship.dc.html",
       "destination": "/knowledge/topics/earth-stewardship",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-shared-practice-of-life.dc.html",
+      "destination": "/knowledge/shared-practice-of-life",
       "permanent": true
     },
     {
@@ -459,6 +465,10 @@
       "destination": "/Intuitive-Perception-Training.dc.html"
     },
     {
+      "source": "/kids-weekly-practice",
+      "destination": "/Kids-Weekly-Practice.dc.html"
+    },
+    {
       "source": "/personal-karma-reconciliation",
       "destination": "/Personal-Karma-Reconciliation.dc.html"
     },
@@ -545,6 +555,10 @@
     {
       "source": "/knowledge/topics/earth-stewardship",
       "destination": "/Knowledge-Topic-earth-stewardship.dc.html"
+    },
+    {
+      "source": "/knowledge/shared-practice-of-life",
+      "destination": "/Knowledge-shared-practice-of-life.dc.html"
     },
     {
       "source": "/knowledge/a-living-vision-for-rainbow-sanctuary",

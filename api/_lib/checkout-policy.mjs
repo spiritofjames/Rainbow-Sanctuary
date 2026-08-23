@@ -1,10 +1,13 @@
 import { resolveOfferVariant } from "./offer-catalog.mjs";
 import { isApprovedGroupHealingEvent } from "./group-healing-schedule.mjs";
-import { groupHealingZoomJoinUrl } from "./group-healing-zoom.mjs";
 
 const EVENT_ID_PATTERN = /^[a-z0-9][a-z0-9-]{2,79}$/;
 const REQUEST_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const STRIPE_PRICE_ID_PATTERN = /^price_[a-zA-Z0-9]+$/;
+const SOURCE_CONTROLLED_OPEN_OFFERS = new Set([
+  "kids-weekly-practice-four-week",
+  "kids-weekly-practice-twelve-week"
+]);
 
 function commaSeparatedSet(value) {
   return new Set(String(value || "").split(",").map((item) => item.trim()).filter(Boolean));
@@ -22,7 +25,10 @@ export function validateCheckoutRequest(body, environment) {
 
   if (!EVENT_ID_PATTERN.test(eventId)) throw new Error("Invalid event identifier.");
   if (!REQUEST_ID_PATTERN.test(requestId)) throw new Error("Invalid request identifier.");
-  if (!commaSeparatedSet(environment.STRIPE_ALLOWED_OFFER_IDS).has(offerId)) {
+  if (
+    !commaSeparatedSet(environment.STRIPE_ALLOWED_OFFER_IDS).has(offerId) &&
+    !SOURCE_CONTROLLED_OPEN_OFFERS.has(offerId)
+  ) {
     throw new Error("This payment option is not open.");
   }
   if (
@@ -32,7 +38,12 @@ export function validateCheckoutRequest(body, environment) {
   ) {
     throw new Error("Registration is not open for this event.");
   }
-  if (offer.policy === "group-healing") groupHealingZoomJoinUrl(environment);
+  if (
+    offer.policy === "kids-weekly-practice" &&
+    !["kids-weekly-practice-2026-08-29-four-week", "kids-weekly-practice-2026-08-29-twelve-week"].includes(eventId)
+  ) {
+    throw new Error("Registration is not open for this Children’s Weekly Practice cycle.");
+  }
   if (offer.policy !== "group-healing" && eventId !== offer.sessionId) {
     throw new Error("Invalid programme payment reference.");
   }
@@ -111,6 +122,8 @@ function policyMessage(offer) {
     ? "This booking is non-refundable and non-transferable. You may request one reschedule to an available Group Healing session by contacting bookings@rainbowsanctuary.life at least 24 hours before the booked session. Mandatory consumer rights and organizer cancellation are unaffected."
     : offer.policy === "regeneration-maintenance"
       ? "This fixed-start Regeneration Maintenance registration is reserved for people who have completed ReGeneration Level I and Level II. The chosen one-month or first three-month commitment is a one-time payment, not an automatic subscription. Preparation details are sent by email. Mandatory consumer rights and organizer cancellation are unaffected."
+      : offer.policy === "kids-weekly-practice"
+        ? "Children’s Weekly Practice is for children who have completed Children’s Workshop I or II. This is a one-time payment for the selected four- or twelve-week cycle, not an automatic subscription. A parent or guardian completes enrolment and receives the Zoom access and practical details by email."
     : offer.policy === "internal-test"
       ? "This is an internal payment-system verification only. It does not reserve a session, programme place, or service."
     : "The total shown includes payment processing. Programme scheduling and participation details are confirmed separately. Mandatory consumer rights are unaffected.";
@@ -125,6 +138,35 @@ function configuredStripePriceId(offer, environment) {
     throw new Error("This payment option is not configured.");
   }
   return priceId;
+}
+
+function checkoutCustomFields(offer) {
+  // Stripe Checkout already collects the payer's name as its native `Name`
+  // field. Adding another custom name field makes guardians enter the same
+  // information twice, particularly after a promotion code is applied.
+  if (offer.policy === "kids-weekly-practice") {
+    return [
+      {
+        key: "child_name",
+        label: { custom: "Child's name", type: "custom" },
+        optional: false,
+        type: "text"
+      },
+      {
+        key: "guardian_whatsapp",
+        label: { custom: "Parent or guardian WhatsApp number", type: "custom" },
+        optional: false,
+        type: "text"
+      }
+    ];
+  }
+  const fields = [{
+    key: "client_display_name",
+    label: { custom: "Full name", type: "custom" },
+    optional: false,
+    type: "text"
+  }];
+  return fields;
 }
 
 export function checkoutSessionParameters({ eventId, offer, origin, taxEnabled = false, environment = {} }) {
@@ -156,6 +198,7 @@ export function checkoutSessionParameters({ eventId, offer, origin, taxEnabled =
     custom_text: {
       submit: { message: policyMessage(offer) }
     },
+    custom_fields: checkoutCustomFields(offer),
     metadata: {
       offer_key: offer.id,
       event_id: eventId,

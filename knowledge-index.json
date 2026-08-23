@@ -1,8 +1,44 @@
 {
   "schemaVersion": "1.0",
   "sourceCommit": "source-controlled",
-  "generatedAt": "2026-08-18T00:00:00.000Z",
+  "generatedAt": "2026-08-22T00:00:00.000Z",
   "entries": [
+    {
+      "id": "shared-practice-of-life",
+      "title": "A shared practice of life",
+      "summary": "A reflection on equality, shared responsibility, conflict, and the practical work of building a living community together.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/shared-practice-of-life",
+      "topic": {
+        "id": "co-creation-and-community",
+        "name": "Co-creation and community"
+      },
+      "contentType": "explainer",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "co-creation",
+        "community",
+        "shared-practice",
+        "equality",
+        "responsibility",
+        "conflict"
+      ],
+      "author": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-08-22",
+      "updatedAt": "2026-08-22",
+      "reviewDueAt": "2027-02-22",
+      "locale": "en"
+    },
     {
       "id": "a-living-vision-for-rainbow-sanctuary",
       "title": "A living vision for Rainbow Sanctuary",

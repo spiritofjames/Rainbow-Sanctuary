@@ -65,6 +65,11 @@ function checkoutDisplayName(object) {
   return String(customName || object.customer_details?.name || "").trim();
 }
 
+function checkoutCustomField(object, key) {
+  const field = object.custom_fields?.find((candidate) => candidate.key === key);
+  return String(field?.text?.value || "").trim();
+}
+
 export function crmPaymentHandoff(event, { allowLive = false } = {}) {
   if (!CRM_PAYMENT_HANDOFF_EVENTS.has(event.type) || (event.livemode && !allowLive)) {
     throw new Error("Only approved Stripe Checkout events can enter the CRM.");
@@ -80,19 +85,21 @@ export function crmPaymentHandoff(event, { allowLive = false } = {}) {
   const paymentIntentId = typeof object.payment_intent === "string"
     ? object.payment_intent
     : object.payment_intent?.id || "";
-  // Stripe does not create a PaymentIntent for a Checkout Session that is
-  // completely discounted by a valid promotion code. The Checkout Session is
-  // still the authoritative paid booking record in that case, so use it as
-  // the provider reference rather than rejecting a real participant.
-  const providerPaymentId = paymentIntentId || String(object.id || "");
   const offerId = String(object.metadata?.offer_key || "");
   const sessionId = String(object.metadata?.event_id || "");
-  const identifiers = [event.id, object.id, providerPaymentId, offerId, sessionId];
+  const customer = { displayName: customerDisplayName, email: customerEmail };
+  // Child details belong only to the Kids enrolment handoff. Keeping these
+  // properties absent for every other offer preserves the existing CRM schema.
+  if (offerId.startsWith("kids-weekly-practice-")) {
+    customer.childName = checkoutCustomField(object, "child_name");
+    customer.guardianWhatsApp = checkoutCustomField(object, "guardian_whatsapp");
+  }
+  const identifiers = [event.id, object.id, paymentIntentId, offerId, sessionId];
 
   if (
     object.payment_status !== "paid" ||
     !Number.isInteger(object.amount_total) ||
-    object.amount_total < 0 ||
+    object.amount_total <= 0 ||
     !Number.isInteger(amountSubtotalMinor) ||
     amountSubtotalMinor <= 0 ||
     object.amount_total > amountSubtotalMinor ||
@@ -111,14 +118,11 @@ export function crmPaymentHandoff(event, { allowLive = false } = {}) {
     amountSubtotalMinor,
     bookingReference: object.id,
     currency: "USD",
-    customer: {
-      displayName: customerDisplayName,
-      email: customerEmail
-    },
+    customer,
     eventId: event.id,
     occurredAt: new Date(event.created * 1000).toISOString(),
     offerId,
-    providerPaymentId,
+    providerPaymentId: paymentIntentId,
     schemaVersion: "rainbow.payment-handoff.v1",
     sessionId,
     stripeEventId: event.id
@@ -127,7 +131,7 @@ export function crmPaymentHandoff(event, { allowLive = false } = {}) {
 
 export function checkoutAmountMatchesApprovedPrice(handoff, approvedAmountMinor) {
   return handoff.amountSubtotalMinor === approvedAmountMinor &&
-    handoff.amountMinor >= 0 &&
+    handoff.amountMinor > 0 &&
     handoff.amountMinor <= handoff.amountSubtotalMinor;
 }
 

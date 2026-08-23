@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
   "sourceCommit": "source-controlled",
-  "generatedAt": "2026-08-18T00:00:00.000Z",
+  "generatedAt": "2026-08-22T00:00:00.000Z",
   "compilerVersion": "1.1.0",
-  "articleCount": 6,
+  "articleCount": 7,
   "longReadCount": 1,
   "excludedDraftCount": 1,
   "routes": {
@@ -15,6 +15,7 @@
     "Knowledge-Topic-consciousness-and-reflection.dc.html": "/knowledge/topics/consciousness-and-reflection",
     "Knowledge-Topic-co-creation-and-community.dc.html": "/knowledge/topics/co-creation-and-community",
     "Knowledge-Topic-earth-stewardship.dc.html": "/knowledge/topics/earth-stewardship",
+    "Knowledge-shared-practice-of-life.dc.html": "/knowledge/shared-practice-of-life",
     "Knowledge-a-living-vision-for-rainbow-sanctuary.dc.html": "/knowledge/a-living-vision-for-rainbow-sanctuary",
     "Knowledge-co-creation-principles-for-rainbow-sanctuary.dc.html": "/knowledge/co-creation-principles-for-rainbow-sanctuary",
     "Knowledge-life-from-dust-to-the-stars.dc.html": "/knowledge/life-from-dust-to-the-stars",
@@ -23,6 +24,42 @@
     "Knowledge-using-the-library.dc.html": "/knowledge/using-the-library"
   },
   "entries": [
+    {
+      "id": "shared-practice-of-life",
+      "title": "A shared practice of life",
+      "summary": "A reflection on equality, shared responsibility, conflict, and the practical work of building a living community together.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/shared-practice-of-life",
+      "topic": {
+        "id": "co-creation-and-community",
+        "name": "Co-creation and community"
+      },
+      "contentType": "explainer",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "co-creation",
+        "community",
+        "shared-practice",
+        "equality",
+        "responsibility",
+        "conflict"
+      ],
+      "author": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-08-22",
+      "updatedAt": "2026-08-22",
+      "reviewDueAt": "2027-02-22",
+      "locale": "en"
+    },
     {
       "id": "a-living-vision-for-rainbow-sanctuary",
       "title": "A living vision for Rainbow Sanctuary",

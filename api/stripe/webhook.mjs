@@ -6,7 +6,7 @@ import { mirrorHubSpotPurchase } from "../_lib/hubspot-payment.mjs";
 import { attemptPurchaseOperationsNotification } from "../_lib/operations-notification.mjs";
 import { isOptionalContributionSession } from "../_lib/optional-contribution.mjs";
 import { hydrateStaffPaymentLinkEvent } from "../_lib/staff-payment-links.mjs";
-import { syncPaidGroupHealingParticipant } from "../_lib/group-healing-calendar.mjs";
+import { addKidsWeeklyPracticeGuardian } from "../_lib/kids-weekly-practice-calendar.mjs";
 
 export const config = {
   api: { bodyParser: false }
@@ -40,16 +40,35 @@ export default async function handler(request, response) {
     const governedEvent = hydrateStaffPaymentLinkEvent(event, process.env);
     let delivery = { forwarded: false, ignored: true, reason: "not-applicable" };
     let bookingEmail = { sent: false, reason: "not-applicable" };
-    let calendarInvitation = { enabled: false, reason: "not-applicable" };
+    let calendarEnrolment = { enabled: false, reason: "not-applicable" };
     if (
       ["checkout.session.completed", "checkout.session.async_payment_succeeded"].includes(event.type) &&
       !isInternalPaymentTest(governedEvent) &&
       !isOptionalContributionSession(governedEvent?.data?.object, process.env)
     ) {
-      // The participant confirmation is the first operational action after a
-      // verified Stripe payment. It is independently idempotent, so a later
-      // temporary CRM error cannot strand a paid person without their access
-      // details while Stripe retries the event.
+      const hubspot = await mirrorHubSpotPurchase(governedEvent, process.env);
+      await attemptPurchaseOperationsNotification(governedEvent, hubspot, process.env);
+
+      // The host series is the single source of truth for Ethel. Calendar
+      // enrolment is intentionally non-blocking: an OAuth or Google outage
+      // must never cause a paid participant to miss their confirmation email
+      // or make Stripe retry a legitimate charge. Only the guardian email is
+      // sent to Calendar; child data and WhatsApp remain in HubSpot.
+      const offerKey = String(governedEvent.data?.object?.metadata?.offer_key || "");
+      if (offerKey.startsWith("kids-weekly-practice-")) {
+        try {
+          calendarEnrolment = await addKidsWeeklyPracticeGuardian({
+            email: governedEvent.data?.object?.customer_details?.email,
+            environment: process.env
+          });
+        } catch (calendarError) {
+          console.error("kids_weekly_practice_calendar_enrolment_error", {
+            eventId: event.id,
+            message: calendarError.message
+          });
+          calendarEnrolment = { enabled: true, added: false, reason: "failed" };
+        }
+      }
       try {
         bookingEmail = await sendPurchaseConfirmation(governedEvent, process.env);
       } catch (emailError) {
@@ -60,17 +79,6 @@ export default async function handler(request, response) {
           message: emailError.message
         });
         bookingEmail = { sent: false, reason: "failed" };
-      }
-      const hubspot = await mirrorHubSpotPurchase(governedEvent, process.env);
-      await attemptPurchaseOperationsNotification(governedEvent, hubspot, process.env);
-      try {
-        calendarInvitation = await syncPaidGroupHealingParticipant(governedEvent, process.env);
-      } catch (calendarError) {
-        // The verified payment and HubSpot record are authoritative. A staff
-        // calendar outage must be visible for follow-up but must not block a
-        // paid participant's confirmation or cause Stripe to retry a charge.
-        console.error("stripe_group_healing_calendar_invitation_error", { eventId: event.id, message: calendarError.message });
-        calendarInvitation = { enabled: false, reason: "failed" };
       }
     }
     try {
@@ -93,8 +101,8 @@ export default async function handler(request, response) {
       deliveryReason: delivery.reason || null,
       bookingEmailSent: bookingEmail.sent,
       bookingEmailReason: bookingEmail.reason || null,
-      calendarInvitationEnabled: calendarInvitation.enabled,
-      calendarInvitationReason: calendarInvitation.reason || null
+      calendarEnrolmentEnabled: calendarEnrolment.enabled,
+      calendarEnrolmentReason: calendarEnrolment.reason || null
     });
     return sendJson(response, 200, { received: true });
   } catch (error) {
