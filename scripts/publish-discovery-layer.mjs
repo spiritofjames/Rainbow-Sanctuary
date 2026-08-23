@@ -436,11 +436,22 @@ for (const file of fs.readdirSync(siteDir).filter((name) => name.endsWith(".js")
   fs.writeFileSync(filePath, source);
 }
 
-const redirects = Object.entries(allRoutes).map(([file, route]) => ({
-  source: `/${file}`,
-  destination: route,
-  permanent: true
-}));
+const legacyCleanRouteRedirects = {
+  "/kids-weekly-practice": "/children-weekly-practice"
+};
+
+const redirects = [
+  ...Object.entries(allRoutes).map(([file, route]) => ({
+    source: `/${file}`,
+    destination: route,
+    permanent: true
+  })),
+  ...Object.entries(legacyCleanRouteRedirects).map(([source, destination]) => ({
+    source,
+    destination,
+    permanent: true
+  }))
+];
 
 const rewrites = [
   { source: "/guardian", destination: "/guardian/index.html" },

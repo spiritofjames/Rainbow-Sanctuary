@@ -349,6 +349,11 @@
       "source": "/144-Stages-Maintenance.dc.html",
       "destination": "/144-stages-maintenance",
       "permanent": true
+    },
+    {
+      "source": "/kids-weekly-practice",
+      "destination": "/children-weekly-practice",
+      "permanent": true
     }
   ],
   "rewrites": [
