@@ -2,10 +2,12 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   attemptEnquiryOperationsNotification,
+  attemptAutismRegistrationOneHourReminder,
   attemptPurchaseOperationsNotification,
   attemptOptionalContributionFollowUp,
   attemptVisitorIntakeReceipt,
   autismRegistrationReceipt,
+  autismRegistrationOneHourReminder,
   enquiryOperationsMessage,
   optionalContributionFollowUp,
   purchaseOperationsMessage,
@@ -96,6 +98,25 @@ test("Autism registration receipt confirms the weekly list without promising rev
   assert.match(message.text, /11:00 PM Beijing time/);
   assert.doesNotMatch(message.text, /review|diagnos/i);
   assert.match(message.text, /no Zoom session/i);
+});
+
+test("Autism registration queues one privacy-safe reminder for the next Tuesday session", async () => {
+  const registration = { ...intake, area: "family", program: "autism-family-support" };
+  const now = new Date("2031-08-04T08:00:00.000Z");
+  const message = autismRegistrationOneHourReminder(registration, now);
+  assert.equal(message.to, registration.email);
+  assert.match(message.subject, /begins in one hour/i);
+  assert.match(message.text, /11:00 PM Beijing time/i);
+  assert.match(message.text, /no Zoom session/i);
+  assert.ok(Date.parse(message.scheduledAt) > now.getTime());
+
+  let scheduled;
+  const result = await attemptAutismRegistrationOneHourReminder(registration, environment, {
+    emails: { send: async (...args) => { scheduled = args; return { data: { id: "reminder_123" }, error: null }; } }
+  }, console, now);
+  assert.deepEqual(result, { sent: true, id: "reminder_123" });
+  assert.equal(scheduled[0].scheduledAt, message.scheduledAt);
+  assert.equal(scheduled[1].idempotencyKey, message.idempotencyKey);
 });
 
 test("only free donation-based registration schedules one delayed contribution follow-up", async () => {
