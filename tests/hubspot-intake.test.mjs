@@ -1,6 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mirrorHubSpotIntake, toHubSpotProperties } from "../api/_lib/hubspot-intake.mjs";
+import {
+  mirrorHubSpotIntake,
+  toHubSpotProperties,
+  toHubSpotProtectedContactProperties
+} from "../api/_lib/hubspot-intake.mjs";
 
 const intake = {
   area: "spiral",
@@ -31,6 +35,15 @@ test("website enquiry maps to Ethel and exact HubSpot taxonomy", () => {
     lastname: "Ethel Owner",
     phone: "+1 555 123 4567",
     program_or_offering: "Spiral I — Foundations"
+  });
+});
+
+test("protected registrations use only standard HubSpot contact fields before their private note is stored", () => {
+  assert.deepEqual(toHubSpotProtectedContactProperties(intake), {
+    email: "synthetic@example.test",
+    firstname: "Synthetic",
+    lastname: "Ethel Owner",
+    phone: "+1 555 123 4567"
   });
 });
 
@@ -147,6 +160,13 @@ test("Autism registration uses the same private thirty-day storage with a struct
     return { ok: true, status: 200 };
   }, attachment, { participantAge: 9, participantCountry: "Panama", participantName: "Alex" });
 
+  const contactUpsert = JSON.parse(calls[0].options.body);
+  assert.deepEqual(contactUpsert.inputs[0].properties, {
+    email: "synthetic@example.test",
+    firstname: "Synthetic",
+    lastname: "Ethel Owner",
+    phone: "+1 555 123 4567"
+  });
   assert.equal(calls[1].options.body.get("folderPath"), "/rainbow-sanctuary/autism-family-registration");
   const note = JSON.parse(calls[2].options.body);
   assert.match(note.properties.hs_note_body, /Autism &amp; Family Support registration/);
