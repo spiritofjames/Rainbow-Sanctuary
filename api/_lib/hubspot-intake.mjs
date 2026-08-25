@@ -172,6 +172,21 @@ export function toHubSpotProperties(intake, ownerId) {
   };
 }
 
+// Protected applications must create the contact before any sensitive material
+// is stored. Custom portal properties are optional and may differ between
+// HubSpot accounts; they must never prevent a guardian's registration from
+// being recorded. The full protected application is placed in the restricted
+// contact note after this standard-field upsert succeeds.
+export function toHubSpotProtectedContactProperties(intake) {
+  const { firstname, lastname } = splitName(intake.displayName);
+  return {
+    email: intake.email,
+    firstname,
+    lastname,
+    phone: intake.phone
+  };
+}
+
 export async function mirrorHubSpotIntake(intake, environment, fetchImplementation = fetch, attachment = null, application = null) {
   if (environment.HUBSPOT_INTAKE_ENABLED !== "true") {
     // A protected participant image must never be accepted unless the private
@@ -182,7 +197,9 @@ export async function mirrorHubSpotIntake(intake, environment, fetchImplementati
   }
   const { ownerId, portalId, token } = requireConfiguration(environment);
   const privateConfiguration = attachment ? requirePrivateIntakeConfiguration(environment) : null;
-  const properties = toHubSpotProperties(intake, ownerId);
+  const properties = attachment
+    ? toHubSpotProtectedContactProperties(intake)
+    : toHubSpotProperties(intake, ownerId);
   const authorization = { authorization: `Bearer ${token}`, "content-type": "application/json" };
 
   const upsertResponse = await fetchImplementation(`${HUBSPOT_API_ORIGIN}/crm/v3/objects/contacts/batch/upsert`, {
