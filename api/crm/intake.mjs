@@ -3,6 +3,7 @@ import { forwardWebsiteIntake, normalizePublicIntake } from "../_lib/crm-intake.
 import { mirrorHubSpotIntake } from "../_lib/hubspot-intake.mjs";
 import {
   attemptAutismRegistrationReceipt,
+  attemptAutismRegistrationOneHourReminder,
   attemptEnquiryOperationsNotification,
   attemptOptionalContributionFollowUp,
   attemptVisitorIntakeReceipt
@@ -105,10 +106,14 @@ export default async function handler(request, response) {
     });
     const privateApplication = isPrivate ? privateApplicationDetails(input, normalized) : null;
     const autismRegistration = isAutismRegistration ? autismRegistrationDetails(input, normalized) : null;
-    await forwardWebsiteIntake(input, process.env);
+    // Private Healing and Autism & Family Support contain protected images.
+    // Their authoritative path is the restricted HubSpot record; an optional
+    // legacy CRM mirror must never block (or receive) that material.
+    if (!requiresProtectedAttachment) await forwardWebsiteIntake(input, process.env);
     const hubspot = await mirrorHubSpotIntake(normalized, process.env, fetch, attachment, privateApplication || autismRegistration);
     if (isAutismRegistration) {
       await attemptAutismRegistrationReceipt(normalized, process.env);
+      await attemptAutismRegistrationOneHourReminder(normalized, process.env);
       await attemptOptionalContributionFollowUp(normalized, process.env);
     } else {
       await attemptVisitorIntakeReceipt(normalized, process.env);
