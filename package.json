@@ -11,6 +11,9 @@
     "knowledge:build": "node scripts/knowledge/build.mjs",
     "knowledge:check": "node --test tests/knowledge-compiler.test.mjs && npm run knowledge:build && node scripts/publish-discovery-layer.mjs && git diff --exit-code",
     "release:check": "node scripts/release-integrity-check.mjs",
+    "quality:preflight": "npm run knowledge:build && npm test && npm run email:check && npm run release:check && python3 scripts/validate_site.py && node scripts/publish-discovery-layer.mjs && python3 -m json.tool vercel.json >/dev/null",
+    "quality:generated-check": "git diff --exit-code",
+    "quality:production-smoke": "python3 scripts/check_endpoints.py",
     "validate": "npm run knowledge:build && npm test && npm run email:check && python3 scripts/validate_site.py && node scripts/publish-discovery-layer.mjs && git diff --exit-code"
   },
   "dependencies": {

@@ -1,0 +1,54 @@
+name: Production incident
+description: Record a visitor-facing, operational, payment, registration, calendar, CRM, Zoom, or email failure.
+title: "[Incident] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include customer names, email addresses, WhatsApp numbers, payment details, photos, health information, or access tokens.
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - P0 — payments, registrations, sensitive data, or public site unavailable
+        - P1 — core journey broken for multiple visitors
+        - P2 — non-blocking defect or operational friction
+        - P3 — improvement idea
+    validations:
+      required: true
+  - type: dropdown
+    id: detected_by
+    attributes:
+      label: Detected by
+      options:
+        - Automated production monitor
+        - Automated test or deployment check
+        - Staff report
+        - Customer report
+    validations:
+      required: true
+  - type: input
+    id: observed_at
+    attributes:
+      label: Observed at (include timezone)
+      placeholder: "2026-08-25 09:15 Asia/Makassar"
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Visitor or operational impact
+      description: Describe the affected flow and scale without using personal data.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Safe evidence
+      description: Link to a route, workflow run, or redacted error. Do not attach personal or payment data.
+  - type: textarea
+    id: resolution
+    attributes:
+      label: Resolution and regression proof
+      description: Add root cause, fix/PR, test or monitor coverage, and production verification before closing.

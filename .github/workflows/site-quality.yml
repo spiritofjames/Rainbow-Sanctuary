@@ -42,19 +42,7 @@ jobs:
         run: npm ci
 
       - name: Verify application and release-critical integrations
-        run: |
-          npm run knowledge:build
-          npm test
-          npm run email:check
-          npm run release:check
+        run: npm run quality:preflight
 
-      - name: Validate pages, links, assets, placeholders, and headers
-        run: python3 scripts/validate_site.py
-
-      - name: Verify discovery layer is reproducible
-        run: |
-          node scripts/publish-discovery-layer.mjs
-          git diff --exit-code
-
-      - name: Validate Vercel configuration syntax
-        run: python3 -m json.tool vercel.json >/dev/null
+      - name: Verify generated files are committed
+        run: npm run quality:generated-check

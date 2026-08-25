@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  issues: write
 
 concurrency:
   group: endpoint-health
@@ -27,4 +28,35 @@ jobs:
           python-version: "3.12"
 
       - name: Verify DNS, HTTPS, canonical routing, and staging protection
-        run: python3 scripts/check_endpoints.py
+        run: npm run quality:production-smoke
+
+      - name: Record a production incident when monitoring fails
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = '[Incident] Production endpoint health check failed';
+            const marker = '<!-- rainbow-production-health-monitor -->';
+            const details = `${marker}\n\n## Automated production health alert\n\nThe public-site smoke check failed before a visitor reported it.\n\n- Detected: ${new Date().toISOString()}\n- Workflow: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}\n- Commit checked: ${context.sha}\n\nReview the failed check output, verify the live route, then record the cause and regression coverage in [docs/quality/incident-backlog.md](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/blob/main/docs/quality/incident-backlog.md). Do not paste customer data, payment details, or provider secrets into this issue.`;
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              per_page: 100,
+            });
+            const existing = issues.find((issue) => issue.title === title && issue.body?.includes(marker));
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body: `Monitoring failed again at ${new Date().toISOString()}. Workflow: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body: details,
+              });
+            }
