@@ -36,6 +36,8 @@ test("sensitive pathways stay safely gated, while approved direct registration r
   assert.match(autism, /preparing a short parents-only introduction and Q&amp;A/i);
   assert.match(autism, /It is an introduction for parents, not the weekly practice itself/i);
   assert.match(autism, /please do not send medical records, diagnoses, or unnecessary sensitive information/i);
+  assert.match(autism, /overnight-rest-preparation-v1\.jpg/i);
+  assert.match(autism, /A quiet, familiar setting is enough/i);
   assert.match(autism, /data-supported-apply="\/apply\?reason=family&amp;program=autism-family-support"/);
   assert.match(youth, /reviewed first/i);
   assert.match(youth, /not a crisis or emergency service/i);
