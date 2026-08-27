@@ -27,6 +27,12 @@ test("sensitive pathways stay safely gated, while approved direct registration r
   assert.match(autism, /Complete the free weekly registration/i);
   assert.match(autism, /recent photo, full name, age, and country/i);
   assert.match(autism, /no Zoom link or live attendance requirement/i);
+  assert.match(autism, /For parents who are new to this work/i);
+  assert.match(autism, /It is not a live Zoom session/i);
+  assert.match(autism, /not medical care, therapy, diagnosis, or treatment/i);
+  assert.match(autism, /preparing a short parents-only introduction and Q&amp;A/i);
+  assert.match(autism, /It is an introduction for parents, not the weekly practice itself/i);
+  assert.match(autism, /please do not send medical records, diagnoses, or unnecessary sensitive information/i);
   assert.match(autism, /data-supported-apply="\/apply\?reason=family&amp;program=autism-family-support"/);
   assert.match(youth, /reviewed first/i);
   assert.match(youth, /not a crisis or emergency service/i);
