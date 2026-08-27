@@ -24,10 +24,13 @@ test("sensitive pathways stay safely gated, while approved direct registration r
   assert.match(autism, /Higher-Dimensional Hospital is a spiritual and consciousness-based framework/i);
   assert.match(autism, /guided audio, focused intention, and an overnight energetic practice/i);
   assert.match(autism, /Wellbeing Disclaimer/i);
-  assert.match(autism, /Complete the free weekly registration/i);
+  assert.match(autism, /Choose a weekly practice date when you are ready/i);
   assert.match(autism, /recent photo, full name, age, and country/i);
   assert.match(autism, /no Zoom link or live attendance requirement/i);
   assert.match(autism, /For parents who are new to this work/i);
+  assert.match(autism, /Choose a weekly practice date/i);
+  assert.doesNotMatch(autism, /For parents: start here/i);
+  assert.doesNotMatch(autism, />About Rainbow Sanctuary</i);
   assert.match(autism, /It is not a live Zoom session/i);
   assert.match(autism, /not medical care, therapy, diagnosis, or treatment/i);
   assert.match(autism, /preparing a short parents-only introduction and Q&amp;A/i);
