@@ -17,8 +17,9 @@ test("Awakening Academy publishes a single parent-led route from discovery to on
 
   assert.match(family, /Explore the 4-Day Foundation/);
   assert.match(family, /Awakening Academy/);
-  assert.match(family, /See the whole Academy pathway/);
-  assert.match(family, /Click any stage below to read about it/);
+  assert.match(family, /One pathway\. One clear beginning/);
+  assert.match(family, /rs-academy-route/);
+  assert.match(family, /There is no performance standard/);
   assert.match(family, /href="\/awakening-academy-level-1"/);
   assert.match(family, /href="\/awakening-academy-level-2"/);
   assert.match(family, /href="\/unlock-the-potential#certificate"/);
