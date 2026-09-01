@@ -17,6 +17,7 @@ const AREA_LABELS = new Map([
 const PROGRAM_LABELS = new Map([
   ["adult-potential-development", "Adult Potential Development"],
   ["autism-family-support", "Autism & Family Support"],
+  ["awakening-academy-foundation", "Awakening Academy — 4-Day Foundation Journey"],
   ["awakening-inner-light-2026", "Awakening Your Inner Light Retreat 2026"],
   ["childrens-potential-coach-certification", "Children’s Potential Coach Certification"],
   ["crystal-healing", "Crystal Healing"],
@@ -44,11 +45,6 @@ const PROGRAM_LABELS = new Map([
 function splitName(displayName) {
   const [firstname, ...remainder] = displayName.trim().split(/\s+/);
   return { firstname, lastname: remainder.join(" ") };
-}
-
-function enquiryDetails(intake) {
-  const source = String(intake.sourcePage || "/apply").trim();
-  return `Website source: ${source}\n\n${intake.requestMessage}`;
 }
 
 function escapeHtml(value) {
@@ -87,6 +83,22 @@ function autismRegistrationNote({ intake, retention, application }) {
     "<p><strong>Schedule and preparation</strong><br>Weekly Tuesday, 11:00 PM Beijing time (UTC+8). Parent or guardian confirmed a restful, familiar space at the corresponding local time.</p>",
     `<p><strong>Participant photo</strong><br>Attached to this restricted note. It is automatically deleted after ${days} days. Do not download or duplicate outside the approved case workflow.</p>`,
     `<p><small>Parent or guardian consent recorded · Registration reference: ${escapeHtml(intake.eventId)}</small></p>`
+  ].join("");
+}
+
+function publicEnquiryNote(intake) {
+  const area = AREA_LABELS.get(intake.area) || "Other";
+  const program = intake.program
+    ? (PROGRAM_LABELS.get(intake.program) || "Other / Not sure yet")
+    : (intake.area === "group-healing" ? "Online Group Healing" : "Other / Not sure yet");
+  return [
+    "<h3>Website enquiry</h3>",
+    `<p><strong>Area of interest</strong><br>${escapeHtml(area)}</p>`,
+    `<p><strong>Programme or offering</strong><br>${escapeHtml(program)}</p>`,
+    `<p><strong>Website source</strong><br>${escapeHtml(intake.sourcePage || "/apply")}</p>`,
+    `<p><strong>Message</strong><br>${escapeHtml(intake.requestMessage).replaceAll("\n", "<br>")}</p>`,
+    `<p><strong>Preferred contact</strong><br>WhatsApp: ${escapeHtml(intake.phone)}</p>`,
+    `<p><small>Privacy consent recorded · Submission reference: ${escapeHtml(intake.eventId)}</small></p>`
   ].join("");
 }
 
@@ -161,20 +173,33 @@ async function attachPrivateHeadshot({ application, attachment, contactId, intak
   if (!noteResponse.ok) throw new Error(`HubSpot private note creation failed with status ${noteResponse.status}.`);
 }
 
+async function createPublicEnquiryNote({ contactId, intake, ownerId, token }, fetchImplementation) {
+  const noteResponse = await fetchImplementation(`${HUBSPOT_API_ORIGIN}/crm/v3/objects/notes`, {
+    body: JSON.stringify({
+      associations: [{
+        to: { id: contactId },
+        types: [{ associationCategory: "HUBSPOT_DEFINED", associationTypeId: 202 }]
+      }],
+      properties: {
+        hs_note_body: publicEnquiryNote(intake),
+        hs_timestamp: intake.occurredAt,
+        hubspot_owner_id: ownerId
+      }
+    }),
+    headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
+    method: "POST"
+  });
+  if (!noteResponse.ok) throw new Error(`HubSpot enquiry note creation failed with status ${noteResponse.status}.`);
+}
+
 export function toHubSpotProperties(intake, ownerId) {
   const { firstname, lastname } = splitName(intake.displayName);
-  const program = intake.program
-    ? (PROGRAM_LABELS.get(intake.program) || "Other / Not sure yet")
-    : (intake.area === "group-healing" ? "Online Group Healing" : "Other / Not sure yet");
   return {
-    area_of_interest: AREA_LABELS.get(intake.area) || "Other",
     email: intake.email,
-    enquiry_details: enquiryDetails(intake),
     firstname,
     hubspot_owner_id: ownerId,
     lastname,
-    phone: intake.phone,
-    program_or_offering: program
+    phone: intake.phone
   };
 }
 
@@ -227,6 +252,8 @@ export async function mirrorHubSpotIntake(intake, environment, fetchImplementati
       retention: privateConfiguration.retention,
       token
     }, fetchImplementation);
+  } else {
+    await createPublicEnquiryNote({ contactId, intake, ownerId, token }, fetchImplementation);
   }
 
   return {
