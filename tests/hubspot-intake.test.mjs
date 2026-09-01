@@ -66,6 +66,25 @@ test("a general main-website enquiry preserves both its classification and sourc
   });
 });
 
+test("Awakening Academy Foundation enquiries retain the family source and canonical programme label", () => {
+  assert.deepEqual(toHubSpotProperties({
+    ...intake,
+    area: "family",
+    program: "awakening-academy-foundation",
+    requestMessage: "I would like to understand the next Foundation Journey.",
+    sourcePage: "/apply?reason=family&program=awakening-academy-foundation"
+  }, "166816652"), {
+    area_of_interest: "Program guidance",
+    email: "synthetic@example.test",
+    enquiry_details: "Website source: /apply?reason=family&program=awakening-academy-foundation\n\nI would like to understand the next Foundation Journey.",
+    firstname: "Synthetic",
+    hubspot_owner_id: "166816652",
+    lastname: "Ethel Owner",
+    phone: "+1 555 123 4567",
+    program_or_offering: "Awakening Academy — 4-Day Foundation Journey"
+  });
+});
+
 test("HubSpot mirror idempotently upserts the Ethel-owned contact without duplicate form activity", async () => {
   const calls = [];
   const result = await mirrorHubSpotIntake(intake, environment, async (url, options) => {
