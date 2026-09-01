@@ -25,20 +25,17 @@ const environment = {
   HUBSPOT_PORTAL_ID: "246920029"
 };
 
-test("website enquiry maps to Ethel and exact HubSpot taxonomy", () => {
+test("website enquiry maps to Ethel-owned standard HubSpot contact fields", () => {
   assert.deepEqual(toHubSpotProperties(intake, "166816652"), {
-    area_of_interest: "Program guidance",
     email: "synthetic@example.test",
-    enquiry_details: "Website source: /apply?reason=spiral&program=spiral-i\n\nI would like to understand Spiral I.",
     firstname: "Synthetic",
     hubspot_owner_id: "166816652",
     lastname: "Ethel Owner",
-    phone: "+1 555 123 4567",
-    program_or_offering: "Spiral I — Foundations"
+    phone: "+1 555 123 4567"
   });
 });
 
-test("a general main-website enquiry preserves both its classification and source page", () => {
+test("a general main-website enquiry keeps the same portable contact contract", () => {
   assert.deepEqual(toHubSpotProperties({
     ...intake,
     area: "other",
@@ -46,33 +43,11 @@ test("a general main-website enquiry preserves both its classification and sourc
     requestMessage: "I would like help choosing the right next step.",
     sourcePage: "/apply"
   }, "166816652"), {
-    area_of_interest: "Other",
     email: "synthetic@example.test",
-    enquiry_details: "Website source: /apply\n\nI would like help choosing the right next step.",
     firstname: "Synthetic",
     hubspot_owner_id: "166816652",
     lastname: "Ethel Owner",
-    phone: "+1 555 123 4567",
-    program_or_offering: "General enquiry — main website"
-  });
-});
-
-test("Awakening Academy Foundation enquiries retain the family source and canonical programme label", () => {
-  assert.deepEqual(toHubSpotProperties({
-    ...intake,
-    area: "family",
-    program: "awakening-academy-foundation",
-    requestMessage: "I would like to understand the next Foundation Journey.",
-    sourcePage: "/apply?reason=family&program=awakening-academy-foundation"
-  }, "166816652"), {
-    area_of_interest: "Program guidance",
-    email: "synthetic@example.test",
-    enquiry_details: "Website source: /apply?reason=family&program=awakening-academy-foundation\n\nI would like to understand the next Foundation Journey.",
-    firstname: "Synthetic",
-    hubspot_owner_id: "166816652",
-    lastname: "Ethel Owner",
-    phone: "+1 555 123 4567",
-    program_or_offering: "Awakening Academy — 4-Day Foundation Journey"
+    phone: "+1 555 123 4567"
   });
 });
 
@@ -85,30 +60,14 @@ test("protected registrations use only standard HubSpot contact fields before th
   });
 });
 
-test("a general main-website enquiry preserves both its classification and source page", () => {
-  assert.deepEqual(toHubSpotProperties({
-    ...intake,
-    area: "other",
-    program: "general-enquiry",
-    requestMessage: "I would like help choosing the right next step.",
-    sourcePage: "/apply"
-  }, "166816652"), {
-    area_of_interest: "Other",
-    email: "synthetic@example.test",
-    enquiry_details: "Website source: /apply\n\nI would like help choosing the right next step.",
-    firstname: "Synthetic",
-    hubspot_owner_id: "166816652",
-    lastname: "Ethel Owner",
-    phone: "+1 555 123 4567",
-    program_or_offering: "General enquiry — main website"
-  });
-});
-
-test("HubSpot mirror idempotently upserts the Ethel-owned contact without duplicate form activity", async () => {
+test("HubSpot mirror upserts the Ethel-owned contact and stores full enquiry context in a note", async () => {
   const calls = [];
   const result = await mirrorHubSpotIntake(intake, environment, async (url, options) => {
     calls.push({ body: JSON.parse(options.body), headers: options.headers, url });
-    return { json: async () => ({ results: [{ id: "41001" }] }), ok: true, status: 200 };
+    if (url.endsWith("contacts/batch/upsert")) {
+      return { json: async () => ({ results: [{ id: "41001" }] }), ok: true, status: 200 };
+    }
+    return { ok: true, status: 201 };
   });
   assert.deepEqual(result, {
     attachmentStored: false,
@@ -117,11 +76,47 @@ test("HubSpot mirror idempotently upserts the Ethel-owned contact without duplic
     enabled: true,
     ownerId: "166816652"
   });
-  assert.equal(calls.length, 1);
+  assert.equal(calls.length, 2);
   assert.match(calls[0].url, /contacts\/batch\/upsert$/);
   assert.equal(calls[0].body.inputs[0].idProperty, "email");
   assert.equal(calls[0].body.inputs[0].properties.hubspot_owner_id, "166816652");
   assert.equal(calls[0].headers.authorization, `Bearer ${environment.HUBSPOT_ACCESS_TOKEN}`);
+  assert.match(calls[1].url, /crm\/v3\/objects\/notes$/);
+  assert.equal(calls[1].body.associations[0].to.id, "41001");
+  assert.equal(calls[1].body.properties.hubspot_owner_id, "166816652");
+  assert.match(calls[1].body.properties.hs_note_body, /Website enquiry/);
+  assert.match(calls[1].body.properties.hs_note_body, /Program guidance/);
+  assert.match(calls[1].body.properties.hs_note_body, /Spiral I — Foundations/);
+  assert.match(calls[1].body.properties.hs_note_body, /I would like to understand Spiral I/);
+  assert.match(calls[1].body.properties.hs_note_body, /apply\?reason=spiral/);
+});
+
+test("Awakening Academy Foundation enquiries retain their family source and canonical programme label in the contact note", async () => {
+  const calls = [];
+  await mirrorHubSpotIntake({
+    ...intake,
+    area: "family",
+    eventId: "12e9e9fd-367f-4f92-a6d2-bbe8e977d398",
+    program: "awakening-academy-foundation",
+    requestMessage: "I would like to understand the next Foundation Journey.",
+    sourcePage: "/apply?reason=family&program=awakening-academy-foundation"
+  }, environment, async (url, options) => {
+    calls.push({ body: JSON.parse(options.body), url });
+    if (url.endsWith("contacts/batch/upsert")) {
+      return { json: async () => ({ results: [{ id: "41002" }] }), ok: true, status: 200 };
+    }
+    return { ok: true, status: 201 };
+  });
+  assert.equal(calls.length, 2);
+  assert.deepEqual(calls[0].body.inputs[0].properties, {
+    email: "synthetic@example.test",
+    firstname: "Synthetic",
+    hubspot_owner_id: "166816652",
+    lastname: "Ethel Owner",
+    phone: "+1 555 123 4567"
+  });
+  assert.match(calls[1].body.properties.hs_note_body, /Awakening Academy — 4-Day Foundation Journey/);
+  assert.match(calls[1].body.properties.hs_note_body, /apply\?reason=family&amp;program=awakening-academy-foundation/);
 });
 
 test("private healing uploads a private expiring file and attaches it to Ethel's contact note", async () => {
