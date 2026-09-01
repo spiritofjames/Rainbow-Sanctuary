@@ -30,7 +30,7 @@ test("public enquiry becomes the exact minimal CRM contract", () => {
     preferredContact: "whatsapp",
     privacyAcceptedAt: "2026-08-04T10:00:00.000Z",
     privacyPolicyVersion: "13 July 2026",
-    program: null,
+    program: "general-enquiry",
     requestMessage: "I would like to understand the next workshop.",
     schemaVersion: "rainbow.website-intake.v2",
     sourcePage: "/apply?reason=workshop"
@@ -46,6 +46,16 @@ test("programme context survives the public enquiry URL and reaches the CRM", ()
   assert.equal(contextual.area, "spiral");
   assert.equal(contextual.pathway, "program");
   assert.equal(contextual.program, "spiral-i");
+});
+
+test("a central-form enquiry is explicitly classified as a general main-website enquiry", () => {
+  const general = normalizePublicIntake({
+    ...submission,
+    reason: "other",
+    sourcePage: "/apply"
+  }, receivedAt);
+  assert.equal(general.program, "general-enquiry");
+  assert.equal(general.sourcePage, "/apply");
 });
 
 test("valid international WhatsApp numbers are not misclassified as payment-card data", () => {
@@ -101,6 +111,7 @@ test("Autism & Family Support registration is a separately gated, parent-contact
 
 test("unsafe or unconsented submissions fail closed", () => {
   assert.throws(() => normalizePublicIntake({ ...submission, privacyAccepted: false }, receivedAt), /consent/i);
+  assert.throws(() => normalizePublicIntake({ ...submission, message: "Too short" }, receivedAt), /invalid enquiry fields/i);
   assert.throws(() => normalizePublicIntake({ ...submission, message: "card=4242 4242 4242 4242" }, receivedAt), /prohibited/i);
   assert.throws(
     () => normalizePublicIntake({ ...submission, submittedAt: "2026-08-03T09:59:59.000Z" }, new Date("2026-08-04T10:00:00.000Z")),
@@ -152,6 +163,7 @@ test("the enquiry form uses JSON for ordinary requests and private multipart onl
   ]);
   assert.match(config, /endpoint: "\/api\/crm\/intake"/);
   assert.match(form, /clientEventId/);
+  assert.match(form, /name="message"[^>]*minlength="10"[^>]*required="true"/);
   assert.match(form, /privacyAccepted: true/);
   assert.match(form, /submissionId: ''/);
   assert.match(form, /submittedAt: ''/);

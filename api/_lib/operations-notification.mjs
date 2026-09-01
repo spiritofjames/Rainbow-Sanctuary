@@ -22,6 +22,7 @@ function safeContactUrl(hubspot) {
 }
 
 function intakePathwayLabel(intake) {
+  if (intake.program === "general-enquiry") return "General enquiry — main website";
   const source = String(intake.program || intake.area || "Rainbow Sanctuary enquiry").trim();
   return source
     .split(/[\s_-]+/)
@@ -45,18 +46,19 @@ export function visitorIntakeReceipt(intake) {
 }
 
 export function enquiryOperationsMessage(intake, hubspot, environment) {
-  const program = intake.program || intake.area;
+  const program = intakePathwayLabel(intake);
   const content = {
     preheader: "A new Rainbow Sanctuary enquiry is ready for review.",
     eyebrow: "Operations · New enquiry",
     heading: "A new enquiry is ready.",
     greeting: `Hello Ethel,`,
     paragraphs: [
-      `${escapeHtml(intake.displayName)} submitted a ${escapeHtml(program)} enquiry. Open the owned HubSpot contact to review the approved intake details and decide the next step.`,
+      `${escapeHtml(intake.displayName)} submitted an enquiry for ${escapeHtml(program)}. Open the owned HubSpot contact to review the approved intake details and decide the next step.`,
       "The notification intentionally excludes the enquiry message and any attachment. Review confidential details only in the approved system."
     ],
     details: [
       { label: "Programme", value: escapeHtml(program) },
+      { label: "Source", value: escapeHtml(intake.sourcePage || "/apply") },
       { label: "Reference", value: escapeHtml(intake.eventId) }
     ],
     cta: { label: "Open contact in HubSpot", url: safeContactUrl(hubspot) },

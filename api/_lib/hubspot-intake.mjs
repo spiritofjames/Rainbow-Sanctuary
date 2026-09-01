@@ -24,6 +24,7 @@ const PROGRAM_LABELS = new Map([
   ["earth-healer-training", "Earth Healer Training"],
   ["earth-healing-zone", "Earth Healing Zone"],
   ["family-information-field-restoration", "Family Information Field Restoration"],
+  ["general-enquiry", "General enquiry — main website"],
   ["holographic-healing", "Holographic Healing"],
   ["intuitive-perception-training", "Intuitive Perception Training"],
   ["online-group-healing", "Online Group Healing"],
@@ -43,6 +44,11 @@ const PROGRAM_LABELS = new Map([
 function splitName(displayName) {
   const [firstname, ...remainder] = displayName.trim().split(/\s+/);
   return { firstname, lastname: remainder.join(" ") };
+}
+
+function enquiryDetails(intake) {
+  const source = String(intake.sourcePage || "/apply").trim();
+  return `Website source: ${source}\n\n${intake.requestMessage}`;
 }
 
 function escapeHtml(value) {
@@ -163,7 +169,7 @@ export function toHubSpotProperties(intake, ownerId) {
   return {
     area_of_interest: AREA_LABELS.get(intake.area) || "Other",
     email: intake.email,
-    enquiry_details: intake.requestMessage,
+    enquiry_details: enquiryDetails(intake),
     firstname,
     hubspot_owner_id: ownerId,
     lastname,
