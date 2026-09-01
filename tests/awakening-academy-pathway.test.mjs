@@ -17,11 +17,19 @@ test("Awakening Academy publishes a single parent-led route from discovery to on
 
   assert.match(family, /Explore the 4-Day Foundation/);
   assert.match(family, /Awakening Academy/);
+  assert.match(family, /See the whole Academy pathway/);
+  assert.match(family, /Click any stage below to read about it/);
+  assert.match(family, /href="\/awakening-academy-level-1"/);
+  assert.match(family, /href="\/awakening-academy-level-2"/);
+  assert.match(family, /href="\/unlock-the-potential#certificate"/);
+  assert.match(family, /href="\/unlock-the-potential#ongoing-practice"/);
   assert.match(family, /Children’s Potential Coach Certification is professional adult training/);
   assert.match(academy, /4-Day Foundation Journey/);
   assert.match(academy, /Parent review/);
   assert.match(academy, /Certificate of Accomplishment/);
   assert.match(academy, /regular practice, creative projects, and co-creation/);
+  assert.match(academy, /id="certificate"/);
+  assert.match(academy, /id="ongoing-practice"/);
   assert.match(academy, /not an academic, therapeutic, professional, or practitioner qualification/i);
   assert.match(academy, /\/awakening-academy-level-1/);
   assert.match(academy, /\/awakening-academy-level-2/);
