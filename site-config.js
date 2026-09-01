@@ -35,6 +35,15 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     phone: "",
     instagram: ""
   },
+  trustpilot: {
+    // Keep false until the public rating/count and every participant image below are verified.
+    enabled: false,
+    profileUrl: "",
+    score: null,
+    reviewCount: 0,
+    // Use only consented images stored in ./assets/. Do not use stock, AI, or placeholder faces.
+    avatars: []
+  },
   legal: {
     entityName: "",
     registeredAddress: "",

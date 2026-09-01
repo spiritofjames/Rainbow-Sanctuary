@@ -47,6 +47,7 @@ template and a disabled event automation contract.
 | Booking | `rs.booking.changed` | `rs-booking-changed` | Human/CRM |
 | Booking | `rs.booking.cancelled` | `rs-booking-cancelled` | Human/CRM |
 | Session | `rs.session.follow_up` | `rs-session-follow-up` | CRM scheduler after attendance state |
+| Session | `rs.session.review_requested` | `rs-session-review-request` | CRM scheduler after confirmed attendance; disabled pending Trustpilot review-collection approval |
 | Retreat | `rs.retreat.application.received` | `rs-retreat-application-received` | CRM after secure storage |
 | Retreat | `rs.retreat.accepted` | `rs-retreat-accepted` | Human reviewer |
 | Retreat | `rs.retreat.preparation` | `rs-retreat-preparation` | CRM scheduler after approved content |
@@ -84,6 +85,11 @@ owner must first pass acceptance.
     its specialised registration confirmation so a visitor never receives two
     immediate acknowledgements. Its optional contribution follow-up remains a
     separate consent-based message scheduled for the next day.
+11. A review request is optional and is never sent based on a participant's
+    sentiment, predicted rating, complaint history, or a facilitator's judgment.
+    It may be issued only after attendance is confirmed, with the standard
+    Trustpilot review link and no session notes or sensitive context. It remains
+    disabled until the approved Trustpilot activation checklist is complete.
 
 ## Interim HubSpot visibility
 
