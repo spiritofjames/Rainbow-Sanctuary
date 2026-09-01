@@ -2,7 +2,7 @@
   "schemaVersion": "security-layer/owner-authorization-v1",
   "authorizedBy": "James Stark",
   "actions": ["network_write"],
-  "riskTier": "T2",
+  "riskTier": "T3",
   "taskId": "awakening-academy-transparent-practice-update",
   "project": "/Users/spiritofjames/Documents/My Projects/Planetary Symbiosis Network/stages/05_page-assembly/workspace/rainbow-sanctuary/stages/05_page-assembly/workspace/rainbow-sanctuary-awakening-academy",
   "destinations": ["https://github.com/spiritofjames/Rainbow-Sanctuary.git"],
