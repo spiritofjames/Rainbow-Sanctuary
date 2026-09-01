@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "security-layer/owner-authorization-v1",
+  "authorizedBy": "James Stark",
+  "actions": ["network_write"],
+  "riskTier": "T2",
+  "taskId": "awakening-academy-transparent-practice-update",
+  "project": "/Users/spiritofjames/Documents/My Projects/Planetary Symbiosis Network/stages/05_page-assembly/workspace/rainbow-sanctuary/stages/05_page-assembly/workspace/rainbow-sanctuary-awakening-academy",
+  "destinations": ["https://github.com/spiritofjames/Rainbow-Sanctuary.git"],
+  "constraints": "Push only commit 42b6692 and its required task evidence from codex/awakening-academy-staging to the authorized GitHub repository. Use a pull request for staging. Do not push directly to staging or main and do not promote to production.",
+  "issuedAt": "2026-09-01T08:31:00Z",
+  "expiresAt": "2026-09-02T08:31:00Z",
+  "authorization": "James Stark explicitly approved: push it to staging."
+}
