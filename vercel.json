@@ -101,6 +101,21 @@
       "permanent": true
     },
     {
+      "source": "/Awakening-Academy-Foundation.dc.html",
+      "destination": "/awakening-academy-foundation",
+      "permanent": true
+    },
+    {
+      "source": "/Awakening-Academy-Level-1.dc.html",
+      "destination": "/awakening-academy-level-1",
+      "permanent": true
+    },
+    {
+      "source": "/Awakening-Academy-Level-2.dc.html",
+      "destination": "/awakening-academy-level-2",
+      "permanent": true
+    },
+    {
       "source": "/Book-Consultation.dc.html",
       "destination": "/apply",
       "permanent": true
@@ -400,6 +415,18 @@
     {
       "source": "/bigger-vision",
       "destination": "/Bigger-Vision.dc.html"
+    },
+    {
+      "source": "/awakening-academy-foundation",
+      "destination": "/Awakening-Academy-Foundation.dc.html"
+    },
+    {
+      "source": "/awakening-academy-level-1",
+      "destination": "/Awakening-Academy-Level-1.dc.html"
+    },
+    {
+      "source": "/awakening-academy-level-2",
+      "destination": "/Awakening-Academy-Level-2.dc.html"
     },
     {
       "source": "/apply",
