@@ -85,6 +85,25 @@ test("protected registrations use only standard HubSpot contact fields before th
   });
 });
 
+test("a general main-website enquiry preserves both its classification and source page", () => {
+  assert.deepEqual(toHubSpotProperties({
+    ...intake,
+    area: "other",
+    program: "general-enquiry",
+    requestMessage: "I would like help choosing the right next step.",
+    sourcePage: "/apply"
+  }, "166816652"), {
+    area_of_interest: "Other",
+    email: "synthetic@example.test",
+    enquiry_details: "Website source: /apply\n\nI would like help choosing the right next step.",
+    firstname: "Synthetic",
+    hubspot_owner_id: "166816652",
+    lastname: "Ethel Owner",
+    phone: "+1 555 123 4567",
+    program_or_offering: "General enquiry — main website"
+  });
+});
+
 test("HubSpot mirror idempotently upserts the Ethel-owned contact without duplicate form activity", async () => {
   const calls = [];
   const result = await mirrorHubSpotIntake(intake, environment, async (url, options) => {
