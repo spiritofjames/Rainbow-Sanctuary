@@ -6,6 +6,7 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_PATTERN = /^\+[1-9][0-9\s().-]{6,20}$/;
 const PROHIBITED_PATTERN = /\b(?:password|passphrase|recovery\s*code|api[_\s]*key|access\s*token|private\s*key|client\s*secret|card\s*number|card|cvv|cvc)\b\s*[:=]/i;
 const FULL_CARD_PATTERN = /\b(?:\d[ -]*?){12,19}\b/;
+const MIN_PUBLIC_MESSAGE_LENGTH = 10;
 const PATHWAYS = new Map([
   ["certification", "practitioner"],
   ["earth-healing", "partnership"],
@@ -46,8 +47,13 @@ export function normalizePublicIntake(input, receivedAt = new Date(), options = 
   }
   let program = clean(input.program) || null;
   if (!program && sourcePage.startsWith("/")) {
-    const params = new URL(`https://rainbowsanctuary.life${sourcePage}`).searchParams;
+    const sourceUrl = new URL(`https://rainbowsanctuary.life${sourcePage}`);
+    const params = sourceUrl.searchParams;
     program = clean(params.get("program") || params.get("session") || params.get("event")) || null;
+    // A visitor who starts at the central form has not selected a specific
+    // offering. Make that explicit rather than sending an ambiguous "Other"
+    // contact to HubSpot.
+    if (!program && sourceUrl.pathname === "/apply") program = "general-enquiry";
   }
   const eventId = clean(input.clientEventId);
   const submittedAt = Date.parse(input.submittedAt);
@@ -64,7 +70,7 @@ export function normalizePublicIntake(input, receivedAt = new Date(), options = 
     displayName.length < 1 || displayName.length > 120 ||
     !EMAIL_PATTERN.test(email) || email.length > 254 ||
     !PHONE_PATTERN.test(phone) ||
-    requestMessage.length < 1 || requestMessage.length > 2000 ||
+    requestMessage.length < MIN_PUBLIC_MESSAGE_LENGTH || requestMessage.length > 2000 ||
     !pathway ||
     area.length > 120 ||
     (program !== null && (program.length > 160 || !/^[A-Za-z0-9][A-Za-z0-9 _-]*$/.test(program))) ||
