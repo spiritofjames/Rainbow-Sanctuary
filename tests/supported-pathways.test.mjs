@@ -100,6 +100,20 @@ test("homepage has an editorial contribution invitation near its closing content
   assert.match(home, /Every contribution is voluntary\. Choose your own amount securely through Stripe\./);
 });
 
+test("homepage offers an optional, neutral route to the Trustpilot review invitation", () => {
+  const home = read("Home.dc.html");
+  const reviewInvitation = home.indexOf('class="rs-home-review-invitation"');
+  const footer = home.indexOf("<!-- FOOTER -->");
+  assert.ok(reviewInvitation > -1);
+  assert.ok(reviewInvitation < footer);
+  assert.match(home, /Have you joined us for a session\?/);
+  assert.match(home, /There is no expected rating\./);
+  assert.match(home, /href="\/review">Leave an honest review/);
+  assert.match(home, /assets\/editorial\/trustpilot-review-invitation\.jpg/);
+  assert.match(home, /People holding hands together in an outdoor circle/);
+  assert.doesNotMatch(home, /Trusted by \d+ Trustpilot/i);
+});
+
 test("supported session selection separates the date, format and registration action", () => {
   const scheduler = read("supported-pathway-scheduler.js");
   const styles = read("supported-pathways.css");

@@ -5,6 +5,9 @@
 - The stable link to share with a client is `https://rainbowsanctuary.life/review`.
   It presents a clear, optional invitation and then opens the Trustpilot review
   form for `rainbowsanctuary.life`.
+- A review invitation at the bottom of the homepage links to `/review`. It is
+  an invitation to share an honest experience, not a rating claim or a prompt
+  for a favourable review.
 - `rs-session-review-request` is a source-controlled transactional template for
   the existing email lifecycle. Its event is `rs.session.review_requested`.
 - The homepage has no Trustpilot score, star rating, TrustBox, or review count.
@@ -83,6 +86,14 @@ consented local participant images. Do not use stock, AI-generated, or
 unconsented faces, and do not replace the Trustpilot count with a broader
 “trusted by” number unless that number has a documented, auditable basis.
 
-The row does not load a third-party TrustBox script. If a later decision requires
-Trustpilot's own widget instead, review its current embed requirements,
-accessibility, and CSP impact before replacing this lightweight display.
+The score and stars do **not** update automatically when a new Trustpilot review
+arrives. They remain hidden until the approved `site-config.js` values are
+entered, then continue to show those configured values. Do not enable or update
+them based solely on an email notification; confirm the public Trustpilot
+profile first.
+
+The row does not load a third-party TrustBox script or call the Trustpilot API.
+If a later decision requires automatic updates through Trustpilot's official
+widget or approved API, treat that as a separate integration: review its current
+embed requirements, consent/privacy implications, accessibility, CSP impact,
+and the update/failure behaviour before enabling it.
