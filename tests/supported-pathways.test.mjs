@@ -111,6 +111,10 @@ test("homepage offers an optional, neutral route to the Trustpilot review invita
   assert.match(home, /href="\/review">Leave an honest review/);
   assert.match(home, /assets\/editorial\/trustpilot-review-invitation\.jpg/);
   assert.match(home, /People holding hands together in an outdoor circle/);
+  assert.match(home, /aspect-ratio: 16 \/ 9/);
+  assert.match(home, /position: absolute;/);
+  assert.match(home, /justify-content: center;/);
+  assert.match(home, /min-height: 390px/);
   assert.doesNotMatch(home, /Trusted by \d+ Trustpilot/i);
 });
 
