@@ -15,6 +15,8 @@
 - `Children-Family.dc.html` — parent trust page and pathway routing.
 - `Unlock-The-Potential.dc.html` — master Academy roadmap.
 - `Awakening-Academy-Foundation.dc.html` — new Foundation conversion page.
+- `Awakening-Academy-Level-1.dc.html` — new Level 1 roadmap page.
+- `Awakening-Academy-Level-2.dc.html` — new Level 2 roadmap page.
 - `api/_lib/hubspot-intake.mjs` — canonical programme label for the Foundation enquiry.
 - `scripts/publish-discovery-layer.mjs` — Foundation public route and discovery metadata.
 - `vercel.json` — Foundation legacy redirect and canonical rewrite.
@@ -58,7 +60,22 @@
 - [ ] Use a single primary CTA label: `Explore the 4-Day Foundation`.
 - [ ] Commit with `feat: clarify children and family academy pathway`.
 
-### Task 4: Turn Unlock the Potential into the Academy roadmap
+### Task 4: Add the two progression pages
+
+**Files:**
+- Create: `Awakening-Academy-Level-1.dc.html`
+- Create: `Awakening-Academy-Level-2.dc.html`
+- Modify: `scripts/publish-discovery-layer.mjs`
+- Modify: `vercel.json`
+
+- [ ] Add public routes `/awakening-academy-level-1` and `/awakening-academy-level-2`, including legacy filename redirects and canonical rewrites.
+- [ ] Build Level 1 around inner awareness, discernment, creative expression, living-world connection, and grounded energetic boundaries.
+- [ ] Build Level 2 around three energetic centres, heart–mind coherence, emotional alchemy, nature consciousness, sacred geometry, space harmony, and collective responsibility.
+- [ ] On both pages, route new families to the Foundation Journey and state that Level progression follows the parent review. Do not add dates, fees, provider links, or outcome guarantees.
+- [ ] Run `node scripts/publish-discovery-layer.mjs`; expect all three Academy routes in generated discovery output.
+- [ ] Commit with `feat: add awakening academy level pages`.
+
+### Task 5: Turn Unlock the Potential into the Academy roadmap
 
 **Files:**
 - Modify: `Unlock-The-Potential.dc.html`
@@ -67,22 +84,23 @@
 - [ ] Explicitly state that the child certificate is not an academic, professional, therapeutic, or practitioner qualification.
 - [ ] Preserve spiritual voice through experiential language while avoiding statements of guaranteed psychic, healing, academic, or environmental outcomes.
 - [ ] Make the Foundation page the only dominant CTA; route supporting links to the Foundation or parent page.
+- [ ] Link every roadmap stage to the Foundation, Level 1, or Level 2 page as appropriate.
 - [ ] Commit with `feat: add awakening academy roadmap`.
 
-### Task 5: Add regression coverage before full validation
+### Task 6: Add regression coverage before full validation
 
 **Files:**
 - Create: `tests/awakening-academy-pathway.test.mjs`
 - Modify: `tests/hubspot-intake.test.mjs`
 
-- [ ] Assert all three public pages contain the agreed route relationships and the Foundation parent-intake query.
+- [ ] Assert all five public pages contain the agreed route relationships and the Foundation parent-intake query.
 - [ ] Assert the Foundation contains age, guardian, online-first, and four-module disclosure.
 - [ ] Assert the child journey contains the parent review, Certificate of Accomplishment boundary, and ongoing community.
 - [ ] Assert prohibited guarantees and clinical promises are absent from the new child-pathway pages.
 - [ ] Run `node --test tests/awakening-academy-pathway.test.mjs tests/hubspot-intake.test.mjs`; expect PASS.
 - [ ] Commit with `test: cover awakening academy pathway`.
 
-### Task 6: Verify, stage, and present
+### Task 7: Verify, stage, and present
 
 **Files:**
 - Modify only generated discovery artifacts if `npm run validate` changes them deterministically.

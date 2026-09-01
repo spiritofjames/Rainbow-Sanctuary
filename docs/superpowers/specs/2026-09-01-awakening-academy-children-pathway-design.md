@@ -56,6 +56,10 @@ This becomes the master Academy roadmap. It defines the Foundation, guided paren
 
 This is the dedicated four-day conversion page. It describes the four days, online-first format, occasional invitation-based in-person cohorts, age and guardian requirements, what to prepare, and the parent-led enquiry route. No dates, fees, capacity, payment links, Zoom links, or live email automation are invented or activated before separate operational approval.
 
+### `/awakening-academy-level-1` and `/awakening-academy-level-2`
+
+These are new public roadmap pages because the current site has no separate Level 1 or Level 2 routes. Level 1 presents the core practice sequence: inner awareness, discernment, creative expression, connection with the living world, and grounded energetic boundaries. Level 2 presents the advanced sequence: three energetic centres, heart–mind coherence, emotional alchemy, nature consciousness, sacred geometry, space harmony, and collective responsibility. Both pages direct new families to the Foundation Journey and state that progression follows the parent review.
+
 ### Existing adult coach certification
 
 The child pages explicitly identify it as professional adult training and do not present it as the child’s certificate.
