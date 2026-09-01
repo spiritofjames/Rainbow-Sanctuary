@@ -405,7 +405,7 @@ class Component extends DCLogic {
         } catch (error) {
           const message = error && error.status === 400
             ? 'We could not validate this enquiry. Please refresh the page, check the required fields, and try once more.'
-            : 'Your message could not be sent. Please try again once the connection is available.';
+            : 'Secure registration is temporarily unavailable. Your registration was not saved. Please try again shortly.';
           this.setState({ submitting: false, error: message });
         }
       },

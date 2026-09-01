@@ -130,7 +130,7 @@ async function attachPrivateHeadshot({ application, attachment, contactId, intak
     duplicateValidationStrategy: "RETURN_EXISTING",
     ttl: retention
   }));
-  const uploadResponse = await fetchImplementation(`${HUBSPOT_API_ORIGIN}/files/2026-03/files`, {
+  const uploadResponse = await fetchImplementation(`${HUBSPOT_API_ORIGIN}/files/v3/files`, {
     body: uploadBody,
     headers: { authorization: `Bearer ${token}` },
     method: "POST"
@@ -141,7 +141,7 @@ async function attachPrivateHeadshot({ application, attachment, contactId, intak
     throw new Error("HubSpot private file upload returned an invalid response.");
   }
 
-  const noteResponse = await fetchImplementation(`${HUBSPOT_API_ORIGIN}/crm/objects/2026-03/notes`, {
+  const noteResponse = await fetchImplementation(`${HUBSPOT_API_ORIGIN}/crm/v3/objects/notes`, {
     body: JSON.stringify({
       associations: [{
         to: { id: contactId },
@@ -179,11 +179,34 @@ export function toHubSpotProperties(intake, ownerId) {
   };
 }
 
+// Protected applications must create the contact before any sensitive material
+// is stored. Custom portal properties are optional and may differ between
+// HubSpot accounts; they must never prevent a guardian's registration from
+// being recorded. The full protected application is placed in the restricted
+// contact note after this standard-field upsert succeeds.
+export function toHubSpotProtectedContactProperties(intake) {
+  const { firstname, lastname } = splitName(intake.displayName);
+  return {
+    email: intake.email,
+    firstname,
+    lastname,
+    phone: intake.phone
+  };
+}
+
 export async function mirrorHubSpotIntake(intake, environment, fetchImplementation = fetch, attachment = null, application = null) {
-  if (environment.HUBSPOT_INTAKE_ENABLED !== "true") return { enabled: false };
+  if (environment.HUBSPOT_INTAKE_ENABLED !== "true") {
+    // A protected participant image must never be accepted unless the private
+    // HubSpot handoff is active. Public enquiries may remain independently
+    // operable when the optional mirror is disabled.
+    if (attachment) throw new Error("HubSpot private intake is not configured.");
+    return { enabled: false };
+  }
   const { ownerId, portalId, token } = requireConfiguration(environment);
   const privateConfiguration = attachment ? requirePrivateIntakeConfiguration(environment) : null;
-  const properties = toHubSpotProperties(intake, ownerId);
+  const properties = attachment
+    ? toHubSpotProtectedContactProperties(intake)
+    : toHubSpotProperties(intake, ownerId);
   const authorization = { authorization: `Bearer ${token}`, "content-type": "application/json" };
 
   const upsertResponse = await fetchImplementation(`${HUBSPOT_API_ORIGIN}/crm/v3/objects/contacts/batch/upsert`, {

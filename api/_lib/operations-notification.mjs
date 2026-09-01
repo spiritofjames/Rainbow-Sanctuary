@@ -103,6 +103,60 @@ export function autismRegistrationReceipt(intake) {
   };
 }
 
+function beijingWeeklySessionAfter(now = new Date()) {
+  const beijingOffsetMilliseconds = 8 * 60 * 60 * 1000;
+  const beijingClock = new Date(now.getTime() + beijingOffsetMilliseconds);
+  const daysUntilTuesday = (2 - beijingClock.getUTCDay() + 7) % 7;
+  const sessionAt = new Date(Date.UTC(
+    beijingClock.getUTCFullYear(),
+    beijingClock.getUTCMonth(),
+    beijingClock.getUTCDate() + daysUntilTuesday,
+    15,
+    0,
+    0
+  ));
+  if (sessionAt.getTime() <= now.getTime()) sessionAt.setUTCDate(sessionAt.getUTCDate() + 7);
+  return sessionAt;
+}
+
+export function autismRegistrationOneHourReminder(intake, now = new Date()) {
+  const sessionAt = beijingWeeklySessionAfter(now);
+  const scheduledAt = new Date(sessionAt.getTime() - (60 * 60 * 1000));
+  const sessionDate = new Intl.DateTimeFormat("en-US", {
+    day: "numeric",
+    month: "long",
+    timeZone: "Asia/Shanghai",
+    weekday: "long",
+    year: "numeric"
+  }).format(sessionAt);
+  const content = {
+    preheader: "The weekly wellbeing practice begins in one hour.",
+    eyebrow: "Weekly practice reminder",
+    heading: "The practice begins in one hour.",
+    greeting: `Hello ${escapeHtml(intake.displayName)},`,
+    paragraphs: [
+      `Autism & Family Support begins in one hour, on ${escapeHtml(sessionDate)} at 11:00 PM Beijing time (UTC+8).`,
+      "Please help the participant settle into a restful, familiar space. There is no Zoom session or live attendance requirement."
+    ],
+    details: [{ label: "Pathway", value: "Autism & Family Support" }],
+    callout: "This is a non-clinical wellbeing practice and does not replace healthcare, educational, therapeutic, or crisis support.",
+    closing: "Rainbow Sanctuary"
+  };
+  return {
+    html: emailHtml(content),
+    identity: "general",
+    idempotencyKey: `intake:${intake.eventId}:autism-one-hour-reminder:${sessionAt.toISOString().slice(0, 10)}`,
+    scheduledAt: scheduledAt.toISOString(),
+    subject: "Autism & Family Support begins in one hour",
+    tags: [
+      { name: "workflow", value: "autism_registration" },
+      { name: "timing", value: "one_hour_reminder" }
+    ],
+    text: emailText(content),
+    to: intake.email
+  };
+}
+
 export function optionalContributionFollowUp(intake) {
   if (!FREE_DONATION_FOLLOW_UP_PROGRAMS.has(intake.program) || intake.privacyAcceptedAt === undefined) {
     throw new Error("This registration is not eligible for a contribution follow-up.");
@@ -215,10 +269,35 @@ export async function attemptVisitorIntakeReceipt(intake, environment, resendCli
 export async function attemptAutismRegistrationReceipt(intake, environment, resendClient, logger = console) {
   try {
     const result = await sendOperationalEmail(autismRegistrationReceipt(intake), environment, resendClient);
+    if (!result.sent) {
+      logger.error("autism_registration_receipt_error", {
+        eventId: intake.eventId,
+        reason: result.reason || "receipt-unavailable"
+      });
+    }
     return result;
   } catch (error) {
     logger.error("autism_registration_receipt_error", { reason: "receipt-unavailable" });
     return { reason: "receipt-unavailable", sent: false };
+  }
+}
+
+export async function attemptAutismRegistrationOneHourReminder(intake, environment, resendClient, logger = console, now = new Date()) {
+  try {
+    const result = await sendOperationalEmail(autismRegistrationOneHourReminder(intake, now), environment, resendClient);
+    if (!result.sent) {
+      logger.error("autism_registration_reminder_error", {
+        eventId: intake.eventId,
+        reason: result.reason || "reminder-unavailable"
+      });
+    }
+    return result;
+  } catch (error) {
+    logger.error("autism_registration_reminder_error", {
+      eventId: intake.eventId,
+      reason: "reminder-unavailable"
+    });
+    return { reason: "reminder-unavailable", sent: false };
   }
 }
 

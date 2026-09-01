@@ -1,6 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mirrorHubSpotIntake, toHubSpotProperties } from "../api/_lib/hubspot-intake.mjs";
+import {
+  mirrorHubSpotIntake,
+  toHubSpotProperties,
+  toHubSpotProtectedContactProperties
+} from "../api/_lib/hubspot-intake.mjs";
 
 const intake = {
   area: "spiral",
@@ -72,6 +76,15 @@ test("Awakening Academy Foundation enquiries retain the family source and canoni
   });
 });
 
+test("protected registrations use only standard HubSpot contact fields before their private note is stored", () => {
+  assert.deepEqual(toHubSpotProtectedContactProperties(intake), {
+    email: "synthetic@example.test",
+    firstname: "Synthetic",
+    lastname: "Ethel Owner",
+    phone: "+1 555 123 4567"
+  });
+});
+
 test("HubSpot mirror idempotently upserts the Ethel-owned contact without duplicate form activity", async () => {
   const calls = [];
   const result = await mirrorHubSpotIntake(intake, environment, async (url, options) => {
@@ -117,7 +130,7 @@ test("private healing uploads a private expiring file and attaches it to Ethel's
     if (url.endsWith("contacts/batch/upsert")) {
       return { json: async () => ({ results: [{ id: "41001" }] }), ok: true, status: 200 };
     }
-    if (url.endsWith("/files/2026-03/files")) {
+    if (url.endsWith("/files/v3/files")) {
       return { json: async () => ({ id: "51001" }), ok: true, status: 201 };
     }
     return { ok: true, status: 200 };
@@ -135,7 +148,7 @@ test("private healing uploads a private expiring file and attaches it to Ethel's
     ownerId: "166816652"
   });
   assert.equal(calls.length, 3);
-  assert.match(calls[1].url, /files\/2026-03\/files$/);
+  assert.match(calls[1].url, /files\/v3\/files$/);
   assert.equal(calls[1].options.body.get("folderPath"), "/rainbow-sanctuary/private-healing-intake");
   assert.deepEqual(JSON.parse(calls[1].options.body.get("options")), {
     access: "PRIVATE",
@@ -145,7 +158,7 @@ test("private healing uploads a private expiring file and attaches it to Ethel's
   });
   assert.equal(calls[1].options.headers["content-type"], undefined);
   const note = JSON.parse(calls[2].options.body);
-  assert.match(calls[2].url, /crm\/objects\/2026-03\/notes$/);
+  assert.match(calls[2].url, /crm\/v3\/objects\/notes$/);
   assert.equal(note.associations[0].to.id, "41001");
   assert.equal(note.associations[0].types[0].associationTypeId, 202);
   assert.equal(note.properties.hs_attachment_ids, "51001");
@@ -181,10 +194,17 @@ test("Autism registration uses the same private thirty-day storage with a struct
   await mirrorHubSpotIntake(autismIntake, privateEnvironment, async (url, options) => {
     calls.push({ options, url });
     if (url.endsWith("contacts/batch/upsert")) return { json: async () => ({ results: [{ id: "41001" }] }), ok: true, status: 200 };
-    if (url.endsWith("/files/2026-03/files")) return { json: async () => ({ id: "51001" }), ok: true, status: 201 };
+    if (url.endsWith("/files/v3/files")) return { json: async () => ({ id: "51001" }), ok: true, status: 201 };
     return { ok: true, status: 200 };
   }, attachment, { participantAge: 9, participantCountry: "Panama", participantName: "Alex" });
 
+  const contactUpsert = JSON.parse(calls[0].options.body);
+  assert.deepEqual(contactUpsert.inputs[0].properties, {
+    email: "synthetic@example.test",
+    firstname: "Synthetic",
+    lastname: "Ethel Owner",
+    phone: "+1 555 123 4567"
+  });
   assert.equal(calls[1].options.body.get("folderPath"), "/rainbow-sanctuary/autism-family-registration");
   const note = JSON.parse(calls[2].options.body);
   assert.match(note.properties.hs_note_body, /Autism &amp; Family Support registration/);
@@ -206,4 +226,11 @@ test("private attachment fails before side effects when the private intake gate 
 test("HubSpot mirror is disabled by default and fails closed when enabled without credentials", async () => {
   assert.deepEqual(await mirrorHubSpotIntake(intake, {}), { enabled: false });
   await assert.rejects(() => mirrorHubSpotIntake(intake, { HUBSPOT_INTAKE_ENABLED: "true" }), /not configured/i);
+});
+
+test("a protected attachment cannot be accepted while the HubSpot mirror is disabled", async () => {
+  await assert.rejects(
+    () => mirrorHubSpotIntake(intake, {}, undefined, { buffer: Buffer.alloc(12) }),
+    /private intake is not configured/i
+  );
 });
