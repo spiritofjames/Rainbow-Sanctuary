@@ -8,6 +8,7 @@ const read = (name) => fs.readFileSync(new URL(name, root), "utf8");
 test("Awakening Academy publishes a single parent-led route from discovery to ongoing practice", () => {
   const family = read("Children-Family.dc.html");
   const academy = read("Unlock-The-Potential.dc.html");
+  const programmes = read("Workshops.dc.html");
   const foundation = read("Awakening-Academy-Foundation.dc.html");
   const levelOne = read("Awakening-Academy-Level-1.dc.html");
   const levelTwo = read("Awakening-Academy-Level-2.dc.html");
@@ -24,6 +25,10 @@ test("Awakening Academy publishes a single parent-led route from discovery to on
   assert.match(academy, /not an academic, therapeutic, professional, or practitioner qualification/i);
   assert.match(academy, /\/awakening-academy-level-1/);
   assert.match(academy, /\/awakening-academy-level-2/);
+  assert.match(programmes, /Children’s Academy roadmap/);
+  assert.match(programmes, /href="\/awakening-academy-level-1"/);
+  assert.match(programmes, /href="\/awakening-academy-level-2"/);
+  assert.match(programmes, /Ongoing practice &amp; community/);
   assert.match(foundation, /children ages 5–15/i);
   assert.match(foundation, /Ages 5–10/);
   assert.match(foundation, /Ages 11–15/);
