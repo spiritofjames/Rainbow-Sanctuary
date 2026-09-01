@@ -38,6 +38,44 @@ test("website enquiry maps to Ethel and exact HubSpot taxonomy", () => {
   });
 });
 
+test("a general main-website enquiry preserves both its classification and source page", () => {
+  assert.deepEqual(toHubSpotProperties({
+    ...intake,
+    area: "other",
+    program: "general-enquiry",
+    requestMessage: "I would like help choosing the right next step.",
+    sourcePage: "/apply"
+  }, "166816652"), {
+    area_of_interest: "Other",
+    email: "synthetic@example.test",
+    enquiry_details: "Website source: /apply\n\nI would like help choosing the right next step.",
+    firstname: "Synthetic",
+    hubspot_owner_id: "166816652",
+    lastname: "Ethel Owner",
+    phone: "+1 555 123 4567",
+    program_or_offering: "General enquiry — main website"
+  });
+});
+
+test("Awakening Academy Foundation enquiries retain the family source and canonical programme label", () => {
+  assert.deepEqual(toHubSpotProperties({
+    ...intake,
+    area: "family",
+    program: "awakening-academy-foundation",
+    requestMessage: "I would like to understand the next Foundation Journey.",
+    sourcePage: "/apply?reason=family&program=awakening-academy-foundation"
+  }, "166816652"), {
+    area_of_interest: "Program guidance",
+    email: "synthetic@example.test",
+    enquiry_details: "Website source: /apply?reason=family&program=awakening-academy-foundation\n\nI would like to understand the next Foundation Journey.",
+    firstname: "Synthetic",
+    hubspot_owner_id: "166816652",
+    lastname: "Ethel Owner",
+    phone: "+1 555 123 4567",
+    program_or_offering: "Awakening Academy — 4-Day Foundation Journey"
+  });
+});
+
 test("protected registrations use only standard HubSpot contact fields before their private note is stored", () => {
   assert.deepEqual(toHubSpotProtectedContactProperties(intake), {
     email: "synthetic@example.test",

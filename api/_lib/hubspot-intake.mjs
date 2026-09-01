@@ -17,6 +17,7 @@ const AREA_LABELS = new Map([
 const PROGRAM_LABELS = new Map([
   ["adult-potential-development", "Adult Potential Development"],
   ["autism-family-support", "Autism & Family Support"],
+  ["awakening-academy-foundation", "Awakening Academy — 4-Day Foundation Journey"],
   ["awakening-inner-light-2026", "Awakening Your Inner Light Retreat 2026"],
   ["childrens-potential-coach-certification", "Children’s Potential Coach Certification"],
   ["crystal-healing", "Crystal Healing"],
