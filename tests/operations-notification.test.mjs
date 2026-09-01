@@ -58,6 +58,18 @@ test("enquiry notification is minimal, linked to HubSpot and duplicate-safe", ()
   assert.match(message.html, /Open contact in HubSpot/);
   assert.doesNotMatch(message.html, /Sensitive context/);
   assert.doesNotMatch(message.text, /visitor@example\.test/);
+  assert.match(message.text, /Source:\s+\/apply/);
+});
+
+test("general main-website enquiries are unambiguous in Ethel's notification", () => {
+  const message = enquiryOperationsMessage({
+    ...intake,
+    area: "other",
+    program: "general-enquiry",
+    sourcePage: "/apply"
+  }, hubspot, environment);
+  assert.match(message.subject, /General enquiry — main website/);
+  assert.match(message.text, /Source:\s+\/apply/);
 });
 
 test("every accepted standard enquiry receives one privacy-safe acknowledgement", async () => {

@@ -126,7 +126,7 @@
 
           <sc-if value="{{ isGeneralEnquiry }}" hint-placeholder-val="{{ true }}">
             <div class="rs-application-form__heading"><span>Step 3 · Your enquiry</span><h2>What would you like us to understand?</h2></div>
-            <div class="rs-field"><label for="consultation-message">Message</label><textarea id="consultation-message" name="message" rows="5" required="true" value="{{ message }}" onChange="{{ onMessageChange }}"></textarea><p class="rs-field-help">A parent or legal guardian should make child-related enquiries. Do not include unnecessary identifying information about a child.</p></div>
+            <div class="rs-field"><label for="consultation-message">Message</label><textarea id="consultation-message" name="message" rows="5" minlength="10" required="true" value="{{ message }}" onChange="{{ onMessageChange }}"></textarea><p class="rs-field-help">Required — please tell us what you are looking for (at least 10 characters). A parent or legal guardian should make child-related enquiries. Do not include unnecessary identifying information about a child.</p></div>
           </sc-if>
 
           <label class="rs-consent-field" for="consultation-privacy">
@@ -328,6 +328,10 @@ class Component extends DCLogic {
         const isPrivate = this.state.reason === 'private-healing';
         const isAutismRegistration = this.state.reason === 'family' && this.state.program === 'autism-family-support';
         const requiresProtectedPhoto = isPrivate || isAutismRegistration;
+        if (!requiresProtectedPhoto && this.state.message.trim().length < 10) {
+          this.setState({ error: 'Please tell us what you are looking for in at least 10 characters.' });
+          return;
+        }
         if (!/^\+[1-9][0-9\s().-]{6,20}$/.test(this.state.whatsapp.trim())) {
           this.setState({ error: 'Please enter your WhatsApp number with its international country code, beginning with +.' });
           return;

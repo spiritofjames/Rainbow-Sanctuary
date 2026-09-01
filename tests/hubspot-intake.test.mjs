@@ -29,7 +29,7 @@ test("website enquiry maps to Ethel and exact HubSpot taxonomy", () => {
   assert.deepEqual(toHubSpotProperties(intake, "166816652"), {
     area_of_interest: "Program guidance",
     email: "synthetic@example.test",
-    enquiry_details: "I would like to understand Spiral I.",
+    enquiry_details: "Website source: /apply?reason=spiral&program=spiral-i\n\nI would like to understand Spiral I.",
     firstname: "Synthetic",
     hubspot_owner_id: "166816652",
     lastname: "Ethel Owner",
@@ -44,6 +44,25 @@ test("protected registrations use only standard HubSpot contact fields before th
     firstname: "Synthetic",
     lastname: "Ethel Owner",
     phone: "+1 555 123 4567"
+  });
+});
+
+test("a general main-website enquiry preserves both its classification and source page", () => {
+  assert.deepEqual(toHubSpotProperties({
+    ...intake,
+    area: "other",
+    program: "general-enquiry",
+    requestMessage: "I would like help choosing the right next step.",
+    sourcePage: "/apply"
+  }, "166816652"), {
+    area_of_interest: "Other",
+    email: "synthetic@example.test",
+    enquiry_details: "Website source: /apply\n\nI would like help choosing the right next step.",
+    firstname: "Synthetic",
+    hubspot_owner_id: "166816652",
+    lastname: "Ethel Owner",
+    phone: "+1 555 123 4567",
+    program_or_offering: "General enquiry — main website"
   });
 });
 
