@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "security-layer/owner-authorization-v1",
+  "authorizedBy": "James Stark",
+  "taskId": "children-pathway-design-2026-09-01",
+  "project": "/Users/spiritofjames/Documents/My Projects/Planetary Symbiosis Network",
+  "actions": [
+    "external_commit",
+    "release_prepare"
+  ],
+  "riskTier": "T3",
+  "destinations": [
+    "github.com/spiritofjames/Rainbow-Sanctuary",
+    "protected staging branch",
+    "staging.rainbowsanctuary.life"
+  ],
+  "constraints": "Build and verify only the approved Awakening Academy children pathway. Commit and open or merge a pull request to protected staging only after validation and clean merge checks. Do not deploy or merge to production/main, activate payments, send real participant emails, create calendar or Zoom events, change provider configuration, or process real personal data.",
+  "issuedAt": "2026-09-01T02:20:00Z",
+  "expiresAt": "2026-09-02T02:20:00Z"
+}
