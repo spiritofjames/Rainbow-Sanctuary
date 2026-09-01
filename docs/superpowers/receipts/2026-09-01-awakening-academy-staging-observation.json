@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "security-layer/owner-authorization-v1",
+  "authorizedBy": "James Stark",
+  "taskId": "children-pathway-design-2026-09-01",
+  "project": "/Users/spiritofjames/Documents/My Projects/Planetary Symbiosis Network",
+  "actions": [
+    "network_read"
+  ],
+  "riskTier": "T2",
+  "destinations": [
+    "github.com/spiritofjames/Rainbow-Sanctuary",
+    "staging.rainbowsanctuary.life"
+  ],
+  "constraints": "Read-only observation of the approved Awakening Academy staging pull request, its checks, and the protected staging site. Do not read or disclose secrets, access participant data, or inspect production.",
+  "issuedAt": "2026-09-01T02:35:00Z",
+  "expiresAt": "2026-09-02T02:20:00Z"
+}
