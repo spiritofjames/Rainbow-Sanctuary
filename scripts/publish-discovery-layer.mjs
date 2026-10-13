@@ -6,6 +6,10 @@ const scriptsDir = path.dirname(fileURLToPath(import.meta.url));
 const siteDir = path.resolve(scriptsDir, "..");
 const origin = "https://rainbowsanctuary.life";
 const lastmod = "2026-07-31";
+const routeLastmod = new Map([
+  ["/awakening-your-inner-light-2026", "2026-10-13"],
+  ["/awakening-your-inner-light-october-2026", "2026-10-13"]
+]);
 // Keep operational jobs in the generated Vercel configuration. Discovery
 // publishing runs as part of every release, so dropping this would silently
 // disable the Monday Maintenance reminder.
@@ -77,6 +81,7 @@ const baseRoutes = {
   "Adult-Potential-Development.dc.html": "/adult-potential-development",
   "Autism-Family-Support.dc.html": "/autism-family-support",
   "Awakening-Your-Inner-Light-2026.dc.html": "/awakening-your-inner-light-2026",
+  "Awakening-Your-Inner-Light-October-2026.dc.html": "/awakening-your-inner-light-october-2026",
   "Bigger-Vision.dc.html": "/bigger-vision",
   "Awakening-Academy-Foundation.dc.html": "/awakening-academy-foundation",
   "Awakening-Academy-Level-1.dc.html": "/awakening-academy-level-1",
@@ -149,7 +154,8 @@ const ogImages = {
   "Home.dc.html": "/assets/social/rainbow-sanctuary-home-og-v1.jpg",
   "About-Stephanie.dc.html": "/assets/stephanie-portrait.jpg",
   "1-1-Sessions.dc.html": "/assets/editorial/private-healing-overview.jpg",
-  "Awakening-Your-Inner-Light-2026.dc.html": "/assets/retreat-panama-coast-aerial.jpg",
+  "Awakening-Your-Inner-Light-2026.dc.html": "/assets/retreats/awakening-inner-light-december-2026/stephanie-wu.webp",
+  "Awakening-Your-Inner-Light-October-2026.dc.html": "/assets/retreat-panama-coast-aerial.jpg",
   "Bigger-Vision.dc.html": "/assets/editorial/psn-regenerative-future.jpg",
   "Children-Family.dc.html": "/assets/editorial/home-family-editorial.jpg",
   "Kids-Weekly-Practice.dc.html": "/assets/editorial/children-weekly-practice-preparation.jpg",
@@ -261,12 +267,27 @@ function schemaFor(file, title, description, canonical, image) {
     graph.push({
       "@type": "Event",
       "@id": `${canonical}#event`,
-      name: "Awakening Your Inner Light Retreat 2026",
+      name: "Awakening Your Inner Light Retreat · December 2026",
+      description,
+      image,
+      startDate: "2026-12-03",
+      endDate: "2026-12-09",
+      eventStatus: "https://schema.org/EventScheduled",
+      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+      organizer: { "@id": `${origin}/#organization` }
+    });
+  }
+
+  if (file === "Awakening-Your-Inner-Light-October-2026.dc.html") {
+    graph.push({
+      "@type": "Event",
+      "@id": `${canonical}#event`,
+      name: "Awakening Your Inner Light Retreat · October 2026",
       description,
       image,
       startDate: "2026-10-01",
       endDate: "2026-10-07",
-      eventStatus: "https://schema.org/EventScheduled",
+      eventStatus: "https://schema.org/EventCompleted",
       eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
       location: {
         "@type": "Place",
@@ -277,26 +298,7 @@ function schemaFor(file, title, description, canonical, image) {
           addressCountry: "PA"
         }
       },
-      organizer: { "@id": `${origin}/#organization` },
-      offers: [
-        {
-          "@type": "Offer",
-          name: "Early Bird",
-          price: "3000",
-          priceCurrency: "USD",
-          validThrough: "2026-09-01",
-          availability: "https://schema.org/LimitedAvailability",
-          url: canonical
-        },
-        {
-          "@type": "Offer",
-          name: "Standard",
-          price: "3500",
-          priceCurrency: "USD",
-          availability: "https://schema.org/InStock",
-          url: canonical
-        }
-      ]
+      organizer: { "@id": `${origin}/#organization` }
     });
   }
 
@@ -476,7 +478,7 @@ const sitemap = [
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
   ...Object.values(routes).filter((route) => route !== "/knowledge/search").map((route) => {
     const entry = knowledgeEntryByPath.get(route);
-    return `  <url><loc>${origin}${route}</loc><lastmod>${entry?.updatedAt || lastmod}</lastmod></url>`;
+    return `  <url><loc>${origin}${route}</loc><lastmod>${entry?.updatedAt || routeLastmod.get(route) || lastmod}</lastmod></url>`;
   }),
   "</urlset>",
   ""
@@ -531,7 +533,8 @@ const llms = `# Rainbow Sanctuary
 
 ## Current event
 
-- [Awakening Your Inner Light Retreat 2026](${origin}/awakening-your-inner-light-2026): Seven-day retreat in Bocas del Toro, Panama, 1–7 October 2026
+- [Awakening Your Inner Light · December 2026](${origin}/awakening-your-inner-light-2026): Seven-day, six-night retreat planned for 3–9 December 2026; enquiries are open while final venue, programme and investment details are confirmed
+- [Awakening Your Inner Light · October 2026 history](${origin}/awakening-your-inner-light-october-2026): Factual archive of the completed 1–7 October 2026 retreat in Bocas del Toro, Panama
 
 ## Vision and community
 
@@ -601,7 +604,7 @@ Private sessions are application-led. Current session types include Personal Kar
 
 ### Events and retreats
 
-Current public opportunities are listed at ${origin}/events. Awakening Your Inner Light is scheduled for 1–7 October 2026 in Bocas del Toro, Panama. Its page includes format, investment, facilitators, preparation, screening, and application information: ${origin}/awakening-your-inner-light-2026.
+Current public opportunities are listed at ${origin}/events. Awakening Your Inner Light is planned for 3–9 December 2026 as a seven-day, six-night residential retreat. The active page accepts expressions of interest while final venue, programme, investment, safety and booking details are confirmed: ${origin}/awakening-your-inner-light-2026. The completed October 2026 retreat is preserved separately at ${origin}/awakening-your-inner-light-october-2026.
 
 ## People and community
 

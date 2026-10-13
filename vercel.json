@@ -96,6 +96,11 @@
       "permanent": true
     },
     {
+      "source": "/Awakening-Your-Inner-Light-October-2026.dc.html",
+      "destination": "/awakening-your-inner-light-october-2026",
+      "permanent": true
+    },
+    {
       "source": "/Bigger-Vision.dc.html",
       "destination": "/bigger-vision",
       "permanent": true
@@ -411,6 +416,10 @@
     {
       "source": "/awakening-your-inner-light-2026",
       "destination": "/Awakening-Your-Inner-Light-2026.dc.html"
+    },
+    {
+      "source": "/awakening-your-inner-light-october-2026",
+      "destination": "/Awakening-Your-Inner-Light-October-2026.dc.html"
     },
     {
       "source": "/bigger-vision",

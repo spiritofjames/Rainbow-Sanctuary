@@ -19,6 +19,7 @@ const PROGRAM_LABELS = new Map([
   ["autism-family-support", "Autism & Family Support"],
   ["awakening-academy-foundation", "Awakening Academy — 4-Day Foundation Journey"],
   ["awakening-inner-light-2026", "Awakening Your Inner Light Retreat 2026"],
+  ["awakening-inner-light-december-2026", "Awakening Your Inner Light — 3–9 December 2026"],
   ["childrens-potential-coach-certification", "Children’s Potential Coach Certification"],
   ["crystal-healing", "Crystal Healing"],
   ["dna-activation", "DNA Activation"],
