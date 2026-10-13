@@ -23,6 +23,9 @@ function safeContactUrl(hubspot) {
 
 function intakePathwayLabel(intake) {
   if (intake.program === "general-enquiry") return "General enquiry — main website";
+  if (intake.program === "awakening-inner-light-december-2026") {
+    return "Awakening Your Inner Light — 3–9 December 2026";
+  }
   const source = String(intake.program || intake.area || "Rainbow Sanctuary enquiry").trim();
   return source
     .split(/[\s_-]+/)
