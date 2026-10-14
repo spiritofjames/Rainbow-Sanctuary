@@ -14,6 +14,11 @@ test("supported pathways use Beijing as the only authored source time", () => {
   assert.match(config, /regeneration-maintenance-2026-08-17/);
   assert.match(config, /startDateTime: "2026-08-17T23:00:00\+08:00"/);
   assert.match(config, /firstCycle: \{ frequency: "weekly", sessions: 12, endsOn: "2026-11-02" \}/);
+  assert.match(config, /supportedSchedules:/);
+  assert.match(config, /frequency: "weekly"/);
+  assert.match(config, /frequency: "monthly-first-tuesday"/);
+  assert.match(config, /sessionCount: 104/);
+  assert.match(config, /sessionCount: 24/);
 });
 
 test("sensitive pathways stay safely gated, while approved direct registration remains server-governed", () => {
@@ -86,6 +91,14 @@ test("homepage separates recurring group pathways from the standalone in-person 
   assert.match(home, /rs-home-promo--youth rs-home-promo--wide/);
   assert.match(home, /grid-template-columns: repeat\(3, minmax\(0,1fr\)\)/);
   assert.match(home, /\.rs-home-promo--wide \{ grid-column: span 2; \}/);
+  assert.match(home, /Live now · began 17 August 2026/);
+  assert.match(home, /Tuesdays · 21:00 Beijing time/);
+  assert.match(home, /Ongoing weekly practice · free to join/);
+  assert.match(home, /Ongoing monthly pathway · review first/);
+  assert.match(home, /3–9 December 2026/);
+  assert.match(home, /Venue details after enquiry/);
+  assert.doesNotMatch(home, /22 August 2026/);
+  assert.doesNotMatch(home, /1–7 October 2026/);
 });
 
 test("homepage has an editorial contribution invitation near its closing content", () => {
@@ -125,8 +138,23 @@ test("supported session selection separates the date, format and registration ac
   assert.match(scheduler, /rs-supported-session-format/);
   assert.match(scheduler, /#dc-root \[data-supported-prefix\]/);
   assert.match(scheduler, /MutationObserver/);
+  assert.match(scheduler, /function recurringSessions\(\)/);
+  assert.match(scheduler, /monthly-first-tuesday/);
+  assert.match(scheduler, /const merged = new Map/);
   assert.match(styles, /Selected supported-pathway sessions need a clearly scannable date/);
   assert.match(styles, /rs-supported-session-summary\{margin:30px/);
+});
+
+test("the public calendar keeps active recurring programmes visible without presenting their launch dates as upcoming", () => {
+  const config = read("site-config.js");
+  const calendar = read("events-calendar.js");
+  assert.match(config, /staticGeneratedAt: "2026-10-13T15:00:00\.000Z"/);
+  assert.match(config, /scheduleLabel: "Weekly Tuesdays · 9:00 PM Beijing time"/);
+  assert.match(config, /scheduleLabel: "Weekly Tuesdays · 11:00 PM Beijing time"/);
+  assert.match(config, /scheduleLabel: "First Tuesday monthly · 11:00 PM Beijing time"/);
+  assert.match(calendar, /function isOngoing\(event\)/);
+  assert.match(calendar, /Schedule: \$\{escapeHtml\(event\.scheduleLabel\)\}/);
+  assert.match(calendar, /<span>Live<\/span>/);
 });
 
 test("Group Healing uses the same selected date and format hierarchy", () => {

@@ -19,6 +19,13 @@
     visibleMonth = new Date(firstDate.getFullYear(), firstDate.getMonth(), 1);
   }
   function eventDate(value) { return new Date(value + "T12:00:00"); }
+  function isOngoing(event) {
+    if (event?.ongoing !== true || event.status === "cancelled") return false;
+    if (!event.activeThrough) return true;
+    const finalDay = eventDate(event.activeThrough);
+    finalDay.setHours(23, 59, 59, 999);
+    return finalDay >= new Date();
+  }
   function eventInstant(event) {
     const instant = event?.startDateTime ? new Date(event.startDateTime) : eventDate(event?.startDate);
     return Number.isNaN(instant.getTime()) ? eventDate(event?.startDate) : instant;
@@ -121,9 +128,12 @@
     const list = document.getElementById("events-upcoming-list");
     const empty = document.getElementById("events-empty");
     if (!list || !empty) return;
-    const events = filteredItems().filter(event => eventInstant(event) >= new Date() && event.status !== "cancelled").sort((a, b) => eventInstant(a) - eventInstant(b));
+    const events = filteredItems()
+      .filter(event => (isOngoing(event) || eventInstant(event) >= new Date()) && event.status !== "cancelled")
+      .sort((a, b) => Number(isOngoing(b)) - Number(isOngoing(a)) || eventInstant(a) - eventInstant(b));
     list.innerHTML = events.map(event => {
       const start = calendarDate(event);
+      const ongoing = isOngoing(event);
       const location = [event.venue, event.location].filter(Boolean).map(escapeHtml).join(" · ") || "Location to be confirmed";
       const registrationUrl = safeUrl(event.registrationUrl);
       const action = registrationUrl ? `<a href="${escapeHtml(registrationUrl)}">${escapeHtml(statusNames[event.status] || "View details")} →</a>` : "";
@@ -134,10 +144,16 @@
         event.deposit || ""
       ].filter(Boolean);
       const pricing = priceLines.length ? `<div class="rs-event-card__pricing">${priceLines.map(line => `<span>${escapeHtml(line)}</span>`).join("")}</div>` : "";
-      const timing = event.startDateTime
+      const timing = ongoing && event.scheduleLabel
+        ? `<p class="rs-event-card__time">Schedule: ${escapeHtml(event.scheduleLabel)}</p>`
+        : event.startDateTime
         ? `<p class="rs-event-card__time">Your time: ${escapeHtml(localDateTime(event))}</p><small class="rs-event-card__source-time">Scheduled: ${escapeHtml(sourceDateTime(event))}</small>`
         : "";
-      return `<article class="rs-event-card"><div class="rs-event-date"><strong>${start.getDate()}</strong><span>${start.toLocaleDateString("en", { month:"short" })}</span></div><div><span class="rs-event-card__category">${escapeHtml(categoryNames[event.category])} · ${escapeHtml(dateRange(event))}</span><h4>${escapeHtml(event.title)}</h4><p>${location}</p>${timing}${event.summary ? `<p>${escapeHtml(event.summary)}</p>` : ""}${pricing}${action}</div></article>`;
+      const dateBadge = ongoing
+        ? `<strong aria-hidden="true">●</strong><span>Live</span>`
+        : `<strong>${start.getDate()}</strong><span>${start.toLocaleDateString("en", { month:"short" })}</span>`;
+      const dateLabel = ongoing ? (event.scheduleLabel || "Ongoing") : dateRange(event);
+      return `<article class="rs-event-card"><div class="rs-event-date">${dateBadge}</div><div><span class="rs-event-card__category">${escapeHtml(categoryNames[event.category])} · ${escapeHtml(dateLabel)}</span><h4>${escapeHtml(event.title)}</h4><p>${location}</p>${timing}${event.summary ? `<p>${escapeHtml(event.summary)}</p>` : ""}${pricing}${action}</div></article>`;
     }).join("");
     empty.hidden = events.length > 0;
   }
