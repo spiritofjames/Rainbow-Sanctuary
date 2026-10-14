@@ -29,10 +29,18 @@ test("December retreat is the active lead journey and carries no expired October
   assert.match(page, /7 days · 6 nights/);
   assert.match(page, /program=awakening-inner-light-december-2026/);
   assert.match(page, /stephanie-wu\.webp/);
+  assert.match(page, /retreat-hanan-unified\.jpg/);
+  assert.match(page, /Hanan Joao Perea Fernández Baca/);
+  assert.match(page, /Meet your facilitators/);
+  assert.doesNotMatch(page, /rs-retreat-facilitators--single/);
   assert.match(page, /data-gallery-state="awaiting-approved-content"/);
   assert.match(page, /Venue details shared after enquiry/);
   assert.doesNotMatch(page, /book\.stripe\.com/);
   assert.doesNotMatch(page, /Book Early Bird|Book at Standard Rate|1–7 October 2026 in Bocas del Toro/);
+  const faqs = read("persona-faqs.js");
+  assert.match(faqs, /The next retreat runs from 3–9 December 2026/);
+  assert.match(faqs, /The December investment is shared after enquiry/);
+  assert.doesNotMatch(faqs, /50% deposit before 1 September 2026/);
   assert.match(styles, /\.rs-retreat-section\[id\]\{scroll-margin-top:132px\}/);
 });
 
