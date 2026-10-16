@@ -154,7 +154,7 @@ const ogImages = {
   "Home.dc.html": "/assets/social/rainbow-sanctuary-home-og-v1.jpg",
   "About-Stephanie.dc.html": "/assets/stephanie-portrait.jpg",
   "1-1-Sessions.dc.html": "/assets/editorial/private-healing-overview.jpg",
-  "Awakening-Your-Inner-Light-2026.dc.html": "/assets/retreats/awakening-inner-light-december-2026/stephanie-wu.webp",
+  "Awakening-Your-Inner-Light-2026.dc.html": "/assets/retreats/awakening-inner-light-december-2026/facilitators/stephanie-wu-1080x1920.webp",
   "Awakening-Your-Inner-Light-October-2026.dc.html": "/assets/retreat-panama-coast-aerial.jpg",
   "Bigger-Vision.dc.html": "/assets/editorial/psn-regenerative-future.jpg",
   "Children-Family.dc.html": "/assets/editorial/home-family-editorial.jpg",
@@ -274,7 +274,14 @@ function schemaFor(file, title, description, canonical, image) {
       endDate: "2026-12-09",
       eventStatus: "https://schema.org/EventScheduled",
       eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-      organizer: { "@id": `${origin}/#organization` }
+      organizer: { "@id": `${origin}/#organization` },
+      offers: {
+        "@type": "Offer",
+        price: "3500",
+        priceCurrency: "USD",
+        availability: "https://schema.org/LimitedAvailability",
+        url: `${origin}/apply?reason=events&program=awakening-inner-light-december-2026`
+      }
     });
   }
 
@@ -533,7 +540,7 @@ const llms = `# Rainbow Sanctuary
 
 ## Current event
 
-- [Awakening Your Inner Light · December 2026](${origin}/awakening-your-inner-light-2026): Seven-day, six-night retreat planned for 3–9 December 2026; enquiries are open while final venue, programme and investment details are confirmed
+- [Awakening Your Inner Light · December 2026](${origin}/awakening-your-inner-light-2026): Seven-day, six-night retreat planned for 3–9 December 2026; the investment is USD 3,500 per person, with enquiries open while the final venue and programme are confirmed
 - [Awakening Your Inner Light · October 2026 history](${origin}/awakening-your-inner-light-october-2026): Factual archive of the completed 1–7 October 2026 retreat in Bocas del Toro, Panama
 
 ## Vision and community
@@ -604,7 +611,7 @@ Private sessions are application-led. Current session types include Personal Kar
 
 ### Events and retreats
 
-Current public opportunities are listed at ${origin}/events. Awakening Your Inner Light is planned for 3–9 December 2026 as a seven-day, six-night residential retreat. The active page accepts expressions of interest while final venue, programme, investment, safety and booking details are confirmed: ${origin}/awakening-your-inner-light-2026. The completed October 2026 retreat is preserved separately at ${origin}/awakening-your-inner-light-october-2026.
+Current public opportunities are listed at ${origin}/events. Awakening Your Inner Light is planned for 3–9 December 2026 as a seven-day, six-night residential retreat at USD 3,500 per person. The active page accepts expressions of interest while the final venue, programme, safety and booking details are confirmed: ${origin}/awakening-your-inner-light-2026. The completed October 2026 retreat is preserved separately at ${origin}/awakening-your-inner-light-october-2026.
 
 ## People and community
 

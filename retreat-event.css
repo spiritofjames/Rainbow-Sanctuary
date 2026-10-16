@@ -27,10 +27,55 @@
 .rs-retreat-fact{padding:15px;border:1px solid rgba(255,255,255,.2);border-radius:16px;background:rgba(7,20,15,.56);backdrop-filter:blur(12px)}
 .rs-retreat-fact span{display:block;color:rgba(255,255,255,.58);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
 .rs-retreat-fact strong{display:block;margin-top:5px;font-family:"EB Garamond",serif;font-size:20px;font-weight:400}
+.rs-retreat-fact--investment{border-color:rgba(245,232,201,.5);background:rgba(200,154,59,.2)}
+.rs-retreat-fact--investment strong{color:#fff3d7}
 .rs-retreat-actions{display:flex;flex-wrap:wrap;gap:12px}
 .rs-retreat-hero__intro .rs-retreat-actions{margin-top:24px}
 .rs-retreat-button{display:inline-flex;min-height:50px;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.55);border-radius:999px;padding:11px 22px;color:#fff;font-size:14px;font-weight:600;text-decoration:none}
 .rs-retreat-button--primary{border-color:var(--rs-cta);background:var(--rs-cta)}
+.rs-retreat-section--listening{background:#f6f3ec}
+.rs-retreat-listening-intro{max-width:800px;margin-bottom:34px}
+.rs-retreat-listening-intro .rs-retreat-kicker{color:#766233}
+.rs-retreat-listening-intro h2{margin:12px 0 18px;font-family:"EB Garamond",serif;font-size:clamp(40px,7vw,60px);font-weight:300;letter-spacing:-.035em;line-height:1}
+.rs-retreat-listening-intro p{margin:0;color:var(--retreat-body);font-size:16px;line-height:1.75}
+.rs-retreat-listening-context{max-width:850px;margin:28px 0 0;color:var(--retreat-body);font-size:14px;line-height:1.75}
+.rs-audio-player{display:grid;gap:28px;align-items:center;overflow:hidden;border:1px solid #304037;border-radius:26px;padding:24px;background:linear-gradient(120deg,#202a23,#141d18);color:#fff;box-shadow:0 18px 48px rgba(7,20,15,.09)}
+.rs-audio-player [hidden]{display:none!important}
+.rs-audio-player__artwork{display:block;width:100%;max-width:280px;aspect-ratio:1;overflow:hidden;border-radius:16px}
+.rs-audio-player__artwork img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 33%}
+.rs-audio-player__body{min-width:0}
+.rs-audio-player__topline{display:flex;flex-wrap:wrap;gap:14px 20px;justify-content:space-between;align-items:center;color:#e9dcb9;font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase}
+.rs-audio-player__headphones{display:inline-flex;gap:8px;align-items:center;color:#c4ccc4;letter-spacing:.04em}
+.rs-audio-player h3{margin:25px 0 9px;font-family:"EB Garamond",serif;font-size:clamp(32px,5vw,48px);font-weight:400;letter-spacing:-.02em;line-height:1.05;overflow-wrap:anywhere}
+.rs-audio-player__artist{margin:0;color:#fff;font-size:16px;line-height:1.5}
+.rs-audio-player__artist span{color:#bec7bd}
+.rs-audio-player__note{margin:10px 0 26px;color:#b3bdb2;font-size:12px;line-height:1.6}
+.rs-audio-player audio{display:block;width:100%;margin-top:24px}
+.rs-audio-player__controls{display:grid;gap:14px}
+.rs-audio-player input[type=range]{display:block;width:100%;height:24px;margin:0;padding:0;appearance:none;-webkit-appearance:none;border:0;border-radius:0;background:transparent;cursor:pointer;accent-color:#e7d3a3}
+.rs-audio-player input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:4px;background:linear-gradient(to right,#e7d3a3 var(--audio-progress,0%),#596158 var(--audio-progress,0%))}
+.rs-audio-player input[type=range]::-webkit-slider-thumb{width:13px;height:13px;margin-top:-4.5px;appearance:none;-webkit-appearance:none;border:0;border-radius:50%;background:#fff5dc}
+.rs-audio-player input[type=range]::-moz-range-track{height:4px;border-radius:4px;background:#596158}
+.rs-audio-player input[type=range]::-moz-range-progress{height:4px;border-radius:4px;background:#e7d3a3}
+.rs-audio-player input[type=range]::-moz-range-thumb{width:13px;height:13px;border:0;border-radius:50%;background:#fff5dc}
+.rs-audio-player input:disabled{opacity:.65;cursor:default}
+.rs-audio-player__times{display:flex;justify-content:space-between;margin-top:2px;color:#bec7bd;font-size:12px;font-variant-numeric:tabular-nums}
+.rs-audio-player__transport{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
+.rs-audio-player button{display:inline-flex;align-items:center;justify-content:center;border:0;font:inherit;cursor:pointer}
+.rs-audio-player__play{min-width:144px;min-height:52px;gap:11px;border-radius:999px;padding:12px 20px;background:#f5e8c9;color:#15241a;font-size:14px!important;font-weight:600!important}
+.rs-audio-player__play:hover{background:#fff5dc}
+.rs-audio-player__play[aria-busy=true]{opacity:.75;cursor:progress}
+.rs-audio-player__volume{display:flex;gap:6px;align-items:center}
+.rs-audio-player__volume button{width:44px;height:44px;flex:0 0 44px;border-radius:50%;background:transparent;color:#dbe1d8}
+.rs-audio-player__volume button:hover{background:rgba(255,255,255,.08)}
+.rs-audio-player__volume input[type=range]{width:70px}
+.rs-audio-player button:focus-visible,.rs-audio-player input:focus-visible{outline:2px solid #f5e8c9;outline-offset:5px}
+.rs-audio-player__status{min-height:18px;margin:14px 0 0;color:#bec7bd;font-size:12px;line-height:1.5}
+.rs-audio-player__error{margin:12px 0 0;color:#ffe4bb;font-size:13px;line-height:1.6}
+.rs-audio-player__error a{color:inherit;text-underline-offset:3px}
+@media(max-width:480px){.rs-retreat-section--listening .rs-retreat-shell{width:100%}.rs-audio-player{padding:20px}.rs-audio-player__artwork{max-width:240px}}
+@media(min-width:720px){.rs-audio-player{grid-template-columns:minmax(180px,.38fr) minmax(0,1fr);gap:36px;padding:34px}.rs-audio-player__artwork{max-width:340px}.rs-audio-player__volume input[type=range]{width:90px}}
+@media(min-width:980px){.rs-audio-player{gap:46px;padding:44px}.rs-audio-player__note{margin-bottom:32px}}
 .rs-retreat-nav{position:sticky;z-index:20;top:72px;border-bottom:1px solid rgba(220,214,200,.88);background:rgba(246,243,236,.92);backdrop-filter:blur(14px)}
 .rs-retreat-nav .rs-retreat-shell{display:flex;overflow-x:auto;scrollbar-width:none}
 .rs-retreat-nav .rs-retreat-shell::-webkit-scrollbar{display:none}
@@ -108,7 +153,7 @@
 .rs-retreat-facilitators--single{max-width:920px}
 .rs-retreat-facilitators article{display:grid;overflow:hidden;border:1px solid var(--retreat-border);border-radius:28px;background:var(--retreat-card);box-shadow:0 18px 50px rgba(7,20,15,.08)}
 .rs-retreat-facilitators picture{display:block;min-height:100%}
-.rs-retreat-facilitators img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center 24%}
+.rs-retreat-facilitators img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center 24%}
 .rs-retreat-facilitators article>div{padding:26px}
 .rs-retreat-facilitators span{color:#766233;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
 .rs-retreat-facilitators h3{margin:12px 0 10px;font-family:"EB Garamond",serif;font-size:32px;font-weight:300;line-height:1}
@@ -158,6 +203,7 @@
 .rs-retreat-history-grid h3{margin:12px 0 10px;font-family:"EB Garamond",serif;font-size:34px;font-weight:300;line-height:1}
 .rs-retreat-history-grid p{margin:0;color:var(--retreat-body);font-size:14px;line-height:1.72}
 .rs-retreat-history-grid a{display:inline-flex;margin-top:18px;color:#5d4930;font-size:13px;font-weight:600;text-underline-offset:4px}
+.rs-retreat-media-status{display:inline-flex;margin-top:22px;border:1px solid rgba(118,98,51,.22);border-radius:999px;padding:8px 11px;background:#f5efe2;color:#6c5a35;font-size:10px;font-weight:600;letter-spacing:.06em;line-height:1.35;text-transform:uppercase}
 .rs-retreat-safety{border-radius:30px;padding:30px;background:var(--retreat-forest-900);color:#fff}
 .rs-retreat-safety p{color:rgba(255,255,255,.72)}
 .rs-retreat-checklist{display:grid;gap:10px;margin:24px 0 0;padding:0;list-style:none}
@@ -165,5 +211,5 @@
 .rs-retreat-checklist li::before{position:absolute;top:.65em;left:0;width:8px;height:8px;border:1px solid var(--retreat-gold-500);border-radius:50%;content:""}
 .rs-retreat-note{margin:24px 0 0;padding:16px 18px;border-left:3px solid var(--retreat-gold-500);background:rgba(255,255,255,.07);color:rgba(255,255,255,.78);font-size:13px;line-height:1.65}
 @media(min-width:720px){.rs-retreat-facts{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-nav a{padding:19px 18px}.rs-retreat-recognition-grid,.rs-retreat-clarity-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-truth{grid-template-columns:auto 1fr;align-items:center;padding:25px 28px}.rs-retreat-truth p{padding-left:24px;border-left:1px solid rgba(255,255,255,.15)}.rs-retreat-mid-cta{grid-template-columns:1fr auto;padding:30px}.rs-retreat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-card{padding:32px}.rs-retreat-arc li{grid-template-columns:58px 1fr;padding:24px}.rs-retreat-arc li>span{width:50px;height:50px}.rs-retreat-arc::before{left:49px}.rs-retreat-inclusions{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-setting{grid-template-columns:minmax(280px,.8fr) minmax(0,1.2fr)}.rs-retreat-setting--pending{grid-template-columns:minmax(0,1fr)}.rs-retreat-ceremony-card{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:center;padding:48px}.rs-retreat-facilitators{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-facilitators--single{grid-template-columns:minmax(0,1fr)}.rs-retreat-application{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:start}.rs-retreat-direct-booking__options{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-history-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-safety{padding:44px}}
-@media(min-width:980px){.rs-retreat-hero{min-height:900px}.rs-retreat-hero__content{padding-bottom:64px}.rs-retreat-section{padding:100px 0}.rs-retreat-recognition-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-grid--four{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-arc{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.rs-retreat-arc::before{top:48px;right:40px;bottom:auto;left:40px;width:auto;height:1px}.rs-retreat-arc li{display:block;padding:24px}.rs-retreat-arc li>span{margin-bottom:40px}.rs-retreat-inclusions{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-facilitators article{grid-template-columns:minmax(150px,.72fr) minmax(0,1.28fr)}.rs-retreat-facilitators img{height:100%;min-height:390px;aspect-ratio:auto}.rs-retreat-ceremony-visual{min-height:560px}.rs-retreat-ceremony-visual__content{padding-bottom:58px}}
+@media(min-width:980px){.rs-retreat-hero{min-height:900px}.rs-retreat-hero__content{padding-bottom:64px}.rs-retreat-section{padding:100px 0}.rs-retreat-recognition-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-grid--four{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-arc{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.rs-retreat-arc::before{top:48px;right:40px;bottom:auto;left:40px;width:auto;height:1px}.rs-retreat-arc li{display:block;padding:24px}.rs-retreat-arc li>span{margin-bottom:40px}.rs-retreat-inclusions{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-facilitators article{grid-template-columns:minmax(0,1fr)}.rs-retreat-facilitators img{height:auto;min-height:0;aspect-ratio:4/5}.rs-retreat-history-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.rs-retreat-ceremony-visual{min-height:560px}.rs-retreat-ceremony-visual__content{padding-bottom:58px}}
 @media(prefers-reduced-motion:reduce){.rs-retreat-button{transition:none}}
