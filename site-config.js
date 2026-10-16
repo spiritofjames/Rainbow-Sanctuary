@@ -249,7 +249,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
         location: "Location to be confirmed",
         venue: "Residential retreat · details shared after enquiry",
         summary: "A seven-day, six-night plant-medicine retreat with preparation, supported ceremonial work, embodied practice, rest, and integration.",
-        price: "Investment shared after enquiry",
+        price: "USD 3,500 per person",
         status: "interest",
         registrationUrl: "/awakening-your-inner-light-2026"
       }

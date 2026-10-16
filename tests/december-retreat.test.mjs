@@ -28,18 +28,22 @@ test("December retreat is the active lead journey and carries no expired October
   assert.match(page, /3–9 December 2026/);
   assert.match(page, /7 days · 6 nights/);
   assert.match(page, /program=awakening-inner-light-december-2026/);
-  assert.match(page, /stephanie-wu\.webp/);
-  assert.match(page, /retreat-hanan-unified\.jpg/);
+  assert.match(page, /facilitators\/stephanie-wu-1080x1920\.webp/);
+  assert.match(page, /facilitators\/hanan-perea-1080x1920\.webp/);
   assert.match(page, /Hanan Joao Perea Fernández Baca/);
   assert.match(page, /Meet your facilitators/);
   assert.doesNotMatch(page, /rs-retreat-facilitators--single/);
   assert.match(page, /data-gallery-state="awaiting-approved-content"/);
+  assert.match(page, /id="listen"/);
+  assert.match(page, /USD 3,500 per person/);
+  assert.match(page, /"price"\s*:\s*"3500"/);
+  assert.match(page, /"priceCurrency"\s*:\s*"USD"/);
   assert.match(page, /Venue details shared after enquiry/);
   assert.doesNotMatch(page, /book\.stripe\.com/);
   assert.doesNotMatch(page, /Book Early Bird|Book at Standard Rate|1–7 October 2026 in Bocas del Toro/);
   const faqs = read("persona-faqs.js");
   assert.match(faqs, /The next retreat runs from 3–9 December 2026/);
-  assert.match(faqs, /The December investment is shared after enquiry/);
+  assert.match(faqs, /The December retreat investment is USD 3,500 per person/);
   assert.doesNotMatch(faqs, /50% deposit before 1 September 2026/);
   assert.match(styles, /\.rs-retreat-section\[id\]\{scroll-margin-top:132px\}/);
 });
@@ -59,7 +63,7 @@ test("event catalogue exposes only the December retreat as upcoming", () => {
   assert.match(config, /id: "awakening-inner-light-december-2026"/);
   assert.match(config, /startDate: "2026-12-03"/);
   assert.match(config, /endDate: "2026-12-09"/);
-  assert.match(config, /Investment shared after enquiry/);
+  assert.match(config, /price: "USD 3,500 per person"/);
   assert.doesNotMatch(config, /id: "awakening-inner-light-2026"[\s\S]{0,400}startDate: "2026-10-01"/);
 });
 
@@ -135,5 +139,5 @@ test("discovery generator describes the active and completed retreat truthfully"
   assert.match(discovery, /endDate: "2026-12-09"/);
   assert.match(discovery, /Awakening-Your-Inner-Light-October-2026\.dc\.html/);
   assert.match(discovery, /EventCompleted/);
-  assert.match(discovery, /final venue, programme and investment details are confirmed/);
+  assert.match(discovery, /investment is USD 3,500 per person/);
 });
