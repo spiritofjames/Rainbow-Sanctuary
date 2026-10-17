@@ -39,7 +39,7 @@ function fixture() {
     load() { this.loadCalls++; this.error = null; }
   });
   const player = {
-    dataset: { trackTitle: "Medicina Curandeira", duration: "369.96" },
+    dataset: { trackTitle: "Hatun Hatun Temblarcuna", duration: "369.96" },
     querySelector(selector) {
       return selector === "audio" ? audio : nodes[selector.slice(6, -1)];
     }
@@ -64,7 +64,7 @@ test("play, pause and replay keep labels and SVG icon attributes synchronized", 
   nodes["audio-play"].fire("click");
   await settle();
   assert.equal(audio.paused, false);
-  assert.equal(nodes["audio-play"].attributes.get("aria-label"), "Pause Medicina Curandeira");
+  assert.equal(nodes["audio-play"].attributes.get("aria-label"), "Pause Hatun Hatun Temblarcuna");
   assert.equal(nodes["pause-icon"].attributes.has("hidden"), false);
   assert.equal(nodes["play-icon"].attributes.has("hidden"), true);
   nodes["audio-play"].fire("click");

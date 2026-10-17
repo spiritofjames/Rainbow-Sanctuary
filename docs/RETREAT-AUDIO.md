@@ -2,13 +2,13 @@
 
 ## Source and credit
 
-- Track: **Medicina Curandeira** — Hanan.
-- James supplied the MP3 and requested its use on the retreat landing page on 15 October 2026.
+- Track: **Hatun Hatun Temblarcuna** — Hanan.
+- James supplied a remastered MP3 on 17 October 2026 to replace the earlier listening sample.
 - Public description: recreated from a ceremony recording by James Stark; not represented as an unedited live recording.
 - Duration: 369.96 seconds (6:10), stereo, 48 kHz MP3.
-- Asset: `assets/retreats/awakening-inner-light-december-2026/audio/medicina-curandeira-hanan.mp3`.
-- The web copy preserves the original encoded audio without recompression. Unrelated embedded artwork and generic title/artist metadata were replaced with track credits.
-- Source and web-copy audio-stream SHA-256: `719d6899d1a54be40f021908123da54eb91816be4418e8dd2130111b84bd2a75`.
+- Asset: `assets/retreats/awakening-inner-light-december-2026/audio/hatun-hatun-temblarcuna-hanan.mp3`.
+- The web copy preserves the remastered encoded audio without recompression. Unrelated embedded artwork and generic title/artist metadata were replaced with track credits.
+- Supplied remaster and web-copy audio-stream SHA-256: `16fbe59f83b5479f30c182697e971d48179a0d9750aaf2ac97259f3a5f08d19e`.
 
 ## Integration
 
@@ -24,7 +24,7 @@ The ALIM/Spirit of James podcast page uses a Spotify-hosted iframe, not a standa
 
 ## Verification
 
-Verified locally on 15 October 2026:
+Initial player verification on 15 October 2026, before the remastered audio replacement:
 
 - Full `quality:preflight`: 156 tests passed, 66 HTML pages validated, email-template contracts and release-integrity checks passed. This does not establish live email delivery or activate automations.
 - Browser: real MP3 playback, explicit play/pause, pointer seeking to 3:02, keyboard seeking to 3:03, volume adjustment and mute/unmute.
@@ -36,6 +36,8 @@ Verified locally on 15 October 2026:
 - The Design Canvas template requires `controls="{{ true }}"` and `hidden="{{ true }}"` for boolean state; bare empty attributes become false React props. The player also initializes its error state explicitly.
 - Evidence: `.security-layer/retreat-audio-preflight.log`; desktop screenshot `/tmp/rainbow-hanan-player-desktop.jpg`.
 
-## Staging release scope
+## Release history
 
-After reviewing the local preview on 15 October 2026, James approved the design, renamed the song **Medicina Curandeira**, and explicitly requested a staging release. The page title, player accessibility labels, file name and embedded MP3 title are updated consistently; the encoded audio is unchanged. Release through a feature pull request into protected `staging`, with GitHub checks and hosted-page acceptance. Production remains excluded. The local proof above is not by itself evidence of deployment; the pull request and deployment status record the release outcome.
+After reviewing the local preview on 15 October 2026, James approved the design, renamed the first song **Medicina Curandeira**, and requested a staging release through PR #162.
+
+On 17 October 2026, James supplied the remastered replacement and named it **Hatun Hatun Temblarcuna**. The page title, player accessibility labels, file name and embedded MP3 title now match the new track. The recorded audio stream is preserved exactly from his remastered source. Validate the new asset and playback on staging before reporting it as released.
