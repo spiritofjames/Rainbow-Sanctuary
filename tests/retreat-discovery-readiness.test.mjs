@@ -42,8 +42,8 @@ test("staging is noindex without changing production metadata or security header
   assert.ok(config.headers.find(rule => rule.source === "/(.*)" && !rule.has).headers.some(h => h.key === "Content-Security-Policy"));
   assert.match(page, /name="robots" content="index,follow/);
   assert.match(read("robots.txt"), /User-agent: OAI-SearchBot\nAllow: \//);
-  assert.match(read("sitemap.xml"), /awakening-your-inner-light-2026<\/loc><lastmod>2026-10-22<\/lastmod>/);
-  assert.match(page, /og:image:width" content="1920"/);
-  assert.match(page, /og:image:height" content="1079"/);
+  assert.match(read("sitemap.xml"), /awakening-your-inner-light-2026<\/loc><lastmod>2026-10-23<\/lastmod>/);
+  assert.match(page, /og:image:width" content="1200"/);
+  assert.match(page, /og:image:height" content="630"/);
   assert.match(page, /intent=discovery-call/);
 });
