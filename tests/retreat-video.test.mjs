@@ -192,7 +192,7 @@ test("CSP admits only the selected external embed and preserves the other restri
   const config = JSON.parse(read("vercel.json"));
   const csp = config.headers.find((item) => item.source === "/(.*)").headers.find((header) => header.key === "Content-Security-Policy").value;
   const frames = csp.match(/frame-src ([^;]+);/)[1].split(" ");
-  assert.deepEqual(frames, ["'self'", "https://www.youtube-nocookie.com/embed/bqe-GyjWn4U", "https://www.youtube-nocookie.com/embed/C6KVdON7Ju0", "https://www.youtube-nocookie.com/embed/TKcncu9DIEc", "https://open.spotify.com/embed/track/2WxJlY7NsAqeQ52lJMJYwU"]);
+  assert.deepEqual(frames, ["'self'", "https://www.youtube-nocookie.com/embed/bqe-GyjWn4U", "https://www.youtube-nocookie.com/embed/C6KVdON7Ju0", "https://www.youtube-nocookie.com/embed/TKcncu9DIEc", "https://www.youtube-nocookie.com/embed/_4SF8n4Kprs", "https://open.spotify.com/embed/track/2WxJlY7NsAqeQ52lJMJYwU"]);
   assert.match(csp, /https:\/\/open.spotify.com\/embed\/track\/2WxJlY7NsAqeQ52lJMJYwU;/);
   assert.match(csp, /frame-ancestors 'none'/);
   assert.match(csp, /media-src 'self'/);

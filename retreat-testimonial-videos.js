@@ -2,6 +2,7 @@
 const VIDEO_TITLES = new Map([
   ["C6KVdON7Ju0", "German Sozzi’s retreat reflection"],
   ["TKcncu9DIEc", "Garlon’s retreat reflection"],
+  ["_4SF8n4Kprs", "Leonella’s retreat reflection (Spanish)"],
 ]);
 
 let activeStop = null;
