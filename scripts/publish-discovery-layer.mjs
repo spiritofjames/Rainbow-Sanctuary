@@ -5,10 +5,13 @@ import { fileURLToPath } from "node:url";
 const scriptsDir = path.dirname(fileURLToPath(import.meta.url));
 const siteDir = path.resolve(scriptsDir, "..");
 const origin = "https://rainbowsanctuary.life";
+const retreatFaqs = JSON.parse(fs.readFileSync(path.join(siteDir, "data/december-retreat-faqs.json"), "utf8"));
 const lastmod = "2026-07-31";
 const routeLastmod = new Map([
-  ["/awakening-your-inner-light-2026", "2026-10-13"],
-  ["/awakening-your-inner-light-october-2026", "2026-10-13"]
+  ["/awakening-your-inner-light-2026", "2026-10-22"],
+  ["/awakening-your-inner-light-october-2026", "2026-10-22"],
+  ["/events", "2026-10-22"],
+  ["/apply", "2026-10-22"]
 ]);
 // Keep operational jobs in the generated Vercel configuration. Discovery
 // publishing runs as part of every release, so dropping this would silently
@@ -51,7 +54,7 @@ const headers = [
     headers: [
       {
         key: "Content-Security-Policy",
-        value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self'; connect-src 'self' https://api.github.com https://github.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+        value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://www.youtube.com/iframe_api https://www.youtube.com/s/player/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self'; connect-src 'self' https://api.github.com https://github.com; frame-src 'self' https://www.youtube-nocookie.com/embed/bqe-GyjWn4U https://www.youtube-nocookie.com/embed/C6KVdON7Ju0 https://www.youtube-nocookie.com/embed/TKcncu9DIEc https://open.spotify.com/embed/track/2WxJlY7NsAqeQ52lJMJYwU; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
       },
       {
         key: "Permissions-Policy",
@@ -70,6 +73,11 @@ const headers = [
         value: "DENY"
       }
     ]
+  },
+  {
+    source: "/(.*)",
+    has: [{ type: "host", value: "staging.rainbowsanctuary.life" }],
+    headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }]
   }
 ];
 
@@ -154,7 +162,7 @@ const ogImages = {
   "Home.dc.html": "/assets/social/rainbow-sanctuary-home-og-v1.jpg",
   "About-Stephanie.dc.html": "/assets/stephanie-portrait.jpg",
   "1-1-Sessions.dc.html": "/assets/editorial/private-healing-overview.jpg",
-  "Awakening-Your-Inner-Light-2026.dc.html": "/assets/retreats/awakening-inner-light-december-2026/facilitators/stephanie-wu-1080x1920.webp",
+  "Awakening-Your-Inner-Light-2026.dc.html": "/assets/retreats/awakening-inner-light-december-2026/rainbow-sanctuary-panama-1920.jpg",
   "Awakening-Your-Inner-Light-October-2026.dc.html": "/assets/retreat-panama-coast-aerial.jpg",
   "Bigger-Vision.dc.html": "/assets/editorial/psn-regenerative-future.jpg",
   "Children-Family.dc.html": "/assets/editorial/home-family-editorial.jpg",
@@ -279,9 +287,16 @@ function schemaFor(file, title, description, canonical, image) {
         "@type": "Offer",
         price: "3500",
         priceCurrency: "USD",
-        availability: "https://schema.org/LimitedAvailability",
         url: `${origin}/apply?reason=events&program=awakening-inner-light-december-2026`
       }
+    });
+    graph.push({
+      "@type": "FAQPage",
+      "@id": `${canonical}#frequently-asked-questions`,
+      mainEntity: retreatFaqs.map(({ question, answer }) => ({
+        "@type": "Question", name: question,
+        acceptedAnswer: { "@type": "Answer", text: answer }
+      }))
     });
   }
 
@@ -294,7 +309,6 @@ function schemaFor(file, title, description, canonical, image) {
       image,
       startDate: "2026-10-01",
       endDate: "2026-10-07",
-      eventStatus: "https://schema.org/EventCompleted",
       eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
       location: {
         "@type": "Place",
@@ -386,6 +400,14 @@ for (const [file, route] of Object.entries(routes)) {
   }
   source = ensureKnowledgeFooterLink(ensureContributionFooterLink(source));
 
+  if (file === "Awakening-Your-Inner-Light-2026.dc.html") {
+    const faq = `<!-- rs-retreat-faq:start -->
+    <section id="frequently-asked-questions" class="rs-persona-faq" data-rs-persona-faq="true" aria-labelledby="rs-faq-title"><div class="rs-persona-faq__shell"><header class="rs-persona-faq__heading"><span class="rs-persona-faq__eyebrow">Questions people ask before choosing</span><h2 id="rs-faq-title">Clear answers, before you decide.</h2><p class="rs-persona-faq__intro">Your questions are part of discernment—not an obstacle to enrollment. Start with what matters most to you.</p></header><div class="rs-persona-faq__list">${retreatFaqs.map(({ question, answer }) => `<details><summary>${escapeAttribute(question)}</summary><p>${escapeAttribute(answer)}</p></details>`).join("\n")}</div></div></section>
+    <!-- rs-retreat-faq:end -->`;
+    if (!/<!-- rs-retreat-faq:start -->[\s\S]*?<!-- rs-retreat-faq:end -->/.test(source)) throw new Error("December FAQ publishing markers are missing.");
+    source = source.replace(/<!-- rs-retreat-faq:start -->[\s\S]*?<!-- rs-retreat-faq:end -->/, faq);
+  }
+
   const title = extract(source, /<title>([\s\S]*?)<\/title>/i, "Rainbow Sanctuary");
   const description = extract(
     source,
@@ -407,6 +429,11 @@ for (const [file, route] of Object.entries(routes)) {
       `<meta property="og:image:width" content="1200">`,
       `<meta property="og:image:height" content="630">`,
       `<meta property="og:image:type" content="image/jpeg">`
+    ] : []),
+    ...(file === "Awakening-Your-Inner-Light-2026.dc.html" ? [
+      '<meta property="og:image:width" content="1920">',
+      '<meta property="og:image:height" content="1079">',
+      '<meta property="og:image:type" content="image/jpeg">'
     ] : []),
     '<meta name="twitter:card" content="summary_large_image">',
     `<meta name="twitter:title" content="${escapeAttribute(title)}">`,

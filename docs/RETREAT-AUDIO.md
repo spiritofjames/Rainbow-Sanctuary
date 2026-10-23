@@ -9,6 +9,7 @@
 - Asset: `assets/retreats/awakening-inner-light-december-2026/audio/hatun-hatun-temblarcuna-hanan.mp3`.
 - The web copy preserves the remastered encoded audio without recompression. Unrelated embedded artwork and generic title/artist metadata were replaced with track credits.
 - Supplied remaster and web-copy audio-stream SHA-256: `16fbe59f83b5479f30c182697e971d48179a0d9750aaf2ac97259f3a5f08d19e`.
+- On 22 October 2026, James supplied `Pictures/Team/Hanan 1 (Compressed).png` for the ícaro player portrait. The player uses locally resized 800 × 1067 WebP/JPEG derivatives named `facilitators/hanan-icaro-portrait-800.*`; the supplied original is unchanged. This replaces only the player artwork, not the facilitator card or film poster.
 
 ## Integration
 

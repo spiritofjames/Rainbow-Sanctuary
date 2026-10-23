@@ -42,7 +42,7 @@
 .rs-audio-player{display:grid;gap:28px;align-items:center;overflow:hidden;border:1px solid #304037;border-radius:26px;padding:24px;background:linear-gradient(120deg,#202a23,#141d18);color:#fff;box-shadow:0 18px 48px rgba(7,20,15,.09)}
 .rs-audio-player [hidden]{display:none!important}
 .rs-audio-player__artwork{display:block;width:100%;max-width:280px;aspect-ratio:1;overflow:hidden;border-radius:16px}
-.rs-audio-player__artwork img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 33%}
+.rs-audio-player__artwork img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top}
 .rs-audio-player__body{min-width:0}
 .rs-audio-player__topline{display:flex;flex-wrap:wrap;gap:14px 20px;justify-content:space-between;align-items:center;color:#e9dcb9;font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase}
 .rs-audio-player__headphones{display:inline-flex;gap:8px;align-items:center;color:#c4ccc4;letter-spacing:.04em}
@@ -213,3 +213,335 @@
 @media(min-width:720px){.rs-retreat-facts{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-nav a{padding:19px 18px}.rs-retreat-recognition-grid,.rs-retreat-clarity-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-truth{grid-template-columns:auto 1fr;align-items:center;padding:25px 28px}.rs-retreat-truth p{padding-left:24px;border-left:1px solid rgba(255,255,255,.15)}.rs-retreat-mid-cta{grid-template-columns:1fr auto;padding:30px}.rs-retreat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-card{padding:32px}.rs-retreat-arc li{grid-template-columns:58px 1fr;padding:24px}.rs-retreat-arc li>span{width:50px;height:50px}.rs-retreat-arc::before{left:49px}.rs-retreat-inclusions{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-setting{grid-template-columns:minmax(280px,.8fr) minmax(0,1.2fr)}.rs-retreat-setting--pending{grid-template-columns:minmax(0,1fr)}.rs-retreat-ceremony-card{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:center;padding:48px}.rs-retreat-facilitators{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-facilitators--single{grid-template-columns:minmax(0,1fr)}.rs-retreat-application{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:start}.rs-retreat-direct-booking__options{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-history-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-retreat-safety{padding:44px}}
 @media(min-width:980px){.rs-retreat-hero{min-height:900px}.rs-retreat-hero__content{padding-bottom:64px}.rs-retreat-section{padding:100px 0}.rs-retreat-recognition-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-grid--four{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-arc{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.rs-retreat-arc::before{top:48px;right:40px;bottom:auto;left:40px;width:auto;height:1px}.rs-retreat-arc li{display:block;padding:24px}.rs-retreat-arc li>span{margin-bottom:40px}.rs-retreat-inclusions{grid-template-columns:repeat(4,minmax(0,1fr))}.rs-retreat-facilitators article{grid-template-columns:minmax(0,1fr)}.rs-retreat-facilitators img{height:auto;min-height:0;aspect-ratio:4/5}.rs-retreat-history-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.rs-retreat-ceremony-visual{min-height:560px}.rs-retreat-ceremony-visual__content{padding-bottom:58px}}
 @media(prefers-reduced-motion:reduce){.rs-retreat-button{transition:none}}
+
+/* Experience-led December page. Scoped additions leave the October archive intact. */
+.rs-retreat-section--story,.rs-retreat-section--films{background:#fffdf8}
+.rs-retreat-section--story .rs-retreat-kicker,.rs-retreat-section--films .rs-retreat-kicker,.rs-retreat-section--host .rs-retreat-kicker,.rs-retreat-section--practical .rs-retreat-kicker,.rs-retreat-gallery-preview .rs-retreat-kicker{color:#766233}
+.rs-retreat-story-grid{display:grid;gap:32px}
+.rs-retreat-story-grid .rs-retreat-heading{margin-bottom:0}
+.rs-retreat-story-points article{padding:28px 0;border-top:1px solid var(--retreat-border)}
+.rs-retreat-story-points article:first-child{padding-top:0;border-top:0}
+.rs-retreat-story-points article:last-child{padding-bottom:0}
+.rs-retreat-story-points article>span{color:#766233;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.rs-retreat-story-points h3{margin:12px 0 10px;font-family:"EB Garamond",serif;font-size:32px;font-weight:400;line-height:1.1}
+.rs-retreat-story-points p{margin:0;color:var(--retreat-body);font-size:15px;line-height:1.75}
+.rs-retreat-editorial-note{max-width:950px;margin:44px 0 0;padding:22px 0 0;border-top:1px solid var(--retreat-border);color:var(--retreat-body);font-size:14px;line-height:1.75}
+.rs-retreat-gathering-photo{margin:30px 0 0}
+.rs-retreat-gathering-photo img{display:block;width:100%;height:auto;border-radius:20px}
+.rs-retreat-gathering-photo figcaption{margin-top:10px;color:var(--retreat-body);font-size:12px;line-height:1.6}
+.rs-retreat-landscape-bridge{margin:0;padding:0 0 52px;background:#fffdf8}
+.rs-retreat-landscape-bridge__inner{display:grid;overflow:hidden;border-radius:24px;background:var(--retreat-forest-900);color:#fff}
+.rs-retreat-landscape-bridge img{display:block;width:100%;height:300px;object-fit:cover;object-position:center 58%}
+.rs-retreat-landscape-bridge figcaption{display:flex;flex-direction:column;justify-content:center;gap:18px;padding:32px}
+.rs-retreat-landscape-bridge .rs-retreat-kicker{color:#d4bd80}
+.rs-retreat-landscape-bridge__title{max-width:14ch;font-family:"EB Garamond",serif;font-size:clamp(32px,4vw,56px);font-weight:400;line-height:1.05}
+.rs-retreat-landscape-bridge__copy{max-width:48ch;color:#dce3dc;font-size:15px;line-height:1.7}
+.rs-retreat-section--questions{background:#e9eee7}
+.rs-retreat-section--questions .rs-retreat-kicker{color:#49644e}
+.rs-retreat-section--questions .rs-retreat-questions-intro{max-width:none;margin-bottom:28px}
+.rs-retreat-questions-intro__photo{min-width:0;margin:0}
+.rs-retreat-questions-intro__photo img{display:block;width:100%;height:clamp(300px,34vw,440px);object-fit:cover;object-position:center 55%;border-radius:20px}
+.rs-retreat-questions-intro__photo figcaption{margin-top:10px;color:#455247;font-size:12px;line-height:1.6}
+.rs-retreat-questions{display:grid;gap:18px;margin:0 0 40px;padding:0;list-style:none}
+.rs-retreat-questions li{min-width:0;border:1px solid #c5d2c3;border-radius:20px;padding:24px;background:rgba(255,255,255,.55)}
+.rs-retreat-questions__icon{display:grid;width:46px;height:46px;place-items:center;margin-block-end:20px;border:1px solid #b8cbb7;border-radius:14px;background:#f3f5ed;color:var(--retreat-forest-800)}
+.rs-retreat-questions__icon svg{width:27px;height:27px;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.rs-retreat-questions h3,.rs-retreat-questions__next h3{margin:0 0 12px;color:var(--retreat-forest-800);font-family:"EB Garamond",serif;font-size:30px;font-weight:400;line-height:1.15}
+.rs-retreat-questions p,.rs-retreat-questions__next p{margin:0;color:#455247;font-size:16px;line-height:1.75}
+.rs-retreat-questions__next{display:grid;gap:24px;padding-block-start:32px;border-block-start:1px solid #b8c6b7}
+.rs-retreat-questions__next h3{font-size:27px}
+.rs-retreat-questions__links{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:12px}
+.rs-retreat-questions__links .rs-retreat-button{max-width:100%;border-color:var(--retreat-forest-800);background:var(--retreat-forest-800);color:#fff;text-align:center;line-height:1.5}
+.rs-retreat-questions__links .rs-retreat-button:hover{background:var(--retreat-forest-950)}
+.rs-retreat-questions__link{display:inline-flex;min-height:44px;align-items:center;gap:8px;color:var(--retreat-forest-800);font-size:14px;text-underline-offset:4px}
+.rs-retreat-questions__links a:focus-visible{outline:2px solid var(--retreat-forest-800);outline-offset:5px}
+.rs-retreat-questions__care{max-width:960px;margin:28px 0 0;color:#455247;font-size:13px;line-height:1.75}
+@media(min-width:720px){.rs-retreat-landscape-bridge__inner{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}.rs-retreat-landscape-bridge img{height:100%;min-height:420px}.rs-retreat-landscape-bridge figcaption{padding:clamp(32px,4vw,60px)}.rs-retreat-questions{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}}
+@media(min-width:900px){.rs-retreat-questions-intro{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;align-items:center}}
+@media(min-width:980px){.rs-retreat-questions__next{grid-template-columns:minmax(0,1fr) auto;gap:56px}.rs-retreat-questions__links{align-items:center}}
+.rs-retreat-section--voices{background:var(--retreat-forest-900);color:#fff}
+.rs-retreat-section--voices .rs-retreat-heading p{color:#c0c9c1}
+.rs-retreat-voices{display:grid;gap:32px;margin:36px 0}
+.rs-retreat-voice{margin:0}
+.rs-retreat-voice blockquote{margin:0}
+.rs-retreat-voice blockquote p{margin:0;font-family:"EB Garamond",serif;font-size:clamp(28px,5vw,36px);font-weight:400;line-height:1.2}
+.rs-retreat-voice figcaption{margin-top:20px;color:#c0c9c1;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.rs-retreat-voice__mark{display:block;height:60px;color:#d5b77d;font-family:"EB Garamond",serif;font-size:112px;line-height:1}
+.rs-retreat-voice--lead blockquote p{max-width:480px;font-size:clamp(42px,8vw,66px);line-height:1.03;letter-spacing:-.025em}
+.rs-retreat-voices__more{display:grid;gap:30px;padding-top:30px;border-top:1px solid #476052}
+.rs-retreat-voices__more .rs-retreat-voice+.rs-retreat-voice{padding-top:30px;border-top:1px solid #476052}
+.rs-retreat-page .rs-retreat-caption{font-size:13px;line-height:1.7;color:var(--retreat-body)}
+.rs-retreat-section--voices .rs-retreat-caption{max-width:740px;color:#c0c9c1}
+.rs-retreat-reflections{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,26rem),1fr));gap:24px;margin-block:40px}
+.rs-retreat-reflection{display:flex;min-inline-size:0;flex-direction:column;margin:0;padding:28px;background:#172d22;border-radius:20px}
+.rs-retreat-reflection__portrait{flex:none;width:min(100%,160px);aspect-ratio:1;margin-block-end:24px;overflow:hidden;border:1px solid #425a49;border-radius:20px;background:#294234}
+.rs-retreat-reflection__portrait img{display:block;width:100%;height:100%;object-fit:cover}
+.rs-retreat-reflection__portrait[data-portrait-for="jan"] img{object-position:center 20%}
+.rs-retreat-reflection__portrait[data-portrait-for="ivan"] img{object-position:center 10%}
+.rs-retreat-reflection__portrait[data-portrait-for="chloe"] img{object-position:center 28%}
+.rs-retreat-reflection__portrait[data-portrait-for="rachel"] img{object-position:center 15%}
+.rs-retreat-reflection__portrait[data-portrait-for="garlon"] img{object-position:center 5%}
+.rs-retreat-reflection__portrait[data-portrait-for="ryan"] img{object-position:center 10%}
+.rs-retreat-reflection h3{margin:0 0 22px;color:#e0c99b;font-size:12px;font-weight:500;line-height:1.6;letter-spacing:.025em}
+.rs-retreat-reflection blockquote{margin:0}
+.rs-retreat-reflection blockquote p{margin:0;font-family:"EB Garamond",serif;font-size:clamp(22px,2vw,26px);font-weight:400;line-height:1.4}
+.rs-retreat-reflection figcaption{margin-block-start:auto;padding-block-start:26px;font-size:13px;line-height:1.6}
+.rs-retreat-reflection figcaption strong,.rs-retreat-reflection figcaption span{display:block}
+.rs-retreat-reflection figcaption strong{font-weight:500;color:#f2eadc}
+.rs-retreat-reflection figcaption span{font-size:11px;color:#bac6bc}
+.rs-retreat-section--mama-gaia{background:linear-gradient(150deg,#e5ebe1,#f2f0e7 65%,#e9eadc)}
+.rs-retreat-section--mama-gaia .rs-retreat-kicker{color:#516b53}
+.rs-retreat-mama-intro{display:grid;gap:24px;align-items:start;margin-bottom:clamp(28px,5vw,50px)}
+.rs-retreat-mama-intro h2{max-width:710px;margin:12px 0 0;color:#173429;font-family:"EB Garamond",serif;font-size:clamp(46px,8vw,76px);font-weight:300;letter-spacing:-.04em;line-height:.94}
+.rs-retreat-mama-intro__copy{max-width:660px}
+.rs-retreat-mama-intro__copy p{margin:0;color:#405148;font-size:16px;line-height:1.75}
+.rs-retreat-mama-intro__copy p+p{margin-top:18px}
+.rs-retreat-mama-slider__viewport{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-inline:contain;scrollbar-width:thin}
+.rs-retreat-mama-slider[data-slider-ready] .rs-retreat-mama-slider__viewport{scrollbar-width:none}
+.rs-retreat-mama-slider[data-slider-ready] .rs-retreat-mama-slider__viewport::-webkit-scrollbar{display:none}
+.rs-retreat-mama-slider__viewport:focus-visible{outline:3px solid #766233;outline-offset:4px;border-radius:clamp(14px,2vw,24px)}
+.rs-retreat-mama-slide{flex:0 0 100%;min-width:0;margin:0;scroll-snap-align:start}
+.rs-retreat-mama-slide img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border-radius:clamp(14px,2vw,24px);background:#173429}
+.rs-retreat-mama-slide figcaption{margin-top:12px;color:#405148;font-size:13px;line-height:1.6}
+.rs-retreat-mama-slider__controls{display:none;align-items:center;justify-content:space-between;gap:16px;margin-top:12px}
+.rs-retreat-mama-slider[data-slider-ready] .rs-retreat-mama-slider__controls{display:flex}
+.rs-retreat-mama-slider__status{margin:0;color:#294337;font-size:13px;font-weight:600;line-height:1.5}
+.rs-retreat-mama-slider__buttons{display:flex;gap:10px}
+.rs-retreat-mama-slider__buttons button{display:grid;place-items:center;width:48px;height:48px;border:1px solid #294337;border-radius:50%;background:#fffdf8;color:#18392d;font-size:22px;line-height:1;cursor:pointer}
+.rs-retreat-mama-slider__buttons button:hover:not(:disabled){background:#18392d;color:#fff}
+.rs-retreat-mama-slider__buttons button:focus-visible{outline:3px solid #766233;outline-offset:3px}
+.rs-retreat-mama-slider__buttons button:disabled{opacity:.4;cursor:default}
+.rs-retreat-mama-note{max-width:800px;margin:24px 0 0;color:#4f6053;font-size:12px;line-height:1.7}
+@media(min-width:900px){.rs-retreat-mama-intro{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:72px}}
+@media(max-width:600px){.rs-retreat-mama-slide img{aspect-ratio:4/3}}
+.rs-retreat-section--integration{background:#f8f4eb}
+.rs-retreat-section--integration .rs-retreat-kicker{color:#766233}
+.rs-retreat-integration-grid{display:grid;gap:36px}
+.rs-retreat-integration-grid .rs-retreat-heading{margin:0}
+.rs-retreat-integration-steps{display:grid;gap:28px;list-style:none;margin:0;padding:0}
+.rs-retreat-integration-steps li{display:grid;grid-template-columns:32px minmax(0,1fr);gap:16px;align-items:start}
+.rs-retreat-integration-steps li>span{padding-block-start:5px;color:#766233;font-size:12px;font-weight:600}
+.rs-retreat-integration-steps h3{margin:0 0 10px;font-family:"EB Garamond",serif;font-size:29px;font-weight:400;line-height:1.15}
+.rs-retreat-integration-steps p{margin:0;color:var(--retreat-body);font-size:15px;line-height:1.75}
+.rs-retreat-team-reflection{max-width:850px;margin:48px 0 24px;padding:28px;border-inline-start:3px solid #9a7a37;background:#eee7da}
+.rs-retreat-team-reflection blockquote{margin:0}
+.rs-retreat-team-reflection blockquote p{margin:0;font-family:"EB Garamond",serif;font-size:clamp(24px,3vw,32px);line-height:1.3;color:#243d2e}
+.rs-retreat-team-reflection figcaption{margin-block-start:24px;font-size:13px;line-height:1.6;color:var(--retreat-body)}
+.rs-retreat-team-reflection figcaption strong,.rs-retreat-team-reflection figcaption span{display:block}
+.rs-retreat-team-reflection figcaption strong{font-weight:600;color:#243d2e}
+.rs-retreat-practices{margin-top:42px;padding-top:36px;border-top:1px solid #cec3ad}
+.rs-retreat-practices header{max-width:660px;margin-bottom:28px}
+.rs-retreat-practices h3{margin:0 0 12px;font-family:"EB Garamond",serif;font-size:36px;font-weight:400;line-height:1.1}
+.rs-retreat-practices p{margin:0;color:var(--retreat-body);font-size:14px;line-height:1.75}
+.rs-retreat-practices>div{display:grid;gap:26px}
+.rs-retreat-practices h4{margin:0 0 10px;font-family:"EB Garamond",serif;font-size:25px;font-weight:400;line-height:1.15}
+.rs-retreat-film-layout .rs-retreat-heading{max-width:780px;margin-bottom:36px}
+.rs-retreat-testimonial-grid{display:grid;grid-template-columns:minmax(0,390px);gap:clamp(22px,3vw,36px);justify-content:center}
+.rs-retreat-testimonial-card{min-width:0;overflow:hidden;border-radius:25px;background:#142b20;color:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.06),0 14px 34px rgba(22,40,29,.12)}
+.rs-retreat-testimonial-card [hidden]{display:none!important}
+.rs-retreat-testimonial-card__frame{position:relative;aspect-ratio:9/16;min-height:200px;overflow:hidden;background:#173126}
+.rs-retreat-testimonial-card__poster,.rs-retreat-testimonial-card__embed{position:absolute;inset:0}
+.rs-retreat-testimonial-card__poster{isolation:isolate}
+.rs-retreat-testimonial-card__poster::after{content:"";position:absolute;inset:48% 0 0;z-index:0;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(5,20,12,.62))}
+.rs-retreat-testimonial-card__poster img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;outline:1px solid oklch(1 0 0 / .1);outline-offset:-1px}
+.rs-retreat-testimonial-card__invitation{position:absolute;z-index:1;inset:auto 14px 26px;display:flex;justify-content:center}
+.rs-retreat-testimonial-card__invitation button,.rs-retreat-testimonial-card__invitation a{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:13px 21px;border:0;border-radius:999px;background:#f0ddb4;color:#14281c;font:600 14px/1.4 "Inter",sans-serif;text-decoration:none;cursor:pointer;transition-property:scale,background-color;transition-duration:150ms;transition-timing-function:cubic-bezier(.2,0,0,1)}
+.rs-retreat-testimonial-card__invitation button:hover,.rs-retreat-testimonial-card__invitation a:hover{background:#fff0ce}
+.rs-retreat-testimonial-card__invitation button:active,.rs-retreat-testimonial-card__invitation a:active{scale:.96}
+.rs-retreat-testimonial-card__invitation span{display:inline-block;transform:translateX(2px)}
+.rs-retreat-testimonial-card__embed iframe{display:block;width:100%;height:100%;border:0}
+.rs-retreat-testimonial-card__details{padding:20px 24px 24px}
+.rs-retreat-testimonial-card__details>span{color:#e3cc98;font:600 10px/1.5 "Inter",sans-serif;letter-spacing:.12em;text-transform:uppercase}
+.rs-retreat-testimonial-card__details h3{margin:8px 0;font-family:"EB Garamond",serif;font-size:34px;font-weight:400;line-height:1.05}
+.rs-retreat-testimonial-card__details>p:not(.rs-retreat-testimonial-card__status){margin:0;color:#d4dfd4;font:400 14px/1.65 "Inter",sans-serif}
+.rs-retreat-testimonial-card__controls{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin-top:14px}
+.rs-retreat-testimonial-card__controls a,.rs-retreat-testimonial-card__controls button{display:inline-flex;align-items:center;min-height:44px;padding:8px 0;border:0;background:none;color:#e7d3a3;font:500 12px/1.5 "Inter",sans-serif;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.rs-retreat-testimonial-card__status{min-height:0;margin:0;color:#d4dfd4;font:400 12px/1.55 "Inter",sans-serif}
+.rs-retreat-testimonial-card__status:not(:empty){margin-top:8px}
+.rs-retreat-testimonial-card button:focus-visible,.rs-retreat-testimonial-card a:focus-visible{outline:3px solid #f0ddb4;outline-offset:4px}
+.rs-retreat-testimonial-privacy{max-width:780px;margin:24px auto 0;text-align:center}
+.rs-retreat-testimonial-privacy a{color:inherit;text-underline-offset:3px}
+@media(min-width:740px){.rs-retreat-testimonial-grid{grid-template-columns:repeat(2,minmax(0,390px))}}
+.rs-retreat-section--host{background:#ebe5d9}
+.rs-retreat-host-story{display:grid;gap:34px;align-items:start}
+.rs-retreat-host-story>figure{margin:0}
+.rs-retreat-host-story picture{display:block;max-width:440px;overflow:hidden;border-radius:24px}
+.rs-retreat-host-story img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center 30%}
+.rs-retreat-host-story figcaption{max-width:400px;margin-top:16px;color:var(--retreat-body);font-size:12px;line-height:1.6}
+.rs-retreat-host-story .rs-retreat-heading{margin-bottom:22px}
+.rs-retreat-host-story>div>p{color:var(--retreat-body);font-size:16px;line-height:1.75}
+.rs-retreat-host-story blockquote{margin:26px 0;padding-inline-start:22px;border-inline-start:2px solid #9a7a37}
+.rs-retreat-host-story blockquote p{margin:0;font-family:"EB Garamond",serif;font-size:32px;line-height:1.2}
+.rs-retreat-story-song{container-type:inline-size;display:grid;gap:18px;margin:30px 0 18px;border:1px solid #cab990;border-radius:22px;padding:24px;background:linear-gradient(135deg,#f7f1e4,#e9dfc9)}
+.rs-retreat-story-song__main{display:grid;gap:20px;align-items:start}
+.rs-retreat-story-song__art{display:block;width:min(100%,260px);aspect-ratio:1;overflow:hidden;border-radius:15px;box-shadow:0 12px 28px #1b2d2124}
+.rs-retreat-story-song__art img{display:block;width:100%;height:100%;object-fit:cover}
+.rs-retreat-story-song__copy{display:grid;gap:12px;min-width:0}
+.rs-retreat-story-song__kicker{color:#755d2a;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.rs-retreat-story-song h3{margin:0;color:#17372a;font-family:"EB Garamond",serif;font-size:clamp(29px,3vw,39px);font-weight:400;line-height:1.05}
+.rs-retreat-story-song p{max-width:55ch;margin:0;color:#47544c;font-size:14px;line-height:1.65}
+.rs-retreat-story-song__credit{color:#59665a;font-size:12px;line-height:1.5}
+.rs-retreat-story-song__actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.rs-retreat-story-song__actions button,.rs-retreat-story-song__actions>a{display:inline-flex;min-height:44px;gap:9px;align-items:center;justify-content:center;border-radius:999px;padding:10px 17px;font:700 13px/1.4 "Inter",sans-serif;cursor:pointer}
+.rs-retreat-story-song__actions button{border:1px solid #173b2b;background:#173b2b;color:#fff}
+.rs-retreat-story-song__actions button:hover{background:#285540}
+.rs-retreat-story-song__actions>a{border:1px solid #42634f;background:transparent;color:#173b2b;text-decoration:none}
+.rs-retreat-story-song__actions>a:hover{background:#e2e8dd}
+.rs-retreat-story-song__actions :is(button,a):focus-visible,.rs-retreat-story-song__privacy a:focus-visible{outline:3px solid #775f2d;outline-offset:3px}
+.rs-retreat-story-song__actions button[hidden],.rs-retreat-story-song__player[hidden]{display:none!important}
+.rs-retreat-story-song .rs-retreat-story-song__privacy,.rs-retreat-story-song .rs-retreat-story-song__status{color:#59665a;font-size:11px;line-height:1.55}
+.rs-retreat-story-song__privacy a{color:#234d37;text-underline-offset:3px}
+.rs-retreat-story-song__status:empty{display:none}
+.rs-retreat-story-song__player iframe{display:block;width:100%;height:152px;border:0;border-radius:12px;background:#173b2b}
+@container (min-width:540px){.rs-retreat-story-song__main{grid-template-columns:minmax(0,210px) minmax(0,1fr)}.rs-retreat-story-song__art{width:100%}}
+.rs-retreat-inline-link{display:inline-flex;min-height:44px;gap:12px;align-items:center;color:#3b5945;font-size:14px;font-weight:600;text-underline-offset:5px;text-decoration-thickness:1px}
+.rs-retreat-inline-link:focus-visible{outline:2px solid currentColor;outline-offset:5px}
+.rs-retreat-section--practical{background:#f8f4eb}
+.rs-retreat-practical{display:grid;gap:24px;align-items:start}
+.rs-retreat-practical .rs-retreat-heading{margin-bottom:0}
+.rs-retreat-practical__details{padding-top:26px;border-top:1px solid #c6baa1}
+.rs-retreat-practical__details>p{color:var(--retreat-body);font-size:15px;line-height:1.75}
+.rs-retreat-practical__details .rs-retreat-practical__date{margin:0;color:var(--retreat-forest-800);font-size:20px;font-weight:500;line-height:1.5}
+.rs-retreat-practical__date span{display:block;margin-top:4px;font-size:14px;font-weight:400}
+.rs-retreat-practical__details .rs-retreat-practical__price{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;margin:24px 0;color:var(--retreat-forest-800);font-family:"EB Garamond",serif;font-size:clamp(54px,10vw,74px);line-height:1}
+.rs-retreat-practical__price>span{font-family:"Inter",sans-serif;font-size:16px}
+.rs-retreat-practical__price>small{font-family:"Inter",sans-serif;font-size:13px}
+.rs-retreat-practical__cta{max-width:100%;margin-top:16px;border-color:var(--retreat-forest-800);background:var(--retreat-forest-800);color:#fff;text-align:center;line-height:1.45}
+.rs-retreat-practical__cta:hover{background:var(--retreat-forest-950)}
+.rs-retreat-practical__cta:focus-visible{outline:2px solid var(--retreat-forest-800);outline-offset:4px}
+.rs-retreat-gallery-preview .rs-retreat-heading{max-width:850px;margin-bottom:0}
+.rs-retreat-gallery-preview .rs-retreat-heading p{max-width:680px}
+.rs-retreat-gallery-preview__hint{margin:28px 0 20px;color:#5b6658;font-size:13px;line-height:1.5}
+.rs-retreat-gallery-provenance{max-width:760px;margin-block:22px 0}
+.rs-retreat-gallery-list{columns:2;column-gap:10px}
+.rs-retreat-gallery-list figure{position:relative;break-inside:avoid;margin:0 0 10px}
+.rs-retreat-gallery-list a{display:block;overflow:hidden;border-radius:12px;background:#20352b}
+.rs-retreat-gallery-list a:focus-visible{outline:3px solid #315b43;outline-offset:3px}
+.rs-retreat-gallery-list img{display:block;width:100%;height:auto}
+.rs-retreat-gallery-list figcaption{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.rs-retreat-gallery-preview [hidden]{display:none!important}
+.rs-retreat-gallery-viewer{width:min(1120px,calc(100vw - 24px));height:min(850px,calc(100dvh - 24px));max-width:none;max-height:none;box-sizing:border-box;overflow:hidden;padding:clamp(12px,2.5vw,24px);border:1px solid #46624f;border-radius:20px;background:#0b1e14;color:#fff}
+.rs-retreat-gallery-viewer:not([open]){display:none}
+.rs-retreat-gallery-viewer[open]{display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:12px}
+.rs-retreat-gallery-viewer::backdrop{background:rgba(3,16,9,.92)}
+.rs-retreat-gallery-viewer__top,.rs-retreat-gallery-viewer__bottom{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.rs-retreat-gallery-viewer__top>span{font:600 11px/1.4 "Inter",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#dfd5b9}
+.rs-retreat-gallery-viewer__figure{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:10px;min-height:0;margin:0;text-align:center}
+.rs-retreat-gallery-viewer__figure img{display:block;width:100%;height:100%;min-height:0;object-fit:contain}
+.rs-retreat-gallery-viewer__figure figcaption{font:400 14px/1.45 "Inter",sans-serif;color:#e8e7db}
+.rs-retreat-gallery-viewer__bottom p{margin:0;font:600 13px/1.4 "Inter",sans-serif;color:#dfd5b9}
+.rs-retreat-gallery-viewer__nav{display:flex;gap:12px}
+.rs-retreat-gallery-viewer button{min-width:48px;min-height:48px;padding:8px 14px;border:1px solid #b5c2b1;border-radius:999px;background:transparent;color:#fff;font:600 13px/1.2 "Inter",sans-serif;cursor:pointer}
+.rs-retreat-gallery-viewer button:hover{background:#284b34}
+.rs-retreat-gallery-viewer button:focus-visible{outline:3px solid #e4d3a2;outline-offset:3px}
+@media(prefers-reduced-motion:no-preference){.rs-retreat-gallery-list img{transition:transform .25s ease}.rs-retreat-gallery-list a:hover img{transform:scale(1.035)}}
+.rs-retreat-section--closing{background:var(--retreat-forest-950);color:#fff}
+.rs-retreat-closing{display:grid;gap:32px;align-items:center}
+.rs-retreat-video{width:100%;max-width:390px;min-width:0;margin-inline:auto}
+.rs-retreat-video [hidden]{display:none!important}
+.rs-retreat-video__frame{position:relative;aspect-ratio:9/16;min-height:200px;overflow:hidden;border:1px solid #526352;border-radius:24px;background:#12271b}
+.rs-retreat-video__poster,.rs-retreat-video__embed{position:absolute;inset:0}
+.rs-retreat-video__poster{isolation:isolate;background:linear-gradient(155deg,#384a27,#12271b 55%,#08180e)}
+.rs-retreat-video__poster picture,.rs-retreat-video__poster img{display:block;width:100%;height:100%;object-fit:cover}
+.rs-retreat-video__invitation{position:absolute;inset:auto 18px 30px;display:flex;align-items:center;justify-content:center;text-align:center}
+.rs-retreat-video__invitation>span{color:#f3e8ce;font-size:12px;letter-spacing:.05em}
+.rs-retreat-video__invitation button,.rs-retreat-video__invitation>a{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;border:0;border-radius:999px;padding:14px 20px;background:#f0ddb4;color:#14281c;font:600 14px/1.4 "Inter",sans-serif;text-decoration:none;cursor:pointer}
+.rs-retreat-video__embed iframe{display:block;width:100%;height:100%;border:0}
+.rs-retreat-video__controls{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin-top:12px}
+.rs-retreat-video__controls a,.rs-retreat-video__controls button{display:inline-flex;align-items:center;min-height:44px;padding:8px 2px;border:0;background:none;color:#e7d3a3;font:500 12px/1.5 "Inter",sans-serif;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.rs-retreat-video .rs-retreat-video__privacy,.rs-retreat-video .rs-retreat-video__status{margin:8px 0 0;color:#c0c9c1;font-size:12px;line-height:1.6}
+.rs-retreat-video__privacy a{color:#e7d3a3;text-underline-offset:3px}
+.rs-retreat-video__status:empty{display:none}
+.rs-retreat-video button:focus-visible,.rs-retreat-video a:focus-visible{outline:3px solid #f0ddb4;outline-offset:5px}
+.rs-retreat-closing .rs-retreat-video__caption{color:#dcccaa;font-size:13px}
+.rs-retreat-closing h2{margin:14px 0 22px;font-family:"EB Garamond",serif;font-size:clamp(44px,8vw,70px);font-weight:300;letter-spacing:-.035em;line-height:.98}
+.rs-retreat-closing>div>p{color:#c0c9c1;font-size:16px;line-height:1.75}
+.rs-retreat-closing .rs-retreat-inline-link{color:#e7d3a3}
+.rs-retreat-page .rs-persona-faq{scroll-margin-top:132px}
+.rs-retreat-facilitators p+p{margin-block-start:18px}
+.rs-retreat-facilitator-note{max-width:850px;margin-block-start:28px}
+.rs-retreat-section--land{background:#173429;color:#f6f3ec}
+.rs-retreat-land-intro{display:grid;gap:28px}
+.rs-retreat-land-intro .rs-retreat-heading{margin:0}
+.rs-retreat-land-intro>div>p{margin:0;color:#d2dbd2;font-size:17px;line-height:1.8}
+.rs-retreat-land-intro>div>p+p{margin-block-start:18px}
+.rs-retreat-land-photo{margin:clamp(28px,5vw,48px) 0 0;overflow:hidden;border-radius:clamp(14px,2vw,24px)}
+.rs-retreat-land-photo img{display:block;width:100%;height:auto}
+.rs-retreat-land-notes{display:grid;gap:32px;margin-block:48px}
+.rs-retreat-land-notes article{min-inline-size:0}
+.rs-retreat-land-notes span{display:block;margin-block-end:14px;color:#e0c99b;font-size:11px;text-transform:uppercase;letter-spacing:.14em}
+.rs-retreat-land-notes h3{margin:0 0 14px;font-family:"EB Garamond",serif;font-size:34px;font-weight:400;line-height:1.1}
+.rs-retreat-land-notes p{margin:0;color:#d2dbd2;font-size:15px;line-height:1.75}
+.rs-retreat-land-practical{max-width:900px;padding-block-start:30px;border-block-start:1px solid #4c6456}
+.rs-retreat-land-practical h3{margin:0 0 12px;font-family:"EB Garamond",serif;font-size:28px;font-weight:400}
+.rs-retreat-land-practical p{margin:0;color:#d2dbd2;font-size:14px;line-height:1.8}
+@media(min-width:900px){
+  .rs-retreat-integration-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px}
+  .rs-retreat-land-intro{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:70px;align-items:center}
+  .rs-retreat-land-notes{grid-template-columns:repeat(3,minmax(0,1fr));gap:44px}
+}
+@media(min-width:720px){
+  .rs-retreat-story-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:60px}
+  .rs-retreat-voices{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:50px;align-items:center;margin:50px 0}
+  .rs-retreat-voices__more{padding:0 0 0 42px;border-top:0;border-left:1px solid #476052}
+  .rs-retreat-practices>div{grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+  .rs-retreat-host-story{grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:56px}
+  .rs-retreat-practical{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:60px}
+  .rs-retreat-practical__details{padding:0 0 0 40px;border-top:0;border-left:1px solid #c6baa1}
+  .rs-retreat-gallery-list{column-gap:14px}
+  .rs-retreat-gallery-list figure{margin-block-end:14px}
+  .rs-retreat-gallery-preview__hint{margin:32px 0 24px}
+  .rs-retreat-closing{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:64px}
+}
+@media(min-width:980px){.rs-retreat-story-grid{gap:90px}.rs-retreat-host-story{gap:90px}.rs-retreat-host-story>figure{padding-top:8px}}
+@media(max-width:599px){.rs-retreat-story-song{padding:21px}.rs-retreat-story-song__art{margin-inline:auto}.rs-retreat-story-song__actions>*{width:100%}}
+@media(min-width:1100px){.rs-retreat-gallery-list{columns:3;column-gap:18px}.rs-retreat-gallery-list figure{margin-block-end:18px}}
+@media(min-width:980px){
+  .rs-retreat-facilitators--compact-desktop article{align-content:start}
+  .rs-retreat-facilitators--compact-desktop picture{width:min(calc(100% - 52px),260px);min-height:0;margin-block:28px 0;margin-inline:26px auto;overflow:hidden;border-radius:20px}
+}
+@media(min-width:1100px){
+  .rs-retreat-reflection{display:grid;grid-template-columns:160px minmax(0,1fr);grid-template-rows:auto 1fr auto;column-gap:24px}
+  .rs-retreat-reflection__portrait{grid-column:1;grid-row:1 / 4;margin:0}
+  .rs-retreat-reflection h3,.rs-retreat-reflection blockquote,.rs-retreat-reflection figcaption{grid-column:2}
+}
+
+/* Photo-led December journey; the archived October arc retains its original layout. */
+.rs-retreat-arc--visual{grid-template-columns:minmax(0,1fr);gap:20px}
+.rs-retreat-arc--visual::before{display:none}
+.rs-retreat-arc--visual li{display:block;min-width:0;overflow:hidden;padding:0}
+.rs-retreat-arc--visual li>img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+.rs-retreat-arc--visual .rs-retreat-arc__body{padding:24px}
+.rs-retreat-arc__stage{display:block;margin-bottom:16px;color:#766233;font-size:11px;font-weight:600;line-height:1.5;letter-spacing:.09em;text-transform:uppercase}
+.rs-retreat-arc--visual h3{margin:0 0 12px;font-size:29px;line-height:1.1}
+.rs-retreat-arc__caption{margin:20px 0 30px}
+.rs-retreat-integration-slider{margin:0 0 clamp(36px,6vw,64px)}
+.rs-retreat-practices+.rs-retreat-integration-slider{margin:32px 0 0}
+.rs-retreat-integration-slider__viewport{position:relative;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-inline:contain;scrollbar-width:thin}
+.rs-retreat-integration-slider[data-slider-ready] .rs-retreat-integration-slider__viewport{scrollbar-width:none}
+.rs-retreat-integration-slider[data-slider-ready] .rs-retreat-integration-slider__viewport::-webkit-scrollbar{display:none}
+.rs-retreat-integration-slider__viewport:focus-visible{outline:3px solid #766233;outline-offset:4px;border-radius:clamp(14px,2vw,24px)}
+.rs-retreat-integration-photo{flex:0 0 100%;min-width:0;margin:0;scroll-snap-align:start}
+.rs-retreat-integration-photo img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:clamp(14px,2vw,24px)}
+.rs-retreat-integration-photo figcaption{margin-top:12px;color:var(--retreat-body);font-size:12px;line-height:1.6}
+.rs-retreat-integration-slider__controls{display:none;align-items:center;justify-content:space-between;gap:16px;margin-top:12px}
+.rs-retreat-integration-slider[data-slider-ready] .rs-retreat-integration-slider__controls{display:flex}
+.rs-retreat-integration-slider__status{margin:0;color:#294337;font-size:13px;font-weight:600;line-height:1.5}
+.rs-retreat-integration-slider__buttons{display:flex;gap:10px}
+.rs-retreat-integration-slider__buttons button{display:grid;place-items:center;width:48px;height:48px;border:1px solid #294337;border-radius:50%;background:#fff;color:#18392d;font-size:22px;line-height:1;cursor:pointer}
+.rs-retreat-integration-slider__buttons button:hover:not(:disabled){background:#18392d;color:#fff}
+.rs-retreat-integration-slider__buttons button:focus-visible{outline:3px solid #766233;outline-offset:3px}
+.rs-retreat-integration-slider__buttons button:disabled{opacity:.4;cursor:default}
+.rs-retreat-team-reflection--portrait{display:grid;gap:22px;max-width:none;border-radius:0 22px 22px 0;padding:24px}
+.rs-retreat-team-reflection__portrait{display:block;width:144px;max-width:100%;height:auto;aspect-ratio:1;object-fit:cover;object-position:center 30%;border-radius:20px}
+.rs-retreat-team-reflection--portrait figcaption{margin:0}
+@media(min-width:600px){
+  .rs-retreat-arc--visual{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rs-retreat-team-reflection--portrait{grid-template-columns:160px minmax(0,1fr);grid-template-rows:auto 1fr;column-gap:32px;row-gap:20px;padding:32px}
+  .rs-retreat-team-reflection__portrait{grid-column:1;grid-row:1 / 3;width:160px}
+  .rs-retreat-team-reflection--portrait blockquote,.rs-retreat-team-reflection--portrait figcaption{grid-column:2}
+}
+@media(min-width:980px){
+  .rs-retreat-arc--visual{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .rs-retreat-arc--visual .rs-retreat-arc__body{padding:22px}
+}
