@@ -531,6 +531,7 @@ test("hero has one Register Your Interest CTA while discovery-call guidance rema
   assert.match(actions, />Register Your Interest<\/a>/);
   assert.match(actions, /href="\/apply\?reason=events&amp;program=awakening-inner-light-december-2026"/);
   assert.doesNotMatch(actions, /discovery-call|href="#week"/);
+  assert.match(page.slice(page.indexOf('id="application"')), /href="\/apply\?reason=events&amp;program=awakening-inner-light-december-2026&amp;intent=discovery-call"/);
   assert.match(page.slice(page.indexOf('<section id="listen"')), /Can I request a discovery call before deciding\?/);
 });
 
