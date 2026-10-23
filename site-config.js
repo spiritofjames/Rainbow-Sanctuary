@@ -11,6 +11,9 @@ const regenerationMaintenanceProgramme = {
   summary: "A fixed-start maintenance practice for people who have completed ReGeneration Levels I and II.",
   price: "USD 210 one month · USD 630 first three months",
   status: "open",
+  ongoing: true,
+  activeThrough: "2026-11-02",
+  scheduleLabel: "Live now · began 17 August 2026 · weekly through 2 November",
   registrationUrl: "/144-stages-maintenance#choose-commitment"
 };
 
@@ -91,8 +94,8 @@ window.RAINBOW_SANCTUARY_CONFIG = {
   events: {
     feedUrl: "",
     staticFallbackApproved: true,
-    staticGeneratedAt: "2026-07-25T10:00:00.000Z",
-    staticCacheVersion: "events-1",
+    staticGeneratedAt: "2026-10-13T15:00:00.000Z",
+    staticCacheVersion: "events-2",
     // Beijing is the single authoring time zone for Rainbow Sanctuary's supported group pathways.
     timezone: "Asia/Shanghai",
     groupHealing: {
@@ -145,6 +148,38 @@ window.RAINBOW_SANCTUARY_CONFIG = {
         operationsCalendar: "private-only"
       }
     },
+    supportedSchedules: {
+      "autism-family-support": {
+        title: "Autism & Family Support",
+        category: "family",
+        startDate: "2026-08-18",
+        time: "23:00",
+        timezone: "Asia/Shanghai",
+        timezoneOffset: "+08:00",
+        timezoneLabel: "Beijing time",
+        frequency: "weekly",
+        sessionCount: 104,
+        location: "Remote preparation",
+        venue: "No live attendance required",
+        summary: "A free, scheduled, non-clinical wellbeing practice for autistic people and families.",
+        status: "interest"
+      },
+      "young-people-wellbeing": {
+        title: "Young People’s Wellbeing Support",
+        category: "group",
+        startDate: "2026-09-01",
+        time: "23:00",
+        timezone: "Asia/Shanghai",
+        timezoneOffset: "+08:00",
+        timezoneLabel: "Beijing time",
+        frequency: "monthly-first-tuesday",
+        sessionCount: 24,
+        location: "Remote preparation",
+        venue: "Review required before enrolment",
+        summary: "A reviewed, non-clinical monthly wellbeing pathway for young people up to age 25.",
+        status: "interest"
+      }
+    },
     publicCalendarUrl: "",
     items: [
       {
@@ -164,6 +199,9 @@ window.RAINBOW_SANCTUARY_CONFIG = {
         // Protected staging uses Stripe test mode for generated Stage 1 CRM acceptance.
         // Do not promote this status to main until live checkout is separately approved.
         status: "open",
+        ongoing: true,
+        activeThrough: "2027-08-17",
+        scheduleLabel: "Weekly Tuesdays · 9:00 PM Beijing time",
         registrationUrl: "/online-group-healing#choose-session",
         checkoutUrl: ""
       },
@@ -180,36 +218,8 @@ window.RAINBOW_SANCTUARY_CONFIG = {
         summary: "A free, scheduled, non-clinical wellbeing practice for autistic people and families.",
         price: "Free · optional contribution is separate",
         status: "interest",
-        registrationUrl: "/autism-family-support"
-      },
-      {
-        id: "autism-family-support-2026-08-25",
-        title: "Autism & Family Support",
-        category: "family",
-        startDate: "2026-08-25",
-        startDateTime: "2026-08-25T23:00:00+08:00",
-        timezone: "Asia/Shanghai",
-        timezoneLabel: "Beijing time",
-        location: "Remote preparation",
-        venue: "No live attendance required",
-        summary: "A free, scheduled, non-clinical wellbeing practice for autistic people and families.",
-        price: "Free · optional contribution is separate",
-        status: "interest",
-        registrationUrl: "/autism-family-support"
-      },
-      {
-        id: "autism-family-support-2026-09-01",
-        title: "Autism & Family Support",
-        category: "family",
-        startDate: "2026-09-01",
-        startDateTime: "2026-09-01T23:00:00+08:00",
-        timezone: "Asia/Shanghai",
-        timezoneLabel: "Beijing time",
-        location: "Remote preparation",
-        venue: "No live attendance required",
-        summary: "A free, scheduled, non-clinical wellbeing practice for autistic people and families.",
-        price: "Free · optional contribution is separate",
-        status: "interest",
+        ongoing: true,
+        scheduleLabel: "Weekly Tuesdays · 11:00 PM Beijing time",
         registrationUrl: "/autism-family-support"
       },
       {
@@ -225,37 +235,21 @@ window.RAINBOW_SANCTUARY_CONFIG = {
         summary: "A reviewed, non-clinical monthly wellbeing pathway for young people up to age 25.",
         price: "Free · optional contribution is separate",
         status: "interest",
-        registrationUrl: "/young-people-wellbeing"
-      },
-      {
-        id: "young-people-wellbeing-2026-10-06",
-        title: "Young People’s Wellbeing Support",
-        category: "group",
-        startDate: "2026-10-06",
-        startDateTime: "2026-10-06T23:00:00+08:00",
-        timezone: "Asia/Shanghai",
-        timezoneLabel: "Beijing time",
-        location: "Remote preparation",
-        venue: "Review required before enrolment",
-        summary: "A reviewed, non-clinical monthly wellbeing pathway for young people up to age 25.",
-        price: "Free · optional contribution is separate",
-        status: "interest",
+        ongoing: true,
+        scheduleLabel: "First Tuesday monthly · 11:00 PM Beijing time",
         registrationUrl: "/young-people-wellbeing"
       },
       regenerationMaintenanceProgramme,
       {
-        id: "awakening-inner-light-2026",
+        id: "awakening-inner-light-december-2026",
         title: "Awakening Your Inner Light",
         category: "retreat",
-        startDate: "2026-10-01",
-        endDate: "2026-10-07",
-        location: "Bocas del Toro, Panama",
-        venue: "Jungle sanctuary",
-        summary: "A seven-day, six-night plant-medicine retreat with preparation, facilitated ceremonies, daily practices, and integration support.",
+        startDate: "2026-12-03",
+        endDate: "2026-12-09",
+        location: "Location to be confirmed",
+        venue: "Residential retreat · details shared after enquiry",
+        summary: "A seven-day, six-night plant-medicine retreat with preparation, supported ceremonial work, embodied practice, rest, and integration.",
         price: "USD 3,500 per person",
-        earlyBirdPrice: "USD 3,000 per person",
-        earlyBirdDeadline: "2026-09-01",
-        deposit: "50% deposit required for the early-bird rate",
         status: "interest",
         registrationUrl: "/awakening-your-inner-light-2026"
       }

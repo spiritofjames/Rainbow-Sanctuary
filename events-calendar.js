@@ -14,14 +14,35 @@
   function applyFeed(result) {
     feedState = result || feedState;
     items = Array.isArray(result?.items) ? result.items.filter(validEvent).slice() : [];
-    const first = items.filter((event) => eventInstant(event) >= new Date()).sort((a, b) => eventInstant(a) - eventInstant(b))[0];
-    const firstDate = first ? calendarDate(first) : today;
+    showNextEventMonth();
+  }
+  function showNextEventMonth() {
+    const first = filteredItems().filter((event) => !isOngoing(event) && isCurrentOrUpcoming(event)).sort((a, b) => eventInstant(a) - eventInstant(b))[0];
+    const firstDate = first && calendarDate(first) > today ? calendarDate(first) : today;
     visibleMonth = new Date(firstDate.getFullYear(), firstDate.getMonth(), 1);
   }
   function eventDate(value) { return new Date(value + "T12:00:00"); }
+  function isOngoing(event) {
+    if (event?.ongoing !== true || event.status === "cancelled") return false;
+    if (!event.activeThrough) return true;
+    const finalDay = eventDate(event.activeThrough);
+    finalDay.setHours(23, 59, 59, 999);
+    return finalDay >= new Date();
+  }
   function eventInstant(event) {
     const instant = event?.startDateTime ? new Date(event.startDateTime) : eventDate(event?.startDate);
     return Number.isNaN(instant.getTime()) ? eventDate(event?.startDate) : instant;
+  }
+  function isCurrentOrUpcoming(event) {
+    if (event.status === "cancelled") return false;
+    if (isOngoing(event)) return true;
+    if (event.startDateTime) {
+      const end = event.endDateTime ? new Date(event.endDateTime) : eventInstant(event);
+      return (Number.isNaN(end.getTime()) ? eventInstant(event) : end) >= new Date();
+    }
+    const finalDay = eventDate(event.endDate || event.startDate);
+    finalDay.setHours(23, 59, 59, 999);
+    return finalDay >= new Date();
   }
   function startOfDay(date) { return new Date(date.getFullYear(), date.getMonth(), date.getDate()); }
   function escapeHtml(value) { return String(value || "").replace(/[&<>'"]/g, char => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "'":"&#39;", '"':"&quot;" }[char])); }
@@ -32,7 +53,7 @@
       return ["http:", "https:"].includes(url.protocol) ? url.href : "";
     } catch (_) { return ""; }
   }
-  function filteredItems() { return items.filter(event => activeFilter === "all" || event.category === activeFilter); }
+  function filteredItems() { return items.filter(event => event.status !== "cancelled" && (activeFilter === "all" || event.category === activeFilter)); }
   function sameDate(a, b) { return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate(); }
   function readableZone(zone) { return String(zone || "UTC").replace(/_/g, " "); }
   function zoneOffset(date, zone) {
@@ -50,6 +71,12 @@
     if (!event?.startDateTime) return eventDate(event.startDate);
     const parts = zonedParts(eventInstant(event), viewerTimeZone);
     return new Date(parts.year, parts.month - 1, parts.day, 12);
+  }
+  function occursOnDate(event, date) {
+    const start = startOfDay(calendarDate(event));
+    // Date-only residential events keep their published dates in every viewer time zone.
+    const end = !event.startDateTime && event.endDate ? startOfDay(eventDate(event.endDate)) : start;
+    return date >= start && date <= (end >= start ? end : start);
   }
   function localDateTime(event) {
     if (!event?.startDateTime) return "";
@@ -108,10 +135,18 @@
     const cells = [];
     for (let index = 0; index < 42; index += 1) {
       const date = new Date(gridStart.getFullYear(), gridStart.getMonth(), gridStart.getDate() + index);
-      const dayEvents = events.filter(event => sameDate(calendarDate(event), date));
+      const dayEvents = events.filter(event => occursOnDate(event, date));
       const outside = date.getMonth() !== visibleMonth.getMonth();
       const isToday = sameDate(date, today);
-      const pills = dayEvents.map(event => `<span class="rs-calendar-pill" data-category="${event.category}" title="${escapeHtml(event.title)}">${escapeHtml(event.title)}</span>`).join("");
+      const pills = dayEvents.map(event => {
+        const url = safeUrl(event.registrationUrl);
+        const title = `${event.title} · ${dateRange(event)}`;
+        const attributes = `class="rs-calendar-pill" data-category="${event.category}" title="${escapeHtml(title)}"`;
+        const content = `<span>${escapeHtml(event.title)}</span>`;
+        return url
+          ? `<a ${attributes} href="${escapeHtml(url)}" aria-label="${escapeHtml(title)} — view details">${content}</a>`
+          : `<span ${attributes}>${content}</span>`;
+      }).join("");
       cells.push(`<div class="rs-calendar-day${outside ? " rs-calendar-day--outside" : ""}${isToday ? " rs-calendar-day--today" : ""}" role="gridcell" aria-label="${date.toLocaleDateString("en", { weekday:"long", day:"numeric", month:"long" })}${dayEvents.length ? `, ${dayEvents.length} event${dayEvents.length > 1 ? "s" : ""}` : ""}"><span class="rs-calendar-day__number">${date.getDate()}</span><span class="rs-calendar-day__events">${pills}</span></div>`);
     }
     grid.innerHTML = cells.join("");
@@ -121,9 +156,12 @@
     const list = document.getElementById("events-upcoming-list");
     const empty = document.getElementById("events-empty");
     if (!list || !empty) return;
-    const events = filteredItems().filter(event => eventInstant(event) >= new Date() && event.status !== "cancelled").sort((a, b) => eventInstant(a) - eventInstant(b));
+    const events = filteredItems()
+      .filter(isCurrentOrUpcoming)
+      .sort((a, b) => Number(isOngoing(b)) - Number(isOngoing(a)) || eventInstant(a) - eventInstant(b));
     list.innerHTML = events.map(event => {
       const start = calendarDate(event);
+      const ongoing = isOngoing(event);
       const location = [event.venue, event.location].filter(Boolean).map(escapeHtml).join(" · ") || "Location to be confirmed";
       const registrationUrl = safeUrl(event.registrationUrl);
       const action = registrationUrl ? `<a href="${escapeHtml(registrationUrl)}">${escapeHtml(statusNames[event.status] || "View details")} →</a>` : "";
@@ -134,10 +172,16 @@
         event.deposit || ""
       ].filter(Boolean);
       const pricing = priceLines.length ? `<div class="rs-event-card__pricing">${priceLines.map(line => `<span>${escapeHtml(line)}</span>`).join("")}</div>` : "";
-      const timing = event.startDateTime
+      const timing = ongoing && event.scheduleLabel
+        ? `<p class="rs-event-card__time">Schedule: ${escapeHtml(event.scheduleLabel)}</p>`
+        : event.startDateTime
         ? `<p class="rs-event-card__time">Your time: ${escapeHtml(localDateTime(event))}</p><small class="rs-event-card__source-time">Scheduled: ${escapeHtml(sourceDateTime(event))}</small>`
         : "";
-      return `<article class="rs-event-card"><div class="rs-event-date"><strong>${start.getDate()}</strong><span>${start.toLocaleDateString("en", { month:"short" })}</span></div><div><span class="rs-event-card__category">${escapeHtml(categoryNames[event.category])} · ${escapeHtml(dateRange(event))}</span><h4>${escapeHtml(event.title)}</h4><p>${location}</p>${timing}${event.summary ? `<p>${escapeHtml(event.summary)}</p>` : ""}${pricing}${action}</div></article>`;
+      const dateBadge = ongoing
+        ? `<strong aria-hidden="true">●</strong><span>Live</span>`
+        : `<strong>${start.getDate()}</strong><span>${start.toLocaleDateString("en", { month:"short" })}</span>`;
+      const dateLabel = ongoing ? (event.scheduleLabel || "Ongoing") : dateRange(event);
+      return `<article class="rs-event-card"><div class="rs-event-date">${dateBadge}</div><div><span class="rs-event-card__category">${escapeHtml(categoryNames[event.category])} · ${escapeHtml(dateLabel)}</span><h4>${escapeHtml(event.title)}</h4><p>${location}</p>${timing}${event.summary ? `<p>${escapeHtml(event.summary)}</p>` : ""}${pricing}${action}</div></article>`;
     }).join("");
     empty.hidden = events.length > 0;
   }
@@ -155,6 +199,7 @@
       button.addEventListener("click", function () {
         activeFilter = button.dataset.eventFilter;
         document.querySelectorAll("[data-event-filter]").forEach(item => item.setAttribute("aria-pressed", String(item === button)));
+        showNextEventMonth();
         render();
       });
     });

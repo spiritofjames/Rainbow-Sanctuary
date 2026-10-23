@@ -243,21 +243,7 @@
       q("How will online event times be shown?", "The site automatically detects your browser time zone and converts each online session into your local date and time. The organizer’s original time zone remains visible beside it so you can verify the schedule before booking."),
       ...booking,
     ],
-    "/awakening-your-inner-light-2026": [
-      q("Can I enquire if I have never attended a plant-medicine ceremony?", "Yes. First-time participants are invited to begin with questions and a private fit conversation. Previous experience is not assumed, and an enquiry does not commit you to attend."),
-      q("What might a plant-medicine ceremony feel like?", "Ceremonial plant-medicine practices can bring profound shifts in perception, emotion, and physical experience. Responses vary and can be intense or unpredictable. The team should explain the format, known risks, and available support clearly before you decide."),
-      q("Is this retreat intended to cure trauma, depression, anxiety, or a health condition?", "No. The retreat is a spiritual and experiential gathering, not medical treatment or psychotherapy, and no specific outcome is promised. Continue appropriate professional care and discuss any relevant history during confidential suitability screening."),
-      q("Is this retreat right for me if I already have years of inner-work experience?", "It may be. The week is designed for both sincere first-time participants and experienced practitioners who want dedicated space for reflection, embodied practice, ceremony, and integration. Fit is considered individually rather than by spiritual vocabulary or status."),
-      q("What if I feel nervous or uncertain?", "Uncertainty is a valid reason to slow down and ask more questions. The application process exists so you can understand the experience, share concerns privately, and decide without pressure. Not proceeding is also a responsible decision."),
-      q("How is suitability considered?", "Relevant physical health, medication, mental-health history, pregnancy status, previous ceremonial experience, support needs, and other contraindications can affect suitability. Answer screening questions honestly and never stop or change prescribed medication in order to attend."),
-      q("Can I attend but decline a particular practice?", "Informed consent and personal agency matter. You should be able to ask what is essential, what is optional, what alternatives exist, and how support is provided if you pause or decline. These details are confirmed before acceptance."),
-      q("When and where is the retreat?", "The retreat runs from 1–7 October 2026 in Bocas del Toro, Panama, for seven days and six nights. Accepted participants receive the confirmed venue and arrival instructions before travel."),
-      q("What is the price?", "The standard investment is USD 3,500 per person, or USD 3,000 early bird with a 50% deposit before 1 September 2026. Final written terms and an authorised payment route are provided before payment."),
-      q("What is included in the week?", "The published program includes six nights’ accommodation, three meals daily, yoga, breathwork, sound-based practice, three guided plant-medicine ceremonies, complementary ceremonial practices, jungle exploration, sharing circles, and preparation and integration guidance. Final inclusions are confirmed in writing before payment."),
-      q("What support is provided before and after?", "Preparation and integration guidance are part of the retreat. Accepted participants receive the confirmed schedule, preparation requirements, facilitator contact route, and follow-up details in writing."),
-      q("When should I arrange flights?", "Only after written acceptance, final venue confirmation, payment and cancellation terms, legal-readiness confirmation, and explicit travel instructions."),
-      ...booking,
-    ],
+    // December retreat FAQs are rendered at build time from data/december-retreat-faqs.json.
     "/earth-healing-zone": [
       q("What is the Earth Healing Zone?", "It is a community space for shared-time guided spiritual practice and practical stewardship. The current model may use a recorded meditation at a fixed daily time, with live gatherings developing later."),
       q("Do I have to be in China or join from a particular place?", "No. The shared-time practice is designed for remote participation. Each gathering should state its time zone and access method."),
@@ -324,11 +310,12 @@
   }
 
   function mount() {
-    const file = location.pathname.split("/").pop() || "/";
-    const items = dedupe(pages[file] || []);
-    if (!items.length || document.querySelector("[data-rs-persona-faq]")) return;
     const main = document.querySelector("main");
     if (!main) return;
+    const file = location.pathname.split("/").pop() || "/";
+    const pageKey = main.dataset.rsFaqPage || location.pathname.replace(/\/+$/, "") || "/";
+    const items = dedupe(pages[pageKey] || pages[file] || []);
+    if (!items.length || document.querySelector("[data-rs-persona-faq]")) return;
 
     const section = document.createElement("section");
     section.id = "frequently-asked-questions";
@@ -337,9 +324,11 @@
     section.setAttribute("aria-labelledby", "rs-faq-title");
     section.innerHTML = `<div class="rs-persona-faq__shell"><header class="rs-persona-faq__heading"><span class="rs-persona-faq__eyebrow">Questions people ask before choosing</span><h2 id="rs-faq-title">Clear answers, before you decide.</h2><p class="rs-persona-faq__intro">Your questions are part of discernment—not an obstacle to enrollment. Start with what matters most to you.</p></header><div class="rs-persona-faq__list">${items.map((item) => `<details><summary>${escapeHtml(item.question)}</summary><p>${escapeHtml(item.answer)}</p></details>`).join("")}</div></div>`;
 
+    const slot = main.querySelector("[data-rs-faq-slot]");
     const legacy = main.querySelector("#questions");
     const finalCta = legacy || [...main.children].reverse().find((child) => child.querySelector?.(".rs-offer-cta"));
-    if (finalCta) main.insertBefore(section, finalCta);
+    if (slot) slot.replaceWith(section);
+    else if (finalCta) main.insertBefore(section, finalCta);
     else main.appendChild(section);
 
     if (legacy) {

@@ -5,7 +5,15 @@ import { fileURLToPath } from "node:url";
 const scriptsDir = path.dirname(fileURLToPath(import.meta.url));
 const siteDir = path.resolve(scriptsDir, "..");
 const origin = "https://rainbowsanctuary.life";
+const retreatFaqs = JSON.parse(fs.readFileSync(path.join(siteDir, "data/december-retreat-faqs.json"), "utf8"));
 const lastmod = "2026-07-31";
+const routeLastmod = new Map([
+  ["/", "2026-10-23"],
+  ["/awakening-your-inner-light-2026", "2026-10-23"],
+  ["/awakening-your-inner-light-october-2026", "2026-10-23"],
+  ["/events", "2026-10-23"],
+  ["/apply", "2026-10-22"]
+]);
 // Keep operational jobs in the generated Vercel configuration. Discovery
 // publishing runs as part of every release, so dropping this would silently
 // disable the Monday Maintenance reminder.
@@ -47,7 +55,7 @@ const headers = [
     headers: [
       {
         key: "Content-Security-Policy",
-        value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self'; connect-src 'self' https://api.github.com https://github.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+        value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://www.youtube.com/iframe_api https://www.youtube.com/s/player/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self'; connect-src 'self' https://api.github.com https://github.com; frame-src 'self' https://www.youtube-nocookie.com/embed/bqe-GyjWn4U https://www.youtube-nocookie.com/embed/C6KVdON7Ju0 https://www.youtube-nocookie.com/embed/TKcncu9DIEc https://www.youtube-nocookie.com/embed/_4SF8n4Kprs https://open.spotify.com/embed/track/2WxJlY7NsAqeQ52lJMJYwU; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
       },
       {
         key: "Permissions-Policy",
@@ -66,6 +74,11 @@ const headers = [
         value: "DENY"
       }
     ]
+  },
+  {
+    source: "/(.*)",
+    has: [{ type: "host", value: "staging.rainbowsanctuary.life" }],
+    headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }]
   }
 ];
 
@@ -77,6 +90,7 @@ const baseRoutes = {
   "Adult-Potential-Development.dc.html": "/adult-potential-development",
   "Autism-Family-Support.dc.html": "/autism-family-support",
   "Awakening-Your-Inner-Light-2026.dc.html": "/awakening-your-inner-light-2026",
+  "Awakening-Your-Inner-Light-October-2026.dc.html": "/awakening-your-inner-light-october-2026",
   "Bigger-Vision.dc.html": "/bigger-vision",
   "Awakening-Academy-Foundation.dc.html": "/awakening-academy-foundation",
   "Awakening-Academy-Level-1.dc.html": "/awakening-academy-level-1",
@@ -145,18 +159,33 @@ const pageTypes = {
   "Events-Retreats.dc.html": "CollectionPage"
 };
 
+// Versioned, first-party JPEGs avoid reusing cached, unbranded preview URLs.
+// Keep topic-specific editorial images below; use the general card as fallback.
+const brandShareImage = "/assets/social/rainbow-sanctuary-share-20261023.jpg";
+const decemberShareImage = "/assets/social/awakening-inner-light-december-2026-share-20261023.jpg";
+const brandedSocialImages = {
+  [brandShareImage]: {
+    width: 1200, height: 630, type: "image/jpeg",
+    alt: "Rainbow Sanctuary lotus and luminous rooted tree. We’re building a new world. Together with you. Retreats, online events, healing and learning. Bocas del Toro, Panama — Node 01."
+  },
+  [decemberShareImage]: {
+    width: 1200, height: 630, type: "image/jpeg",
+    alt: "Rainbow Sanctuary: Awakening Your Inner Light. A seven-day plant-medicine retreat, 3–9 December 2026, Bocas del Toro, Panama. Preparation, ceremony and integration, beside a luminous rooted tree."
+  }
+};
 const ogImages = {
-  "Home.dc.html": "/assets/social/rainbow-sanctuary-home-og-v1.jpg",
+  "Home.dc.html": brandShareImage,
   "About-Stephanie.dc.html": "/assets/stephanie-portrait.jpg",
   "1-1-Sessions.dc.html": "/assets/editorial/private-healing-overview.jpg",
-  "Awakening-Your-Inner-Light-2026.dc.html": "/assets/retreat-panama-coast-aerial.jpg",
+  "Awakening-Your-Inner-Light-2026.dc.html": decemberShareImage,
+  "Awakening-Your-Inner-Light-October-2026.dc.html": brandShareImage,
   "Bigger-Vision.dc.html": "/assets/editorial/psn-regenerative-future.jpg",
   "Children-Family.dc.html": "/assets/editorial/home-family-editorial.jpg",
   "Kids-Weekly-Practice.dc.html": "/assets/editorial/children-weekly-practice-preparation.jpg",
   "Community-Stories.dc.html": "/assets/editorial/home-community-editorial.jpg",
   "Contribute.dc.html": "/assets/editorial/home-community-editorial.jpg",
   "Earth-Healing-Zone.dc.html": "/assets/editorial/earth-healing-stewardship-v1.jpg",
-  "Events-Retreats.dc.html": "/assets/retreat-panama-coast-aerial.jpg",
+  "Events-Retreats.dc.html": brandShareImage,
   "Group-Healing.dc.html": "/assets/editorial/group-healing-zoom.jpg",
   "Online-Group-Healing.dc.html": "/assets/editorial/group-healing-zoom.jpg",
   "Autism-Family-Support.dc.html": "/assets/editorial/autism-family-support-hero-v2.png",
@@ -261,12 +290,40 @@ function schemaFor(file, title, description, canonical, image) {
     graph.push({
       "@type": "Event",
       "@id": `${canonical}#event`,
-      name: "Awakening Your Inner Light Retreat 2026",
+      name: "Awakening Your Inner Light Retreat · December 2026",
+      description,
+      image,
+      startDate: "2026-12-03",
+      endDate: "2026-12-09",
+      eventStatus: "https://schema.org/EventScheduled",
+      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+      organizer: { "@id": `${origin}/#organization` },
+      offers: {
+        "@type": "Offer",
+        price: "3500",
+        priceCurrency: "USD",
+        url: `${origin}/apply?reason=events&program=awakening-inner-light-december-2026`
+      }
+    });
+    graph.push({
+      "@type": "FAQPage",
+      "@id": `${canonical}#frequently-asked-questions`,
+      mainEntity: retreatFaqs.map(({ question, answer }) => ({
+        "@type": "Question", name: question,
+        acceptedAnswer: { "@type": "Answer", text: answer }
+      }))
+    });
+  }
+
+  if (file === "Awakening-Your-Inner-Light-October-2026.dc.html") {
+    graph.push({
+      "@type": "Event",
+      "@id": `${canonical}#event`,
+      name: "Awakening Your Inner Light Retreat · October 2026",
       description,
       image,
       startDate: "2026-10-01",
       endDate: "2026-10-07",
-      eventStatus: "https://schema.org/EventScheduled",
       eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
       location: {
         "@type": "Place",
@@ -277,26 +334,7 @@ function schemaFor(file, title, description, canonical, image) {
           addressCountry: "PA"
         }
       },
-      organizer: { "@id": `${origin}/#organization` },
-      offers: [
-        {
-          "@type": "Offer",
-          name: "Early Bird",
-          price: "3000",
-          priceCurrency: "USD",
-          validThrough: "2026-09-01",
-          availability: "https://schema.org/LimitedAvailability",
-          url: canonical
-        },
-        {
-          "@type": "Offer",
-          name: "Standard",
-          price: "3500",
-          priceCurrency: "USD",
-          availability: "https://schema.org/InStock",
-          url: canonical
-        }
-      ]
+      organizer: { "@id": `${origin}/#organization` }
     });
   }
 
@@ -377,37 +415,62 @@ for (const [file, route] of Object.entries(routes)) {
   }
   source = ensureKnowledgeFooterLink(ensureContributionFooterLink(source));
 
+  if (file === "Awakening-Your-Inner-Light-2026.dc.html") {
+    const faq = `<!-- rs-retreat-faq:start -->
+    <section id="frequently-asked-questions" class="rs-persona-faq" data-rs-persona-faq="true" aria-labelledby="rs-faq-title"><div class="rs-persona-faq__shell"><header class="rs-persona-faq__heading"><span class="rs-persona-faq__eyebrow">Questions people ask before choosing</span><h2 id="rs-faq-title">Clear answers, before you decide.</h2><p class="rs-persona-faq__intro">Your questions are part of discernment—not an obstacle to enrollment. Start with what matters most to you.</p></header><div class="rs-persona-faq__list">${retreatFaqs.map(({ question, answer }) => `<details><summary>${escapeAttribute(question)}</summary><p>${escapeAttribute(answer)}</p></details>`).join("\n")}</div></div></section>
+    <!-- rs-retreat-faq:end -->`;
+    if (!/<!-- rs-retreat-faq:start -->[\s\S]*?<!-- rs-retreat-faq:end -->/.test(source)) throw new Error("December FAQ publishing markers are missing.");
+    source = source.replace(/<!-- rs-retreat-faq:start -->[\s\S]*?<!-- rs-retreat-faq:end -->/, faq);
+  }
+
   const title = extract(source, /<title>([\s\S]*?)<\/title>/i, "Rainbow Sanctuary");
   const description = extract(
     source,
     /<meta\s+name="description"\s+content="([^"]*)"[^>]*>/i,
     "Rainbow Sanctuary is a global community for spiritual wellbeing, conscious development, and regenerative service."
   );
+  // Keep intentionally shorter sharing copy consistent across Open Graph and X.
+  const socialTitle = extract(source, /<meta\s+property="og:title"\s+content="([^"]*)"[^>]*>/i, title);
+  const socialDescription = extract(source, /<meta\s+property="og:description"\s+content="([^"]*)"[^>]*>/i, description);
+  const socialType = extract(source, /<meta\s+property="og:type"\s+content="([^"]*)"[^>]*>/i, "website");
   const canonical = `${origin}${route}`;
-  const image = `${origin}${ogImages[file] || "/assets/video/home-sanctuary-shore-v3-poster.jpg"}`;
+  const imagePath = ogImages[file] || brandShareImage;
+  const image = `${origin}${imagePath}`;
+  const socialImage = brandedSocialImages[imagePath];
+  const imageAlt = socialImage?.alt || title;
   const schema = schemaFor(file, title, description, canonical, image);
   const metadata = [
     "<!-- rs-discovery:start -->",
     `<link rel="canonical" href="${canonical}">`,
     '<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">',
     '<meta property="og:site_name" content="Rainbow Sanctuary">',
+    `<meta property="og:type" content="${escapeAttribute(socialType)}">`,
+    `<meta property="og:title" content="${escapeAttribute(socialTitle)}">`,
+    `<meta property="og:description" content="${escapeAttribute(socialDescription)}">`,
     `<meta property="og:url" content="${canonical}">`,
     `<meta property="og:image" content="${image}">`,
-    `<meta property="og:image:alt" content="${escapeAttribute(`${title} — Rainbow Sanctuary`)}">`,
-    ...(file === "Home.dc.html" ? [
-      `<meta property="og:image:width" content="1200">`,
-      `<meta property="og:image:height" content="630">`,
-      `<meta property="og:image:type" content="image/jpeg">`
+    `<meta property="og:image:secure_url" content="${image}">`,
+    `<meta property="og:image:alt" content="${escapeAttribute(imageAlt)}">`,
+    ...(socialImage ? [
+      `<meta property="og:image:width" content="${socialImage.width}">`,
+      `<meta property="og:image:height" content="${socialImage.height}">`,
+      `<meta property="og:image:type" content="${socialImage.type}">`
     ] : []),
     '<meta name="twitter:card" content="summary_large_image">',
-    `<meta name="twitter:title" content="${escapeAttribute(title)}">`,
-    `<meta name="twitter:description" content="${escapeAttribute(description)}">`,
+    `<meta name="twitter:title" content="${escapeAttribute(socialTitle)}">`,
+    `<meta name="twitter:description" content="${escapeAttribute(socialDescription)}">`,
     `<meta name="twitter:image" content="${image}">`,
+    `<meta name="twitter:image:alt" content="${escapeAttribute(imageAlt)}">`,
     `<script type="application/ld+json">${JSON.stringify(schema)}</script>`,
     "<!-- rs-discovery:end -->"
   ].join("\n");
 
   source = source.replace(/\n?<!-- rs-discovery:start -->[\s\S]*?<!-- rs-discovery:end -->\n?/g, "\n");
+  // Older pages also contain hand-written sharing tags. Remove only the fields
+  // owned here so crawlers cannot pick a stale first image or duplicate title.
+  source = source.replace(/<head\b[^>]*>[\s\S]*?<\/head>/i, (head) => head
+    .replace(/<meta\b[^>]*(?:name|property)=["'](?:robots|og:(?:site_name|type|title|description|url|image(?::(?:secure_url|alt|width|height|type))?)|twitter:(?:card|title|description|image(?::alt)?))["'][^>]*>\s*/gi, "")
+    .replace(/<link\b[^>]*rel=["']canonical["'][^>]*>\s*/gi, ""));
   source = source.replace("</head>", `${metadata}\n</head>`);
   source = source.replace(/[ \t]+$/gm, "");
   fs.writeFileSync(filePath, source);
@@ -476,7 +539,7 @@ const sitemap = [
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
   ...Object.values(routes).filter((route) => route !== "/knowledge/search").map((route) => {
     const entry = knowledgeEntryByPath.get(route);
-    return `  <url><loc>${origin}${route}</loc><lastmod>${entry?.updatedAt || lastmod}</lastmod></url>`;
+    return `  <url><loc>${origin}${route}</loc><lastmod>${entry?.updatedAt || routeLastmod.get(route) || lastmod}</lastmod></url>`;
   }),
   "</urlset>",
   ""
@@ -531,7 +594,8 @@ const llms = `# Rainbow Sanctuary
 
 ## Current event
 
-- [Awakening Your Inner Light Retreat 2026](${origin}/awakening-your-inner-light-2026): Seven-day retreat in Bocas del Toro, Panama, 1–7 October 2026
+- [Awakening Your Inner Light · December 2026](${origin}/awakening-your-inner-light-2026): Seven-day, six-night retreat planned for 3–9 December 2026; the investment is USD 3,500 per person, with enquiries open while the final venue and programme are confirmed
+- [Awakening Your Inner Light · October 2026 history](${origin}/awakening-your-inner-light-october-2026): Factual archive of the completed 1–7 October 2026 retreat in Bocas del Toro, Panama
 
 ## Vision and community
 
@@ -601,7 +665,7 @@ Private sessions are application-led. Current session types include Personal Kar
 
 ### Events and retreats
 
-Current public opportunities are listed at ${origin}/events. Awakening Your Inner Light is scheduled for 1–7 October 2026 in Bocas del Toro, Panama. Its page includes format, investment, facilitators, preparation, screening, and application information: ${origin}/awakening-your-inner-light-2026.
+Current public opportunities are listed at ${origin}/events. Awakening Your Inner Light is planned for 3–9 December 2026 as a seven-day, six-night residential retreat at USD 3,500 per person. The active page accepts expressions of interest while the final venue, programme, safety and booking details are confirmed: ${origin}/awakening-your-inner-light-2026. The completed October 2026 retreat is preserved separately at ${origin}/awakening-your-inner-light-october-2026.
 
 ## People and community
 
