@@ -84,12 +84,31 @@ test("unknown video IDs and incomplete cards never create an embed", () => {
   assert.equal(unknown.frames.length + incomplete.frames.length, 0);
 });
 
+test("Leonella's Spanish reflection stays manual and replaces another active film", () => {
+  const garlon = fixture("TKcncu9DIEc");
+  const leonella = fixture("_4SF8n4Kprs");
+  assert.equal(mountTestimonialVideo(garlon.card), true);
+  assert.equal(mountTestimonialVideo(leonella.card), true);
+  assert.equal(leonella.frames.length, 0);
+  garlon.click("play");
+  leonella.click("play");
+  assert.equal(garlon.nodes.get("embed").children.length, 0);
+  assert.equal(leonella.frames.length, 1);
+  assert.equal(new URL(leonella.frames[0].src).pathname, "/embed/_4SF8n4Kprs");
+  assert.match(leonella.frames[0].title, /Leonella.*Spanish/);
+  leonella.click("stop");
+  assert.equal(leonella.nodes.get("embed").children.length, 0);
+  assert.equal(leonella.nodes.get("poster").hidden, false);
+  assert.equal(leonella.nodes.get("play").focused, true);
+});
+
 test("page keeps local posters, a direct fallback and no eager third-party frame", () => {
   const page = read("Awakening-Your-Inner-Light-2026.dc.html");
   const films = page.slice(page.indexOf('id="participant-stories"'), page.indexOf('id="first-time"'));
   assert.doesNotMatch(films, /<iframe|https:\/\/i\.ytimg\.com|youtube-nocookie\.com/);
   assert.match(films, /youtube\.com\/shorts\/C6KVdON7Ju0/);
   assert.match(films, /youtu\.be\/TKcncu9DIEc/);
+  assert.match(films, /youtube\.com\/shorts\/_4SF8n4Kprs/);
   assert.match(films, /\/cookie-policy#optional-video/);
   assert.doesNotMatch(read("retreat-testimonial-videos.js"), /IntersectionObserver|localStorage|sessionStorage|document\.cookie|fetch\(/);
 });

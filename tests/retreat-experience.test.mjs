@@ -495,7 +495,7 @@ test("tradition and setting copy do not invent precise credentials, cures or inc
   assert.doesNotMatch(setting, /no cars|car-free|safe swimming|luxury facilities/i);
 });
 
-test("participant reflections use the two supplied films and local covers without eager embeds", () => {
+test("participant reflections use the three supplied films and local covers without eager embeds", () => {
   const slots = [...page.matchAll(/data-retreat-video-slot="([^"]+)" data-media-status="awaiting-approved-clip"/g)].map((match) => match[1]);
   assert.deepEqual(slots, []);
   assert.doesNotMatch(page, /<(?:video|iframe)\b|src=""|href="#"/);
@@ -503,13 +503,18 @@ test("participant reflections use the two supplied films and local covers withou
   assert.match(page, /data-media-status="approved-youtube" data-video-id="bqe-GyjWn4U"/);
   assert.doesNotMatch(page, /His forthcoming film|Conversation with Hanan · Film coming soon/);
   const participantFilms = page.slice(page.indexOf('id="participant-stories"'), page.indexOf('id="first-time"'));
-  assert.equal((participantFilms.match(/data-testimonial-video data-video-id=/g) || []).length, 2);
+  assert.equal((participantFilms.match(/data-testimonial-video data-video-id=/g) || []).length, 3);
   assert.match(participantFilms, /data-video-id="C6KVdON7Ju0"/);
   assert.match(participantFilms, /data-video-id="TKcncu9DIEc"/);
   assert.match(participantFilms, /German Sozzi/);
   assert.match(participantFilms, /Garlon/);
   assert.match(participantFilms, /german-video-still\.jpg/);
-  assert.match(participantFilms, /garlon-video-still\.jpg/);
+  assert.match(participantFilms, /garlon-video-cover-20261023\.jpg/);
+  assert.match(participantFilms, /leonella-video-cover-20261023\.jpg/);
+  assert.match(participantFilms, /data-video-id="_4SF8n4Kprs"/);
+  assert.match(participantFilms, /lang="es">Español/);
+  assert.match(participantFilms, /Play Leonella’s video reflection in Spanish/);
+  assert.doesNotMatch(participantFilms, /Meet two people|garlon-video-still\.jpg/);
   assert.match(participantFilms, /they do not start as you scroll/);
   assert.match(participantFilms, /data-testimonial-play hidden="\{\{ true \}\}"/);
   assert.match(participantFilms, /data-testimonial-stop hidden="\{\{ true \}\}"/);
@@ -517,6 +522,17 @@ test("participant reflections use the two supplied films and local covers withou
   for (const match of page.matchAll(/(?:src|srcset)="(\.\/assets\/retreats\/[^" ]+)"/g)) {
     assert.ok(existsSync(new URL(`../${match[1]}`, import.meta.url)), `asset exists: ${match[1]}`);
   }
+});
+
+test("hero has one Register Your Interest CTA while discovery-call guidance remains below", () => {
+  const hero = page.slice(page.indexOf('<section class="rs-retreat-hero">'), page.indexOf('<section id="listen"'));
+  const actions = hero.match(/<div class="rs-retreat-actions">([\s\S]*?)<\/div>/)[1];
+  assert.equal((actions.match(/<a\b/g) || []).length, 1);
+  assert.match(actions, />Register Your Interest<\/a>/);
+  assert.match(actions, /href="\/apply\?reason=events&amp;program=awakening-inner-light-december-2026"/);
+  assert.doesNotMatch(actions, /discovery-call|href="#week"/);
+  assert.match(page.slice(page.indexOf('id="application"')), /href="\/apply\?reason=events&amp;program=awakening-inner-light-december-2026&amp;intent=discovery-call"/);
+  assert.match(page.slice(page.indexOf('<section id="listen"')), /Can I request a discovery call before deciding\?/);
 });
 
 test("setting features the supplied shoreline photo without cropping and with responsive lazy loading", () => {

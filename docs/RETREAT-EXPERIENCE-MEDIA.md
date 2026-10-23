@@ -138,7 +138,18 @@ Local integration is not staging or production deployment. Retain separate relea
 
 ### Participant films — local revision, 22 October 2026
 
-James supplied two public Rainbow Sanctuary YouTube links for participant testimonials: [German Sozzi](https://youtube.com/shorts/C6KVdON7Ju0) and [Garlon](https://youtu.be/TKcncu9DIEc). YouTube's public oEmbed metadata confirmed those display names and titles. Their current public video stills are retained as local `testimonials/german-video-still.jpg` and `testimonials/garlon-video-still.jpg` (1280 × 720); the centered portrait artwork fills a 9:16 cover crop in the page. These are source stills, not generated likenesses. The user supplied the URLs for this landing-page integration; no third clip has been received yet.
+James initially supplied two public Rainbow Sanctuary YouTube links for participant testimonials: [German Sozzi](https://youtube.com/shorts/C6KVdON7Ju0) and [Garlon](https://youtu.be/TKcncu9DIEc). YouTube's public oEmbed metadata confirmed those display names and titles. Their original public video stills are retained as local `testimonials/german-video-still.jpg` and `testimonials/garlon-video-still.jpg` (1280 × 720). German's still remains the displayed cover; Garlon's displayed cover was replaced on 23 October as described below. These are source stills, not generated likenesses.
+
+### Third participant film and supplied portrait covers — 23 October 2026
+
+James supplied [Leonella's reflection](https://youtube.com/shorts/_4SF8n4Kprs), identified it as Spanish, and authorized its publication. YouTube oEmbed confirms the title “Retreat in Panama | Leonella’s Reflection at Rainbow Sanctuary” on the Rainbow Sanctuary channel. The page identifies its language as Español and describes her reflection without quoting, translating, or promising subtitles. No full transcript or caption-accuracy review is claimed.
+
+The owner-supplied originals remain unchanged:
+
+- Garlon: `Aya Retreat October 2026/For the website/Testimonials/Garlon testimonials.jpg` → `testimonials/garlon-video-cover-20261023.jpg`.
+- Leonella: `Aya Retreat October 2026/20261001-Day1Mornign/LEONIMG_20261001_074201 (leonella).jpg` → `testimonials/leonella-video-cover-20261023.jpg`.
+
+Both originals are 2296 × 4080; the web portraits are 900 × 1600 JPEGs in the existing 9:16 frames. No generated imagery, face changes, or retouching were used. Three films sit side by side on desktop, two plus a centered third on tablet, and one per row on mobile. The runtime allowlist and generated Content Security Policy include only the approved new video URL alongside existing media. All participant films remain click-to-play, with no loading or playback on scroll.
 
 `retreat-testimonial-videos.js` leaves the poster in place and makes no YouTube request until a visitor explicitly presses Play. Only then does it mount an allowlisted `youtube-nocookie.com` iframe and begin that selected film. Stop, choosing the other film, or hiding the tab removes the iframe. A direct YouTube link remains available as a fallback. These participant videos do not autoplay on scrolling. The clips are described as individual past-gathering experiences, not promises of similar results. Captions appeared during local playback; their accuracy and a full transcript have not been independently reviewed.
 

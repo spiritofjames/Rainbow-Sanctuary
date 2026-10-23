@@ -38,7 +38,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://www.youtube.com/iframe_api https://www.youtube.com/s/player/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self'; connect-src 'self' https://api.github.com https://github.com; frame-src 'self' https://www.youtube-nocookie.com/embed/bqe-GyjWn4U https://www.youtube-nocookie.com/embed/C6KVdON7Ju0 https://www.youtube-nocookie.com/embed/TKcncu9DIEc https://open.spotify.com/embed/track/2WxJlY7NsAqeQ52lJMJYwU; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://www.youtube.com/iframe_api https://www.youtube.com/s/player/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self'; connect-src 'self' https://api.github.com https://github.com; frame-src 'self' https://www.youtube-nocookie.com/embed/bqe-GyjWn4U https://www.youtube-nocookie.com/embed/C6KVdON7Ju0 https://www.youtube-nocookie.com/embed/TKcncu9DIEc https://www.youtube-nocookie.com/embed/_4SF8n4Kprs https://open.spotify.com/embed/track/2WxJlY7NsAqeQ52lJMJYwU; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
         },
         {
           "key": "Permissions-Policy",
