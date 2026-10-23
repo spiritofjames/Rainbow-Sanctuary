@@ -33,7 +33,8 @@ test("December retreat is the active lead journey and carries no expired October
   assert.match(page, /Hanan Joao Perea Fernández Baca/);
   assert.match(page, /Meet your facilitators/);
   assert.doesNotMatch(page, /rs-retreat-facilitators--single/);
-  assert.match(page, /data-gallery-state="awaiting-approved-content"/);
+  assert.match(page, /aria-label="Curated photographs of retreat life and Bocas del Toro surroundings"/);
+  assert.doesNotMatch(page, /data-gallery-state="awaiting-approved-content"/);
   assert.match(page, /id="listen"/);
   assert.match(page, /USD 3,500 per person/);
   assert.match(page, /"price"\s*:\s*"3500"/);
@@ -41,7 +42,7 @@ test("December retreat is the active lead journey and carries no expired October
   assert.match(page, /Venue details shared after enquiry/);
   assert.doesNotMatch(page, /book\.stripe\.com/);
   assert.doesNotMatch(page, /Book Early Bird|Book at Standard Rate|1–7 October 2026 in Bocas del Toro/);
-  const faqs = read("persona-faqs.js");
+  const faqs = read("data/december-retreat-faqs.json");
   assert.match(faqs, /The next retreat runs from 3–9 December 2026/);
   assert.match(faqs, /The December retreat investment is USD 3,500 per person/);
   assert.doesNotMatch(faqs, /50% deposit before 1 September 2026/);
@@ -138,6 +139,6 @@ test("discovery generator describes the active and completed retreat truthfully"
   assert.match(discovery, /startDate: "2026-12-03"/);
   assert.match(discovery, /endDate: "2026-12-09"/);
   assert.match(discovery, /Awakening-Your-Inner-Light-October-2026\.dc\.html/);
-  assert.match(discovery, /EventCompleted/);
+  assert.doesNotMatch(discovery, /EventCompleted/);
   assert.match(discovery, /investment is USD 3,500 per person/);
 });

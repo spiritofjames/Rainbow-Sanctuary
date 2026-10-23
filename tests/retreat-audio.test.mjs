@@ -140,4 +140,11 @@ test("listening section follows hero and ships a real, deferred audio source", (
   const source = audio[0].match(/src="([^"]+)"/)[1];
   assert.ok(existsSync(new URL(`../${source}`, import.meta.url)));
   assert.equal(formatAudioTime(369.96), "6:10");
+  const artwork = html.slice(html.indexOf('<picture class="rs-audio-player__artwork">'), html.indexOf('</picture>', section));
+  assert.match(artwork, /hanan-icaro-portrait-800\.webp/);
+  assert.match(artwork, /hanan-icaro-portrait-800\.jpg/);
+  assert.doesNotMatch(artwork, /hanan-perea-1080x1920/);
+  for (const image of artwork.matchAll(/(?:src|srcset)="(\.\/assets\/[^\"]+)"/g)) {
+    assert.ok(existsSync(new URL(`../${image[1]}`, import.meta.url)));
+  }
 });
