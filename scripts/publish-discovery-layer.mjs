@@ -8,9 +8,10 @@ const origin = "https://rainbowsanctuary.life";
 const retreatFaqs = JSON.parse(fs.readFileSync(path.join(siteDir, "data/december-retreat-faqs.json"), "utf8"));
 const lastmod = "2026-07-31";
 const routeLastmod = new Map([
-  ["/awakening-your-inner-light-2026", "2026-10-22"],
-  ["/awakening-your-inner-light-october-2026", "2026-10-22"],
-  ["/events", "2026-10-22"],
+  ["/", "2026-10-23"],
+  ["/awakening-your-inner-light-2026", "2026-10-23"],
+  ["/awakening-your-inner-light-october-2026", "2026-10-23"],
+  ["/events", "2026-10-23"],
   ["/apply", "2026-10-22"]
 ]);
 // Keep operational jobs in the generated Vercel configuration. Discovery
@@ -158,19 +159,33 @@ const pageTypes = {
   "Events-Retreats.dc.html": "CollectionPage"
 };
 
+// Versioned, first-party JPEGs avoid reusing cached, unbranded preview URLs.
+// Keep topic-specific editorial images below; use the general card as fallback.
+const brandShareImage = "/assets/social/rainbow-sanctuary-share-20261023.jpg";
+const decemberShareImage = "/assets/social/awakening-inner-light-december-2026-share-20261023.jpg";
+const brandedSocialImages = {
+  [brandShareImage]: {
+    width: 1200, height: 630, type: "image/jpeg",
+    alt: "Rainbow Sanctuary lotus and luminous rooted tree. We’re building a new world. Together with you. Retreats, online events, healing and learning. Bocas del Toro, Panama — Node 01."
+  },
+  [decemberShareImage]: {
+    width: 1200, height: 630, type: "image/jpeg",
+    alt: "Rainbow Sanctuary: Awakening Your Inner Light. A seven-day plant-medicine retreat, 3–9 December 2026, Bocas del Toro, Panama. Preparation, ceremony and integration, beside a luminous rooted tree."
+  }
+};
 const ogImages = {
-  "Home.dc.html": "/assets/social/rainbow-sanctuary-home-og-v1.jpg",
+  "Home.dc.html": brandShareImage,
   "About-Stephanie.dc.html": "/assets/stephanie-portrait.jpg",
   "1-1-Sessions.dc.html": "/assets/editorial/private-healing-overview.jpg",
-  "Awakening-Your-Inner-Light-2026.dc.html": "/assets/retreats/awakening-inner-light-december-2026/rainbow-sanctuary-panama-1920.jpg",
-  "Awakening-Your-Inner-Light-October-2026.dc.html": "/assets/retreat-panama-coast-aerial.jpg",
+  "Awakening-Your-Inner-Light-2026.dc.html": decemberShareImage,
+  "Awakening-Your-Inner-Light-October-2026.dc.html": brandShareImage,
   "Bigger-Vision.dc.html": "/assets/editorial/psn-regenerative-future.jpg",
   "Children-Family.dc.html": "/assets/editorial/home-family-editorial.jpg",
   "Kids-Weekly-Practice.dc.html": "/assets/editorial/children-weekly-practice-preparation.jpg",
   "Community-Stories.dc.html": "/assets/editorial/home-community-editorial.jpg",
   "Contribute.dc.html": "/assets/editorial/home-community-editorial.jpg",
   "Earth-Healing-Zone.dc.html": "/assets/editorial/earth-healing-stewardship-v1.jpg",
-  "Events-Retreats.dc.html": "/assets/retreat-panama-coast-aerial.jpg",
+  "Events-Retreats.dc.html": brandShareImage,
   "Group-Healing.dc.html": "/assets/editorial/group-healing-zoom.jpg",
   "Online-Group-Healing.dc.html": "/assets/editorial/group-healing-zoom.jpg",
   "Autism-Family-Support.dc.html": "/assets/editorial/autism-family-support-hero-v2.png",
@@ -414,36 +429,48 @@ for (const [file, route] of Object.entries(routes)) {
     /<meta\s+name="description"\s+content="([^"]*)"[^>]*>/i,
     "Rainbow Sanctuary is a global community for spiritual wellbeing, conscious development, and regenerative service."
   );
+  // Keep intentionally shorter sharing copy consistent across Open Graph and X.
+  const socialTitle = extract(source, /<meta\s+property="og:title"\s+content="([^"]*)"[^>]*>/i, title);
+  const socialDescription = extract(source, /<meta\s+property="og:description"\s+content="([^"]*)"[^>]*>/i, description);
+  const socialType = extract(source, /<meta\s+property="og:type"\s+content="([^"]*)"[^>]*>/i, "website");
   const canonical = `${origin}${route}`;
-  const image = `${origin}${ogImages[file] || "/assets/video/home-sanctuary-shore-v3-poster.jpg"}`;
+  const imagePath = ogImages[file] || brandShareImage;
+  const image = `${origin}${imagePath}`;
+  const socialImage = brandedSocialImages[imagePath];
+  const imageAlt = socialImage?.alt || title;
   const schema = schemaFor(file, title, description, canonical, image);
   const metadata = [
     "<!-- rs-discovery:start -->",
     `<link rel="canonical" href="${canonical}">`,
     '<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">',
     '<meta property="og:site_name" content="Rainbow Sanctuary">',
+    `<meta property="og:type" content="${escapeAttribute(socialType)}">`,
+    `<meta property="og:title" content="${escapeAttribute(socialTitle)}">`,
+    `<meta property="og:description" content="${escapeAttribute(socialDescription)}">`,
     `<meta property="og:url" content="${canonical}">`,
     `<meta property="og:image" content="${image}">`,
-    `<meta property="og:image:alt" content="${escapeAttribute(`${title} — Rainbow Sanctuary`)}">`,
-    ...(file === "Home.dc.html" ? [
-      `<meta property="og:image:width" content="1200">`,
-      `<meta property="og:image:height" content="630">`,
-      `<meta property="og:image:type" content="image/jpeg">`
-    ] : []),
-    ...(file === "Awakening-Your-Inner-Light-2026.dc.html" ? [
-      '<meta property="og:image:width" content="1920">',
-      '<meta property="og:image:height" content="1079">',
-      '<meta property="og:image:type" content="image/jpeg">'
+    `<meta property="og:image:secure_url" content="${image}">`,
+    `<meta property="og:image:alt" content="${escapeAttribute(imageAlt)}">`,
+    ...(socialImage ? [
+      `<meta property="og:image:width" content="${socialImage.width}">`,
+      `<meta property="og:image:height" content="${socialImage.height}">`,
+      `<meta property="og:image:type" content="${socialImage.type}">`
     ] : []),
     '<meta name="twitter:card" content="summary_large_image">',
-    `<meta name="twitter:title" content="${escapeAttribute(title)}">`,
-    `<meta name="twitter:description" content="${escapeAttribute(description)}">`,
+    `<meta name="twitter:title" content="${escapeAttribute(socialTitle)}">`,
+    `<meta name="twitter:description" content="${escapeAttribute(socialDescription)}">`,
     `<meta name="twitter:image" content="${image}">`,
+    `<meta name="twitter:image:alt" content="${escapeAttribute(imageAlt)}">`,
     `<script type="application/ld+json">${JSON.stringify(schema)}</script>`,
     "<!-- rs-discovery:end -->"
   ].join("\n");
 
   source = source.replace(/\n?<!-- rs-discovery:start -->[\s\S]*?<!-- rs-discovery:end -->\n?/g, "\n");
+  // Older pages also contain hand-written sharing tags. Remove only the fields
+  // owned here so crawlers cannot pick a stale first image or duplicate title.
+  source = source.replace(/<head\b[^>]*>[\s\S]*?<\/head>/i, (head) => head
+    .replace(/<meta\b[^>]*(?:name|property)=["'](?:robots|og:(?:site_name|type|title|description|url|image(?::(?:secure_url|alt|width|height|type))?)|twitter:(?:card|title|description|image(?::alt)?))["'][^>]*>\s*/gi, "")
+    .replace(/<link\b[^>]*rel=["']canonical["'][^>]*>\s*/gi, ""));
   source = source.replace("</head>", `${metadata}\n</head>`);
   source = source.replace(/[ \t]+$/gm, "");
   fs.writeFileSync(filePath, source);
