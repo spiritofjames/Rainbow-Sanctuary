@@ -16,7 +16,7 @@ This policy is tailored to the current website build. The operating legal entity
 
 ## 1. Current website behavior
 
-The Rainbow Sanctuary site does not set first-party tracking cookies or use its own advertising pixels. Hanan’s retreat video connects to YouTube and attempts playback with sound when at least half of its player enters view, falling back to muted playback if the browser blocks it. It can also be started manually. Reduced-motion or data-saving browser settings disable automatic loading. James’s song artwork is served by this website; its optional Spotify player loads only after you select “Listen here on Spotify.”
+The Rainbow Sanctuary site does not set first-party tracking cookies or use its own advertising pixels. Hanan’s retreat video connects to YouTube and attempts playback with sound when at least half of its player enters view, falling back to muted playback if the browser blocks it. It can also be started manually. Reduced-motion or data-saving browser settings disable automatic loading. The song recordings and artwork in the retreat page’s audio players are served by this website and play only when you use their controls.
 
 The hosting provider may still process ordinary HTTP request and security-log data. See the [Privacy Policy](https://rainbowsanctuary.life/privacy-policy).
 
@@ -32,9 +32,9 @@ Reduced-motion and data-saving browser settings keep playback manual. Select “
 
 Google controls its own processing and retention, including processing that may occur outside your country. See [Google’s Privacy Policy](https://policies.google.com/privacy). Video notice updated: 20 October 2026.
 
-## Optional Spotify song player
+## Story song and Spotify link
 
-The Sonqoypi Bobinsana cover artwork is served by this website. The Spotify player is not present until you select “Listen here on Spotify” in James’s story. That choice connects your browser to open.spotify.com; Spotify receives technical connection information such as your IP address and browser details, and may use cookies or similar storage. Playback starts only through Spotify’s own player controls and its availability may depend on your location and account. Selecting “Close Spotify player” removes the embedded frame but cannot erase data already received or stored by Spotify. The separate Spotify link opens the track on Spotify instead. Listening is not required to enquire. See [Spotify’s Privacy Policy](https://www.spotify.com/legal/privacy-policy/).
+The full Sonqoypi Bobinsana recording and its cover artwork are served by this website. The player does not autoplay or connect to Spotify. Choosing the separate “Open in Spotify” link takes you to Spotify, which receives ordinary connection information and may use cookies or similar storage under its own policies. Listening is not required to enquire. See [Spotify’s Privacy Policy](https://www.spotify.com/legal/privacy-policy/).
 
 ## 3. If other tools are added later
 

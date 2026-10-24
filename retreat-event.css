@@ -368,37 +368,29 @@
 @media(min-width:740px) and (max-width:1099px){.rs-retreat-testimonial-card:last-child:nth-child(odd){grid-column:1/-1;width:100%;max-width:390px;justify-self:center}}
 @media(min-width:1100px){.rs-retreat-testimonial-grid{grid-template-columns:repeat(3,minmax(0,390px))}}
 .rs-retreat-section--host{background:#ebe5d9}
-.rs-retreat-host-story{display:grid;gap:34px;align-items:start}
-.rs-retreat-host-story>figure{margin:0}
-.rs-retreat-host-story picture{display:block;max-width:440px;overflow:hidden;border-radius:24px}
-.rs-retreat-host-story img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center 30%}
-.rs-retreat-host-story figcaption{max-width:400px;margin-top:16px;color:var(--retreat-body);font-size:12px;line-height:1.6}
+.rs-retreat-host-story{display:grid;gap:34px;align-items:stretch}
+.rs-retreat-host-story__portrait{display:flex;flex-direction:column;margin:0;min-width:0}
+.rs-retreat-host-story__portrait picture{display:block;width:100%;max-width:480px;overflow:hidden;border-radius:24px}
+.rs-retreat-host-story__portrait img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center 30%}
+.rs-retreat-host-story__portrait figcaption{margin-top:16px;color:var(--retreat-body);font-size:12px;line-height:1.6}
+.rs-retreat-host-story__copy{min-width:0;align-self:center}
 .rs-retreat-host-story .rs-retreat-heading{margin-bottom:22px}
-.rs-retreat-host-story>div>p{color:var(--retreat-body);font-size:16px;line-height:1.75}
+.rs-retreat-host-story .rs-retreat-heading h2{font-size:clamp(40px,4.3vw,56px);line-height:1.04}
+.rs-retreat-host-story__copy>p{margin:0 0 18px;color:var(--retreat-body);font-size:16px;line-height:1.75}
+.rs-retreat-host-story__copy>p.rs-retreat-caption{font-size:13px;line-height:1.65}
 .rs-retreat-host-story blockquote{margin:26px 0;padding-inline-start:22px;border-inline-start:2px solid #9a7a37}
 .rs-retreat-host-story blockquote p{margin:0;font-family:"EB Garamond",serif;font-size:32px;line-height:1.2}
-.rs-retreat-story-song{container-type:inline-size;display:grid;gap:18px;margin:30px 0 18px;border:1px solid #cab990;border-radius:22px;padding:24px;background:linear-gradient(135deg,#f7f1e4,#e9dfc9)}
-.rs-retreat-story-song__main{display:grid;gap:20px;align-items:start}
-.rs-retreat-story-song__art{display:block;width:min(100%,260px);aspect-ratio:1;overflow:hidden;border-radius:15px;box-shadow:0 12px 28px #1b2d2124}
-.rs-retreat-story-song__art img{display:block;width:100%;height:100%;object-fit:cover}
-.rs-retreat-story-song__copy{display:grid;gap:12px;min-width:0}
+.rs-retreat-story-song{grid-column:1/-1;display:grid;gap:22px;min-width:0;margin:8px 0 0;padding-top:34px;border-top:1px solid #cabfa9}
+.rs-retreat-story-song__heading{display:grid;gap:10px}
 .rs-retreat-story-song__kicker{color:#755d2a;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
-.rs-retreat-story-song h3{margin:0;color:#17372a;font-family:"EB Garamond",serif;font-size:clamp(29px,3vw,39px);font-weight:400;line-height:1.05}
-.rs-retreat-story-song p{max-width:55ch;margin:0;color:#47544c;font-size:14px;line-height:1.65}
-.rs-retreat-story-song__credit{color:#59665a;font-size:12px;line-height:1.5}
-.rs-retreat-story-song__actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-.rs-retreat-story-song__actions button,.rs-retreat-story-song__actions>a{display:inline-flex;min-height:44px;gap:9px;align-items:center;justify-content:center;border-radius:999px;padding:10px 17px;font:700 13px/1.4 "Inter",sans-serif;cursor:pointer}
-.rs-retreat-story-song__actions button{border:1px solid #173b2b;background:#173b2b;color:#fff}
-.rs-retreat-story-song__actions button:hover{background:#285540}
-.rs-retreat-story-song__actions>a{border:1px solid #42634f;background:transparent;color:#173b2b;text-decoration:none}
-.rs-retreat-story-song__actions>a:hover{background:#e2e8dd}
-.rs-retreat-story-song__actions :is(button,a):focus-visible,.rs-retreat-story-song__privacy a:focus-visible{outline:3px solid #775f2d;outline-offset:3px}
-.rs-retreat-story-song__actions button[hidden],.rs-retreat-story-song__player[hidden]{display:none!important}
-.rs-retreat-story-song .rs-retreat-story-song__privacy,.rs-retreat-story-song .rs-retreat-story-song__status{color:#59665a;font-size:11px;line-height:1.55}
-.rs-retreat-story-song__privacy a{color:#234d37;text-underline-offset:3px}
-.rs-retreat-story-song__status:empty{display:none}
-.rs-retreat-story-song__player iframe{display:block;width:100%;height:152px;border:0;border-radius:12px;background:#173b2b}
-@container (min-width:540px){.rs-retreat-story-song__main{grid-template-columns:minmax(0,210px) minmax(0,1fr)}.rs-retreat-story-song__art{width:100%}}
+.rs-retreat-story-song__heading p{max-width:80ch;margin:0;color:#47544c;font-size:14px;line-height:1.65}
+.rs-audio-player--story{min-width:0}
+.rs-audio-player--story .rs-audio-player__artwork{margin-inline:auto}
+.rs-audio-player--story .rs-audio-player__status{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media(min-width:720px){.rs-audio-player--story{grid-template-columns:minmax(180px,240px) minmax(0,1fr);gap:32px;padding:32px}.rs-audio-player--story .rs-audio-player__artwork{max-width:240px}}
+.rs-retreat-story-song__footer{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 28px}
+.rs-retreat-story-song__footer a{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:#355c46;font-size:14px;text-decoration:underline;text-underline-offset:4px}
+.rs-retreat-story-song__footer a:focus-visible{outline:3px solid #775f2d;outline-offset:3px}
 .rs-retreat-inline-link{display:inline-flex;min-height:44px;gap:12px;align-items:center;color:#3b5945;font-size:14px;font-weight:600;text-underline-offset:5px;text-decoration-thickness:1px}
 .rs-retreat-inline-link:focus-visible{outline:2px solid currentColor;outline-offset:5px}
 .rs-retreat-section--practical{background:#f8f4eb}
@@ -490,7 +482,6 @@
   .rs-retreat-voices{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:50px;align-items:center;margin:50px 0}
   .rs-retreat-voices__more{padding:0 0 0 42px;border-top:0;border-left:1px solid #476052}
   .rs-retreat-practices>div{grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
-  .rs-retreat-host-story{grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:56px}
   .rs-retreat-practical{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:60px}
   .rs-retreat-practical__details{padding:0 0 0 40px;border-top:0;border-left:1px solid #c6baa1}
   .rs-retreat-gallery-list{column-gap:14px}
@@ -498,8 +489,12 @@
   .rs-retreat-gallery-preview__hint{margin:32px 0 24px}
   .rs-retreat-closing{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:64px}
 }
-@media(min-width:980px){.rs-retreat-story-grid{gap:90px}.rs-retreat-host-story{gap:90px}.rs-retreat-host-story>figure{padding-top:8px}}
-@media(max-width:599px){.rs-retreat-story-song{padding:21px}.rs-retreat-story-song__art{margin-inline:auto}.rs-retreat-story-song__actions>*{width:100%}}
+@media(min-width:980px){.rs-retreat-story-grid{gap:90px}}
+@media(min-width:900px){
+  .rs-retreat-host-story{grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);column-gap:clamp(36px,5vw,72px);row-gap:40px}
+  .rs-retreat-host-story__portrait picture{position:relative;flex:1;min-height:460px;max-width:none}
+  .rs-retreat-host-story__portrait img{position:absolute;inset:0;height:100%;aspect-ratio:auto}
+}
 @media(min-width:1100px){.rs-retreat-gallery-list{columns:3;column-gap:18px}.rs-retreat-gallery-list figure{margin-block-end:18px}}
 @media(min-width:980px){
   .rs-retreat-facilitators--compact-desktop article{align-content:start}

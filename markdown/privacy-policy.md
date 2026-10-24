@@ -83,9 +83,9 @@ The retreat page connects to Google/YouTube when Hanan’s player enters view, o
 
 Google determines its own processing, retention and international data handling. Removing the player does not erase information already received by Google. See our [video privacy controls](https://rainbowsanctuary.life/cookie-policy#optional-video) and [Google’s Privacy Policy](https://policies.google.com/privacy). Video notice updated: 20 October 2026.
 
-## Optional Spotify player
+## Story song and Spotify link
 
-James’s song cover is served from this website. We connect your browser to Spotify only if you choose to load the embedded player or open the separate Spotify link. Spotify may receive your IP address and browser details and may use cookies or similar storage under its own policies. We do not send your enquiry details to Spotify or store your listening choice. Closing the player removes its frame but does not undo information Spotify has already received. The retreat enquiry does not require listening. See the [Spotify player notice](https://rainbowsanctuary.life/cookie-policy#optional-spotify) and [Spotify’s Privacy Policy](https://www.spotify.com/legal/privacy-policy/).
+James’s full song recording and cover artwork are served from this website. The audio player starts only when you choose Play and does not connect to Spotify. If you choose the separate Spotify link, Spotify may receive your IP address and browser details and may use cookies or similar storage under its own policies. We do not send your enquiry details to Spotify or store your listening choice. The retreat enquiry does not require listening. See the [listening notice](https://rainbowsanctuary.life/cookie-policy#optional-spotify) and [Spotify’s Privacy Policy](https://www.spotify.com/legal/privacy-policy/).
 
 ## Contact-channel information
 
