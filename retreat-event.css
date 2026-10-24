@@ -191,6 +191,9 @@
 .rs-retreat-application header p{margin:0;color:rgba(255,255,255,.7);font-size:16px;line-height:1.75}
 .rs-retreat-button--application{margin-top:24px;border-color:var(--retreat-gold-500);background:var(--retreat-gold-500);color:var(--retreat-forest-950)}
 .rs-retreat-application__reassurance{margin-top:14px!important;color:rgba(255,255,255,.56)!important;font-size:13px!important;line-height:1.6!important}
+.rs-retreat-application__reassurance a,.rs-retreat-application__reassurance a:visited{color:#fff;text-decoration:underline;text-underline-offset:.2em}
+.rs-retreat-application__reassurance a:hover{text-decoration-thickness:2px}
+.rs-retreat-application__reassurance a:focus-visible{outline:2px solid #fff;outline-offset:4px;border-radius:2px}
 .rs-retreat-application ol{display:grid;gap:10px;margin:0;padding:0;list-style:none}
 .rs-retreat-application li{display:grid;grid-template-columns:38px 1fr;gap:15px;border:1px solid rgba(255,255,255,.13);border-radius:18px;padding:18px;background:rgba(255,255,255,.045)}
 .rs-retreat-application li>span{display:grid;width:38px;height:38px;place-items:center;border:1px solid rgba(245,232,201,.35);border-radius:50%;color:var(--retreat-gold-100);font-size:10px}

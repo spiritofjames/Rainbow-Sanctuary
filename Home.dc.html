@@ -8,16 +8,18 @@
 <meta name="theme-color" content="#f5f5f5">
 <link rel="icon" href="./assets/brand/favicon-lotus-64.png?v=20260717-final1" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="./assets/brand/apple-touch-icon.png?v=20260717-final1" sizes="180x180">
+<link rel="preload" as="image" href="./assets/video/home-sanctuary-shore-v3-poster.jpg" fetchpriority="high">
 <link rel="stylesheet" href="./site.css?v=20260714-spectrum1">
 <link rel="stylesheet" href="./group-journey.css?v=20260722-entry1">
 <script src="./site-config.js"></script>
 <script src="./support.js"></script>
 <script src="./cta-effects.js?v=20260714-purple3" defer></script>
 <script src="./home-hero-video.js?v=2" defer></script>
-<script src="./trustpilot-proof.js?v=20260901-1" defer></script>
 <!-- rs-discovery:start -->
 <link rel="canonical" href="https://rainbowsanctuary.life/">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<link rel="alternate" type="text/markdown" href="https://rainbowsanctuary.life/markdown/home.md">
+<link rel="describedby" type="text/plain" href="https://rainbowsanctuary.life/llms.txt">
 <meta property="og:site_name" content="Rainbow Sanctuary">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Rainbow Sanctuary — A New World, Together">
@@ -42,7 +44,6 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@300;400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<script src="./image-slot.js"></script>
 <style>
   body { margin: 0; background: #f5f5f5; }
 
@@ -166,57 +167,32 @@
   .rs-hero-action--secondary { background: rgba(8,20,16,.46); }
   .rs-hero-action--secondary:hover { background: rgba(8,20,16,.72); }
 
-  /* Intentionally hidden until site-config.js contains verified Trustpilot data. */
-  .rs-hero-trustproof {
+  /* Direct review link: no unverified rating, third-party script, or logo asset. */
+  .rs-hero-reviews {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 13px;
-    max-width: min(100%, 560px);
+    gap: 10px;
+    box-sizing: border-box;
+    min-height: 44px;
+    max-width: 100%;
     margin: 24px auto 0;
-    padding: 9px 15px 9px 10px;
-    border: 1px solid rgba(255,255,255,.25);
+    padding: 11px 18px;
+    border: 1px solid rgba(255,255,255,.72);
     border-radius: 999px;
-    background: rgba(7,18,14,.38);
-    box-shadow: 0 12px 34px rgba(0,0,0,.2);
-    color: #fff;
-    text-align: left;
+    background: rgba(255,255,255,.94);
+    color: #173e30;
+    font-size: 13px;
+    line-height: 1.4;
+    text-align: center;
     text-decoration: none;
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+    transition: background 180ms ease, border-color 180ms ease;
   }
 
-  .rs-hero-trustproof:hover { border-color: rgba(255,255,255,.46); background: rgba(7,18,14,.56); transform: translateY(-1px); }
-  .rs-hero-trustproof:focus-visible { outline: 3px solid rgba(211,192,255,.88); outline-offset: 4px; }
-
-  .rs-hero-trustproof__people { display: flex; flex: 0 0 auto; padding-left: 9px; }
-  .rs-hero-trustproof__person {
-    display: grid;
-    width: 34px;
-    height: 34px;
-    margin-left: -9px;
-    overflow: hidden;
-    place-items: center;
-    border: 2px solid rgba(245,245,245,.9);
-    border-radius: 50%;
-    background: #d9f2ea;
-  }
-  .rs-hero-trustproof__person img { width: 100%; height: 100%; object-fit: cover; }
-  .rs-hero-trustproof__detail { display: grid; gap: 2px; min-width: 0; }
-  .rs-hero-trustproof__rating { display: flex; align-items: center; gap: 7px; color: #fff; font-size: 12px; font-weight: 700; }
-  .rs-hero-trustproof__stars {
-    --rs-rating: 0;
-    display: inline-block;
-    background: linear-gradient(90deg, #f5c65e calc(var(--rs-rating) * 20%), rgba(255,255,255,.34) calc(var(--rs-rating) * 20%));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    font-size: 15px;
-    letter-spacing: .12em;
-    line-height: 1;
-  }
-  .rs-hero-trustproof__caption { color: rgba(255,255,255,.74); font-size: 11px; line-height: 1.25; }
+  .rs-hero-reviews:hover { background: #fff; border-color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+  .rs-hero-reviews:focus-visible { outline: 3px solid #d9d4ff; outline-offset: 4px; }
+  .rs-hero-reviews strong { font-weight: 700; }
+  .rs-hero-reviews__arrow { flex: 0 0 auto; font-size: 17px; line-height: 1; }
 
   .rs-hero-motion-toggle {
     position: absolute;
@@ -699,11 +675,7 @@
     .rs-hero-copy p { max-width: 92vw; font-size: 14px; line-height: 1.55; }
     .rs-hero-actions { gap: 10px; margin-top: 20px; }
     .rs-hero-action { min-height: 44px; padding: 10px 16px; font-size: 12px; }
-    .rs-hero-trustproof { gap: 10px; margin-top: 18px; padding-right: 12px; }
-    .rs-hero-trustproof__person { width: 31px; height: 31px; }
-    .rs-hero-trustproof__rating { gap: 5px; font-size: 11px; }
-    .rs-hero-trustproof__stars { font-size: 13px; }
-    .rs-hero-trustproof__caption { font-size: 10px; }
+    .rs-hero-reviews { gap: 8px; margin-top: 18px; padding: 10px 15px; font-size: 12px; }
   }
 
   @media (min-width: 760px) {
@@ -825,12 +797,9 @@
           <a class="rs-hero-action rs-hero-action--primary" href="#find-your-path">Find your starting point</a>
           <a class="rs-hero-action rs-hero-action--secondary" href="/group-healing">Explore Group Healing</a>
         </div>
-        <a class="rs-hero-trustproof" data-trustpilot-proof hidden target="_blank" rel="noopener noreferrer" aria-label="">
-          <span class="rs-hero-trustproof__people" data-trustpilot-avatars aria-hidden="true"></span>
-          <span class="rs-hero-trustproof__detail">
-            <span class="rs-hero-trustproof__rating"><span class="rs-hero-trustproof__stars" data-trustpilot-stars aria-hidden="true">★★★★★</span><span data-trustpilot-score></span></span>
-            <span class="rs-hero-trustproof__caption" data-trustpilot-caption></span>
-          </span>
+        <a class="rs-hero-reviews" href="https://www.trustpilot.com/review/rainbowsanctuary.life" target="_blank" rel="noopener noreferrer" aria-label="Read our reviews on Trustpilot (opens in a new tab)">
+          <span>Read our reviews on <strong>Trustpilot</strong></span>
+          <span class="rs-hero-reviews__arrow" aria-hidden="true">↗</span>
         </a>
       </div>
     </div>
@@ -840,7 +809,7 @@
   <section class="rs-home-promotions" aria-label="Upcoming Rainbow Sanctuary experiences">
     <div class="rs-home-promotions__inner">
       <a class="rs-home-promo rs-home-promo--maintenance rs-home-promo--wide" href="/144-stages-maintenance" aria-label="Explore Regeneration Maintenance">
-        <img class="rs-home-promo__image" src="./assets/editorial/regeneration-maintenance-collective-v1.png" alt="A collective evening practice for renewal and regeneration" width="1600" height="900" loading="eager" decoding="async">
+        <img class="rs-home-promo__image" src="./assets/editorial/regeneration-maintenance-collective-v1.png" alt="A collective evening practice for renewal and regeneration" width="1600" height="900" loading="lazy" decoding="async">
         <div class="rs-home-promo__content">
           <span class="rs-home-promo__eyebrow">Ongoing collective practice</span>
           <h2>Regeneration Maintenance</h2>
@@ -849,7 +818,7 @@
         </div>
       </a>
       <a class="rs-home-promo rs-home-promo--group rs-home-promo--group-healing rs-home-promo--compact" href="/online-group-healing#choose-session" aria-label="Choose the next Online Group Healing session">
-        <img class="rs-home-promo__image" src="./assets/editorial/group-healing-zoom.jpg" alt="" width="1672" height="941" loading="eager" decoding="async">
+        <img class="rs-home-promo__image" src="./assets/editorial/group-healing-zoom.jpg" alt="" width="1672" height="941" loading="lazy" decoding="async">
         <div class="rs-home-promo__content">
           <span class="rs-home-promo__eyebrow">Weekly · live online</span>
           <h2>Join the next Group Healing</h2>
@@ -950,7 +919,7 @@
 
         <div style="position:relative;border-radius:24px;overflow:hidden;height:420px;">
           <div data-image-key="home-spiral" id="home-photo-spiral" style="width:100%;height:100%;">
-            <img src="./assets/editorial/home-spiral-editorial.jpg" alt="Adults in a quiet reflective workshop" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover;object-position:52% 40%;" />
+            <img src="./assets/editorial/home-spiral-editorial.jpg" alt="Adults in a quiet reflective workshop" width="1003" height="1568" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover;object-position:52% 40%;" />
           </div>
           <div style="position:absolute;left:0;right:0;bottom:0;padding:20px 24px;background:linear-gradient(to top, rgba(12,10,9,0.62), rgba(12,10,9,0));pointer-events:none;">
             <a href="/spiral-journey" style="pointer-events:auto;color:#ffffff;font-size:16px;font-weight:500;text-decoration:none;">The Spiral Journey &rarr;</a>
@@ -959,7 +928,7 @@
 
         <div style="position:relative;border-radius:24px;overflow:hidden;height:420px;">
           <div data-image-key="home-family" id="home-photo-family" style="width:100%;height:100%;">
-            <img src="./assets/editorial/home-family-editorial.jpg" alt="A parent accompanying a child in a creative activity" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover;object-position:50% 39%;" />
+            <img src="./assets/editorial/home-family-editorial.jpg" alt="A parent accompanying a child in a creative activity" width="1003" height="1568" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover;object-position:50% 39%;" />
           </div>
           <div style="position:absolute;left:0;right:0;bottom:0;padding:20px 24px;background:linear-gradient(to top, rgba(12,10,9,0.62), rgba(12,10,9,0));pointer-events:none;">
             <a href="/children-and-family" style="pointer-events:auto;color:#ffffff;font-size:16px;font-weight:500;text-decoration:none;">Children &amp; Family &rarr;</a>
@@ -968,7 +937,7 @@
 
         <div style="position:relative;border-radius:24px;overflow:hidden;height:420px;">
           <div data-image-key="home-community" id="home-photo-community" style="width:100%;height:100%;">
-            <img src="./assets/editorial/home-community-editorial.jpg" alt="Adults sharing tea at a small tropical gathering" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover;object-position:50% 45%;" />
+            <img src="./assets/editorial/home-community-editorial.jpg" alt="Adults sharing tea at a small tropical gathering" width="1122" height="1402" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover;object-position:50% 45%;" />
           </div>
           <div style="position:absolute;left:0;right:0;bottom:0;padding:20px 24px;background:linear-gradient(to top, rgba(12,10,9,0.62), rgba(12,10,9,0));pointer-events:none;">
             <a href="/community-stories" style="pointer-events:auto;color:#ffffff;font-size:16px;font-weight:500;text-decoration:none;">Community &amp; Stories &rarr;</a>
@@ -1003,7 +972,7 @@
 
       <a href="/online-group-healing" style="display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;max-width:760px;margin:0 auto 32px;padding:22px 24px;border:1px solid #c8bdf5;border-radius:20px;background:#f0edff;color:#1d1933;text-decoration:none;">
         <span style="display:grid;width:42px;height:42px;place-items:center;border-radius:14px;background:#5a49ea;color:#fff;font-size:12px;font-weight:700;">START</span>
-        <span><strong style="display:block;font-family:'EB Garamond',serif;font-size:24px;font-weight:400;">Online Group Healing</strong><small style="color:#625f5a;font-size:13px;">Twice monthly · one rotating theme</small></span>
+        <span><strong style="display:block;font-family:'EB Garamond',serif;font-size:24px;font-weight:400;">Online Group Healing</strong><small style="color:#625f5a;font-size:13px;">Weekly on Tuesdays · one rotating theme</small></span>
         <span aria-hidden="true">→</span>
       </a>
 
@@ -1101,7 +1070,7 @@
   <section class="rs-home-review-invitation" aria-labelledby="review-invitation-title">
     <div class="rs-home-review-invitation__inner">
       <div class="rs-home-review-invitation__image">
-        <img src="./assets/editorial/trustpilot-review-invitation.jpg" alt="People holding hands together in an outdoor circle" loading="lazy" decoding="async">
+        <img src="./assets/editorial/trustpilot-review-invitation.jpg" alt="People holding hands together in an outdoor circle" width="736" height="736" loading="lazy" decoding="async">
       </div>
       <div class="rs-home-review-invitation__copy">
         <span class="rs-home-review-invitation__eyebrow">Share your experience</span>

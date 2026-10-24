@@ -5,8 +5,20 @@ import path from 'node:path';
 import test from 'node:test';
 
 import { compileKnowledge, validateArticle } from '../scripts/knowledge/compiler.mjs';
+import { knowledgeContributorSchema } from '../scripts/knowledge/entities.mjs';
 
 const fixtureRoot = path.resolve('tests/fixtures/knowledge');
+
+test('Knowledge contributor schema distinguishes the editorial team from an individual author', () => {
+  const editorial = knowledgeContributorSchema({ id: 'rainbow-editorial', name: 'Rainbow Sanctuary Editorial Team', role: 'Website editorial team' });
+  assert.equal(editorial['@type'], 'Organization');
+  assert.equal(editorial['@id'], 'https://rainbowsanctuary.life/#editorial-team');
+  assert.deepEqual(editorial.parentOrganization, { '@id': 'https://rainbowsanctuary.life/#organization' });
+  assert.equal(editorial.jobTitle, undefined);
+  assert.deepEqual(knowledgeContributorSchema({ id: 'stephanie-wu', name: 'Stephanie Wu', role: 'Author' }), {
+    '@type': 'Person', name: 'Stephanie Wu', jobTitle: 'Author',
+  });
+});
 
 test('AC-001 / AC-002: compiles approved public content and excludes drafts from every public artifact', async (t) => {
   const outputDir = await mkdtemp(path.join(os.tmpdir(), 'rainbow-knowledge-'));
@@ -37,8 +49,35 @@ test('AC-001 / AC-002: compiles approved public content and excludes drafts from
   assert.match(directory, /Explore all articles/);
   assert.match(directory, /using-the-library/);
   assert.match(manifest, /"Knowledge-Articles\.dc\.html": "\/knowledge\/articles"/);
+  const schema = JSON.parse(article.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+  const articleEntity = schema['@graph'].find((item) => item['@type'] === 'Article');
+  assert.equal(articleEntity.author['@type'], 'Organization');
+  assert.equal(articleEntity.reviewedBy['@id'], articleEntity.author['@id']);
+  assert.match(landing, /class="rs-knowledge-topic-card"[^>]*><span>Topic<\/span><h3>/);
+  assert.match(landing, /class="rs-knowledge-article-card">[\s\S]*?<h3><a/);
+  assert.doesNotMatch(landing, /class="rs-knowledge-article-card">[\s\S]*?<h2><a/);
+  assert.match(directory, /class="rs-knowledge-article-card">[\s\S]*?<h2><a/);
   assert.doesNotMatch(combined, /PRIVATE_DRAFT_SENTINEL/);
   assert.doesNotMatch(combined, /private-source-path/);
+});
+
+test('Knowledge cards nest below section headings without changing directory heading levels', async (t) => {
+  const outputDir = await mkdtemp(path.join(os.tmpdir(), 'rainbow-knowledge-headings-'));
+  t.after(() => rm(outputDir, { recursive: true, force: true }));
+  await compileKnowledge({ sourceDir: path.resolve('content/knowledge'), outputDir });
+  const article = await readFile(path.join(outputDir, 'Knowledge-shared-practice-of-life.dc.html'), 'utf8');
+  const related = article.match(/<section class="rs-knowledge-related">([\s\S]*?)<\/section>/)[1];
+  assert.match(related, /^<h2>Related articles<\/h2>/);
+  assert.match(related, /<h3><a/);
+  assert.equal([...related.matchAll(/<h2>/g)].length, 1);
+  const topic = await readFile(path.join(outputDir, 'Knowledge-Topic-co-creation-and-community.dc.html'), 'utf8');
+  const directory = await readFile(path.join(outputDir, 'Knowledge-Long-Reads.dc.html'), 'utf8');
+  assert.match(topic, /class="rs-knowledge-article-card">[\s\S]*?<h2><a/);
+  assert.match(directory, /class="rs-knowledge-article-card">[\s\S]*?<h2><a/);
+  const css = await readFile(path.resolve('knowledge.css'), 'utf8');
+  assert.match(css, /\.rs-knowledge-topic-card h3,/);
+  assert.match(css, /\.rs-knowledge-article-card h3,/);
+  assert.match(css, /font-size: 28px; line-height: 1\.12; margin: 8px 0;/);
 });
 
 test('AC-003: approved content requires an auditable publication chronology and opaque source IDs', () => {

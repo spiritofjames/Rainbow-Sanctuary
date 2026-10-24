@@ -10,9 +10,9 @@
   for a favourable review.
 - `rs-session-review-request` is a source-controlled transactional template for
   the existing email lifecycle. Its event is `rs.session.review_requested`.
-- The homepage has no Trustpilot score, star rating, TrustBox, or review count.
-  Do not add any of those until genuine reviews exist and the display details are
-  approved.
+- The homepage hero links directly to the public reviews with “Read our reviews
+  on Trustpilot.” It works without JavaScript and shows no score, star rating,
+  logo asset, TrustBox, reviewer portraits, or cached review count.
 
 ## Manager workflow
 
@@ -57,43 +57,41 @@ external `href` in `review/index.html`; keep the public link
 `https://rainbowsanctuary.life/review` unchanged so managers and email templates
 do not need updating.
 
-## Future homepage score
+## Homepage review link — checked 23 October 2026
 
-The homepage now contains a finished, configuration-gated proof row beneath its
-hero buttons. It follows the approved visual direction: up to four overlapping
-real participant portraits, a star treatment with the verified score, and the
-Trustpilot review count. It is hidden unless every required value is valid.
+The public profile at
+<https://www.trustpilot.com/review/rainbowsanctuary.life> showed one individual
+five-star review and an overall TrustScore of **3.7** (official star graphic:
+3.5 out of 5). A review's individual rating is not the business TrustScore.
+These are dated verification facts, not values to hardcode into the homepage.
 
-When reviews and image permissions are ready, update the `trustpilot` section of
-`site-config.js` using only values visible on the verified public Trustpilot
-profile:
+Read-only inspection of the claimed Trustpilot Business account showed only
+**Review Collector** when filtering website widgets to those included in the
+current plan. Its purpose is collecting reviews, not displaying a live score.
+The Marketing assets page explicitly stated that separate branding assets,
+including logos and stars, are unavailable on the free plan. No subscription,
+trial, review invitation, account setting, or provider integration was changed.
 
-```js
-trustpilot: {
-  enabled: true,
-  profileUrl: "https://www.trustpilot.com/review/rainbowsanctuary.life",
-  score: 4.8,
-  reviewCount: 24,
-  avatars: [
-    { src: "./assets/editorial/trustpilot-participant-01.jpg", alt: "Rainbow Sanctuary participant" }
-  ]
-}
-```
+The old configuration-gated rating row was removed: its CSS `display` rule
+overrode the HTML `hidden` attribute, exposing empty stars even though the
+rating configuration was disabled. Its unused script and score/avatar settings
+were also removed so they cannot accidentally reintroduce stale rating claims.
 
-The component refuses to show if the account link is not a Trustpilot HTTPS URL,
-the score is outside 1–5, the review count is not at least one, or there are no
-consented local participant images. Do not use stock, AI-generated, or
-unconsented faces, and do not replace the Trustpilot count with a broader
-“trusted by” number unless that number has a documented, auditable basis.
+The replacement is a normal, accessible link styled in Rainbow Sanctuary's own
+visual language. It loads no Trustpilot script, image, iframe, or API request.
+Only choosing the link opens the independent profile in a new tab. New reviews
+are visible there without a site update. The separate neutral review invitation
+and disabled email automation remain unchanged.
 
-The score and stars do **not** update automatically when a new Trustpilot review
-arrives. They remain hidden until the approved `site-config.js` values are
-entered, then continue to show those configured values. Do not enable or update
-them based solely on an email notification; confirm the public Trustpilot
-profile first.
+## If a live rating widget is added later
 
-The row does not load a third-party TrustBox script or call the Trustpilot API.
-If a later decision requires automatic updates through Trustpilot's official
-widget or approved API, treat that as a separate integration: review its current
-embed requirements, consent/privacy implications, accessibility, CSP impact,
-and the update/failure behaviour before enabling it.
+Use only an official widget included in the account's confirmed plan, with the
+correct business-unit and template identifiers obtained from the dashboard.
+Do not activate a trial, upgrade a subscription, copy restricted branding
+assets, or imitate a five-star aggregate badge without owner approval and
+verified rights. Always distinguish individual reviews from the overall score.
+
+Before embedding, review the current provider requirements, privacy/consent,
+accessibility, CSP allowlist, performance, and failure behavior. Keep a direct
+profile link available if an embedded widget cannot load. Never scrape a score
+or maintain a hand-edited star rating as a substitute for a permitted live widget.

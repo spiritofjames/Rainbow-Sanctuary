@@ -56,3 +56,4 @@
 ## More context
 
 - [Extended site guide](https://rainbowsanctuary.life/llms-full.txt)
+- [Public Markdown directory](https://rainbowsanctuary.life/markdown/index.md): Text equivalents of the published pages, without forms or private source material

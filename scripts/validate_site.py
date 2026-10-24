@@ -162,6 +162,7 @@ def validate_discovery_layer(
         route: target for route, target in route_map.items()
         if route not in PRIVATE_ROUTES
         and route not in {"/guardian", "/knowledge/search"}
+        and not target.startswith("/api/")
         and Path(target).name not in COMPONENT_PAGES
     }
     if len(discovery_routes) < 39:
@@ -190,11 +191,7 @@ def validate_discovery_layer(
             canonical = f'https://rainbowsanctuary.life{clean_route}'
             if f'<link rel="canonical" href="{canonical}">' not in text:
                 errors.append(f"{target.name}: canonical URL is not {canonical}")
-            expected_robots = (
-                '<meta name="robots" content="noindex,follow'
-                if clean_route == "/knowledge/search"
-                else '<meta name="robots" content="index,follow'
-            )
+            expected_robots = '<meta name="robots" content="index,follow'
             for marker in (
                 expected_robots,
                 '<meta property="og:url"',
@@ -203,6 +200,12 @@ def validate_discovery_layer(
             ):
                 if marker not in text:
                     errors.append(f"{target.name}: missing discovery metadata {marker}")
+
+    search_target = route_map.get("/knowledge/search")
+    if search_target:
+        search_html = (ROOT / search_target.lstrip("/")).read_text(encoding="utf-8")
+        if '<meta name="robots" content="noindex,follow' not in search_html:
+            errors.append("Knowledge search must remain noindex,follow after discovery generation")
 
     expected_urls = {
         f"https://rainbowsanctuary.life{route}" for route in discovery_routes
