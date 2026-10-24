@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { mountTestimonialVideo } from "../retreat-testimonial-videos.js";
 
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
@@ -111,4 +111,17 @@ test("page keeps local posters, a direct fallback and no eager third-party frame
   assert.match(films, /youtube\.com\/shorts\/_4SF8n4Kprs/);
   assert.match(films, /\/cookie-policy#optional-video/);
   assert.doesNotMatch(read("retreat-testimonial-videos.js"), /IntersectionObserver|localStorage|sessionStorage|document\.cookie|fetch\(/);
+});
+
+test("German's card uses the supplied portrait without changing its film or controls", () => {
+  const page = read("Awakening-Your-Inner-Light-2026.dc.html");
+  const card = page.match(/<article[^>]*aria-labelledby="german-video-title"[\s\S]*?<\/article>/)?.[0];
+  assert.ok(card, "German's testimonial card exists");
+  const poster = "assets/retreats/awakening-inner-light-december-2026/testimonials/german-video-cover-20261023.jpg";
+  assert.ok(card.includes(`src="./${poster}"`));
+  assert.ok(existsSync(new URL(`../${poster}`, import.meta.url)));
+  assert.match(card, /width="900" height="1955" loading="lazy" decoding="async"/);
+  assert.match(card, /data-video-id="C6KVdON7Ju0"/);
+  assert.match(card, /data-testimonial-play/);
+  assert.doesNotMatch(card, /german-video-still\.jpg|<iframe/);
 });
