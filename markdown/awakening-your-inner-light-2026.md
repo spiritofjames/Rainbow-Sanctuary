@@ -407,7 +407,7 @@ This is my experience and spiritual interpretation. Yours may be different. If y
 
 A song from my journey
 
-A song I created after the journey, carrying something of that experience into everyday life.
+A song I recorded during one of the ceremonies after my initiation, carrying something of that experience into everyday life.
 
 ![Sonqoypi Bobinsana single cover: luminous flowers beside a moonlit jungle river](https://rainbowsanctuary.life/assets/retreats/awakening-inner-light-december-2026/music/sonqoypi-bobinsana-cover-800.jpg)
 
@@ -417,7 +417,7 @@ Original song · Full recording Headphones on
 
 Hatun Ahayu
 
-From James’s first retreat journey.
+Recorded during a ceremony after my initiation.
 
 [Open in Spotify](https://open.spotify.com/track/2WxJlY7NsAqeQ52lJMJYwU)
 
