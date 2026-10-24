@@ -508,7 +508,7 @@ test("participant reflections use the three supplied films and local covers with
   assert.match(participantFilms, /data-video-id="TKcncu9DIEc"/);
   assert.match(participantFilms, /German Sozzi/);
   assert.match(participantFilms, /Garlon/);
-  assert.match(participantFilms, /german-video-still\.jpg/);
+  assert.match(participantFilms, /german-video-cover-20261023\.jpg/);
   assert.match(participantFilms, /garlon-video-cover-20261023\.jpg/);
   assert.match(participantFilms, /leonella-video-cover-20261023\.jpg/);
   assert.match(participantFilms, /data-video-id="_4SF8n4Kprs"/);

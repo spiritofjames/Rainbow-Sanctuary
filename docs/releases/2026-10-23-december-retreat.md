@@ -56,5 +56,27 @@ is outside the deployment's control.
 
 ## Hosted verification
 
-Pending: protected preview, staging acceptance, production pull request, and
-post-publication HTTP/browser checks. Local passing checks alone are not deployment.
+- Staging PR: #167; commit `5d324692cec96e03d596709ed3f7f2d5d4c0162f`.
+- Staging deployment: `dpl_47CpUYFmFDg5a9sKnxC8w8mHWcCw`, Ready.
+- Production PR: #168, merged 23 October 2026 at 23:10:16 UTC.
+- Production commit: `399381ec8751f5b67479b63478e35c2d0ae29729`.
+- Production deployment: `dpl_2UiPt82Dofd7FWdZxABgtRAUCnS1`, Ready;
+  `rainbow-sanctuary-website-2bksdk1kh.vercel.app`.
+- Production aliases verified: `rainbowsanctuary.life` and
+  `www.rainbowsanctuary.life`.
+- Both staging and production passed 68 HTTP checks covering sitemap routes,
+  discovery files, sharing images, supplied covers and two legacy redirects.
+- Staging registration opens with the December programme selected; the discovery
+  selector sets `discovery-call` intent and the matching message. No new enquiry
+  was submitted. The retreat calendar filter opens December and links all seven
+  dates, 3–9 December, to the correct landing page.
+- Hosted staging Leonella playback was confirmed by the YouTube Pause control
+  after explicit Play. Public production Garlon playback also progressed to 0:01;
+  Stop restored the covers. All three local covers load on the public page.
+- The public hero has one registration CTA, no eager participant iframe, valid
+  December canonical and exact Leonella CSP URL. No horizontal overflow was
+  observed at the reviewed widths. No console error was observed in the tested
+  staging session.
+- GitHub Site quality passed and both release PRs had no unresolved review threads.
+- No rollback required. Post-release documentation is synchronized to staging via
+  a follow-up PR; production page/assets remain the tested release above.
