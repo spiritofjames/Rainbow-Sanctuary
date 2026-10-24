@@ -1,5 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
+import { htmlToMarkdown } from "./lib/html-to-markdown.mjs";
+import { reconcileMarkdown } from "./lib/reconcile-markdown.mjs";
+import { knowledgeContributorSchema } from "./knowledge/entities.mjs";
 import { fileURLToPath } from "node:url";
 
 const scriptsDir = path.dirname(fileURLToPath(import.meta.url));
@@ -12,6 +15,7 @@ const routeLastmod = new Map([
   ["/awakening-your-inner-light-2026", "2026-10-23"],
   ["/awakening-your-inner-light-october-2026", "2026-10-23"],
   ["/events", "2026-10-23"],
+  ["/online-group-healing", "2026-10-23"],
   ["/apply", "2026-10-22"]
 ]);
 // Keep operational jobs in the generated Vercel configuration. Discovery
@@ -140,6 +144,11 @@ const knowledgeRoutes = Object.fromEntries(
   )
 );
 const routes = { ...baseRoutes, ...knowledgeRoutes };
+const indexableRoutes = Object.fromEntries(Object.entries(routes).filter(([, route]) => route !== "/knowledge/search"));
+const markdownPath = (route) => `/markdown/${route === "/" ? "home" : route.slice(1)}.md`;
+reconcileMarkdown(path.join(siteDir, "markdown"), [
+  "index.md", ...Object.values(indexableRoutes).map(route => markdownPath(route).slice("/markdown/".length))
+]);
 
 // Transaction returns are routable but must never be indexed or enter the sitemap.
 const privateRoutes = {
@@ -338,30 +347,8 @@ function schemaFor(file, title, description, canonical, image) {
     });
   }
 
-  if (file === "Online-Group-Healing.dc.html") {
-    graph.push({
-      "@type": "Event",
-      "@id": `${canonical}#event-2026-08-18`,
-      name: "Grounding & Renewal — Online Group Session",
-      description: "A guided online group wellbeing session for grounding, reflection, rest, and shared intention.",
-      image,
-      startDate: "2026-08-18T21:00:00+08:00",
-      eventStatus: "https://schema.org/EventScheduled",
-      eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
-      location: {
-        "@type": "VirtualLocation",
-        url: `${canonical}#choose-session`
-      },
-      organizer: { "@id": `${origin}/#organization` },
-      offers: {
-        "@type": "Offer",
-        price: "22",
-        priceCurrency: "USD",
-        availability: "https://schema.org/InStock",
-        url: `${canonical}#choose-session`
-      }
-    });
-  }
+  // The online group page is a recurring calendar, not a single dated event.
+  // Only publish Event instances once they come from the confirmed calendar.
 
   if (file === "Events-Retreats.dc.html") {
     graph.push({
@@ -394,9 +381,17 @@ function schemaFor(file, title, description, canonical, image) {
       datePublished: knowledgeEntry.firstPublishedAt,
       dateModified: knowledgeEntry.updatedAt,
       inLanguage: knowledgeEntry.locale,
-      author: { "@type": "Person", name: knowledgeEntry.author.name, jobTitle: knowledgeEntry.author.role },
-      reviewedBy: { "@type": "Person", name: knowledgeEntry.reviewer.name, jobTitle: knowledgeEntry.reviewer.role },
+      author: knowledgeContributorSchema(knowledgeEntry.author),
+      reviewedBy: knowledgeContributorSchema(knowledgeEntry.reviewer),
       publisher: { "@id": `${origin}/#organization` }
+    });
+    graph.push({
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: `${origin}/` },
+        { "@type": "ListItem", position: 2, name: "Knowledge", item: `${origin}/knowledge` },
+        { "@type": "ListItem", position: 3, name: knowledgeEntry.title, item: canonical }
+      ]
     });
   }
 
@@ -439,10 +434,15 @@ for (const [file, route] of Object.entries(routes)) {
   const socialImage = brandedSocialImages[imagePath];
   const imageAlt = socialImage?.alt || title;
   const schema = schemaFor(file, title, description, canonical, image);
+  const indexable = Object.hasOwn(indexableRoutes, file);
   const metadata = [
     "<!-- rs-discovery:start -->",
     `<link rel="canonical" href="${canonical}">`,
-    '<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">',
+    `<meta name="robots" content="${indexable ? "index" : "noindex"},follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">`,
+    ...(indexable ? [
+      `<link rel="alternate" type="text/markdown" href="${origin}${markdownPath(route)}">`,
+      `<link rel="describedby" type="text/plain" href="${origin}/llms.txt">`
+    ] : []),
     '<meta property="og:site_name" content="Rainbow Sanctuary">',
     `<meta property="og:type" content="${escapeAttribute(socialType)}">`,
     `<meta property="og:title" content="${escapeAttribute(socialTitle)}">`,
@@ -474,6 +474,14 @@ for (const [file, route] of Object.entries(routes)) {
   source = source.replace("</head>", `${metadata}\n</head>`);
   source = source.replace(/[ \t]+$/gm, "");
   fs.writeFileSync(filePath, source);
+  if (indexable) {
+    const body = htmlToMarkdown(source, canonical);
+    if (!body.trim()) throw new Error(`Empty public Markdown: ${route}`);
+    const target = path.join(siteDir, markdownPath(route));
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    const heading = /^# /m.test(body) ? "" : `# ${title}\n\n`;
+    fs.writeFileSync(target, `${heading}Source: ${canonical}\n\n${body.trim()}\n`);
+  }
 }
 
 // Keep the support invitation present even on routable, non-indexed pages.
@@ -520,6 +528,11 @@ const redirects = [
 ];
 
 const rewrites = [
+  // Source material is not published content. Explicit denials also protect
+  // Git-backed static deployments, where source files remain in the checkout.
+  ...["content", "docs", "tests", "scripts", "output"].map((directory) => ({
+    source: `/${directory}/:path*`, destination: "/api/private-source"
+  })),
   { source: "/guardian", destination: "/guardian/index.html" },
   { source: "/knowledge/SiteNavFixed.dc.html", destination: "/SiteNavFixed.dc.html" },
   { source: "/knowledge/(.*)/SiteNavFixed.dc.html", destination: "/SiteNavFixed.dc.html" },
@@ -529,6 +542,24 @@ const rewrites = [
 }))
 ];
 
+// Markdown is an alternate representation, not a competing search landing page.
+// Keep the canonical association available even to non-HTML clients.
+headers.push(...Object.values(indexableRoutes).map((route) => ({
+  source: markdownPath(route),
+  headers: [
+    { key: "Content-Type", value: "text/markdown; charset=utf-8" },
+    { key: "X-Robots-Tag", value: "noindex" },
+    { key: "Link", value: `<${origin}${route}>; rel="canonical", <${origin}/llms.txt>; rel="describedby"` }
+  ]
+})));
+headers.push({
+  source: "/markdown/index.md",
+  headers: [
+    { key: "Content-Type", value: "text/markdown; charset=utf-8" },
+    { key: "X-Robots-Tag", value: "noindex" }
+  ]
+});
+
 fs.writeFileSync(
   path.join(siteDir, "vercel.json"),
   `${JSON.stringify({ trailingSlash: false, crons, headers, redirects, rewrites }, null, 2)}\n`
@@ -537,7 +568,7 @@ fs.writeFileSync(
 const sitemap = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-  ...Object.values(routes).filter((route) => route !== "/knowledge/search").map((route) => {
+  ...Object.values(indexableRoutes).map((route) => {
     const entry = knowledgeEntryByPath.get(route);
     return `  <url><loc>${origin}${route}</loc><lastmod>${entry?.updatedAt || routeLastmod.get(route) || lastmod}</lastmod></url>`;
   }),
@@ -621,8 +652,15 @@ ${knowledgeLlms}
 ## More context
 
 - [Extended site guide](${origin}/llms-full.txt)
+- [Public Markdown directory](${origin}/markdown/index.md): Text equivalents of the published pages, without forms or private source material
 `;
 fs.writeFileSync(path.join(siteDir, "llms.txt"), llms);
+
+const markdownIndex = `# Rainbow Sanctuary — Public Markdown\n\nText equivalents of public pages. Follow each source URL for current interactive calendars, booking options, and media. These copies do not include form fields, submissions, private records, or unpublished editorial drafts.\n\n${Object.entries(indexableRoutes).map(([file, route]) => {
+  const title = extract(fs.readFileSync(path.join(siteDir, file), "utf8"), /<title>([\s\S]*?)<\/title>/i, route);
+  return `- [${title}](${origin}${markdownPath(route)}) — [Web page](${origin}${route})`;
+}).join("\n")}\n`;
+fs.writeFileSync(path.join(siteDir, "markdown/index.md"), markdownIndex);
 
 const llmsFull = `# Rainbow Sanctuary — Extended Site Guide
 
@@ -657,7 +695,7 @@ Programs include ReGeneration, Earth Healer Training, Rainbow Light Codes, Cryst
 
 ### Children and families
 
-The family area includes Unlock the Potential and the Children's Potential Coach pathway. The overview is at ${origin}/children-and-family. Safeguarding information is published at ${origin}/children-safeguarding.
+The Awakening Academy is a guardian-supported educational and experiential pathway for children ages 5–15. Every child starts with the 4-Day Foundation, followed by parent-and-team review before Level I and Level II. Completion is recognised with a Certificate of Accomplishment; ongoing community practice is invitation-only. Participation is voluntary and not a performance standard. The Children's Potential Coach Certification is a separate adult professional pathway, not a programme for child participants. The overview is at ${origin}/children-and-family. Safeguarding information is published at ${origin}/children-safeguarding.
 
 ### Private healing
 

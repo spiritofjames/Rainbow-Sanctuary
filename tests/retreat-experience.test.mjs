@@ -535,6 +535,16 @@ test("hero has one Register Your Interest CTA while discovery-call guidance rema
   assert.match(page.slice(page.indexOf('<section id="listen"')), /Can I request a discovery call before deciding\?/);
 });
 
+test("application discovery-call link stays white and recognizable on the dark section", () => {
+  const css = read("retreat-event.css");
+  const linkRule = css.match(/\.rs-retreat-application__reassurance a,\.rs-retreat-application__reassurance a:visited\{([^}]+)\}/)?.[1];
+  assert.ok(linkRule, "normal and visited link states share the high-contrast style");
+  assert.match(linkRule, /color:#fff;/);
+  assert.match(linkRule, /text-decoration:underline;/);
+  assert.match(css, /\.rs-retreat-application__reassurance a:focus-visible\{[^}]*outline:2px solid #fff;[^}]*outline-offset:4px/);
+  assert.match(page, /retreat-event\.css\?v=20261023-discovery-contrast/);
+});
+
 test("setting features the supplied shoreline photo without cropping and with responsive lazy loading", () => {
   const setting = page.slice(page.indexOf('id="setting"'), page.indexOf('id="practical-details"'));
   assert.equal((setting.match(/class="rs-retreat-land-photo"/g) || []).length, 1);

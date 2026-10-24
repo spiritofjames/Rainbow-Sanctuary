@@ -72,6 +72,1005 @@
           "value": "noindex, nofollow, noarchive"
         }
       ]
+    },
+    {
+      "source": "/markdown/home.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/about.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/about>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/private-healing.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/private-healing>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/accessibility.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/accessibility>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/adult-potential-development.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/adult-potential-development>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/autism-family-support.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/autism-family-support>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/awakening-your-inner-light-2026.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/awakening-your-inner-light-2026>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/awakening-your-inner-light-october-2026.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/awakening-your-inner-light-october-2026>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/bigger-vision.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/bigger-vision>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/awakening-academy-foundation.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/awakening-academy-foundation>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/awakening-academy-level-1.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/awakening-academy-level-1>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/awakening-academy-level-2.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/awakening-academy-level-2>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/apply.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/apply>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/children-and-family.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/children-and-family>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/children-safeguarding.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/children-safeguarding>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/childrens-potential-coach-certification.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/childrens-potential-coach-certification>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/community-stories.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/community-stories>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/contribute.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/contribute>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/cookie-policy.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/cookie-policy>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/crystal-healing.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/crystal-healing>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/dna-activation.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/dna-activation>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/earth-healer-training.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/earth-healer-training>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/earth-healing-zone.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/earth-healing-zone>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/events.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/events>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/family-information-field-restoration.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/family-information-field-restoration>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/group-healing.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/group-healing>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/online-group-healing.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/online-group-healing>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/holographic-healing.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/holographic-healing>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/intuitive-perception-training.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/intuitive-perception-training>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/children-weekly-practice.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/children-weekly-practice>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/personal-karma-reconciliation.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/personal-karma-reconciliation>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/practitioner-certification.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/practitioner-certification>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/privacy-policy.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/privacy-policy>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/rainbow-light-codes.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/rainbow-light-codes>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/regeneration.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/regeneration>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/spiral-i.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/spiral-i>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/spiral-ii.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/spiral-ii>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/spiral-iii.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/spiral-iii>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/spiral-iv.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/spiral-iv>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/spiral-journey.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/spiral-journey>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/terms.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/terms>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/unlock-the-potential.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/unlock-the-potential>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/wellbeing-disclaimer.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/wellbeing-disclaimer>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/programs.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/programs>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/articles.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/articles>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/long-reads.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/long-reads>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/topics/getting-started.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/topics/getting-started>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/topics/consciousness-and-reflection.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/topics/consciousness-and-reflection>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/topics/co-creation-and-community.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/topics/co-creation-and-community>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/topics/earth-stewardship.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/topics/earth-stewardship>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/shared-practice-of-life.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/shared-practice-of-life>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/a-living-vision-for-rainbow-sanctuary.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/a-living-vision-for-rainbow-sanctuary>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/co-creation-principles-for-rainbow-sanctuary.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/co-creation-principles-for-rainbow-sanctuary>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/life-from-dust-to-the-stars.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/life-from-dust-to-the-stars>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/the-game-of-consciousness.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/the-game-of-consciousness>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/twelve-reflections-on-collective-consciousness.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/twelve-reflections-on-collective-consciousness>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/using-the-library.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/using-the-library>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/index.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
     }
   ],
   "redirects": [
@@ -392,6 +1391,26 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/content/:path*",
+      "destination": "/api/private-source"
+    },
+    {
+      "source": "/docs/:path*",
+      "destination": "/api/private-source"
+    },
+    {
+      "source": "/tests/:path*",
+      "destination": "/api/private-source"
+    },
+    {
+      "source": "/scripts/:path*",
+      "destination": "/api/private-source"
+    },
+    {
+      "source": "/output/:path*",
+      "destination": "/api/private-source"
+    },
     {
       "source": "/guardian",
       "destination": "/guardian/index.html"
