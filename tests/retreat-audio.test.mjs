@@ -133,7 +133,8 @@ test("listening section follows hero and ships a real, deferred audio source", (
   const section = html.indexOf('id="listen"');
   assert.ok(section > html.indexOf('class="rs-retreat-hero"'));
   assert.ok(section < html.indexOf('class="rs-retreat-nav"'));
-  const audio = html.match(/<audio\b[^>]*>[\s\S]*?<\/audio>/g);
+  const listening = html.slice(section, html.indexOf('class="rs-retreat-nav"'));
+  const audio = listening.match(/<audio\b[^>]*>[\s\S]*?<\/audio>/g);
   assert.equal(audio.length, 1);
   assert.match(audio[0], /controls="\{\{ true \}\}" preload="none"/);
   assert.doesNotMatch(audio[0], /autoplay/);

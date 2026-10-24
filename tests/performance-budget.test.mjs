@@ -51,4 +51,10 @@ test("performance changes preserve the approved video and audio loading behaviou
   assert.match(home, /home-sanctuary-shore-v3-desktop\.mp4"/);
   assert.match(retreat, /<audio\b[^>]*preload="none"/);
   assert.doesNotMatch(retreat, /<iframe\b[^>]*src="https:\/\/(?:www\.youtube|open\.spotify)/);
+  const recordings = [...retreat.matchAll(/<audio\b[^>]*>/g)].map(match => match[0]);
+  assert.equal(recordings.length, 2);
+  for (const recording of recordings) {
+    assert.match(recording, /preload="none"/);
+    assert.doesNotMatch(recording, /\bautoplay(?:=|\s|>)/);
+  }
 });

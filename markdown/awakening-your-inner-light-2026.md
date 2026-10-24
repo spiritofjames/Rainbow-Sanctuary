@@ -393,33 +393,33 @@ James’s story · My first ayahuasca retreat
 
 ## I waited five years. I wanted to trust the people guiding me.
 
-My first ayahuasca retreat was here in October. For five years, I had opportunities to take part—even invitations that would have cost me nothing—but I kept waiting. I wanted to feel a real trust in the people who would guide me, and in the space we would enter together.
+My first ayahuasca retreat was here in October. For five years, I had opportunities to take part, but I waited. I wanted to trust the people guiding me and the space we would enter together.
 
-I arrived during a difficult period in my life. What unfolded felt, to me, like a profound remembering. Receiving a sacred name touched me so deeply that I felt it through my whole body. I experienced a closeness to the plants and to the sacred that is difficult to put into words.
-
-A song came from that journey. For me, it was a way to give expression to something I had experienced in ceremony—to let it become part of my life, rather than only a memory.
+I arrived during a difficult period. What unfolded felt like a profound remembering: receiving a sacred name, a closeness to the plants, and an experience I felt through my whole body.
 
 > “It is the most powerful experience of my life, and this is just the beginning.”
 
-And that is why integration matters so much to me. I do not want to measure a journey only by what happened in ceremony. I want to ask how I listen, how I relate, how I meet my emotions, and how I live what I have understood. That is part of the work I now bring alongside Stephanie.
+Integration is how I carry it into everyday life: how I listen, relate, and meet my emotions. That is the work I now bring alongside Stephanie.
 
-This is my experience and my spiritual interpretation—not a prediction of yours. If you are curious and cautious at the same time, I understand. You can ask questions, take your time, and decide what is right for you.
+This is my experience and spiritual interpretation. Yours may be different. If you are curious and cautious, you can ask questions, take your time, and decide what is right for you.
 
-![Sonqoypi Bobinsana single cover: luminous flowers beside a moonlit jungle river](https://rainbowsanctuary.life/assets/retreats/awakening-inner-light-december-2026/music/sonqoypi-bobinsana-cover-800.jpg)
+[Read the first-time questions](https://rainbowsanctuary.life/awakening-your-inner-light-2026#frequently-asked-questions)
 
 A song from my journey
 
+A song I created after the journey, carrying something of that experience into everyday life.
+
+![Sonqoypi Bobinsana single cover: luminous flowers beside a moonlit jungle river](https://rainbowsanctuary.life/assets/retreats/awakening-inner-light-december-2026/music/sonqoypi-bobinsana-cover-800.jpg)
+
+Original song · Full recording Headphones on
+
 ### Sonqoypi Bobinsana
 
-During my plant-medicine journey, I felt my sacred name awaken within me. This song came afterward, carrying something of that experience into my everyday life.
+Hatun Ahayu
 
-Hatun Ahayu · Choose how to listen
+From James’s first retreat journey.
 
 [Open in Spotify](https://open.spotify.com/track/2WxJlY7NsAqeQ52lJMJYwU)
-
-The player connects to Spotify only if you choose to load it. Spotify may use cookies or similar storage. [Listening privacy](https://rainbowsanctuary.life/cookie-policy#optional-spotify)
-
-[Read the first-time questions](https://rainbowsanctuary.life/awakening-your-inner-light-2026#frequently-asked-questions)
 
 Meet your facilitators
 

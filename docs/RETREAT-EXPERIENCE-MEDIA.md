@@ -264,7 +264,22 @@ The six-photo responsive grid was superseded by the 59-photo collage above.
 
 James supplied `Rainbow Sactuary/Ceremony Music/Aya retreat October 2026 - Bluff/Hatun Ahayu/Sonqoypi Bobinsana Single Cover.png` (3000 × 3000 PNG) for the song card under his first-person story. The source remains untouched. The site serves an 800 × 800 WebP (137 KB) with an 800 × 800 JPEG fallback (266 KB) from `assets/retreats/awakening-inner-light-december-2026/music/`.
 
-The cover and direct track link are first-party/ordinary page content. The Spotify iframe is created only after a visitor chooses to load it; closing removes the frame. Its source is restricted to the owner-supplied track ID in the site CSP, and adjacent copy plus the Cookie and Privacy policies disclose the provider connection. Spotify determines playback availability for each listener; no full-track availability is promised. This is local work, not a staged or production release.
+The original revision used a visitor-loaded Spotify iframe. It was superseded by the full recording and layout revision below.
+
+## James's story and full recording — 24 October 2026
+
+The desktop portrait and shortened first-person story now share one grid row, with a larger portrait that follows the text column's height. The song player spans both columns beneath them. Mobile keeps the portrait, story and player in reading order.
+
+Reference checked: `alimmethod.com/podcast` and its local source at `Spirit of James/website/app/podcast/page.tsx`. That implementation uses a full-width, 352px official Spotify show embed. The same official embed presentation was tried for this music track, but Spotify displayed a Preview badge and opened a “Listen to the full track” prompt in the test browser. Spotify's own troubleshooting explains that playback availability depends on the browser and encrypted-media support. The final implementation uses James's supplied full recording to provide direct, complete playback within the page, with a separate link to the same Spotify track.
+
+- Source: `Rainbow Sactuary/Ceremony Music/Aya retreat October 2026 - Bluff/Hatun Ahayu/Hatun Ahayu - Sonqoypi Bobinsana.mp3`.
+- Delivery: `assets/retreats/awakening-inner-light-december-2026/audio/sonqoypi-bobinsana-hatun-ahayu.mp3`.
+- Duration: 359.097021 seconds (5:59); stereo MP3, 48 kHz; 7,901,282 bytes.
+- Imported without re-encoding. Extra source metadata/artwork removed; title and artist set. Encoded-audio SHA-256 matches source: `900ee2c937c18606418870df611a6202d70dd61fa1e371b4e39874b9c8faefcb`.
+- Existing `retreat-audio.js` supplies play/pause, seeking, volume/mute and native fallback; audio uses `preload="none"`, with no autoplay. Its status announcements remain available to assistive technology without adding helper text beneath the player.
+- Cover uses the existing owner-supplied WebP/JPEG derivatives. No Spotify iframe or new player dependency is needed; the obsolete two-step loader is removed, and Spotify is removed from frame-src. Cookie/Privacy copy reflects first-party listening and the external Spotify link.
+
+Official references: https://developer.spotify.com/documentation/embeds/tutorials/creating-an-embed and https://developer.spotify.com/documentation/embeds/tutorials/troubleshooting.
 
 ## Validation boundary
 
