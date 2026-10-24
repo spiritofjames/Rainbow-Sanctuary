@@ -14,7 +14,7 @@ const browserFiles = new Set([
   "home-hero-video.js", "image-slot.js", "kids-weekly-practice-checkout.js", "knowledge-search.js",
   "offer-experience.js", "payment-confirmation.js", "persona-faqs.js", "public-event-feed.js",
   "regeneration-maintenance-checkout.js", "regeneration-maintenance-scheduler.js", "retreat-audio.js",
-  "retreat-gallery.js", "retreat-integration-slider.js", "retreat-story-song.js",
+  "retreat-gallery.js", "retreat-integration-slider.js",
   "retreat-testimonial-videos.js", "retreat-video.js", "site-config.js", "support.js", "supported-pathway-scheduler.js"
 ]);
 const componentFiles = ["SiteNav.dc.html", "SiteNavCinematic.dc.html", "SiteNavFixed.dc.html", "SiteNavLotus.dc.html"];

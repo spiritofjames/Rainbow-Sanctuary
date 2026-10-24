@@ -4,7 +4,6 @@ import { existsSync, readFileSync, statSync } from "node:fs";
 import vm from "node:vm";
 import { initIntegrationSlider, initMamaGaiaSlider } from "../retreat-integration-slider.js";
 import { initRetreatGallery } from "../retreat-gallery.js";
-import { initStorySong } from "../retreat-story-song.js";
 
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 const page = read("Awakening-Your-Inner-Light-2026.dc.html");
@@ -37,7 +36,7 @@ test("experience narrative preserves music, genuine guest voices and separate ho
   assert.doesNotMatch(voices, /data-speaker|00:\d\d|private-source|sharing-circle-after/);
   assert.match(page, /Retreat co-host/);
   assert.match(page, /not an independent guest review/);
-  assert.match(page, /not a prediction of yours/);
+  assert.match(page, /This is my experience and spiritual interpretation\. Yours may be different/);
 });
 
 test("curated gallery presents all 22 real photographs in one mixed-ratio collage", () => {
@@ -419,23 +418,11 @@ test("first-person co-host story, team attribution and integration remain transp
   assert.match(story, /edited from James’s own words/);
   assert.match(story, /A song from my journey/);
   assert.match(story, /Sonqoypi Bobinsana/);
-  assert.match(story, /Hatun Ahayu · Choose how to listen/);
-  assert.match(story, /data-story-song/);
-  assert.match(story, /sonqoypi-bobinsana-cover-800\.webp/);
-  assert.match(story, /sonqoypi-bobinsana-cover-800\.jpg/);
-  for (const extension of ["webp", "jpg"]) {
-    const art = new URL(`../assets/retreats/awakening-inner-light-december-2026/music/sonqoypi-bobinsana-cover-800.${extension}`, import.meta.url);
-    assert.ok(existsSync(art) && statSync(art).size < 300_000, `${extension} cover is optimized and present`);
-  }
+  assert.match(story, /Hatun Ahayu/);
   assert.match(story, /href="https:\/\/open\.spotify\.com\/track\/2WxJlY7NsAqeQ52lJMJYwU" target="_blank" rel="noopener noreferrer"/);
-  assert.match(story, /data-spotify-load[^>]*hidden/);
-  assert.match(story, /data-spotify-embed hidden/);
-  assert.match(story, /cookie-policy#optional-spotify/);
-  assert.match(page, /retreat-story-song\.js\?v=20261022-1/);
-  assert.match(read("retreat-event.css"), /@container \(min-width:540px\)\{\.rs-retreat-story-song__main\{grid-template-columns:/);
   assert.match(read("Cookie-Policy.dc.html"), /id="optional-spotify"/);
   assert.match(read("Privacy-Policy.dc.html"), /id="optional-spotify"/);
-  assert.doesNotMatch(story, /<iframe\b|autoplay=/);
+  assert.doesNotMatch(story, /<iframe\b|autoplay=|data-spotify-load|data-spotify-status|retreat-story-song\.js/);
   assert.doesNotMatch(story, /James’s first ayahuasca|He arrived|He describes|For James,/);
   const integration = page.slice(page.indexOf('id="integration"'), page.indexOf('id="participant-stories"'));
   assert.match(integration, /<strong>Ethel<\/strong><span>Retreat organiser &amp; caregiver/);
@@ -444,43 +431,23 @@ test("first-person co-host story, team attribution and integration remain transp
   assert.doesNotMatch(integration, /Retreat guest|Retreat participant<\/span>/);
 });
 
-test("Spotify player loads only on an explicit choice and can be closed", () => {
-  const handlers = new Map();
-  const button = {
-    hidden: true,
-    textContent: "",
-    addEventListener(type, handler) { handlers.set(type, handler); },
-    setAttribute(name, value) { this[name] = value; },
-  };
-  const slot = {
-    hidden: true,
-    children: [],
-    replaceChildren(...nodes) { this.children = nodes; },
-  };
-  const status = { textContent: "" };
-  const nodes = new Map([
-    ["[data-spotify-load]", button],
-    ["[data-spotify-embed]", slot],
-    ["[data-spotify-status]", status],
-  ]);
-  const root = {
-    dataset: {},
-    querySelector(selector) { return nodes.get(selector); },
-    ownerDocument: { createElement(tag) { assert.equal(tag, "iframe"); return {}; } },
-  };
-  initStorySong(root);
-  assert.equal(button.hidden, false);
-  assert.equal(slot.children.length, 0, "no third-party frame before visitor choice");
-  handlers.get("click")();
-  assert.equal(slot.children.length, 1);
-  assert.equal(slot.children[0].src, "https://open.spotify.com/embed/track/2WxJlY7NsAqeQ52lJMJYwU");
-  assert.equal(slot.children[0].loading, "lazy");
-  assert.equal(slot.hidden, false);
-  assert.equal(button["aria-expanded"], "true");
-  handlers.get("click")();
-  assert.equal(slot.children.length, 0);
-  assert.equal(slot.hidden, true);
-  assert.equal(button["aria-expanded"], "false");
+test("James's full recording uses the existing first-party player without a Spotify preview gate", () => {
+  const story = page.slice(page.indexOf('id="first-time"'), page.indexOf('id="facilitators"'));
+  const recording = "./assets/retreats/awakening-inner-light-december-2026/audio/sonqoypi-bobinsana-hatun-ahayu.mp3";
+  assert.ok(existsSync(new URL(`../${recording}`, import.meta.url)));
+  assert.match(story, /data-retreat-audio data-track-title="Sonqoypi Bobinsana" data-duration="359\.097021"/);
+  const audio = story.match(/<audio\b[^>]*>/)?.[0];
+  assert.ok(audio?.includes(`src="${recording}"`));
+  assert.match(audio, /controls="\{\{ true \}\}" preload="none"/);
+  assert.match(story, /aria-label="Play Sonqoypi Bobinsana"/);
+  assert.match(story, /aria-label="Seek within Sonqoypi Bobinsana"/);
+  assert.match(story, /data-audio-duration>5:59/);
+  assert.match(story, /sonqoypi-bobinsana-cover-800\.webp/);
+  assert.match(story, /sonqoypi-bobinsana-cover-800\.jpg/);
+  assert.doesNotMatch(story, /<iframe\b|\bautoplay(?:=|\s|>)/);
+  assert.doesNotMatch(page, /retreat-story-song\.js/);
+  const cookieNotice = read("Cookie-Policy.dc.html");
+  assert.match(cookieNotice, /player does not autoplay or connect to Spotify/);
 });
 
 test("tradition and setting copy do not invent precise credentials, cures or included excursions", () => {
@@ -503,6 +470,7 @@ test("participant reflections use the three supplied films and local covers with
   assert.match(page, /data-media-status="approved-youtube" data-video-id="bqe-GyjWn4U"/);
   assert.doesNotMatch(page, /His forthcoming film|Conversation with Hanan · Film coming soon/);
   const participantFilms = page.slice(page.indexOf('id="participant-stories"'), page.indexOf('id="first-time"'));
+  assert.doesNotMatch(participantFilms, /<iframe\b/);
   assert.equal((participantFilms.match(/data-testimonial-video data-video-id=/g) || []).length, 3);
   assert.match(participantFilms, /data-video-id="C6KVdON7Ju0"/);
   assert.match(participantFilms, /data-video-id="TKcncu9DIEc"/);
@@ -542,7 +510,7 @@ test("application discovery-call link stays white and recognizable on the dark s
   assert.match(linkRule, /color:#fff;/);
   assert.match(linkRule, /text-decoration:underline;/);
   assert.match(css, /\.rs-retreat-application__reassurance a:focus-visible\{[^}]*outline:2px solid #fff;[^}]*outline-offset:4px/);
-  assert.match(page, /retreat-event\.css\?v=20261023-discovery-contrast/);
+  assert.match(page, /retreat-event\.css\?v=20261024-host-story/);
 });
 
 test("setting features the supplied shoreline photo without cropping and with responsive lazy loading", () => {

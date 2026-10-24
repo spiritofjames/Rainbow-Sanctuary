@@ -1,5 +1,17 @@
 # Release log
 
+## 2026-10-24 — Public AI discovery, performance and source containment
+
+- **Release owner:** James; explicitly requested “push to production” after the protected staging handoff.
+- **Pull requests:** #173 (staging), #174 (production).
+- **Production commit:** `53b950ea4569610c7c7fee925cc095519a44191d`.
+- **Production deployment:** `dpl_Brv5u2Ph2zrJxSn6HtXweNEqm4fF` (Ready; public domain verified).
+- **Previous deployment / rollback:** `dpl_Hg4HWSTyJKLR6Aas2Ny9gAj5QpDm`, commit `43240a8abc5efdecfd4ae411e18f9f5b04660d1d`.
+- **Summary:** Publish 58 public-page Markdown mirrors and their directory, consistent metadata/headings/schema and discovery routes, bounded loading improvements, the approved Trustpilot profile link and white retreat discovery-call link. Serve only the explicit public-build allowlist; unpublished source, docs, tests, scripts and package metadata are no longer publicly served. Existing native API behavior is preserved.
+- **Verification:** Fresh 252 tests, 66-page validation, 27 email templates/contracts and 25-file release integrity; green GitHub Site quality and Endpoint health; 130 production HTTP checks passed; desktop/mobile browser review and December discovery-call prefill/unchecked consent verified without submission. Source-path HEAD checks return 404; API GET returns 405.
+- **Review boundaries:** No new human privacy/legal, accessibility certification or physical-device sign-off; prior owner-accepted exceptions remain explicit. No live CRM/email/payment write tests, actual AI-citation/indexing claims or field Core Web Vitals claims. Pre-existing literal `<mark>` text in search excerpts remains a minor follow-up. See [release evidence](releases/2026-10-24-geo-production.md).
+- **Rollback required:** No. Reverting to the previous deployment would also restore its source-file exposure; prefer a reviewed forward fix unless a more severe fault requires rollback.
+
 ## 2026-10-23 — German testimonial portrait cover
 
 - **Release owner:** James; explicitly approved publication through staging to live.
