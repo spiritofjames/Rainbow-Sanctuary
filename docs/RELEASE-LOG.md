@@ -1,5 +1,17 @@
 # Release log
 
+## 2026-10-23 — German testimonial portrait cover
+
+- **Release owner:** James; explicitly approved publication through staging to live.
+- **Pull requests:** #170 (staging), #171 (production).
+- **Production commit:** `43240a8abc5efdecfd4ae411e18f9f5b04660d1d`.
+- **Production deployment:** `dpl_Hg4HWSTyJKLR6Aas2Ny9gAj5QpDm` (Ready; public domain verified).
+- **Previous deployment / rollback:** `dpl_2UiPt82Dofd7FWdZxABgtRAUCnS1`, commit `399381ec8751f5b67479b63478e35c2d0ae29729`.
+- **Summary:** Replace German Sozzi's landscape testimonial still with the owner-supplied portrait. Preserve the original source, video ID, manual playback, card copy, other covers and all intake routing. Add descriptive alt text, dimensions, provenance and regression coverage.
+- **Verification:** 219 automated tests, 66-page validation, email/release/discovery checks; protected preview desktop/mobile checks; staging legacy redirect and Play/Stop checks; 68 production HTTP checks and exact published-image SHA-256 match. Live portrait loaded at 900 × 1955; no participant-video iframe before interaction.
+- **Review boundaries:** This is a cover-only update. No new legal, accessibility certification, physical-device review, testimonial claims or end-to-end email-delivery claims. Previous release review exceptions remain documented in its acceptance record.
+- **Rollback required:** No.
+
 ## 2026-10-23 — December retreat, participant films and branded link previews
 
 - **Release owner:** James.
