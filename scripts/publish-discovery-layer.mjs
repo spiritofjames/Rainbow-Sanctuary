@@ -528,8 +528,8 @@ const redirects = [
 ];
 
 const rewrites = [
-  // Source material is not published content. Explicit denials also protect
-  // Git-backed static deployments, where source files remain in the checkout.
+  // The public-build allowlist excludes source files; these routes additionally
+  // return a predictable 404. Rewrites alone cannot override static files.
   ...["content", "docs", "tests", "scripts", "output"].map((directory) => ({
     source: `/${directory}/:path*`, destination: "/api/private-source"
   })),
@@ -562,7 +562,7 @@ headers.push({
 
 fs.writeFileSync(
   path.join(siteDir, "vercel.json"),
-  `${JSON.stringify({ trailingSlash: false, crons, headers, redirects, rewrites }, null, 2)}\n`
+  `${JSON.stringify({ buildCommand: "npm run build", outputDirectory: "public-build", trailingSlash: false, crons, headers, redirects, rewrites }, null, 2)}\n`
 );
 
 const sitemap = [

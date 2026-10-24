@@ -52,6 +52,14 @@ the resulting files. Commit all generated output. Knowledge search remains
 Repository-only content/docs/tests/scripts/output paths must return HTTP 404
 on previews and staging. Verify this on Vercel, not a plain local static server.
 
+Vercel runs `npm run build` and serves only `public-build/`. The final packaging
+step copies public pages, browser scripts/styles, approved media, Markdown,
+Pagefind, and the existing guardian/review interfaces. Source, docs, tests,
+email templates and package metadata are not copied. Native `api/` functions
+and their imports remain in the source checkout for Vercel's function tracing.
+Do not revert the output directory to the repository root: static files take
+precedence over source-denial rewrites.
+
 ## Production promotion
 
 1. Complete every required item in

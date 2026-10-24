@@ -29,7 +29,7 @@ Full local/CI and staging verification results are recorded in the release hando
 
 A headers-only request to the unpublished editorial-template path under `/content/knowledge/articles/` returned HTTP 200 and Markdown content type on production. The body was not retrieved. This is a confirmed publication-boundary defect; sensitivity and historical access are not established. No secret exposure is asserted.
 
-Owner notified during this task. Repository-only `/content`, `/docs`, `/tests`, `/scripts` and `/output` routes now fail closed through a 404 handler in the staging candidate. This preserves build inputs and source evidence while preventing those files from being served as public content. A protected staging HTTP check must confirm routing precedes static-file delivery. Production containment remains pending a separately authorized promotion; do not describe this as fixed live.
+Owner notified during this task. The first protected preview showed that static files take precedence over denial rewrites. The release now packages an explicit public allowlist in `public-build/`, excluding source material from static delivery, while retaining native API source and email imports for function tracing. Repository-only `/content`, `/docs`, `/tests`, `/scripts` and `/output` routes additionally return a predictable 404. Protected preview and staging HTTP checks must verify both the excluded paths and functional public/API routes. Production containment remains pending a separately authorized promotion; do not describe this as fixed live.
 
 ## What remains outside this release
 
@@ -45,5 +45,6 @@ Owner notified during this task. Repository-only `/content`, `/docs`, `/tests`, 
 - [OpenAI crawler documentation](https://developers.openai.com/api/docs/bots): search and training controls are independent.
 - [Perplexity crawler documentation](https://docs.perplexity.ai/docs/resources/perplexity-crawlers): PerplexityBot supports search, not foundation-model training.
 - [llms.txt proposal](https://llmstxt.org/): optional agent-friendly discovery convention, including alternate Markdown links; not a guarantee of inclusion or ranking.
+- [Vercel build output configuration](https://vercel.com/docs/builds/configure-a-build): only the configured output directory is served statically; native API functions remain separate.
 
 The GEO skills informed the checks, but claims about guaranteed ranking, universal bot JavaScript behaviour, or mandatory AI-only files were not adopted.
