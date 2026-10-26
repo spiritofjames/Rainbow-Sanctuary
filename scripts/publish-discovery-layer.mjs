@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { htmlToMarkdown } from "./lib/html-to-markdown.mjs";
 import { reconcileMarkdown } from "./lib/reconcile-markdown.mjs";
-import { knowledgeContributorSchema } from "./knowledge/entities.mjs";
+import { knowledgeContributorSchema, stephanieSchema } from "./knowledge/entities.mjs";
 import { fileURLToPath } from "node:url";
 
 const scriptsDir = path.dirname(fileURLToPath(import.meta.url));
@@ -190,7 +190,7 @@ const ogImages = {
   "Awakening-Your-Inner-Light-October-2026.dc.html": brandShareImage,
   "Bigger-Vision.dc.html": "/assets/editorial/psn-regenerative-future.jpg",
   "Children-Family.dc.html": "/assets/editorial/home-family-editorial.jpg",
-  "Kids-Weekly-Practice.dc.html": "/assets/editorial/children-weekly-practice-preparation.jpg",
+  "Kids-Weekly-Practice.dc.html": "/assets/editorial/family-creative.jpg",
   "Community-Stories.dc.html": "/assets/editorial/home-community-editorial.jpg",
   "Contribute.dc.html": "/assets/editorial/home-community-editorial.jpg",
   "Earth-Healing-Zone.dc.html": "/assets/editorial/earth-healing-stewardship-v1.jpg",
@@ -255,15 +255,17 @@ const organization = {
   "@id": `${origin}/#organization`,
   name: "Rainbow Sanctuary",
   url: `${origin}/`,
+  description: "Rainbow Sanctuary is a healing academy and global community for people seeking steadier wellbeing, deeper self-understanding, conscious practice, and a more connected way of living.",
+  sameAs: [
+    "https://www.instagram.com/rainbowsanctuary.life/",
+    "https://www.trustpilot.com/review/rainbowsanctuary.life"
+  ],
+  knowsAbout: ["Emotional awareness", "Spiritual practice", "Community learning", "Retreat preparation and integration"],
   logo: {
     "@type": "ImageObject",
     url: `${origin}/assets/brand/lotus-planetary-consciousness-original.png`
   },
-  founder: {
-    "@type": "Person",
-    name: "Stephanie Wu",
-    url: `${origin}/about`
-  }
+  founder: { "@id": stephanieSchema["@id"] }
 };
 
 const website = {
@@ -272,12 +274,35 @@ const website = {
   url: `${origin}/`,
   name: "Rainbow Sanctuary",
   publisher: { "@id": `${origin}/#organization` },
-  inLanguage: "en"
+  inLanguage: "en",
+  // Describes the existing Knowledge search, not a promised Google feature.
+  potentialAction: {
+    "@type": "SearchAction",
+    name: "Search the Rainbow Sanctuary knowledge library",
+    target: { "@type": "EntryPoint", urlTemplate: `${origin}/knowledge/search?q={search_term_string}` },
+    "query-input": "required name=search_term_string"
+  }
 };
 
-function schemaFor(file, title, description, canonical, image) {
+function visibleBreadcrumbSchema(source, canonical, title) {
+  const nav = source.match(/<nav\b[^>]*aria-label=["']Breadcrumb["'][^>]*>([\s\S]*?)<\/nav>/i)?.[1];
+  if (!nav) return null;
+  const items = [...nav.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)].map(([, href, text]) => ({
+    name: decodeHtml(text.replace(/<[^>]*>/g, "").trim()),
+    item: new URL(decodeHtml(href), canonical).href
+  }));
+  const currentLabel = nav.match(/<span\b[^>]*>([^<]+)<\/span>\s*$/i)?.[1];
+  if (items.at(-1)?.item !== canonical) items.push({ name: currentLabel && currentLabel.trim() !== "/" ? decodeHtml(currentLabel.trim()) : title.replace(/\s*\|\s*Rainbow Sanctuary$/, ""), item: canonical });
+  return {
+    "@type": "BreadcrumbList", "@id": `${canonical}#breadcrumb`,
+    itemListElement: items.map((item, index) => ({ "@type": "ListItem", position: index + 1, ...item }))
+  };
+}
+
+function schemaFor(file, title, description, canonical, image, source) {
   const graph = [
     organization,
+    stephanieSchema,
     website,
     {
       "@type": pageTypes[file] || "WebPage",
@@ -294,6 +319,8 @@ function schemaFor(file, title, description, canonical, image) {
       inLanguage: "en"
     }
   ];
+  const webpage = graph.find(node => node["@id"] === `${canonical}#webpage`);
+  if (file === "About-Stephanie.dc.html") webpage.mainEntity = { "@id": stephanieSchema["@id"] };
 
   if (file === "Awakening-Your-Inner-Light-2026.dc.html") {
     graph.push({
@@ -372,6 +399,8 @@ function schemaFor(file, title, description, canonical, image) {
 
   const knowledgeEntry = knowledgeEntryByPath.get(new URL(canonical).pathname);
   if (knowledgeEntry) {
+    webpage.reviewedBy = knowledgeContributorSchema(knowledgeEntry.reviewer);
+    webpage.mainEntity = { "@id": `${canonical}#article` };
     graph.push({
       "@type": "Article",
       "@id": `${canonical}#article`,
@@ -382,17 +411,13 @@ function schemaFor(file, title, description, canonical, image) {
       dateModified: knowledgeEntry.updatedAt,
       inLanguage: knowledgeEntry.locale,
       author: knowledgeContributorSchema(knowledgeEntry.author),
-      reviewedBy: knowledgeContributorSchema(knowledgeEntry.reviewer),
       publisher: { "@id": `${origin}/#organization` }
     });
-    graph.push({
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: `${origin}/` },
-        { "@type": "ListItem", position: 2, name: "Knowledge", item: `${origin}/knowledge` },
-        { "@type": "ListItem", position: 3, name: knowledgeEntry.title, item: canonical }
-      ]
-    });
+  }
+  const breadcrumb = visibleBreadcrumbSchema(source, canonical, knowledgeEntry?.title || title);
+  if (breadcrumb) {
+    graph.push(breadcrumb);
+    webpage.breadcrumb = { "@id": breadcrumb["@id"] };
   }
 
   return {
@@ -433,7 +458,7 @@ for (const [file, route] of Object.entries(routes)) {
   const image = `${origin}${imagePath}`;
   const socialImage = brandedSocialImages[imagePath];
   const imageAlt = socialImage?.alt || title;
-  const schema = schemaFor(file, title, description, canonical, image);
+  const schema = schemaFor(file, title, description, canonical, image, source);
   const indexable = Object.hasOwn(indexableRoutes, file);
   const metadata = [
     "<!-- rs-discovery:start -->",

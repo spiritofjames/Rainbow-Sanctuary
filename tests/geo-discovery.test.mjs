@@ -54,8 +54,11 @@ test("final article schema preserves organizational authors and breadcrumbs", ()
     const source = config.rewrites.find(r => r.source === route).destination.slice(1);
     const graph = graphs(source);
     const article = graph.find(n => n["@type"] === "Article");
+    const webpage = graph.find(n => n["@type"] === "WebPage");
+    assert.equal(article.reviewedBy, undefined);
+    assert.deepEqual(webpage.mainEntity, { "@id": article["@id"] });
     for (const role of ["author", "reviewer"]) {
-      if (entry[role].id === "rainbow-editorial") assert.equal(article[role === "reviewer" ? "reviewedBy" : role]["@type"], "Organization");
+      if (entry[role].id === "rainbow-editorial") assert.equal((role === "reviewer" ? webpage.reviewedBy : article.author)["@type"], "Organization");
     }
     assert.equal(graph.filter(n => n["@type"] === "BreadcrumbList").length, 1);
   }
