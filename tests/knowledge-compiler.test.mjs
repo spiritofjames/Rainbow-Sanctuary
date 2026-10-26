@@ -16,7 +16,7 @@ test('Knowledge contributor schema distinguishes the editorial team from an indi
   assert.deepEqual(editorial.parentOrganization, { '@id': 'https://rainbowsanctuary.life/#organization' });
   assert.equal(editorial.jobTitle, undefined);
   assert.deepEqual(knowledgeContributorSchema({ id: 'stephanie-wu', name: 'Stephanie Wu', role: 'Author' }), {
-    '@type': 'Person', name: 'Stephanie Wu', jobTitle: 'Author',
+    '@type': 'Person', '@id': 'https://rainbowsanctuary.life/about#stephanie-wu', url: 'https://rainbowsanctuary.life/about', name: 'Stephanie Wu', jobTitle: 'Author',
   });
 });
 
@@ -52,7 +52,10 @@ test('AC-001 / AC-002: compiles approved public content and excludes drafts from
   const schema = JSON.parse(article.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
   const articleEntity = schema['@graph'].find((item) => item['@type'] === 'Article');
   assert.equal(articleEntity.author['@type'], 'Organization');
-  assert.equal(articleEntity.reviewedBy['@id'], articleEntity.author['@id']);
+  assert.equal(articleEntity.reviewedBy, undefined);
+  const webpageEntity = schema['@graph'].find((item) => item['@type'] === 'WebPage');
+  assert.equal(webpageEntity.reviewedBy['@id'], articleEntity.author['@id']);
+  assert.deepEqual(webpageEntity.mainEntity, { '@id': articleEntity['@id'] });
   assert.match(landing, /class="rs-knowledge-topic-card"[^>]*><span>Topic<\/span><h3>/);
   assert.match(landing, /class="rs-knowledge-article-card">[\s\S]*?<h3><a/);
   assert.doesNotMatch(landing, /class="rs-knowledge-article-card">[\s\S]*?<h2><a/);
