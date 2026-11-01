@@ -80,7 +80,7 @@ test("sensitive pathways stay safely gated, while approved direct registration r
 });
 
 test("homepage separates recurring group pathways from the standalone in-person retreat", () => {
-  const home = read("Home.dc.html");
+  const home = read("Explore.dc.html");
   assert.equal((home.match(/class="rs-home-promotions"/g) || []).length, 1);
   assert.match(home, /rs-home-retreat-feature/);
   assert.match(home, /Featured in-person retreat/);
@@ -102,7 +102,7 @@ test("homepage separates recurring group pathways from the standalone in-person 
 });
 
 test("homepage has an editorial contribution invitation near its closing content", () => {
-  const home = read("Home.dc.html");
+  const home = read("Explore.dc.html");
   const invitation = home.indexOf('class="rs-home-contribution"');
   const closingCta = home.indexOf("<!-- CLOSING CTA -->");
   assert.ok(invitation > -1);
@@ -114,7 +114,7 @@ test("homepage has an editorial contribution invitation near its closing content
 });
 
 test("homepage offers an optional, neutral route to the Trustpilot review invitation", () => {
-  const home = read("Home.dc.html");
+  const home = read("Explore.dc.html");
   const reviewInvitation = home.indexOf('class="rs-home-review-invitation"');
   const footer = home.indexOf("<!-- FOOTER -->");
   assert.ok(reviewInvitation > -1);

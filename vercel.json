@@ -93,6 +93,23 @@
       ]
     },
     {
+      "source": "/markdown/explore.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/explore>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
       "source": "/markdown/about.md",
       "headers": [
         {
@@ -1082,6 +1099,11 @@
       "permanent": true
     },
     {
+      "source": "/Explore.dc.html",
+      "destination": "/explore",
+      "permanent": true
+    },
+    {
       "source": "/About-Stephanie.dc.html",
       "destination": "/about",
       "permanent": true
@@ -1428,6 +1450,10 @@
     {
       "source": "/",
       "destination": "/Home.dc.html"
+    },
+    {
+      "source": "/explore",
+      "destination": "/Explore.dc.html"
     },
     {
       "source": "/about",

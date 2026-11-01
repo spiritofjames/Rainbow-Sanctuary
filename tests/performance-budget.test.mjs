@@ -4,7 +4,8 @@ import { readFileSync, statSync } from "node:fs";
 
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 const bytes = (file) => statSync(new URL(`../${file}`, import.meta.url)).size;
-const home = read("Home.dc.html");
+// The previous programmes homepage is preserved at /explore, including video.
+const home = read("Explore.dc.html");
 const retreat = read("Awakening-Your-Inner-Light-2026.dc.html");
 
 test("hero image requests are discoverable early without preloading below-fold media", () => {
