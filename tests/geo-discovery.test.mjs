@@ -10,7 +10,7 @@ const graphs = (file) => [...read(file).matchAll(/<script type="application\/ld\
 
 test("only indexable canonical pages receive faithful Markdown alternates", () => {
   const urls = [...read("sitemap.xml").matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
-  assert.equal(urls.length, 58);
+  assert.equal(urls.length, 59);
   for (const url of urls) {
     const route = new URL(url).pathname;
     const source = config.rewrites.find(r => r.source === route).destination.slice(1);
