@@ -11,7 +11,7 @@ const origin = "https://rainbowsanctuary.life";
 const retreatFaqs = JSON.parse(fs.readFileSync(path.join(siteDir, "data/december-retreat-faqs.json"), "utf8"));
 const lastmod = "2026-07-31";
 const routeLastmod = new Map([
-  ["/", "2026-10-31"],
+  ["/", "2026-11-01"],
   ["/explore", "2026-10-31"],
   ["/awakening-your-inner-light-2026", "2026-10-23"],
   ["/awakening-your-inner-light-october-2026", "2026-10-23"],
@@ -327,7 +327,7 @@ function schemaFor(file, title, description, canonical, image, source) {
   if (file === "Home.dc.html") {
     const section = source.match(/<section class="home-questions[\s\S]*?<\/section>/)?.[0] || "";
     const questions = [...section.matchAll(/<details><summary>([\s\S]*?)<\/summary><p>([\s\S]*?)<\/p><\/details>/g)];
-    if (questions.length !== 6) throw new Error("Homepage FAQ must contain six visible questions and answers.");
+    if (questions.length !== 8) throw new Error("Homepage FAQ must contain eight visible questions and answers.");
     const plain = text => decodeHtml(text.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim());
     graph.push({ "@type": "FAQPage", "@id": `${canonical}#questions`, mainEntity: questions.map(([,question,answer]) => ({
       "@type": "Question", name: plain(question), acceptedAnswer: { "@type": "Answer", text: plain(answer) }
@@ -463,8 +463,8 @@ for (const [file, route] of Object.entries(routes)) {
     "Rainbow Sanctuary is a global community for spiritual wellbeing, conscious development, and regenerative service."
   );
   // Keep intentionally shorter sharing copy consistent across Open Graph and X.
-  const socialTitle = extract(source, /<meta\s+property="og:title"\s+content="([^"]*)"[^>]*>/i, title);
-  const socialDescription = extract(source, /<meta\s+property="og:description"\s+content="([^"]*)"[^>]*>/i, description);
+  const socialTitle = file === "Home.dc.html" ? title : extract(source, /<meta\s+property="og:title"\s+content="([^"]*)"[^>]*>/i, title);
+  const socialDescription = file === "Home.dc.html" ? description : extract(source, /<meta\s+property="og:description"\s+content="([^"]*)"[^>]*>/i, description);
   const socialType = extract(source, /<meta\s+property="og:type"\s+content="([^"]*)"[^>]*>/i, "website");
   const canonical = `${origin}${route}`;
   const imagePath = ogImages[file] || brandShareImage;
@@ -646,7 +646,7 @@ const knowledgeLlms = (knowledgeManifest.entries || []).length
 
 const llms = `# Rainbow Sanctuary
 
-> Rainbow Sanctuary is a growing community rooted in Bocas del Toro, Panama, bringing people together through inner growth, learning and shared creation. It offers current programmes, family activities, online gatherings and retreats while developing the School of the Universe within a wider Planetary Symbiosis Network vision. Its work is educational and experiential and does not replace medical or mental-health care.
+> Rainbow Sanctuary brings families, communities and active projects together around learning, spiritual practice and care for the Earth. Rooted in Bocas del Toro, Panama, it is helping build the wider Planetary Symbiosis Network. At least twelve functioning nodes is a goal, not an operating count. The School is in development. Superintelligence describes an early spiritual inquiry distinct from AI, not a demonstrated system for accessing universal knowledge. Educational and spiritual activities do not replace medical or mental-health care.
 
 ## Start here
 
@@ -708,6 +708,8 @@ const llmsFull = `# Rainbow Sanctuary — Extended Site Guide
 Rainbow Sanctuary is a global spiritual wellbeing and conscious-development community co-founded by Stephanie Wu. It brings together accessible online group experiences, a progressive four-level Spiral Journey, focused programs, children-and-family work, practitioner pathways, private sessions, retreats, and an Earth-centred regenerative vision.
 
 The identity homepage at ${origin}/ explains what Rainbow Sanctuary is building, why, its physical connection to Bocas del Toro in Panama, the people behind the work and ways to contribute. The programmes experience is preserved separately at ${origin}/explore; the focused programme catalogue remains ${origin}/programs.
+
+The homepage's primary invitation is connection for families, existing communities and active projects. At least twelve functioning community nodes is a goal, not an operating count. Superintelligence is described as an early spiritual inquiry, distinct from AI and not a demonstrated system that retrieves universal knowledge. References to higher guidance, Akashic Records, New Earth and 5D describe spiritual beliefs, not verified technical or scientific capabilities. Initial contact uses the official Instagram profile; there is no new connection form or automatic membership.
 
 The School of the Universe is a connected learning initiative for children and families. Its physical learning environment and digital platform are in development, preparing for beta; this is not an announcement of public enrolment or a live public platform. Current Rainbow family activities are separate, and adult retreat participation is never a requirement for children or families. The wider PSN anchor network and human-led, AI-supported digital platform are also in development, not a residential or investment offer. Generated site and network images are labelled as visualisations or artistic visions, not documentary photographs or operating-location maps.
 
