@@ -23,8 +23,8 @@ test('identity story answers visitor questions as native HTML', () => {
   const ids = [...home.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]);
   assert.equal(new Set(ids).size, ids.length);
   for (const id of ['vision','school','panama','pathways','people','psn','progress','questions','connect','instagram']) assert.ok(ids.includes(id));
-  for (const text of ['growing community rooted in Panama','Stephanie Wu, James Stark','School building is in place','preparing for beta','not open public enrolment','separate and voluntary','not a residential or investment offer','voluntary contribution to shared access']) assert.ok(home.includes(text), text);
-  assert.equal((home.match(/<details><summary>/g) || []).length, 6);
+  for (const text of ['A new way of living begins with connection','Stephanie Wu, James Stark','School building is in place','preparing for beta','not an announcement of open School enrolment','separate, voluntary pathway','not an open residency, property or investment offer','not a demonstrated system','Twelve functioning nodes is our goal']) assert.ok(home.includes(text), text);
+  assert.equal((home.match(/<details><summary>/g) || []).length, 8);
   assert.ok(home.indexOf('id="instagram"') > home.indexOf('id="connect"'));
   assert.ok(home.indexOf('id="instagram"') < home.indexOf('<footer'));
 });
@@ -52,9 +52,9 @@ test('homepage images have dimensions and only its real coast hero has high prio
   for (const f of ['rainbow-serif.woff2','rainbow-sans.woff2']) assert.ok(fs.statSync(new URL('../assets/home/' + f, import.meta.url)).size < 30000);
 });
 
-test('FAQ structured data derives from the same six visible answers', () => {
+test('FAQ structured data derives from the same eight visible answers', () => {
   const faq = schema.find(s => s['@type'] === 'FAQPage');
-  assert.equal(faq.mainEntity.length, 6);
+  assert.equal(faq.mainEntity.length, 8);
   const text = htmlToMarkdown(home, 'https://rainbowsanctuary.life/');
   const visibleAnswers = [...home.matchAll(/<details><summary>([\s\S]*?)<\/summary><p>([\s\S]*?)<\/p><\/details>/g)].map(([, question, answer]) => ({
     name: question.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim(),

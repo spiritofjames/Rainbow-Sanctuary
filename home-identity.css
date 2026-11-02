@@ -166,3 +166,48 @@ a:focus-visible { outline-color: var(--rs-focus); box-shadow: 0 0 0 6px var(--rs
 @media(max-width:1000px){.selected-page .header .identity-nav{display:none}.mobile-menu{display:block}.people-note{gap:32px}.progress-grid{gap:16px}.progress-grid article{padding:24px 20px}.home-questions{gap:32px}.selected-page .header .brand{width:185px}}
 @media(max-width:660px){.selected-page .header .brand{width:145px}.selected-page .vision-note>p{font-size:16px}.selected-page .story-copy>p:not(.eyebrow){font-size:16px}.selected-page .concept-label,.selected-page .website-label{font-size:13px!important}.site-visualisation{padding-bottom:32px}.site-visualisation img{border-radius:16px}.site-visualisation figcaption{font-size:12px}.people-note{grid-template-columns:1fr;gap:24px;padding-block:32px}.progress-section{padding-block:48px}.progress-grid{grid-template-columns:1fr;gap:16px}.chapter-heading{margin-bottom:32px}.stage-label{margin-bottom:16px}.home-questions{grid-template-columns:1fr;gap:24px;padding-block:32px 48px}.home-questions h2{font-size:40px}.selected-page .product-visual figcaption{font-size:12px}.selected-page .psn-artwork figcaption,.selected-page .connection-visual figcaption{font-size:12px}.selected-page .social-photo figcaption{font-size:12px}.selected-page .story-context .text-link{flex-shrink:1}.selected-page .footer-links{margin-left:0}.selected-page .closing h2{font-size:44px}.selected-page .small{font-size:14px!important}}
 @media(prefers-reduced-motion:reduce){.mobile-menu summary span{transition:none}}
+/* Connection-led review: retain Rainbow's approved tokens and photographic rhythm. */
+.connection-page .arrival-intro{max-width:900px}
+.connection-page .arrival-intro>p:not(.eyebrow){max-width:720px;margin-inline:auto}
+.connection-page .arrival-intro h1{font-size:clamp(42px,5.7vw,80px);line-height:1.07;text-wrap:balance}
+.connection-page h2,.connection-page h3{text-wrap:balance}
+.connection-page .vision-note{max-width:960px}
+.connection-page .vision-note>p:not(.eyebrow){max-width:760px;margin-inline:auto}
+.connection-page .vision-note>p:last-child{padding:24px;border:1px solid #d9d0b9;border-radius:20px;color:#183d30}
+.connection-page .copy-split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,80px);align-items:center;padding-block:80px}
+.connection-page .copy-split h2{font-size:clamp(36px,3.7vw,58px);line-height:1.08;margin:20px 0 28px}
+.connection-page .copy-split p{line-height:1.7;margin-bottom:20px}
+.connection-page .copy-split .product-visual{width:100%;min-width:0;align-self:center}
+.connection-page .context-note{font-size:14px;line-height:1.6!important;color:#627267;margin-top:24px}
+.connection-page .context-note strong{font-weight:400}
+.connection-page .inquiry-section{background:#10271e;color:#f7f3e8}
+.connection-page .inquiry-section .eyebrow{color:#d8c58d}
+.connection-page .inquiry-section .context-note{color:#c4d0c7}
+.connection-page .inquiry-section a{color:#fff}
+.connection-page .psn-copy h2{font-size:clamp(36px,3.7vw,58px)}
+.connection-page .psn-story{align-items:center}
+.connection-page .people-note{display:block;max-width:800px;padding-top:48px}
+.connection-page .audience-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:40px 0}
+.connection-page .audience-grid article{padding:28px;border:1px solid #d7d4c7;border-radius:24px;background:#fcfaf5;scroll-margin-top:24px}
+.connection-page .audience-grid h3{font-size:28px;margin:0 0 18px}
+.connection-page .message-starter{font-size:14px;color:#526458;border-top:1px solid #ded9ca;padding-top:20px;line-height:1.7}
+.connection-page .message-starter span{display:block;text-transform:uppercase;font-size:11px;letter-spacing:.1em;color:#876d32;margin-bottom:8px}
+.connection-page .connection-hub{padding-block:80px}
+.connection-page .hub-intro{max-width:800px}
+.connection-page .hub-intro h2{font-size:clamp(38px,4.4vw,64px);line-height:1.08}
+.connection-page .hub-contact{max-width:720px;margin:40px auto;text-align:center}
+.connection-page .hub-contact .message-starter{border:0;padding-top:0}
+.connection-page .connection-how{max-width:800px;padding-top:32px;border-top:1px solid #d7d4c7}
+.connection-page .connection-how h3{font-size:30px}
+.connection-page .nav-secondary{font-size:12px}
+.connection-page .header{gap:24px}
+.connection-page .identity-nav{gap:20px}
+.connection-page .arrival-intro h1+p{margin-top:24px}
+.connection-page .arrival-intro .button{margin-top:24px}
+.connection-page .arrival-intro .context-note{margin-top:24px}
+.connection-page .context-note{font-size:14px!important}
+.connection-page .copy-split .button+.text-link{margin-left:12px}
+.connection-page .inquiry-section p{color:#dce5dc}
+.connection-page .inquiry-section .context-note{color:#c4d0c7}
+@media(max-width:1100px){.connection-page .identity-nav{display:none}.connection-page .mobile-menu{display:block}}
+@media(max-width:800px){.connection-page .copy-split{grid-template-columns:1fr;padding-block:48px}.connection-page .audience-grid{grid-template-columns:1fr}.connection-page .connection-hub{padding-block:48px}.connection-page .psn-story{grid-template-columns:1fr}.connection-page .audience-grid article{padding:24px}}

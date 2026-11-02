@@ -9,7 +9,7 @@ const publicFiles = new Set([
 ]);
 const browserFiles = new Set([
   "application.css", "events-calendar.css", "group-journey.css", "knowledge.css",
-  "offer-experience.css", "persona-faqs.css", "retreat-event.css", "site.css", "supported-pathways.css", "home-identity.css", "home-identity.js",
+  "offer-experience.css", "persona-faqs.css", "retreat-event.css", "site.css", "supported-pathways.css", "home-identity.css", "home-experience.css", "home-identity.js",
   "cta-effects.js", "donation-selector.js", "events-calendar.js", "group-healing-scheduler.js",
   "home-hero-video.js", "image-slot.js", "kids-weekly-practice-checkout.js", "knowledge-search.js",
   "offer-experience.js", "payment-confirmation.js", "persona-faqs.js", "public-event-feed.js",
