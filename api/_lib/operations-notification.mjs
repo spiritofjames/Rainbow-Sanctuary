@@ -211,7 +211,11 @@ export function purchaseOperationsMessage(stripeEvent, hubspot, environment) {
     greeting: "Hello Ethel,",
     paragraphs: [
       `${escapeHtml(handoff.customer.displayName)} completed payment for ${escapeHtml(offer.name)}. Stripe and the private Rainbow CRM remain the financial authority.`,
-      "Open the owned HubSpot contact to continue participant follow-up. This notification contains no financial credentials."
+      "Open the owned HubSpot contact to continue participant follow-up. This notification contains no financial credentials.",
+      ...(offer.policy === "private-session" ? [
+        "Appointment action required: match the private application by email, check the consented contact details and timezone, and contact the customer to arrange a suitable time. Payment alone does not confirm an appointment.",
+        handoff.customer.whatsapp ? "A WhatsApp number was captured at checkout. Verify follow-up consent in the application before messaging." : "WhatsApp was not captured at checkout. Check the matched application; if it is absent, contact the customer by email to complete intake. Do not assume another phone number is WhatsApp."
+      ] : [])
     ],
     details: [
       { label: "Amount", value: `USD ${(handoff.amountMinor / 100).toFixed(2)}` },
@@ -223,7 +227,9 @@ export function purchaseOperationsMessage(stripeEvent, hubspot, environment) {
   return {
     html: emailHtml(content),
     identity: "bookings",
-    idempotencyKey: `stripe:${handoff.stripeEventId}:operations`,
+    idempotencyKey: offer.policy === "private-session"
+      ? `stripe-checkout:${handoff.bookingReference}:operations`
+      : `stripe:${handoff.stripeEventId}:operations`,
     subject: `Payment received — ${offer.name}`,
     tags: [{ name: "workflow", value: "payment" }],
     text: emailText(content),

@@ -104,7 +104,13 @@ before payment opens.
 
 ### Prices still missing or structurally unresolved
 
-- Personal Karma Reconciliation Session;
+Personal Karma Reconciliation was confirmed by James on 2 November 2026 at
+**USD 500 per private session**, with the exact supplied Stripe Payment Link
+`https://book.stripe.com/3cIdR9dEd1mdfU15ov3Nm0q`. It does not use the planning
+gross-up formula above. Application review and human appointment arrangement
+remain separate from payment. See `docs/KARMA-BOOKING-20261102.md` for the
+configuration and live-QA gates; this price approval is not integration evidence.
+
 - Family Information Field Restoration Session;
 - DNA Activation;
 - the Private Healing hub, if it is intended to have a separate umbrella fee;

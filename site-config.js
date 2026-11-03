@@ -72,7 +72,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     "unlock-the-potential": "",
     "childrens-potential-coach-certification": "USD 7,710 package · payment processing included",
     "one-to-one-sessions": "",
-    "personal-karma-reconciliation": "",
+    "personal-karma-reconciliation": "USD 500 per private session",
     "family-information-field-restoration": "",
     "dna-activation": ""
   },
