@@ -6,6 +6,23 @@ Baseline: production `7a7d7e1eeaf313e152d8c126b0952c89054af286`
 
 ## Owner correction — 3 November 2026
 
+Latest booking-flow correction: **Book this session → details and headshot →
+Continue to payment — USD 500 → Stripe**. This supersedes the earlier
+agreed-next-step/manual payment card. Only after the authoritative private
+HubSpot contact, file and note are saved does `/api/crm/intake` return the fixed
+owner-supplied Stripe URL with an opaque application UUID as `client_reference_id`.
+No email, WhatsApp, case answers or image URL are sent in that URL. The browser
+rejects missing, unexpected or off-domain destinations and retains a fallback
+payment link if navigation is unavailable. Other pathways retain their existing
+application/enquiry behavior. Intake acknowledgment and manager alert say payment
+is not yet confirmed; payment confirmation still requires a verified paid Stripe
+event. Appointment time is agreed with the manager after payment.
+
+Official parameter reference: https://docs.stripe.com/payment-links/url-parameters.
+The reference is reconciliation data, not proof of payment or authorization to
+access an application. The supplied Payment Link is still shareable outside
+the website; its actual provider mapping/webhooks remain a release gate below.
+
 Restore the original “Home is where your heart feels peace” root homepage on
 protected staging by reversing only the earlier identity-homepage PR #181.
 Keep the new homepage preserved on its separate branch, not published at `/`.
@@ -34,8 +51,10 @@ candidate only, not this corrected form. No production release is included.
    agreed later by the manager.
 2. Restricted HubSpot intake note preserves the application and consent evidence.
    No scheduling fields or private narrative are sent to Stripe.
-3. The exact Stripe link is visible for customers who have agreed the next step
-   with the team. Instructions say application first and the same email at checkout.
+3. One spacious booking card replaces the adjacent application/payment cards.
+   The main CTA opens the application; a smaller text link allows questions
+   without payment. Continue to payment saves first, then redirects to the
+   exact Stripe link. Instructions request the same email at checkout.
 4. A mapped, signed, paid Checkout event is checked against the USD 500 catalogue.
    Unpaid, unknown, wrong-price, wrong-session and unapproved live events fail closed.
 5. The payment upsert matches the contact by email. Valid checkout WhatsApp data

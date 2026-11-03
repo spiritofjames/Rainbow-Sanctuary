@@ -6,7 +6,7 @@ Source: https://rainbowsanctuary.life/personal-karma-reconciliation
 
 A private spiritual wellbeing session for people who experience certain emotional or relational themes as cyclical, unresolved, or difficult to release.
 
-[Apply for this session](https://rainbowsanctuary.life/apply?reason=private-healing&session=karma) USD 500 per private session
+[Book this session](https://rainbowsanctuary.life/apply?reason=private-healing&session=karma) USD 500 per private session
 
 Start with lived experience
 
@@ -72,18 +72,16 @@ Possible—not promised
 
 **Next action** A grounded step toward repair, boundary, or release.
 
-## Begin with your private application.
+Personal Karma Reconciliation · USD 500
 
-USD 500 per private session. Share your contact details, the pattern you want to explore, and your intended outcome. Our team reviews the application before arranging an appointment.
+## Make space for your next step.
 
-[Apply for this session](https://rainbowsanctuary.life/apply?reason=private-healing&session=karma)
+Share your details, what you are navigating and what you hope to explore. Then continue to secure payment through Stripe. Our manager will contact you afterwards to arrange your session.
 
-### Already agreed the next step with our team?
+[Book this session](https://rainbowsanctuary.life/apply?reason=private-healing&session=karma)
 
-**Pay USD 500 securely through Stripe.** Complete your application first and use the same email at checkout so we can match your payment to your contact details. Include your WhatsApp number with its international country code.
+Questions first? [Get in touch.](https://rainbowsanctuary.life/apply?reason=other&program=personal-karma-reconciliation)
 
-[Pay USD 500 on Stripe](https://book.stripe.com/3cIdR9dEd1mdfU15ov3Nm0q)
-
-The manager will contact you by email or your consented WhatsApp number to agree a suitable time. Payment does not book a time automatically. If Stripe offers a local-currency conversion, review the displayed amount before paying; you can select USD.
+Your details are saved before you pay. Payment does not book a time automatically; your appointment is arranged personally with our team.
 
 This session does not guarantee changes in relationships, opportunity, wealth, fortune, health, or another person’s behavior. It is not medical or mental-health treatment and does not replace qualified care.
