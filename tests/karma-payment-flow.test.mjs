@@ -81,6 +81,37 @@ test("failed saves, missing acceptance and unsafe URLs cannot redirect to paymen
   }
 });
 
+test("service-unavailable response preserves entered data and does not blame visitor fields or redirect", async () => {
+  const { form, navigations } = makeForm({ replies: [{ ok: false, status: 503 }] });
+  await form.renderVals().handleSubmit({ preventDefault() {} });
+  assert.match(form.state.error, /service is temporarily unavailable/);
+  assert.doesNotMatch(form.state.error, /validate|refresh|check the required/);
+  assert.equal(form.state.name, "Synthetic Booking");
+  assert.equal(form.state.email, "booking@example.test");
+  assert.ok(form.state.photoFile);
+  assert.equal(form.state.submitted, false);
+  assert.equal(navigations.length, 0);
+});
+
+test("missing private staging configuration returns 503 before any HubSpot or payment activity", async t => {
+  const keys = ["CRM_WEBSITE_INTAKE_ENABLED", "CRM_ALLOWED_INTAKE_ORIGINS", "HUBSPOT_PRIVATE_INTAKE_ENABLED"];
+  const saved = Object.fromEntries(keys.map(key => [key, process.env[key]]));
+  const originalFetch = globalThis.fetch;
+  let calls = 0;
+  t.after(() => { globalThis.fetch = originalFetch; for (const [key, value] of Object.entries(saved)) { if (value === undefined) delete process.env[key]; else process.env[key] = value; } });
+  globalThis.fetch = async () => { calls++; throw new Error("Real network access is forbidden"); };
+  process.env.CRM_WEBSITE_INTAKE_ENABLED = "true";
+  process.env.CRM_ALLOWED_INTAKE_ORIGINS = "https://booking.example.test";
+  delete process.env.HUBSPOT_PRIVATE_INTAKE_ENABLED;
+  const response = { headers: {}, setHeader(key, value) { this.headers[key] = value; }, status(code) { this.statusCode = code; return this; }, json(body) { this.body = body; return this; } };
+  await intakeHandler({ method: "POST", headers: { origin: "https://booking.example.test", host: "booking.example.test", "content-type": "application/json" }, body: { reason: "private-healing", program: "karma" } }, response);
+  assert.equal(response.statusCode, 503);
+  assert.equal(response.headers["Retry-After"], "60");
+  assert.match(response.body.error, /temporarily unavailable/);
+  assert.equal(response.body.paymentUrl, undefined);
+  assert.equal(calls, 0);
+});
+
 test("missing headshot stops before save/payment, and other private sessions retain their application behavior", async () => {
   const missing = makeForm(); missing.form.state.photoFile = null;
   await missing.form.renderVals().handleSubmit({ preventDefault() {} });
