@@ -6,7 +6,7 @@ Source: https://rainbowsanctuary.life/personal-karma-reconciliation
 
 A private spiritual wellbeing session for people who experience certain emotional or relational themes as cyclical, unresolved, or difficult to release.
 
-[Apply for this session](https://rainbowsanctuary.life/apply?reason=private-healing&session=karma) Pricing coming soon
+[Apply for this session](https://rainbowsanctuary.life/apply?reason=private-healing&session=karma) USD 500 per private session
 
 Start with lived experience
 
@@ -72,10 +72,18 @@ Possible—not promised
 
 **Next action** A grounded step toward repair, boundary, or release.
 
-## Request a private review.
+## Begin with your private application.
 
-Share the recurring pattern, the outcome you hope for, and why this form of spiritual practice feels relevant now.
+USD 500 per private session. Share your contact details, the pattern you want to explore, and your intended outcome. Our team reviews the application before arranging an appointment.
 
 [Apply for this session](https://rainbowsanctuary.life/apply?reason=private-healing&session=karma)
+
+### Already agreed the next step with our team?
+
+**Pay USD 500 securely through Stripe.** Complete your application first and use the same email at checkout so we can match your payment to your contact details. Include your WhatsApp number with its international country code.
+
+[Pay USD 500 on Stripe](https://book.stripe.com/3cIdR9dEd1mdfU15ov3Nm0q)
+
+The manager will contact you by email or your consented WhatsApp number to agree a suitable time. Payment does not book a time automatically. If Stripe offers a local-currency conversion, review the displayed amount before paying; you can select USD.
 
 This session does not guarantee changes in relationships, opportunity, wealth, fortune, health, or another person’s behavior. It is not medical or mental-health treatment and does not replace qualified care.

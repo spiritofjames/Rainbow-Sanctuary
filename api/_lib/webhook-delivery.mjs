@@ -70,6 +70,16 @@ function checkoutCustomField(object, key) {
   return String(field?.text?.value || "").trim();
 }
 
+function checkoutWhatsApp(object) {
+  // Payment Link custom-field keys can be generated from the label. Accept
+  // only fields explicitly identified as WhatsApp, never an arbitrary phone.
+  const field = object.custom_fields?.find((candidate) =>
+    /^whatsapp(?:number)?(?:\d+)?$/.test(String(candidate.key || "").toLowerCase().replace(/[^a-z0-9]/g, ""))
+  );
+  const number = String(field?.text?.value || "").replace(/[\s().-]/g, "");
+  return /^\+[1-9]\d{6,14}$/.test(number) ? number : "";
+}
+
 export function crmPaymentHandoff(event, { allowLive = false } = {}) {
   if (!CRM_PAYMENT_HANDOFF_EVENTS.has(event.type) || (event.livemode && !allowLive)) {
     throw new Error("Only approved Stripe Checkout events can enter the CRM.");
@@ -88,6 +98,12 @@ export function crmPaymentHandoff(event, { allowLive = false } = {}) {
   const offerId = String(object.metadata?.offer_key || "");
   const sessionId = String(object.metadata?.event_id || "");
   const customer = { displayName: customerDisplayName, email: customerEmail };
+  if (offerId === "personal-karma-reconciliation") {
+    const whatsapp = checkoutWhatsApp(object);
+    const phone = String(object.customer_details?.phone || "").replace(/[\s().-]/g, "");
+    if (whatsapp) customer.whatsapp = whatsapp;
+    if (/^\+[1-9]\d{6,14}$/.test(phone)) customer.phone = phone;
+  }
   // Child details belong only to the Kids enrolment handoff. Keeping these
   // properties absent for every other offer preserves the existing CRM schema.
   if (offerId.startsWith("kids-weekly-practice-")) {
