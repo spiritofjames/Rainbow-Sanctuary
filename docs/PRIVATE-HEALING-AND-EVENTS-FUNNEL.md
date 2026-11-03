@@ -28,6 +28,26 @@
 8. **Follow-up** — the team may recommend another session or other appropriate
    support without making guaranteed outcome claims.
 
+### Personal Karma Reconciliation — 2 November 2026 update
+
+The approved price is USD 500. The owner-approved 3 November flow is **Book this
+session → application details → Continue to payment → Stripe**. The server
+returns the fixed Stripe link only after the contact, private image and note
+are saved. The application captures required name, email,
+international WhatsApp number, private context/current challenges, intended
+outcome, recent headshot and explicit consent. Timezone and availability are not
+requested on the application; the manager agrees appointment details later.
+
+Use the same email for intake and payment. The manager matches the application,
+checks consent, and agrees an appointment with the customer. A verified payment
+produces a payment-received message, not an automatic appointment confirmation.
+No reminder should run until an actual time and timezone are confirmed. The
+payment link itself is shareable and does not technically enforce prior
+application submission outside this website flow. An opaque application UUID is
+sent as Stripe `client_reference_id`; it is for reconciliation, never payment
+proof, identity authentication or access to an application. See
+`KARMA-BOOKING-20261102.md` for remaining provider gates.
+
 ## Recommended launch stack
 
 - **HubSpot:** intake form, private file upload, contact record, consent evidence,

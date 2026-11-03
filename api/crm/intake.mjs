@@ -10,6 +10,7 @@ import {
 } from "../_lib/operations-notification.mjs";
 import { parseJsonBody, sendJson } from "../_lib/http.mjs";
 import { parseMultipartIntake } from "../_lib/private-intake.mjs";
+import { savedKarmaPaymentUrl } from "../_lib/karma-booking.mjs";
 
 function safeFailureReason(error) {
   const message = String(error?.message || "").toLowerCase();
@@ -111,6 +112,7 @@ export default async function handler(request, response) {
     // legacy CRM mirror must never block (or receive) that material.
     if (!requiresProtectedAttachment) await forwardWebsiteIntake(input, process.env);
     const hubspot = await mirrorHubSpotIntake(normalized, process.env, fetch, attachment, privateApplication || autismRegistration);
+    const paymentUrl = savedKarmaPaymentUrl(normalized, hubspot);
     if (isAutismRegistration) {
       await attemptAutismRegistrationReceipt(normalized, process.env);
       await attemptAutismRegistrationOneHourReminder(normalized, process.env);
@@ -119,20 +121,24 @@ export default async function handler(request, response) {
       await attemptVisitorIntakeReceipt(normalized, process.env);
     }
     await attemptEnquiryOperationsNotification(normalized, hubspot, process.env);
-    return sendJson(response, 202, { accepted: true });
+    return sendJson(response, 202, { accepted: true, ...(paymentUrl ? { paymentUrl } : {}) });
   } catch (error) {
-    const operationalFailure = /operations notification|operational recipient/i.test(error.message);
-    const expected = !operationalFailure && /not enabled|not configured|not allowed|origin|required|invalid|private healing|private headshot|protected participant|autism registration|consent|prohibited/i.test(error.message);
+    const message = String(error?.message || "");
+    // Missing service configuration is not invalid customer input. Keep the
+    // protected intake fail-closed, but report an unavailable service (503).
+    const unavailable = /not enabled|not configured|operations notification|operational recipient/i.test(message);
+    const invalid = !unavailable && /not allowed|origin|required|invalid|private healing|private headshot|protected participant|autism registration|consent|prohibited/i.test(message);
     console.error("crm_intake_error", {
-      category: expected ? "rejected" : "upstream-unavailable",
+      category: invalid ? "rejected" : "upstream-unavailable",
       reason: safeFailureReason(error),
       validation: safeValidationDetail(error),
       upstreamStatus: safeUpstreamStatus(error)
     });
-    return sendJson(response, expected ? 400 : 502, {
-      error: expected
-        ? "This enquiry path is not available yet. No information was saved."
-        : "The private CRM is temporarily unavailable. Please try again later."
+    if (unavailable) response.setHeader("Retry-After", "60");
+    return sendJson(response, unavailable ? 503 : (invalid ? 400 : 502), {
+      error: unavailable
+        ? "The form service is temporarily unavailable. Please try again shortly."
+        : (invalid ? "Please check the required fields and try again." : "The private CRM is temporarily unavailable. Please try again later.")
     });
   }
 }

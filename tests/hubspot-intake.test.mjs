@@ -182,6 +182,7 @@ test("private healing uploads a private expiring file and attaches it to Ethel's
   assert.match(note.properties.hs_note_body, /stuck in an old pattern/);
   assert.match(note.properties.hs_note_body, /supportive next step/);
   assert.match(note.properties.hs_note_body, /WhatsApp: \+1 555 123 4567/);
+  assert.doesNotMatch(note.properties.hs_note_body, /Scheduling timezone|Scheduling preferences/);
   assert.match(note.properties.hs_note_body, /30 days/);
 });
 
