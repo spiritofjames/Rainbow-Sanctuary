@@ -86,9 +86,9 @@ test('whole-card links retain block headings, paragraphs and images without nest
   assert.doesNotMatch(result, /\[!\[|\[[^\n]*##/);
 });
 
-test('preserved programmes homepage linked cards keep their headings as Markdown headings', () => {
-  const html = readFileSync(new URL('../Explore.dc.html', import.meta.url), 'utf8');
-  const result = htmlToMarkdown(html, 'https://rainbowsanctuary.life/explore');
+test('real homepage linked cards keep their headings as Markdown headings', () => {
+  const html = readFileSync(new URL('../Home.dc.html', import.meta.url), 'utf8');
+  const result = htmlToMarkdown(html, 'https://rainbowsanctuary.life/');
   assert.match(result, /^## Awakening Your Inner Light$/m);
   assert.match(result, /\[Visit linked page\]\(https:\/\/rainbowsanctuary.life\/awakening-your-inner-light-2026\)/);
   assert.doesNotMatch(result, /\[[^\n]*##|\[!\[/);

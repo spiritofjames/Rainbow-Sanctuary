@@ -5,7 +5,7 @@ import { existsSync, readFileSync } from "node:fs";
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 
 test("homepage hero links directly to the correct independent review profile", () => {
-  const home = read("Explore.dc.html");
+  const home = read("Home.dc.html");
   const link = home.match(/<a class="rs-hero-reviews"[\s\S]*?<\/a>/)?.[0];
   assert.ok(link, "hero review link exists in HTML without JavaScript");
   assert.match(link, /href="https:\/\/www\.trustpilot\.com\/review\/rainbowsanctuary\.life"/);
@@ -18,7 +18,7 @@ test("homepage hero links directly to the correct independent review profile", (
 });
 
 test("the obsolete configurable star badge cannot expose placeholder or stale ratings", () => {
-  const home = read("Explore.dc.html");
+  const home = read("Home.dc.html");
   assert.doesNotMatch(home, /trustpilot-proof\.js|data-trustpilot-|rs-hero-trustproof|★★★★★/);
   assert.doesNotMatch(read("site-config.js"), /trustpilot\s*:/);
   assert.equal(existsSync(new URL("../trustpilot-proof.js", import.meta.url)), false);
@@ -26,7 +26,7 @@ test("the obsolete configurable star badge cannot expose placeholder or stale ra
 });
 
 test("review link has a visible focus treatment and touch-sized responsive layout", () => {
-  const home = read("Explore.dc.html");
+  const home = read("Home.dc.html");
   const styles = home.match(/\.rs-hero-reviews \{[\s\S]*?\n  \}/)?.[0];
   assert.ok(styles);
   assert.match(styles, /min-height: 44px/);
@@ -39,7 +39,7 @@ test("review link has a visible focus treatment and touch-sized responsive layou
 
 test("review collection remains separate, optional, and neutral", () => {
   const invitation = read("review/index.html");
-  assert.match(read("Explore.dc.html"), /href="\/review">Leave an honest review/);
+  assert.match(read("Home.dc.html"), /href="\/review">Leave an honest review/);
   assert.match(invitation, /https:\/\/www\.trustpilot\.com\/evaluate\/rainbowsanctuary\.life/);
   assert.match(invitation, /honest review/i);
   assert.match(read("docs/TRUSTPILOT-REVIEW-COLLECTION.md"), /automation remains disabled/);

@@ -64,9 +64,9 @@ test("home, events and generic pages share the brand card; December has its own 
   }
 });
 
-test("all 60 discoverable pages have static, consistent OG and X metadata", () => {
+test("all 59 discoverable pages have static, consistent OG and X metadata", () => {
   const pages = readdirSync(root).filter(file => file.endsWith(".dc.html") && read(file).includes("<!-- rs-discovery:start -->"));
-  assert.equal(pages.length, 60);
+  assert.equal(pages.length, 59);
   for (const file of pages) {
     const html = head(file);
     assert.equal(meta(html, "twitter:title"), meta(html, "og:title"), file);

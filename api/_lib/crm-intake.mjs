@@ -56,20 +56,6 @@ export function normalizePublicIntake(input, receivedAt = new Date(), options = 
     if (!program && sourceUrl.pathname === "/apply") program = "general-enquiry";
   }
   const eventId = clean(input.clientEventId);
-  const isKarma = area === "private-healing" && program === "karma";
-  const schedulingTimezone = clean(input.schedulingTimezone);
-  const schedulingPreferences = clean(input.schedulingPreferences);
-  if (isKarma) {
-    try {
-      if (!schedulingTimezone || schedulingTimezone.length > 80) throw new Error();
-      new Intl.DateTimeFormat("en", { timeZone: schedulingTimezone }).format();
-    } catch {
-      throw new Error("A valid scheduling timezone is required.");
-    }
-    if (schedulingPreferences.length > 300 || PROHIBITED_PATTERN.test(schedulingPreferences) || FULL_CARD_PATTERN.test(schedulingPreferences)) {
-      throw new Error("Invalid scheduling preferences.");
-    }
-  }
   const submittedAt = Date.parse(input.submittedAt);
   const receivedTime = receivedAt.getTime();
   if (
@@ -110,8 +96,7 @@ export function normalizePublicIntake(input, receivedAt = new Date(), options = 
     program,
     requestMessage,
     schemaVersion: "rainbow.website-intake.v2",
-    sourcePage,
-    ...(isKarma ? { schedulingTimezone, schedulingPreferences } : {})
+    sourcePage
   };
 }
 
