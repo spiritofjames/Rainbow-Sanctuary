@@ -475,9 +475,11 @@ class Component extends DCLogic {
           this.setState({ submitted: true, showAcknowledgement: true, acknowledgementClosed: false, submitting: false });
           this.openAcknowledgement();
         } catch (error) {
-          const message = error && error.status === 400
-            ? 'We could not validate this enquiry. Please refresh the page, check the required fields, and try once more.'
-            : 'We could not confirm the submission. It may already have reached our team. Please try again using this form, which keeps the same submission reference.';
+          const message = error && error.status === 503
+            ? 'Our form service is temporarily unavailable. Please keep this page open and try again shortly, or contact our team.'
+            : (error && error.status === 400
+              ? 'We could not validate this enquiry. Please check the required fields and try once more.'
+              : 'We could not confirm the submission. It may already have reached our team. Please try again using this form, which keeps the same submission reference.');
           this.setState({ submitting: false, error: message });
         }
       },
