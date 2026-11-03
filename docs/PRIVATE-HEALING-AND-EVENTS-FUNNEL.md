@@ -33,8 +33,9 @@
 The approved price is USD 500. The website keeps the application as the primary
 step and presents the owner-supplied Stripe link for customers who have agreed
 the next step with the team. The application captures required name, email,
-international WhatsApp number, timezone, private context, intended outcome,
-headshot and explicit consent; scheduling preferences are optional.
+international WhatsApp number, private context/current challenges, intended
+outcome, recent headshot and explicit consent. Timezone and availability are not
+requested on the application; the manager agrees appointment details later.
 
 Use the same email for intake and payment. The manager matches the application,
 checks consent, and agrees an appointment with the customer. A verified payment

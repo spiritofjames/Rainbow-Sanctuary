@@ -129,8 +129,6 @@
             <div class="rs-application-form__heading"><span>Step 3 · Your application</span><h2>What support are you seeking?</h2></div>
             <sc-if value="{{ isKarmaApplication }}" hint-placeholder-val="{{ false }}">
               <p class="rs-field-help">Personal Karma Reconciliation is USD 500. The team reviews your application before payment and arranges your appointment with you; submitting this form does not book a time.</p>
-              <div class="rs-field"><label for="scheduling-timezone">Your timezone</label><input id="scheduling-timezone" name="schedulingTimezone" type="text" required="true" maxlength="80" placeholder="For example, America/Panama" value="{{ schedulingTimezone }}" onChange="{{ onSchedulingTimezoneChange }}" /><p class="rs-field-help">Use an IANA timezone such as America/Panama, Europe/London or Asia/Singapore so we can arrange the correct local time.</p></div>
-              <div class="rs-field"><label for="scheduling-preferences">Preferred days and times (optional)</label><input id="scheduling-preferences" name="schedulingPreferences" type="text" maxlength="300" placeholder="For example, weekday afternoons in my timezone" value="{{ schedulingPreferences }}" onChange="{{ onSchedulingPreferencesChange }}" /><p class="rs-field-help">Scheduling preferences only. Please do not include health or payment information.</p></div>
             </sc-if>
             <div class="rs-field"><label for="current-challenges">Your current challenges</label><textarea id="current-challenges" name="currentChallenges" rows="5" maxlength="900" required="true" value="{{ currentChallenges }}" onChange="{{ onChallengesChange }}"></textarea><p class="rs-field-help">Describe your lived experience in your own words. Do not include medical records or private information about another person.</p></div>
             <div class="rs-field"><label for="intended-outcome">Your intended outcome</label><textarea id="intended-outcome" name="intendedOutcome" rows="4" maxlength="700" required="true" value="{{ intendedOutcome }}" onChange="{{ onOutcomeChange }}"></textarea><p class="rs-field-help">What do you hope to understand, practise, or relate to differently?</p></div>
@@ -271,7 +269,6 @@ class Component extends DCLogic {
 
   componentDidMount() {
     document.body.classList.remove('rs-application-dialog-open');
-    this.setState({ schedulingTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone || '', schedulingPreferences: '' });
     const params = new URLSearchParams(window.location.search);
     const reason = params.get('reason');
     const privateSession = params.get('session');
@@ -314,8 +311,6 @@ class Component extends DCLogic {
       retreatIntent: this.state.retreatIntent,
       privateSession: this.state.privateSession,
       isKarmaApplication: this.state.reason === 'private-healing' && this.state.privateSession === 'karma',
-      schedulingTimezone: this.state.schedulingTimezone || '',
-      schedulingPreferences: this.state.schedulingPreferences || '',
       currentChallenges: this.state.currentChallenges,
       intendedOutcome: this.state.intendedOutcome,
       participantName: this.state.participantName,
@@ -355,8 +350,6 @@ class Component extends DCLogic {
         this.setState({ retreatIntent, message, configurationPending: false, error: '' });
       },
       onPrivateSessionChange: (e) => this.setState({ privateSession: e.target.value, error: '' }),
-      onSchedulingTimezoneChange: (e) => this.setState({ schedulingTimezone: e.target.value, error: '' }),
-      onSchedulingPreferencesChange: (e) => this.setState({ schedulingPreferences: e.target.value, error: '' }),
       onChallengesChange: (e) => this.setState({ currentChallenges: e.target.value, error: '' }),
       onOutcomeChange: (e) => this.setState({ intendedOutcome: e.target.value, error: '' }),
       onParticipantNameChange: (e) => this.setState({ participantName: e.target.value, error: '' }),
@@ -395,15 +388,6 @@ class Component extends DCLogic {
           this.setState({ error: 'Please add the requested recent headshot, or contact the team to discuss an accessible alternative.' });
           return;
         }
-        if (isPrivate && this.state.privateSession === 'karma') {
-          try {
-            if (!(this.state.schedulingTimezone || '').trim()) throw new Error();
-            new Intl.DateTimeFormat('en', { timeZone: this.state.schedulingTimezone.trim() }).format();
-          } catch {
-            this.setState({ error: 'Please enter a valid timezone, for example America/Panama or Europe/London.' });
-            return;
-          }
-        }
         if (!formConfig || !formConfig.endpoint) {
           this.setState({ configurationPending: true, error: '', submitted: false });
           return;
@@ -439,8 +423,6 @@ class Component extends DCLogic {
             privacyPolicyVersion: window.RAINBOW_SANCTUARY_CONFIG?.legal?.privacyPolicyVersion || '9 August 2026',
             currentChallenges: isPrivate ? this.state.currentChallenges.trim() : undefined,
             intendedOutcome: isPrivate ? this.state.intendedOutcome.trim() : undefined,
-            schedulingTimezone: isPrivate && this.state.privateSession === 'karma' ? (this.state.schedulingTimezone || '').trim() : undefined,
-            schedulingPreferences: isPrivate && this.state.privateSession === 'karma' ? (this.state.schedulingPreferences || '').trim() : undefined,
             participantName: isAutismRegistration ? this.state.participantName.trim() : undefined,
             participantAge: isAutismRegistration ? this.state.participantAge : undefined,
             participantCountry: isAutismRegistration ? this.state.participantCountry.trim() : undefined,

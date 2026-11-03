@@ -4,6 +4,20 @@ Date: 2 November 2026
 Branch: `codex/website-updates-20261102`
 Baseline: production `7a7d7e1eeaf313e152d8c126b0952c89054af286`
 
+## Owner correction — 3 November 2026
+
+Restore the original “Home is where your heart feels peace” root homepage on
+protected staging by reversing only the earlier identity-homepage PR #181.
+Keep the new homepage preserved on its separate branch, not published at `/`.
+Preserve existing schema/search improvements and the USD 500 Karma payment flow.
+Remove timezone and preferred days/times from the browser, submission payload,
+server requirement and new HubSpot notes. Existing historical QA notes are not
+edited or deleted. The remaining application fields are name, email, WhatsApp,
+session selection, current challenges, intended outcome, recent headshot and
+the existing privacy/photo consents. The team agrees appointments privately.
+Historical QA observations below that mention timezone describe the earlier
+candidate only, not this corrected form. No production release is included.
+
 ## Owner-approved scope
 
 - USD 500 per private session, without a further planning-fee uplift.
@@ -13,13 +27,13 @@ Baseline: production `7a7d7e1eeaf313e152d8c126b0952c89054af286`
 
 ## Implemented locally, not yet deployed or live-certified
 
-1. Primary application: name, email, international WhatsApp number, required
-   timezone, optional availability, private session context and intended outcome,
-   existing headshot and consent. Timezone is initially suggested from the browser
-   and remains editable. Server validation rejects missing/invalid Karma timezones.
-2. Restricted HubSpot intake note preserves scheduling details and consent
-   evidence alongside the existing private application. No extra scheduling
-   details or private narrative are sent to Stripe.
+1. Primary application: name, email, international WhatsApp number, private
+   session context/current challenges, intended outcome, recent headshot and
+   consent. Owner correction on 3 November removes timezone and availability
+   fields, browser collection and server requirements. Appointment details are
+   agreed later by the manager.
+2. Restricted HubSpot intake note preserves the application and consent evidence.
+   No scheduling fields or private narrative are sent to Stripe.
 3. The exact Stripe link is visible for customers who have agreed the next step
    with the team. Instructions say application first and the same email at checkout.
 4. A mapped, signed, paid Checkout event is checked against the USD 500 catalogue.

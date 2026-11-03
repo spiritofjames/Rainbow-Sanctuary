@@ -11,8 +11,7 @@ const origin = "https://rainbowsanctuary.life";
 const retreatFaqs = JSON.parse(fs.readFileSync(path.join(siteDir, "data/december-retreat-faqs.json"), "utf8"));
 const lastmod = "2026-07-31";
 const routeLastmod = new Map([
-  ["/", "2026-10-31"],
-  ["/explore", "2026-10-31"],
+  ["/", "2026-10-23"],
   ["/awakening-your-inner-light-2026", "2026-10-23"],
   ["/awakening-your-inner-light-october-2026", "2026-10-23"],
   ["/events", "2026-10-23"],
@@ -89,7 +88,6 @@ const headers = [
 
 const baseRoutes = {
   "Home.dc.html": "/",
-  "Explore.dc.html": "/explore",
   "About-Stephanie.dc.html": "/about",
   "1-1-Sessions.dc.html": "/private-healing",
   "Accessibility-Statement.dc.html": "/accessibility",
@@ -165,7 +163,6 @@ const knowledgeEntryByPath = new Map(
 );
 
 const pageTypes = {
-  "Explore.dc.html": "CollectionPage",
   "About-Stephanie.dc.html": "AboutPage",
   "Book-Consultation.dc.html": "ContactPage",
   "Events-Retreats.dc.html": "CollectionPage"
@@ -187,7 +184,6 @@ const brandedSocialImages = {
 };
 const ogImages = {
   "Home.dc.html": brandShareImage,
-  "Explore.dc.html": brandShareImage,
   "About-Stephanie.dc.html": "/assets/stephanie-portrait.jpg",
   "1-1-Sessions.dc.html": "/assets/editorial/private-healing-overview.jpg",
   "Awakening-Your-Inner-Light-2026.dc.html": decemberShareImage,
@@ -324,15 +320,6 @@ function schemaFor(file, title, description, canonical, image, source) {
     }
   ];
   const webpage = graph.find(node => node["@id"] === `${canonical}#webpage`);
-  if (file === "Home.dc.html") {
-    const section = source.match(/<section class="home-questions[\s\S]*?<\/section>/)?.[0] || "";
-    const questions = [...section.matchAll(/<details><summary>([\s\S]*?)<\/summary><p>([\s\S]*?)<\/p><\/details>/g)];
-    if (questions.length !== 6) throw new Error("Homepage FAQ must contain six visible questions and answers.");
-    const plain = text => decodeHtml(text.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim());
-    graph.push({ "@type": "FAQPage", "@id": `${canonical}#questions`, mainEntity: questions.map(([,question,answer]) => ({
-      "@type": "Question", name: plain(question), acceptedAnswer: { "@type": "Answer", text: plain(answer) }
-    })) });
-  }
   if (file === "About-Stephanie.dc.html") webpage.mainEntity = { "@id": stephanieSchema["@id"] };
 
   if (file === "Awakening-Your-Inner-Light-2026.dc.html") {
@@ -646,12 +633,11 @@ const knowledgeLlms = (knowledgeManifest.entries || []).length
 
 const llms = `# Rainbow Sanctuary
 
-> Rainbow Sanctuary is a growing community rooted in Bocas del Toro, Panama, bringing people together through inner growth, learning and shared creation. It offers current programmes, family activities, online gatherings and retreats while developing the School of the Universe within a wider Planetary Symbiosis Network vision. Its work is educational and experiential and does not replace medical or mental-health care.
+> Rainbow Sanctuary is a global community offering spiritual wellbeing experiences, conscious-development programs, family support, practitioner pathways, online gatherings, and in-person retreats. Its work is educational and experiential and does not replace medical or mental-health care.
 
 ## Start here
 
-- [Home](${origin}/): Identity, purpose, Panama, the developing School, progress and ways to contribute
-- [Explore programmes and experiences](${origin}/explore): The preserved programmes homepage and current invitations
+- [Home](${origin}/): Overview and current invitations
 - [About Rainbow Sanctuary](${origin}/about): The platform, community, and co-founder Stephanie Wu
 - [The Spiral Journey](${origin}/spiral-journey): Four progressive levels of personal and conscious development
 - [Group Healing](${origin}/group-healing): Overview of shared healing pathways
@@ -706,10 +692,6 @@ const llmsFull = `# Rainbow Sanctuary — Extended Site Guide
 ## What Rainbow Sanctuary is
 
 Rainbow Sanctuary is a global spiritual wellbeing and conscious-development community co-founded by Stephanie Wu. It brings together accessible online group experiences, a progressive four-level Spiral Journey, focused programs, children-and-family work, practitioner pathways, private sessions, retreats, and an Earth-centred regenerative vision.
-
-The identity homepage at ${origin}/ explains what Rainbow Sanctuary is building, why, its physical connection to Bocas del Toro in Panama, the people behind the work and ways to contribute. The programmes experience is preserved separately at ${origin}/explore; the focused programme catalogue remains ${origin}/programs.
-
-The School of the Universe is a connected learning initiative for children and families. Its physical learning environment and digital platform are in development, preparing for beta; this is not an announcement of public enrolment or a live public platform. Current Rainbow family activities are separate, and adult retreat participation is never a requirement for children or families. The wider PSN anchor network and human-led, AI-supported digital platform are also in development, not a residential or investment offer. Generated site and network images are labelled as visualisations or artistic visions, not documentary photographs or operating-location maps.
 
 The site speaks about spiritual and energetic practices as part of Rainbow Sanctuary's own framework. These offerings are educational and experiential. They are not medical diagnosis, treatment, psychotherapy, or a replacement for qualified professional care.
 

@@ -99,20 +99,20 @@ test("unpaid, wrong-price, wrong-session and unapproved live events cannot confi
   assert.throws(() => purchaseConfirmationFromStripeEvent({ ...event, livemode: true }), /approved/);
 });
 
-test("Karma intake requires consent, WhatsApp and a real timezone before payment", () => {
+test("Karma intake requires consent and WhatsApp without requesting scheduling details", () => {
   const input = {
     clientEventId: "12e9e9fd-367f-4f92-a6d2-bbe8e977d398", name: "Synthetic Karma Customer", email: "karma-qa@example.test",
     whatsapp: "+1 202 555 0102", reason: "private-healing", program: "karma", photoConsent: true,
     privacyAccepted: true, privacyPolicyVersion: "9 August 2026", sourcePage: "/apply?reason=private-healing&session=karma",
-    message: "I would like to explore recurring patterns.", submittedAt: "2026-11-02T10:00:00Z",
-    schedulingTimezone: "America/Panama", schedulingPreferences: "Weekday afternoons"
+    message: "I would like to explore recurring patterns.", submittedAt: "2026-11-02T10:00:00Z"
   };
   const normalize = (value) => normalizePublicIntake(value, new Date("2026-11-02T10:01:00Z"), { allowPrivateHealing: true });
   const intake = normalize(input);
-  assert.equal(intake.schedulingTimezone, "America/Panama");
-  assert.equal(intake.schedulingPreferences, "Weekday afternoons");
+  assert.equal(Object.hasOwn(intake, "schedulingTimezone"), false);
+  assert.equal(Object.hasOwn(intake, "schedulingPreferences"), false);
+  assert.deepEqual(normalize({ ...input, schedulingTimezone: "not-a-timezone", schedulingPreferences: "Legacy client field" }), intake);
   assert.equal(visitorIntakeReceipt(intake).alias, "rs-application-received");
-  for (const change of [{ schedulingTimezone: "" }, { schedulingTimezone: "not-a-timezone" }, { whatsapp: "" }, { privacyAccepted: false }]) {
+  for (const change of [{ whatsapp: "" }, { privacyAccepted: false }, { photoConsent: false }]) {
     assert.throws(() => normalize({ ...input, ...change }));
   }
 });
@@ -122,6 +122,20 @@ test("Karma page retains intake first, the exact owner-supplied link and honest 
   assert.match(page, /https:\/\/book\.stripe\.com\/3cIdR9dEd1mdfU15ov3Nm0q/);
   assert.match(page, /Complete your application first/);
   assert.match(page, /Payment does not book a time automatically/);
+});
+
+test("Karma application retains the requested fields and no timezone or availability controls", async () => {
+  const page = await readFile(new URL("../Book-Consultation.dc.html", import.meta.url), "utf8");
+  for (const id of ["consultation-name", "consultation-email", "consultation-whatsapp", "current-challenges", "intended-outcome", "recent-headshot"]) {
+    assert.ok(page.includes(`id="${id}"`), `Missing application field ${id}`);
+  }
+  assert.doesNotMatch(page, /schedulingTimezone|schedulingPreferences|scheduling-timezone|scheduling-preferences/);
+});
+
+test("the original peace homepage remains the root experience while Karma stays USD 500", async () => {
+  const home = await readFile(new URL("../Home.dc.html", import.meta.url), "utf8");
+  assert.match(home, /Home is where your heart feels peace/);
+  assert.doesNotMatch(home, /home-identity\.(?:css|js)|A sanctuary for a more/);
 });
 
 test("the real webhook verifies a signature and routes Karma to HubSpot plus both emails without external traffic", async () => {
