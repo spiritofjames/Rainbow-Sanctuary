@@ -39,7 +39,9 @@ function coreContactProperties(properties) {
     firstname: properties.firstname,
     hubspot_owner_id: properties.hubspot_owner_id,
     lastname: properties.lastname,
-    lifecyclestage: properties.lifecyclestage
+    lifecyclestage: properties.lifecyclestage,
+    ...(properties.phone ? { phone: properties.phone } : {}),
+    ...(properties.hs_whatsapp_phone_number ? { hs_whatsapp_phone_number: properties.hs_whatsapp_phone_number } : {})
   };
 }
 
@@ -74,15 +76,20 @@ export function toHubSpotPurchaseProperties(stripeEvent, ownerId, { allowLive = 
   const childDetails = variant.policy === "kids-weekly-practice"
     ? ` Child enrolment: ${handoff.customer.childName || "not supplied"}. Guardian WhatsApp: ${handoff.customer.guardianWhatsApp || "not supplied"}.`
     : "";
+  const privateDetails = variant.policy === "private-session"
+    ? " Appointment not yet scheduled. Match the application by email, review consent and contact details, then contact the customer to agree a time."
+    : "";
   return {
-    area_of_interest: ["group-healing", "regeneration-maintenance", "kids-weekly-practice"].includes(variant.policy) ? "Group healing" : "Program guidance",
+    area_of_interest: variant.policy === "private-session" ? "Private healing" : (["group-healing", "regeneration-maintenance", "kids-weekly-practice"].includes(variant.policy) ? "Group healing" : "Program guidance"),
     email: handoff.customer.email,
-    enquiry_details: `Payment received for ${variant.name}. Paid USD ${(handoff.amountMinor / 100).toFixed(2)}. Reference: ${handoff.bookingReference}. Financial authority: Stripe and the private Rainbow CRM.${childDetails}`,
+    enquiry_details: `Payment received for ${variant.name}. Paid USD ${(handoff.amountMinor / 100).toFixed(2)}. Reference: ${handoff.bookingReference}. Financial authority: Stripe and the private Rainbow CRM.${childDetails}${privateDetails}`,
     firstname,
     hubspot_owner_id: ownerId,
     lastname,
     lifecyclestage: "customer",
-    program_or_offering: variant.offer.name
+    program_or_offering: variant.offer.name,
+    ...(handoff.customer.whatsapp || handoff.customer.phone ? { phone: handoff.customer.whatsapp || handoff.customer.phone } : {}),
+    ...(handoff.customer.whatsapp ? { hs_whatsapp_phone_number: handoff.customer.whatsapp } : {})
   };
 }
 

@@ -235,6 +235,24 @@ export function purchaseConfirmationFromStripeEvent(stripeEvent, { allowLive = f
     throw new Error("Internal payment tests do not create participant confirmation emails.");
   }
   const offerKey = String(stripeEvent.data?.object?.metadata?.offer_key || "");
+  if (offerKey === "personal-karma-reconciliation") {
+    const handoff = crmPaymentHandoff(stripeEvent, { allowLive });
+    const offer = resolveOfferVariant(offerKey);
+    if (handoff.sessionId !== offer.sessionId || !checkoutAmountMatchesApprovedPrice(handoff, offer.amountMinor)) {
+      throw new Error("The private session payment does not match the approved catalogue.");
+    }
+    return {
+      alias: "rs-private-session-payment-received",
+      to: handoff.customer.email,
+      variables: {
+        NAME: handoff.customer.displayName,
+        REFERENCE_ID: handoff.bookingReference,
+        SERVICE_URL: `https://rainbowsanctuary.life${offer.offer.pagePath}`
+      },
+      idempotencyKey: checkoutConfirmationKey(handoff, "private-session-payment-received"),
+      tags: [{ name: "offer", value: handoff.offerId }, { name: "session", value: handoff.sessionId }]
+    };
+  }
   if (offerKey === "group-healing") return bookingConfirmationFromStripeEvent(stripeEvent, { allowLive, environment });
   if (offerKey.startsWith("regeneration-maintenance-")) return regenerationMaintenanceConfirmationFromStripeEvent(stripeEvent, { allowLive });
   if (offerKey.startsWith("kids-weekly-practice-")) return kidsWeeklyPracticeConfirmationFromStripeEvent(stripeEvent, environment, { allowLive });

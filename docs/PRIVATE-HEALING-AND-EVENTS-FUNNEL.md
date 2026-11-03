@@ -28,6 +28,21 @@
 8. **Follow-up** — the team may recommend another session or other appropriate
    support without making guaranteed outcome claims.
 
+### Personal Karma Reconciliation — 2 November 2026 update
+
+The approved price is USD 500. The website keeps the application as the primary
+step and presents the owner-supplied Stripe link for customers who have agreed
+the next step with the team. The application captures required name, email,
+international WhatsApp number, timezone, private context, intended outcome,
+headshot and explicit consent; scheduling preferences are optional.
+
+Use the same email for intake and payment. The manager matches the application,
+checks consent, and agrees an appointment with the customer. A verified payment
+produces a payment-received message, not an automatic appointment confirmation.
+No reminder should run until an actual time and timezone are confirmed. The
+payment link itself is shareable and does not technically enforce prior
+application acceptance. See `KARMA-BOOKING-20261102.md` for remaining provider gates.
+
 ## Recommended launch stack
 
 - **HubSpot:** intake form, private file upload, contact record, consent evidence,
