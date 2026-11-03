@@ -1,5 +1,6 @@
 import { checkoutAmountMatchesApprovedPrice, crmPaymentHandoff, isInternalPaymentTest, livePaymentProcessingAllowed } from "./webhook-delivery.mjs";
 import { resolveOfferVariant } from "./offer-catalog.mjs";
+import { karmaApplicationReference } from "./karma-booking.mjs";
 
 const HUBSPOT_API_ORIGIN = "https://api.hubapi.com";
 const NUMERIC_ID_PATTERN = /^\d+$/;
@@ -77,7 +78,7 @@ export function toHubSpotPurchaseProperties(stripeEvent, ownerId, { allowLive = 
     ? ` Child enrolment: ${handoff.customer.childName || "not supplied"}. Guardian WhatsApp: ${handoff.customer.guardianWhatsApp || "not supplied"}.`
     : "";
   const privateDetails = variant.policy === "private-session"
-    ? " Appointment not yet scheduled. Match the application by email, review consent and contact details, then contact the customer to agree a time."
+    ? ` Appointment not yet scheduled. Match the application by email, review consent and contact details, then contact the customer to agree a time.${karmaApplicationReference(stripeEvent.data?.object?.client_reference_id) ? ` Application reference: ${karmaApplicationReference(stripeEvent.data.object.client_reference_id)}.` : ""}`
     : "";
   return {
     area_of_interest: variant.policy === "private-session" ? "Private healing" : (["group-healing", "regeneration-maintenance", "kids-weekly-practice"].includes(variant.policy) ? "Group healing" : "Program guidance"),

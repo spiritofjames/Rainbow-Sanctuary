@@ -10,6 +10,7 @@ import {
 } from "../_lib/operations-notification.mjs";
 import { parseJsonBody, sendJson } from "../_lib/http.mjs";
 import { parseMultipartIntake } from "../_lib/private-intake.mjs";
+import { savedKarmaPaymentUrl } from "../_lib/karma-booking.mjs";
 
 function safeFailureReason(error) {
   const message = String(error?.message || "").toLowerCase();
@@ -111,6 +112,7 @@ export default async function handler(request, response) {
     // legacy CRM mirror must never block (or receive) that material.
     if (!requiresProtectedAttachment) await forwardWebsiteIntake(input, process.env);
     const hubspot = await mirrorHubSpotIntake(normalized, process.env, fetch, attachment, privateApplication || autismRegistration);
+    const paymentUrl = savedKarmaPaymentUrl(normalized, hubspot);
     if (isAutismRegistration) {
       await attemptAutismRegistrationReceipt(normalized, process.env);
       await attemptAutismRegistrationOneHourReminder(normalized, process.env);
@@ -119,7 +121,7 @@ export default async function handler(request, response) {
       await attemptVisitorIntakeReceipt(normalized, process.env);
     }
     await attemptEnquiryOperationsNotification(normalized, hubspot, process.env);
-    return sendJson(response, 202, { accepted: true });
+    return sendJson(response, 202, { accepted: true, ...(paymentUrl ? { paymentUrl } : {}) });
   } catch (error) {
     const operationalFailure = /operations notification|operational recipient/i.test(error.message);
     const expected = !operationalFailure && /not enabled|not configured|not allowed|origin|required|invalid|private healing|private headshot|protected participant|autism registration|consent|prohibited/i.test(error.message);

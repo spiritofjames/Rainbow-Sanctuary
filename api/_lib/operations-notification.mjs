@@ -2,6 +2,7 @@ import { emailHtml, emailText, escapeHtml } from "../../emails/layout.mjs";
 import { sendOperationalEmail, sendTransactionalEmail } from "./email-service.mjs";
 import { crmPaymentHandoff, isInternalPaymentTest, livePaymentProcessingAllowed } from "./webhook-delivery.mjs";
 import { resolveOfferVariant } from "./offer-catalog.mjs";
+import { isKarmaBooking, karmaPaymentUrl, karmaApplicationReference } from "./karma-booking.mjs";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const FREE_DONATION_FOLLOW_UP_PROGRAMS = new Set(["autism-family-support"]);
@@ -22,6 +23,7 @@ function safeContactUrl(hubspot) {
 }
 
 function intakePathwayLabel(intake) {
+  if (intake.program === "karma" || intake.program === "personal-karma-reconciliation") return "Personal Karma Reconciliation";
   if (intake.program === "general-enquiry") return "General enquiry — main website";
   if (intake.program === "awakening-inner-light-december-2026") {
     let isDiscoveryCall = false;
@@ -52,15 +54,38 @@ export function visitorIntakeReceipt(intake) {
   };
 }
 
+export function karmaBookingDetailsReceipt(intake) {
+  const content = {
+    preheader: "Your session details are saved. Payment is the next step.",
+    eyebrow: "Personal Karma Reconciliation · Details received",
+    heading: "Your details are with us.",
+    greeting: `Hello ${escapeHtml(intake.displayName)},`,
+    paragraphs: [
+      "We have received your details for Personal Karma Reconciliation. Continue to secure payment of USD 500 through Stripe, using the same email address as your application.",
+      "This email confirms your details were received, not that payment is complete. After payment, our manager will contact you by email or your consented WhatsApp number to arrange your session time. No appointment time is booked automatically."
+    ],
+    details: [{ label: "Application reference", value: escapeHtml(intake.eventId) }],
+    cta: { label: "Continue to payment — USD 500", url: karmaPaymentUrl(intake.eventId) },
+    closing: "With care, Rainbow Sanctuary"
+  };
+  return {
+    html: emailHtml(content), text: emailText(content), identity: "general",
+    subject: "Your Karma session details are saved — payment next",
+    idempotencyKey: `intake:${intake.eventId}:visitor-received`,
+    tags: [{ name: "workflow", value: "karma-booking-details" }], to: intake.email
+  };
+}
+
 export function enquiryOperationsMessage(intake, hubspot, environment) {
   const program = intakePathwayLabel(intake);
+  const isKarma = isKarmaBooking(intake);
   const content = {
     preheader: "A new Rainbow Sanctuary enquiry is ready for review.",
     eyebrow: "Operations · New enquiry",
     heading: "A new enquiry is ready.",
     greeting: `Hello Ethel,`,
     paragraphs: [
-      `${escapeHtml(intake.displayName)} submitted an enquiry for ${escapeHtml(program)}. Open the owned HubSpot contact to review the approved intake details and decide the next step.`,
+      isKarma ? `${escapeHtml(intake.displayName)} saved booking details for ${escapeHtml(program)} and is continuing to Stripe. Payment is not confirmed by this message. Verify payment in Stripe, then contact the customer to arrange a time.` : `${escapeHtml(intake.displayName)} submitted an enquiry for ${escapeHtml(program)}. Open the owned HubSpot contact to review the approved intake details and decide the next step.`,
       "The notification intentionally excludes the enquiry message and any attachment. Review confidential details only in the approved system."
     ],
     details: [
@@ -75,7 +100,7 @@ export function enquiryOperationsMessage(intake, hubspot, environment) {
     html: emailHtml(content),
     identity: "general",
     idempotencyKey: `intake:${intake.eventId}:operations`,
-    subject: `New Rainbow Sanctuary enquiry — ${program}`,
+    subject: isKarma ? "Karma booking details received — payment not yet confirmed" : `New Rainbow Sanctuary enquiry — ${program}`,
     tags: [{ name: "workflow", value: "enquiry" }],
     text: emailText(content),
     to: operationsRecipient(environment)
@@ -213,13 +238,14 @@ export function purchaseOperationsMessage(stripeEvent, hubspot, environment) {
       `${escapeHtml(handoff.customer.displayName)} completed payment for ${escapeHtml(offer.name)}. Stripe and the private Rainbow CRM remain the financial authority.`,
       "Open the owned HubSpot contact to continue participant follow-up. This notification contains no financial credentials.",
       ...(offer.policy === "private-session" ? [
-        "Appointment action required: match the private application by email, check the consented contact details and timezone, and contact the customer to arrange a suitable time. Payment alone does not confirm an appointment.",
+        "Appointment action required: match the private application by email and its application reference when supplied, check the consented contact details, and contact the customer to arrange a suitable time. Payment alone does not confirm an appointment.",
         handoff.customer.whatsapp ? "A WhatsApp number was captured at checkout. Verify follow-up consent in the application before messaging." : "WhatsApp was not captured at checkout. Check the matched application; if it is absent, contact the customer by email to complete intake. Do not assume another phone number is WhatsApp."
       ] : [])
     ],
     details: [
       { label: "Amount", value: `USD ${(handoff.amountMinor / 100).toFixed(2)}` },
-      { label: "Reference", value: escapeHtml(handoff.bookingReference) }
+      { label: "Reference", value: escapeHtml(handoff.bookingReference) },
+      ...(offer.policy === "private-session" && karmaApplicationReference(stripeEvent.data?.object?.client_reference_id) ? [{ label: "Application reference", value: karmaApplicationReference(stripeEvent.data.object.client_reference_id) }] : [])
     ],
     cta: { label: "Open contact in HubSpot", url: safeContactUrl(hubspot) },
     closing: "Rainbow Sanctuary Operations"
@@ -262,7 +288,9 @@ export async function attemptEnquiryOperationsNotification(
 
 export async function attemptVisitorIntakeReceipt(intake, environment, resendClient, logger = console) {
   try {
-    const result = await sendTransactionalEmail(visitorIntakeReceipt(intake), environment, resendClient);
+    const result = isKarmaBooking(intake)
+      ? await sendOperationalEmail(karmaBookingDetailsReceipt(intake), environment, resendClient)
+      : await sendTransactionalEmail(visitorIntakeReceipt(intake), environment, resendClient);
     if (!result.sent) {
       logger.error("crm_intake_visitor_receipt_error", {
         eventId: intake.eventId,

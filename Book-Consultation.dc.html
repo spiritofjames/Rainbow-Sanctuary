@@ -56,18 +56,18 @@
   <section class="rs-application-hero">
     <div class="rs-application-shell rs-application-hero__inner">
       <span class="rs-application-kicker">Application &amp; enquiries</span>
-      <h1>Begin with context,<br><em>not a calendar.</em></h1>
-      <p>Tell us what brings you here. Private-healing requests are reviewed before scheduling; other enquiries are routed to the most relevant program or event.</p>
+      <h1>Begin with your details.<br><em>Take the next step.</em></h1>
+      <p>Tell us what brings you here. Personal Karma Reconciliation bookings continue to secure payment after your details are saved. Other applications and enquiries go to our team for review and follow-up.</p>
     </div>
   </section>
-  <section class="rs-application-flow" aria-label="Application process"><div class="rs-application-shell rs-application-flow__grid"><div><span>01</span><strong>Share</strong><small>Your context and intention</small></div><div><span>02</span><strong>Review</strong><small>Scope, consent, and fit</small></div><div><span>03</span><strong>Schedule</strong><small>Private link if accepted</small></div><div><span>04</span><strong>Integrate</strong><small>Written follow-up where applicable</small></div></div></section>
+  <section class="rs-application-flow" aria-label="Application process"><div class="rs-application-shell rs-application-flow__grid"><div><span>01</span><strong>Share</strong><small>Your context and intention</small></div><div><span>02</span><strong>Continue</strong><small>Payment or team review</small></div><div><span>03</span><strong>Connect</strong><small>Our team confirms the next step</small></div><div><span>04</span><strong>Integrate</strong><small>Written follow-up where applicable</small></div></div></section>
 
   <section class="rs-application-section">
     <div class="rs-application-shell rs-application-layout">
       <aside class="rs-application-aside">
         <span class="rs-application-kicker">Before you submit</span>
-        <h2>A request is not an acceptance.</h2>
-        <p>We may suggest a different Rainbow Sanctuary pathway, ask for clarification, or recommend qualified care outside our scope.</p>
+        <h2>Know what happens next.</h2>
+        <p>For Personal Karma Reconciliation, we save your contact details, context and headshot before opening Stripe for the USD 500 payment. Our manager then arranges your appointment with you. Other applications are reviewed before acceptance or scheduling.</p>
         <p>Do not submit medical records, diagnoses, government identifiers, emergency information, or unnecessary details about another person.</p>
         <a href="/private-healing">Explore Private Healing →</a>
       </aside>
@@ -128,7 +128,7 @@
             <div class="rs-field"><label for="private-session">Which private session are you considering?</label><select id="private-session" name="privateSession" required="true" value="{{ privateSession }}" onChange="{{ onPrivateSessionChange }}"><option value="">Choose one</option><option value="karma">Personal Karma Reconciliation</option><option value="family-field">Family Information Field Restoration</option><option value="dna-activation">DNA Activation</option><option value="unsure">I am not sure</option></select></div>
             <div class="rs-application-form__heading"><span>Step 3 · Your application</span><h2>What support are you seeking?</h2></div>
             <sc-if value="{{ isKarmaApplication }}" hint-placeholder-val="{{ false }}">
-              <p class="rs-field-help">Personal Karma Reconciliation is USD 500. The team reviews your application before payment and arranges your appointment with you; submitting this form does not book a time.</p>
+              <p class="rs-field-help">USD 500 per private session. We save your details and headshot first, then take you to Stripe. Use the same email at checkout. After payment, our manager will contact you to arrange your appointment.</p>
             </sc-if>
             <div class="rs-field"><label for="current-challenges">Your current challenges</label><textarea id="current-challenges" name="currentChallenges" rows="5" maxlength="900" required="true" value="{{ currentChallenges }}" onChange="{{ onChallengesChange }}"></textarea><p class="rs-field-help">Describe your lived experience in your own words. Do not include medical records or private information about another person.</p></div>
             <div class="rs-field"><label for="intended-outcome">Your intended outcome</label><textarea id="intended-outcome" name="intendedOutcome" rows="4" maxlength="700" required="true" value="{{ intendedOutcome }}" onChange="{{ onOutcomeChange }}"></textarea><p class="rs-field-help">What do you hope to understand, practise, or relate to differently?</p></div>
@@ -164,9 +164,19 @@
             <p class="rs-form-notice rs-form-notice--error rs-floating-notice" role="alert" aria-live="assertive">{{ error }}</p>
           </sc-if>
 
+          <sc-if value="{{ isKarmaApplication }}" hint-placeholder-val="{{ false }}"><p class="rs-field-help">Continuing saves your details; it does not charge you. You complete payment securely on Stripe. Your appointment time is arranged with our team.</p></sc-if>
           <button class="rs-application-submit rs-cta-interactive rs-cta-enter rs-cta-final" type="submit" disabled="{{ submitting }}">{{ submitLabel }}</button>
 
         </form>
+      </sc-if>
+
+      <sc-if value="{{ paymentUrl }}" hint-placeholder-val="{{ false }}">
+        <section class="rs-application-success" role="status" aria-live="polite">
+          <span class="rs-application-kicker">Details saved · payment next</span>
+          <h2>Continue securely on Stripe.</h2>
+          <p>Your details and headshot are saved. Opening Stripe for your USD 500 payment. If it does not open, use the link below. Your appointment time will be arranged with our manager after payment.</p>
+          <a class="rs-entry-button rs-entry-button--primary" href="{{ paymentUrl }}">Continue to payment — USD 500</a>
+        </section>
       </sc-if>
 
       <sc-if value="{{ showAcknowledgement }}" hint-placeholder-val="{{ false }}">
@@ -258,6 +268,7 @@ class Component extends DCLogic {
   constructor(props) {
     super(props);
     this.state = { name: '', email: '', whatsapp: '', reason: '', program: '', event: '', retreatIntent: 'register-interest', privateSession: '', currentChallenges: '', intendedOutcome: '', participantName: '', participantAge: '', participantCountry: '', message: '', photoFile: null, photoName: '', submissionId: '', submittedAt: '', submitted: false, showAcknowledgement: false, acknowledgementClosed: false, submitting: false, configurationPending: false, error: '' };
+    this.state.paymentUrl = '';
     this.acknowledgementReturnFocus = null;
   }
 
@@ -301,6 +312,7 @@ class Component extends DCLogic {
   renderVals() {
     const isDecemberRetreat = this.state.reason === 'events' && this.state.program === 'awakening-inner-light-december-2026';
     const isDiscoveryCall = isDecemberRetreat && this.state.retreatIntent === 'discovery-call';
+    const isKarmaApplication = this.state.reason === 'private-healing' && this.state.privateSession === 'karma';
     return {
       name: this.state.name,
       email: this.state.email,
@@ -310,7 +322,8 @@ class Component extends DCLogic {
       isDecemberRetreat,
       retreatIntent: this.state.retreatIntent,
       privateSession: this.state.privateSession,
-      isKarmaApplication: this.state.reason === 'private-healing' && this.state.privateSession === 'karma',
+      isKarmaApplication,
+      paymentUrl: this.state.paymentUrl,
       currentChallenges: this.state.currentChallenges,
       intendedOutcome: this.state.intendedOutcome,
       participantName: this.state.participantName,
@@ -333,7 +346,7 @@ class Component extends DCLogic {
       acknowledgementNote: this.state.reason === 'family' && this.state.program === 'autism-family-support' ? 'Please keep a restful, familiar space at the corresponding local time for Tuesday 11:00 PM Beijing time (UTC+8). This non-clinical wellbeing practice does not replace healthcare, educational, therapeutic, or crisis support.' : (isDecemberRetreat ? 'This acknowledgement is not an acceptance, place reservation, or payment request. The published investment is USD 3,500. Venue, final programme, safety, and booking terms are confirmed separately in writing.' : 'For Private Healing, a response or scheduling link confirms only the next conversation or appointment described in that message.'),
       closedAcknowledgementTitle: this.state.reason === 'family' && this.state.program === 'autism-family-support' ? 'Registration is complete.' : (isDecemberRetreat ? 'Your December retreat enquiry is with our team.' : 'Your request is with our team.'),
       closedAcknowledgementSummary: this.state.reason === 'family' && this.state.program === 'autism-family-support' ? 'The participant has been added to the weekly registration list. Please check the confirmation email for the schedule and preparation note.' : (isDecemberRetreat ? 'An acknowledgement email is normally sent shortly. If it does not arrive, check your spam folder; your request is still recorded for team follow-up.' : 'We will follow up through WhatsApp and email with the appropriate next step.'),
-      submitLabel: this.state.submitting ? 'Sending securely…' : (this.state.reason === 'family' && this.state.program === 'autism-family-support' ? 'Complete free registration' : (this.state.reason === 'private-healing' ? 'Submit application' : (isDiscoveryCall ? 'Request a discovery call' : 'Send enquiry'))),
+      submitLabel: this.state.submitting ? (isKarmaApplication ? 'Saving your details…' : 'Sending securely…') : (isKarmaApplication ? 'Continue to payment — USD 500' : (this.state.reason === 'family' && this.state.program === 'autism-family-support' ? 'Complete free registration' : (this.state.reason === 'private-healing' ? 'Submit application' : (isDiscoveryCall ? 'Request a discovery call' : 'Send enquiry')))),
       onNameChange: (e) => this.setState({ name: e.target.value, configurationPending: false, error: '' }),
       onEmailChange: (e) => this.setState({ email: e.target.value, configurationPending: false, error: '' }),
       onWhatsappChange: (e) => this.setState({ whatsapp: e.target.value, configurationPending: false, error: '' }),
@@ -448,6 +461,16 @@ class Component extends DCLogic {
             const failure = new Error('Submission failed');
             failure.status = response.status;
             throw failure;
+          }
+          if (isKarmaApplication) {
+            const result = await response.json();
+            const expectedUrl = `https://book.stripe.com/3cIdR9dEd1mdfU15ov3Nm0q?client_reference_id=${encodeURIComponent(submissionId)}`;
+            if (result.accepted !== true || result.paymentUrl !== expectedUrl) {
+              throw new Error('Payment handoff could not be confirmed');
+            }
+            this.setState({ submitted: true, showAcknowledgement: false, submitting: false, paymentUrl: expectedUrl });
+            window.location.assign(expectedUrl);
+            return;
           }
           this.setState({ submitted: true, showAcknowledgement: true, acknowledgementClosed: false, submitting: false });
           this.openAcknowledgement();

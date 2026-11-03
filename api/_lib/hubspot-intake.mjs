@@ -68,6 +68,7 @@ function privateHealingNote({ intake, retention, application }) {
     `<p><strong>Current challenges</strong><br>${escapeHtml(challenges).replaceAll("\n", "<br>")}</p>`,
     `<p><strong>Intended outcome</strong><br>${escapeHtml(intendedOutcome).replaceAll("\n", "<br>")}</p>`,
     `<p><strong>Preferred contact</strong><br>WhatsApp: ${escapeHtml(intake.phone)}</p>`,
+    ...(intake.program === "karma" ? ["<p><strong>Payment status at application</strong><br>Not confirmed. The visitor continues to Stripe after these details are saved. Confirm payment in Stripe before arranging the session.</p>"] : []),
     `<p><strong>Headshot</strong><br>Attached to this restricted note. It is automatically deleted after ${days} days. Do not download or duplicate outside the approved case workflow.</p>`,
     `<p><small>Explicit consent recorded · Submission reference: ${escapeHtml(intake.eventId)}</small></p>`
   ].join("");

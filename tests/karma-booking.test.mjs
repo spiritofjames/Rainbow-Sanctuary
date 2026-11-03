@@ -8,6 +8,7 @@ import { mirrorHubSpotPurchase, toHubSpotPurchaseProperties } from "../api/_lib/
 import { purchaseConfirmationFromStripeEvent, sendPurchaseConfirmation } from "../api/_lib/group-healing-booking-email.mjs";
 import { purchaseOperationsMessage, visitorIntakeReceipt } from "../api/_lib/operations-notification.mjs";
 import { normalizePublicIntake } from "../api/_lib/crm-intake.mjs";
+import { KARMA_PAYMENT_LINK } from "../api/_lib/karma-booking.mjs";
 import { checkoutSessionParameters } from "../api/_lib/checkout-policy.mjs";
 import { Readable } from "node:stream";
 import Stripe from "stripe";
@@ -65,6 +66,15 @@ test("Karma maps verified contact details and the scheduling action without eras
   assert.match(purchaseOperationsMessage(missing, { enabled: true, contactUrl: "https://app-na2.hubspot.com/contacts/456/record/0-1/123" }, environment).text, /WhatsApp was not captured/);
 });
 
+test("verified Karma payment retains the opaque application reference for manager reconciliation", () => {
+  const reference = "12e9e9fd-367f-4f92-a6d2-bbe8e977d398";
+  const linked = { ...event, data: { object: { ...event.data.object, client_reference_id: reference } } };
+  assert.ok(toHubSpotPurchaseProperties(linked, "12345").enquiry_details.includes(`Application reference: ${reference}`));
+  assert.ok(purchaseOperationsMessage(linked, { enabled: true, contactUrl: "https://app-na2.hubspot.com/contacts/1/record/0-1/2" }, { ...environment, RAINBOW_OPERATIONS_EMAIL: "ethel@rainbowsanctuary.life" }).text.includes(reference));
+  const invalid = { ...event, data: { object: { ...event.data.object, client_reference_id: "private-answers-or-arbitrary-text" } } };
+  assert.doesNotMatch(toHubSpotPurchaseProperties(invalid, "12345").enquiry_details, /arbitrary-text/);
+});
+
 test("Karma contact phone survives custom-property failure and HubSpot failures remain retryable", async () => {
   const calls = [];
   const result = await mirrorHubSpotPurchase(event, environment, async (_url, options) => {
@@ -117,10 +127,12 @@ test("Karma intake requires consent and WhatsApp without requesting scheduling d
   }
 });
 
-test("Karma page retains intake first, the exact owner-supplied link and honest scheduling copy", async () => {
+test("Karma page has one booking card and a secondary questions link, not a payment bypass", async () => {
   const page = await readFile(new URL("../Personal-Karma-Reconciliation.dc.html", import.meta.url), "utf8");
-  assert.match(page, /https:\/\/book\.stripe\.com\/3cIdR9dEd1mdfU15ov3Nm0q/);
-  assert.match(page, /Complete your application first/);
+  assert.equal(KARMA_PAYMENT_LINK, "https://book.stripe.com/3cIdR9dEd1mdfU15ov3Nm0q");
+  assert.match(page, /Book this session/);
+  assert.match(page, /reason=other&amp;program=personal-karma-reconciliation/);
+  assert.doesNotMatch(page, /Already agreed the next step|href="https:\/\/book\.stripe\.com/);
   assert.match(page, /Payment does not book a time automatically/);
 });
 
