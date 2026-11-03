@@ -85,6 +85,7 @@ test("private healing stays gated unless its confidential provider and photo con
     message: "Requested session: karma\n\nCurrent context:\nSeeking support.\n\nIntended outcome:\nGreater clarity.",
     photoConsent: true,
     program: "karma",
+    schedulingTimezone: "America/Panama",
     reason: "private-healing"
   }, receivedAt, { allowPrivateHealing: true });
   assert.equal(privateIntake.area, "private-healing");

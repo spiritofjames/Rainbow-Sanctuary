@@ -47,6 +47,9 @@ export default async function handler(request, response) {
       !isOptionalContributionSession(governedEvent?.data?.object, process.env)
     ) {
       const hubspot = await mirrorHubSpotPurchase(governedEvent, process.env);
+      if (governedEvent.data?.object?.metadata?.offer_key === "personal-karma-reconciliation" && hubspot.enabled !== true) {
+        throw new Error("The private-session HubSpot payment handoff is not enabled.");
+      }
       await attemptPurchaseOperationsNotification(governedEvent, hubspot, process.env);
 
       // The host series is the single source of truth for Ethel. Calendar

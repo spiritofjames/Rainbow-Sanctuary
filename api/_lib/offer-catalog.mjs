@@ -60,6 +60,20 @@ const offer = ({ id, name, pagePath, priceKey, variants }) => Object.freeze({
 
 export const OFFER_CATALOG = Object.freeze([
   offer({
+    id: "personal-karma-reconciliation",
+    name: "Personal Karma Reconciliation",
+    pagePath: "/personal-karma-reconciliation",
+    priceKey: "personal-karma-reconciliation",
+    variants: [variant({
+      id: "personal-karma-reconciliation",
+      name: "Personal Karma Reconciliation — private session",
+      baseAmountUsd: 500,
+      amountUsd: 500,
+      sessionId: "personal-karma-reconciliation-private-session",
+      policy: "private-session"
+    })]
+  }),
+  offer({
     id: "group-healing",
     name: "Online Group Healing",
     // Payments begin on the specific booking page. Returning here after a
