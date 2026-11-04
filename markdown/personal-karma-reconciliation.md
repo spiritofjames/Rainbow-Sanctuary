@@ -6,7 +6,9 @@ Source: https://rainbowsanctuary.life/personal-karma-reconciliation
 
 A private spiritual wellbeing session for people who experience certain emotional or relational themes as cyclical, unresolved, or difficult to release.
 
-[Book this session](https://rainbowsanctuary.life/apply?reason=private-healing&session=karma) USD 500 per private session
+[Book this session](https://rainbowsanctuary.life/apply?reason=private-healing&session=karma)
+
+Private session **USD 500**
 
 Start with lived experience
 

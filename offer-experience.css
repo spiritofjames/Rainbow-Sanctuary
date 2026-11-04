@@ -99,6 +99,10 @@
   padding: 9px 16px;
 }
 
+.rs-offer-price-card--single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .rs-offer-price-card small {
   color: #6f6962;
   font-size: 9px;
