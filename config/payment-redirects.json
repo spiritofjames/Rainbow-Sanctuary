@@ -1,0 +1,164 @@
+[
+  {
+    "source": "/pay/personal-karma-reconciliation-private-healing",
+    "destination": "https://book.stripe.com/3cIdR9dEd1mdfU15ov3Nm0q",
+    "stripeId": "plink_1UXNzOHrqlaOfUb7bgwAcOeU",
+    "name": "Personal Karma Reconciliation [Private Healing]"
+  },
+  {
+    "source": "/pay/private-healing",
+    "destination": "https://buy.stripe.com/cNi4gzfMl5Ct8rz18f3Nm0p",
+    "stripeId": "plink_1UXNVHHrqlaOfUb70hBgSMUe",
+    "name": "Private Healing"
+  },
+  {
+    "source": "/pay/private-healing-installement",
+    "destination": "https://buy.stripe.com/4gM28reIh9SJ0Z7g393Nm0o",
+    "stripeId": "plink_1UXMabHrqlaOfUb7hw5QI1Cx",
+    "name": "Private healing Installement"
+  },
+  {
+    "source": "/pay/private-healing-2",
+    "destination": "https://buy.stripe.com/aFa7sL2Zz1mdazHeZ53Nm0n",
+    "stripeId": "plink_1URubLHrqlaOfUb7BGt8HV2i",
+    "name": "Private Healing"
+  },
+  {
+    "source": "/pay/private-healing-3",
+    "destination": "https://buy.stripe.com/3cI00j1Vv8OF37fdV13Nm0m",
+    "stripeId": "plink_1UIJ2kHrqlaOfUb7aRYSFyju",
+    "name": "Private Healing"
+  },
+  {
+    "source": "/pay/kids-weekly-practice-12-week-cycle",
+    "destination": "https://buy.stripe.com/9B66oHas10i9gY56sz3Nm0l",
+    "stripeId": "plink_1U7UlwHrqlaOfUb7MT2kX5Hy",
+    "name": "Kids Weekly Practice — 12-Week Cycle"
+  },
+  {
+    "source": "/pay/kids-weekly-practice-4-week-cycle",
+    "destination": "https://buy.stripe.com/5kQ00j9nX4ypgY54kr3Nm0k",
+    "stripeId": "plink_1U7Ul3HrqlaOfUb7UisUaEuh",
+    "name": "Kids Weekly Practice — 4-Week Cycle"
+  },
+  {
+    "source": "/pay/awakening-your-inner-light-7-day-guided-medicine-retreat-oct-1-7-2026",
+    "destination": "https://book.stripe.com/14A00jbw5gh74bj2cj3Nm0j",
+    "stripeId": "plink_1U6tbSHrqlaOfUb7Jp0Ki0xU",
+    "name": "Awakening Your Inner Light 7-day guided medicine retreat (OCT 1–7, 2026)"
+  },
+  {
+    "source": "/pay/awakening-your-inner-light-7-day-guided-medicine-retreat-oct-1-7-2026-2",
+    "destination": "https://book.stripe.com/5kQ5kD7fPaWN6jrcQX3Nm0i",
+    "stripeId": "plink_1U6tYbHrqlaOfUb7myyQ5EmH",
+    "name": "Awakening Your Inner Light 7-day guided medicine retreat (OCT 1–7, 2026)"
+  },
+  {
+    "source": "/pay/online-group-healing",
+    "destination": "https://book.stripe.com/fZu8wP8jTc0RfU17wD3Nm0h",
+    "stripeId": "plink_1U5ZdBHrqlaOfUb7s91Fx2FG",
+    "name": "Online Group Healing"
+  },
+  {
+    "source": "/pay/children-s-potential-coach-certification-programme-payment-2026-fee-inclusive",
+    "destination": "https://buy.stripe.com/8x2dR99nXfd3azH9EL3Nm0g",
+    "stripeId": "plink_1U3RHcHrqlaOfUb7FrKgmFrv",
+    "name": "Children's Potential Coach Certification — Programme Payment (2026 fee-inclusive)"
+  },
+  {
+    "source": "/pay/adult-potential-development-programme-payment-2026-fee-inclusive",
+    "destination": "https://buy.stripe.com/6oU3cvas10i99vD4kr3Nm0f",
+    "stripeId": "plink_1U3RG1HrqlaOfUb7kwfgLscp",
+    "name": "Adult Potential Development — Programme Payment (2026 fee-inclusive)"
+  },
+  {
+    "source": "/pay/intuitive-perception-training-programme-payment-2026-fee-inclusive",
+    "destination": "https://buy.stripe.com/aFa00j6bL8OFazHcQX3Nm0e",
+    "stripeId": "plink_1U3R9rHrqlaOfUb7exhQ6W2I",
+    "name": "Intuitive Perception Training — Programme Payment (2026 fee-inclusive)"
+  },
+  {
+    "source": "/pay/crystal-healing-programme-payment-2026-fee-inclusive",
+    "destination": "https://buy.stripe.com/5kQaEXcA94yp23b3gn3Nm0d",
+    "stripeId": "plink_1U3R71HrqlaOfUb7XwI8Up6W",
+    "name": "Crystal Healing — Programme Payment (2026 fee-inclusive)"
+  },
+  {
+    "source": "/pay/earth-healer-training-level-ii-2026-fee-inclusive",
+    "destination": "https://buy.stripe.com/6oUeVd8jT6GxePXbMT3Nm0c",
+    "stripeId": "plink_1U3R44HrqlaOfUb77i3fQ7SN",
+    "name": "Earth Healer Training — Level II (2026 fee-inclusive)"
+  },
+  {
+    "source": "/pay/earth-healer-training-level-i-2026-fee-inclusive",
+    "destination": "https://buy.stripe.com/9B68wP7fP2qh8rz2cj3Nm0b",
+    "stripeId": "plink_1U3R2bHrqlaOfUb7ivag937f",
+    "name": "Earth Healer Training — Level I (2026 fee-inclusive)"
+  },
+  {
+    "source": "/pay/regeneration-level-ii-2026-fee-inclusive",
+    "destination": "https://buy.stripe.com/cNi7sL8jT1md6jr4kr3Nm0a",
+    "stripeId": "plink_1U3R0pHrqlaOfUb7JlIfiBfH",
+    "name": "ReGeneration — Level II (2026 fee-inclusive)"
+  },
+  {
+    "source": "/pay/regeneration-level-i-2026-fee-inclusive",
+    "destination": "https://buy.stripe.com/9B614n1Vv5Ct4bjeZ53Nm09",
+    "stripeId": "plink_1U3QyHHrqlaOfUb7FvrF1J5l",
+    "name": "ReGeneration — Level I (2026 fee-inclusive)"
+  },
+  {
+    "source": "/pay/spiral-iv-early-bird-2026-fee-inclusive",
+    "destination": "https://buy.stripe.com/fZu8wPcA97KBfU19EL3Nm08",
+    "stripeId": "plink_1U3QvoHrqlaOfUb7RHdNPi96",
+    "name": "Spiral IV — Early Bird (2026 fee-inclusive)"
+  },
+  {
+    "source": "/pay/spiral-iv-standard-2026-fee-inclusive",
+    "destination": "https://buy.stripe.com/3cI6oH7fPc0RcHPcQX3Nm07",
+    "stripeId": "plink_1U3QrjHrqlaOfUb7LFXHHZQi",
+    "name": "Spiral IV — Standard (2026 fee-inclusive)"
+  },
+  {
+    "source": "/pay/spiral-iii-early-bird-2026-fee-inclusive",
+    "destination": "https://buy.stripe.com/dRm7sL8jT9SJ5fn8AH3Nm06",
+    "stripeId": "plink_1U3QodHrqlaOfUb7VmfqYC7y",
+    "name": "Spiral III — Early Bird (2026 fee-inclusive)"
+  },
+  {
+    "source": "/pay/spiral-iii-standard-2026-fee-inclusive",
+    "destination": "https://buy.stripe.com/28E7sL57H8OFgY53gn3Nm05",
+    "stripeId": "plink_1U3Qm9HrqlaOfUb7870T8VUl",
+    "name": "Spiral III — Standard (2026 fee-inclusive)"
+  },
+  {
+    "source": "/pay/spiral-ii-early-bird-2026-fee-inclusive",
+    "destination": "https://buy.stripe.com/7sYaEXbw5gh737faIP3Nm04",
+    "stripeId": "plink_1U3Qi2HrqlaOfUb7U7BvF0n7",
+    "name": "Spiral II — Early Bird (2026 fee-inclusive)"
+  },
+  {
+    "source": "/pay/spiral-ii-standard-2026-fee-inclusive",
+    "destination": "https://buy.stripe.com/aFa3cvbw58OFazH3gn3Nm03",
+    "stripeId": "plink_1U3QJ1HrqlaOfUb7t54ye27h",
+    "name": "Spiral II — Standard (2026 fee-inclusive)"
+  },
+  {
+    "source": "/pay/spiral-i-early-bird-2026-fee-inclusive",
+    "destination": "https://buy.stripe.com/7sYbJ16bL6GxgY58AH3Nm02",
+    "stripeId": "plink_1U3QGRHrqlaOfUb744cKIRuG",
+    "name": "Spiral I — Early Bird (2026 fee-inclusive)"
+  },
+  {
+    "source": "/pay/spiral-i-standard-2026-fee-inclusive",
+    "destination": "https://buy.stripe.com/8x27sL2Zzc0RePXeZ53Nm01",
+    "stripeId": "plink_1U3Q7dHrqlaOfUb7ONrbMMwX",
+    "name": "Spiral I — Standard (2026 fee-inclusive)"
+  },
+  {
+    "source": "/pay/support-accessible-care",
+    "destination": "https://donate.stripe.com/fZuaEXeIh1mdazHeZ53Nm00",
+    "stripeId": "plink_1U34gMHrqlaOfUb7Ftu9QoG6",
+    "name": "Support Accessible Care"
+  }
+]
