@@ -1,8 +1,289 @@
 {
   "schemaVersion": "1.0",
   "sourceCommit": "source-controlled",
-  "generatedAt": "2026-08-22T00:00:00.000Z",
+  "generatedAt": "2026-11-04T00:00:00.000Z",
   "entries": [
+    {
+      "id": "ai-as-a-question-of-human-responsibility",
+      "title": "AI as a question of human responsibility",
+      "summary": "A reflective guide to using AI with human judgment, transparent limits, care for privacy, and responsibility for the outcomes it shapes.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/ai-as-a-question-of-human-responsibility",
+      "topic": {
+        "id": "technology-and-discernment",
+        "name": "Technology and discernment"
+      },
+      "contentType": "research-note",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "ai",
+        "technology",
+        "responsibility",
+        "discernment",
+        "privacy"
+      ],
+      "author": {
+        "id": "stephanie-wu",
+        "name": "Stephanie Wu",
+        "role": "Author"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-11-04",
+      "updatedAt": "2026-11-04",
+      "reviewDueAt": "2027-05-04",
+      "locale": "en"
+    },
+    {
+      "id": "ecological-care-as-shared-responsibility",
+      "title": "Ecological care as shared responsibility",
+      "summary": "A grounded approach to ecological stewardship through local attention, reciprocal relationships, practical limits, and accountable action.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/ecological-care-as-shared-responsibility",
+      "topic": {
+        "id": "earth-stewardship",
+        "name": "Earth stewardship"
+      },
+      "contentType": "explainer",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "ecology",
+        "stewardship",
+        "regeneration",
+        "place",
+        "responsibility"
+      ],
+      "author": {
+        "id": "stephanie-wu",
+        "name": "Stephanie Wu",
+        "role": "Author"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-11-04",
+      "updatedAt": "2026-11-04",
+      "reviewDueAt": "2027-05-04",
+      "locale": "en"
+    },
+    {
+      "id": "evidence-exploration-and-symbolic-language",
+      "title": "Evidence, exploration, and symbolic language",
+      "summary": "How Rainbow Sanctuary distinguishes established knowledge, emerging questions, and symbolic or spiritual language in its public learning materials.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/evidence-exploration-and-symbolic-language",
+      "topic": {
+        "id": "getting-started",
+        "name": "Getting started"
+      },
+      "contentType": "faq",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "evidence",
+        "discernment",
+        "learning",
+        "symbolism",
+        "transparency"
+      ],
+      "author": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-11-04",
+      "updatedAt": "2026-11-04",
+      "reviewDueAt": "2027-05-04",
+      "locale": "en"
+    },
+    {
+      "id": "from-me-to-we-shared-leadership",
+      "title": "From me to we: a practice of shared leadership",
+      "summary": "A reflection on moving from individual control toward transparent, cross-cultural, and mutually supportive forms of leadership.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/from-me-to-we-shared-leadership",
+      "topic": {
+        "id": "co-creation-and-community",
+        "name": "Co-creation and community"
+      },
+      "contentType": "practice",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "leadership",
+        "co-creation",
+        "transparency",
+        "collaboration",
+        "culture"
+      ],
+      "author": {
+        "id": "stephanie-wu",
+        "name": "Stephanie Wu",
+        "role": "Author"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-11-04",
+      "updatedAt": "2026-11-04",
+      "reviewDueAt": "2027-05-04",
+      "locale": "en"
+    },
+    {
+      "id": "learning-as-a-practice-of-returning",
+      "title": "Learning as a practice of returning",
+      "summary": "An introduction to learning as attention, discernment, embodied practice, and a return to one's own questions and responsibilities.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/learning-as-a-practice-of-returning",
+      "topic": {
+        "id": "consciousness-and-reflection",
+        "name": "Consciousness and reflection"
+      },
+      "contentType": "program-guide",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "learning",
+        "reflection",
+        "discernment",
+        "practice",
+        "school-of-the-universe"
+      ],
+      "author": {
+        "id": "stephanie-wu",
+        "name": "Stephanie Wu",
+        "role": "Author"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-11-04",
+      "updatedAt": "2026-11-04",
+      "reviewDueAt": "2027-05-04",
+      "locale": "en"
+    },
+    {
+      "id": "rainbow-sanctuary-vision-in-practice",
+      "title": "How Rainbow Sanctuary holds vision in practice",
+      "summary": "An introduction to Rainbow Sanctuary's vision: connecting personal responsibility, shared learning, ecological care, and practical community life.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/rainbow-sanctuary-vision-in-practice",
+      "topic": {
+        "id": "vision-and-systems",
+        "name": "Vision and systems"
+      },
+      "contentType": "explainer",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "vision",
+        "systems",
+        "practice",
+        "community",
+        "stewardship",
+        "learning"
+      ],
+      "author": {
+        "id": "stephanie-wu",
+        "name": "Stephanie Wu",
+        "role": "Author"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-11-04",
+      "updatedAt": "2026-11-04",
+      "reviewDueAt": "2027-05-04",
+      "locale": "en"
+    },
+    {
+      "id": "technology-as-an-extension-of-human-intention",
+      "title": "Technology as an extension of human intention",
+      "summary": "A philosophical reflection on technology as a human-made extension of attention, imagination, relationship, and ethical responsibility.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/technology-as-an-extension-of-human-intention",
+      "topic": {
+        "id": "technology-and-discernment",
+        "name": "Technology and discernment"
+      },
+      "contentType": "story",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "technology",
+        "intention",
+        "ethics",
+        "imagination",
+        "reflection"
+      ],
+      "author": {
+        "id": "stephanie-wu",
+        "name": "Stephanie Wu",
+        "role": "Author"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-11-04",
+      "updatedAt": "2026-11-04",
+      "reviewDueAt": "2027-05-04",
+      "locale": "en"
+    },
+    {
+      "id": "what-sovereignty-means-at-rainbow-sanctuary",
+      "title": "What sovereignty means at Rainbow Sanctuary",
+      "summary": "A practical interpretation of sovereignty as personal agency, informed consent, shared responsibility, and respect for each person's inner life.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/what-sovereignty-means-at-rainbow-sanctuary",
+      "topic": {
+        "id": "consciousness-and-reflection",
+        "name": "Consciousness and reflection"
+      },
+      "contentType": "explainer",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "sovereignty",
+        "agency",
+        "consent",
+        "responsibility",
+        "discernment"
+      ],
+      "author": {
+        "id": "stephanie-wu",
+        "name": "Stephanie Wu",
+        "role": "Author"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-11-04",
+      "updatedAt": "2026-11-04",
+      "reviewDueAt": "2027-05-04",
+      "locale": "en"
+    },
     {
       "id": "shared-practice-of-life",
       "title": "A shared practice of life",

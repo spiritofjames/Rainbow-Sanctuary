@@ -943,6 +943,176 @@
       ]
     },
     {
+      "source": "/markdown/knowledge/topics/vision-and-systems.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/topics/vision-and-systems>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/topics/technology-and-discernment.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/topics/technology-and-discernment>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/ai-as-a-question-of-human-responsibility.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/ai-as-a-question-of-human-responsibility>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/ecological-care-as-shared-responsibility.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/ecological-care-as-shared-responsibility>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/evidence-exploration-and-symbolic-language.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/evidence-exploration-and-symbolic-language>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/from-me-to-we-shared-leadership.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/from-me-to-we-shared-leadership>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/learning-as-a-practice-of-returning.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/learning-as-a-practice-of-returning>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/rainbow-sanctuary-vision-in-practice.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/rainbow-sanctuary-vision-in-practice>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/technology-as-an-extension-of-human-intention.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/technology-as-an-extension-of-human-intention>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/what-sovereignty-means-at-rainbow-sanctuary.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/what-sovereignty-means-at-rainbow-sanctuary>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
       "source": "/markdown/knowledge/shared-practice-of-life.md",
       "headers": [
         {
@@ -1472,6 +1642,56 @@
       "permanent": true
     },
     {
+      "source": "/Knowledge-Topic-vision-and-systems.dc.html",
+      "destination": "/knowledge/topics/vision-and-systems",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-Topic-technology-and-discernment.dc.html",
+      "destination": "/knowledge/topics/technology-and-discernment",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-ai-as-a-question-of-human-responsibility.dc.html",
+      "destination": "/knowledge/ai-as-a-question-of-human-responsibility",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-ecological-care-as-shared-responsibility.dc.html",
+      "destination": "/knowledge/ecological-care-as-shared-responsibility",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-evidence-exploration-and-symbolic-language.dc.html",
+      "destination": "/knowledge/evidence-exploration-and-symbolic-language",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-from-me-to-we-shared-leadership.dc.html",
+      "destination": "/knowledge/from-me-to-we-shared-leadership",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-learning-as-a-practice-of-returning.dc.html",
+      "destination": "/knowledge/learning-as-a-practice-of-returning",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-rainbow-sanctuary-vision-in-practice.dc.html",
+      "destination": "/knowledge/rainbow-sanctuary-vision-in-practice",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-technology-as-an-extension-of-human-intention.dc.html",
+      "destination": "/knowledge/technology-as-an-extension-of-human-intention",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-what-sovereignty-means-at-rainbow-sanctuary.dc.html",
+      "destination": "/knowledge/what-sovereignty-means-at-rainbow-sanctuary",
+      "permanent": true
+    },
+    {
       "source": "/Knowledge-shared-practice-of-life.dc.html",
       "destination": "/knowledge/shared-practice-of-life",
       "permanent": true
@@ -1767,6 +1987,46 @@
     {
       "source": "/knowledge/topics/earth-stewardship",
       "destination": "/Knowledge-Topic-earth-stewardship.dc.html"
+    },
+    {
+      "source": "/knowledge/topics/vision-and-systems",
+      "destination": "/Knowledge-Topic-vision-and-systems.dc.html"
+    },
+    {
+      "source": "/knowledge/topics/technology-and-discernment",
+      "destination": "/Knowledge-Topic-technology-and-discernment.dc.html"
+    },
+    {
+      "source": "/knowledge/ai-as-a-question-of-human-responsibility",
+      "destination": "/Knowledge-ai-as-a-question-of-human-responsibility.dc.html"
+    },
+    {
+      "source": "/knowledge/ecological-care-as-shared-responsibility",
+      "destination": "/Knowledge-ecological-care-as-shared-responsibility.dc.html"
+    },
+    {
+      "source": "/knowledge/evidence-exploration-and-symbolic-language",
+      "destination": "/Knowledge-evidence-exploration-and-symbolic-language.dc.html"
+    },
+    {
+      "source": "/knowledge/from-me-to-we-shared-leadership",
+      "destination": "/Knowledge-from-me-to-we-shared-leadership.dc.html"
+    },
+    {
+      "source": "/knowledge/learning-as-a-practice-of-returning",
+      "destination": "/Knowledge-learning-as-a-practice-of-returning.dc.html"
+    },
+    {
+      "source": "/knowledge/rainbow-sanctuary-vision-in-practice",
+      "destination": "/Knowledge-rainbow-sanctuary-vision-in-practice.dc.html"
+    },
+    {
+      "source": "/knowledge/technology-as-an-extension-of-human-intention",
+      "destination": "/Knowledge-technology-as-an-extension-of-human-intention.dc.html"
+    },
+    {
+      "source": "/knowledge/what-sovereignty-means-at-rainbow-sanctuary",
+      "destination": "/Knowledge-what-sovereignty-means-at-rainbow-sanctuary.dc.html"
     },
     {
       "source": "/knowledge/shared-practice-of-life",

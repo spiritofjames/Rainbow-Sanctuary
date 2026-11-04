@@ -64,9 +64,10 @@ test("home, events and generic pages share the brand card; December has its own 
   }
 });
 
-test("all 59 discoverable pages have static, consistent OG and X metadata", () => {
+test("all discoverable pages have static, consistent OG and X metadata", () => {
   const pages = readdirSync(root).filter(file => file.endsWith(".dc.html") && read(file).includes("<!-- rs-discovery:start -->"));
-  assert.equal(pages.length, 59);
+  const canonicalPages = [...read("sitemap.xml").matchAll(/<loc>([^<]+)<\/loc>/g)].length;
+  assert.equal(pages.length, canonicalPages + 1, "the generated noindex search page also carries social metadata");
   for (const file of pages) {
     const html = head(file);
     assert.equal(meta(html, "twitter:title"), meta(html, "og:title"), file);

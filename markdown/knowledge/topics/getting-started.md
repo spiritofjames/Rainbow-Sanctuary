@@ -8,6 +8,14 @@ Orientation for exploring the library and deciding what to read next.
 
 [Search the library](https://rainbowsanctuary.life/knowledge/search) [Explore all articles](https://rainbowsanctuary.life/knowledge/articles)
 
+Getting started · faq
+
+## [Evidence, exploration, and symbolic language](https://rainbowsanctuary.life/knowledge/evidence-exploration-and-symbolic-language)
+
+How Rainbow Sanctuary distinguishes established knowledge, emerging questions, and symbolic or spiritual language in its public learning materials.
+
+Updated 2026-11-04
+
 Getting started · explainer
 
 ## [About this knowledge library](https://rainbowsanctuary.life/knowledge/using-the-library)
