@@ -1077,6 +1077,141 @@
   ],
   "redirects": [
     {
+      "source": "/pay/personal-karma-reconciliation-private-healing",
+      "destination": "https://book.stripe.com/3cIdR9dEd1mdfU15ov3Nm0q",
+      "permanent": false
+    },
+    {
+      "source": "/pay/private-healing",
+      "destination": "https://buy.stripe.com/cNi4gzfMl5Ct8rz18f3Nm0p",
+      "permanent": false
+    },
+    {
+      "source": "/pay/private-healing-installement",
+      "destination": "https://buy.stripe.com/4gM28reIh9SJ0Z7g393Nm0o",
+      "permanent": false
+    },
+    {
+      "source": "/pay/private-healing-2",
+      "destination": "https://buy.stripe.com/aFa7sL2Zz1mdazHeZ53Nm0n",
+      "permanent": false
+    },
+    {
+      "source": "/pay/private-healing-3",
+      "destination": "https://buy.stripe.com/3cI00j1Vv8OF37fdV13Nm0m",
+      "permanent": false
+    },
+    {
+      "source": "/pay/kids-weekly-practice-12-week-cycle",
+      "destination": "https://buy.stripe.com/9B66oHas10i9gY56sz3Nm0l",
+      "permanent": false
+    },
+    {
+      "source": "/pay/kids-weekly-practice-4-week-cycle",
+      "destination": "https://buy.stripe.com/5kQ00j9nX4ypgY54kr3Nm0k",
+      "permanent": false
+    },
+    {
+      "source": "/pay/awakening-your-inner-light-7-day-guided-medicine-retreat-oct-1-7-2026",
+      "destination": "https://book.stripe.com/14A00jbw5gh74bj2cj3Nm0j",
+      "permanent": false
+    },
+    {
+      "source": "/pay/awakening-your-inner-light-7-day-guided-medicine-retreat-oct-1-7-2026-2",
+      "destination": "https://book.stripe.com/5kQ5kD7fPaWN6jrcQX3Nm0i",
+      "permanent": false
+    },
+    {
+      "source": "/pay/online-group-healing",
+      "destination": "https://book.stripe.com/fZu8wP8jTc0RfU17wD3Nm0h",
+      "permanent": false
+    },
+    {
+      "source": "/pay/children-s-potential-coach-certification-programme-payment-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/8x2dR99nXfd3azH9EL3Nm0g",
+      "permanent": false
+    },
+    {
+      "source": "/pay/adult-potential-development-programme-payment-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/6oU3cvas10i99vD4kr3Nm0f",
+      "permanent": false
+    },
+    {
+      "source": "/pay/intuitive-perception-training-programme-payment-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/aFa00j6bL8OFazHcQX3Nm0e",
+      "permanent": false
+    },
+    {
+      "source": "/pay/crystal-healing-programme-payment-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/5kQaEXcA94yp23b3gn3Nm0d",
+      "permanent": false
+    },
+    {
+      "source": "/pay/earth-healer-training-level-ii-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/6oUeVd8jT6GxePXbMT3Nm0c",
+      "permanent": false
+    },
+    {
+      "source": "/pay/earth-healer-training-level-i-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/9B68wP7fP2qh8rz2cj3Nm0b",
+      "permanent": false
+    },
+    {
+      "source": "/pay/regeneration-level-ii-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/cNi7sL8jT1md6jr4kr3Nm0a",
+      "permanent": false
+    },
+    {
+      "source": "/pay/regeneration-level-i-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/9B614n1Vv5Ct4bjeZ53Nm09",
+      "permanent": false
+    },
+    {
+      "source": "/pay/spiral-iv-early-bird-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/fZu8wPcA97KBfU19EL3Nm08",
+      "permanent": false
+    },
+    {
+      "source": "/pay/spiral-iv-standard-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/3cI6oH7fPc0RcHPcQX3Nm07",
+      "permanent": false
+    },
+    {
+      "source": "/pay/spiral-iii-early-bird-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/dRm7sL8jT9SJ5fn8AH3Nm06",
+      "permanent": false
+    },
+    {
+      "source": "/pay/spiral-iii-standard-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/28E7sL57H8OFgY53gn3Nm05",
+      "permanent": false
+    },
+    {
+      "source": "/pay/spiral-ii-early-bird-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/7sYaEXbw5gh737faIP3Nm04",
+      "permanent": false
+    },
+    {
+      "source": "/pay/spiral-ii-standard-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/aFa3cvbw58OFazH3gn3Nm03",
+      "permanent": false
+    },
+    {
+      "source": "/pay/spiral-i-early-bird-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/7sYbJ16bL6GxgY58AH3Nm02",
+      "permanent": false
+    },
+    {
+      "source": "/pay/spiral-i-standard-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/8x27sL2Zzc0RePXeZ53Nm01",
+      "permanent": false
+    },
+    {
+      "source": "/pay/support-accessible-care",
+      "destination": "https://donate.stripe.com/fZuaEXeIh1mdazHeZ53Nm00",
+      "permanent": false
+    },
+    {
       "source": "/Home.dc.html",
       "destination": "/",
       "permanent": true

@@ -535,11 +535,14 @@ for (const file of fs.readdirSync(siteDir).filter((name) => name.endsWith(".js")
   fs.writeFileSync(filePath, source);
 }
 
+const paymentRedirects = JSON.parse(fs.readFileSync(path.join(siteDir, "config/payment-redirects.json"), "utf8"));
+
 const legacyCleanRouteRedirects = {
   "/kids-weekly-practice": "/children-weekly-practice"
 };
 
 const redirects = [
+  ...paymentRedirects.map(({ source, destination }) => ({ source, destination, permanent: false })),
   ...Object.entries(allRoutes).map(([file, route]) => ({
     source: `/${file}`,
     destination: route,
