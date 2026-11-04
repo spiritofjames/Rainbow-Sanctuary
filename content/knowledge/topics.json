@@ -4,6 +4,8 @@
     { "id": "getting-started", "name": "Getting started", "short_description": "Orientation for exploring the library and deciding what to read next.", "order": 1, "enabled": true },
     { "id": "consciousness-and-reflection", "name": "Consciousness and reflection", "short_description": "Thoughtful perspectives on inner life, meaning, attention, and personal reflection.", "order": 2, "enabled": true },
     { "id": "co-creation-and-community", "name": "Co-creation and community", "short_description": "Shared principles for contribution, learning, responsibility, and life together.", "order": 3, "enabled": true },
-    { "id": "earth-stewardship", "name": "Earth stewardship", "short_description": "Vision, care for place, and regenerative ways of relating with the living world.", "order": 4, "enabled": true }
+    { "id": "earth-stewardship", "name": "Earth stewardship", "short_description": "Vision, care for place, and regenerative ways of relating with the living world.", "order": 4, "enabled": true },
+    { "id": "vision-and-systems", "name": "Vision and systems", "short_description": "How Rainbow Sanctuary connects vision, practice, learning, stewardship, and shared responsibility.", "order": 5, "enabled": true },
+    { "id": "technology-and-discernment", "name": "Technology and discernment", "short_description": "Reflections on technology, AI, responsibility, and keeping human judgment at the centre.", "order": 6, "enabled": true }
   ]
 }
