@@ -169,7 +169,9 @@ test("the enquiry form uses JSON for ordinary requests and private multipart onl
   assert.match(form, /submittedAt: ''/);
   assert.match(form, /this\.state\.submissionId \|\| window\.crypto\.randomUUID\(\)/);
   assert.match(form, /this\.state\.submittedAt \|\| new Date\(\)\.toISOString\(\)/);
-  assert.match(form, /\['reason', 'session', 'event', 'program'\]/);
+  assert.match(form, /sourceParameters\.set\('reason', this\.state\.reason\)/);
+  assert.match(form, /sourceParameters\.set\('program', this\.state\.program\)/);
+  assert.match(form, /sourceParameters\.set\('event', this\.state\.event\)/);
   assert.doesNotMatch(form, /window\.location\.pathname \+ window\.location\.search/);
   assert.match(form, /JSON\.stringify/);
   assert.doesNotMatch(form, /Private Healing intake is still protected/);

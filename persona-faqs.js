@@ -214,8 +214,10 @@
       q("Do I need to contact or forgive someone from my past?", "No. Reconciliation does not require unsafe contact, forced forgiveness, or removing appropriate boundaries. The session is centred on your own reflection and integration."),
       q("Can the practitioner verify a past life?", "No objective verification is claimed. Any past-life imagery should be treated as spiritual or symbolic material rather than established fact."),
       q("What does it cost?", priceAnswer("personal-karma-reconciliation")),
+      q("How do I book this session?", "Select Book this session, enter your contact details, context, intended outcome and recent headshot, then select Continue to payment. Your details are saved before Stripe opens for the USD 500 payment. Our manager contacts you afterwards to arrange a suitable time."),
+      q("Does paying reserve a particular time?", "No appointment time is booked automatically. Our manager confirms the session time with you after payment. If you have questions before paying, use Get in touch with us."),
       ...foundations,
-      ...booking,
+      ...booking.slice(2),
     ],
     "/family-information-field-restoration": [
       q("Does my whole family need to participate?", "No. The current offer is framed as a private session for an adult reflecting on home and family patterns. It cannot promise to change another person without their participation."),
@@ -243,21 +245,7 @@
       q("How will online event times be shown?", "The site automatically detects your browser time zone and converts each online session into your local date and time. The organizer’s original time zone remains visible beside it so you can verify the schedule before booking."),
       ...booking,
     ],
-    "/awakening-your-inner-light-2026": [
-      q("Can I enquire if I have never attended a plant-medicine ceremony?", "Yes. First-time participants are invited to begin with questions and a private fit conversation. Previous experience is not assumed, and an enquiry does not commit you to attend."),
-      q("What might a plant-medicine ceremony feel like?", "Ceremonial plant-medicine practices can bring profound shifts in perception, emotion, and physical experience. Responses vary and can be intense or unpredictable. The team should explain the format, known risks, and available support clearly before you decide."),
-      q("Is this retreat intended to cure trauma, depression, anxiety, or a health condition?", "No. The retreat is a spiritual and experiential gathering, not medical treatment or psychotherapy, and no specific outcome is promised. Continue appropriate professional care and discuss any relevant history during confidential suitability screening."),
-      q("Is this retreat right for me if I already have years of inner-work experience?", "It may be. The week is designed for both sincere first-time participants and experienced practitioners who want dedicated space for reflection, embodied practice, ceremony, and integration. Fit is considered individually rather than by spiritual vocabulary or status."),
-      q("What if I feel nervous or uncertain?", "Uncertainty is a valid reason to slow down and ask more questions. The application process exists so you can understand the experience, share concerns privately, and decide without pressure. Not proceeding is also a responsible decision."),
-      q("How is suitability considered?", "Relevant physical health, medication, mental-health history, pregnancy status, previous ceremonial experience, support needs, and other contraindications can affect suitability. Answer screening questions honestly and never stop or change prescribed medication in order to attend."),
-      q("Can I attend but decline a particular practice?", "Informed consent and personal agency matter. You should be able to ask what is essential, what is optional, what alternatives exist, and how support is provided if you pause or decline. These details are confirmed before acceptance."),
-      q("When and where is the retreat?", "The retreat runs from 1–7 October 2026 in Bocas del Toro, Panama, for seven days and six nights. Accepted participants receive the confirmed venue and arrival instructions before travel."),
-      q("What is the price?", "The standard investment is USD 3,500 per person, or USD 3,000 early bird with a 50% deposit before 1 September 2026. Final written terms and an authorised payment route are provided before payment."),
-      q("What is included in the week?", "The published program includes six nights’ accommodation, three meals daily, yoga, breathwork, sound-based practice, three guided plant-medicine ceremonies, complementary ceremonial practices, jungle exploration, sharing circles, and preparation and integration guidance. Final inclusions are confirmed in writing before payment."),
-      q("What support is provided before and after?", "Preparation and integration guidance are part of the retreat. Accepted participants receive the confirmed schedule, preparation requirements, facilitator contact route, and follow-up details in writing."),
-      q("When should I arrange flights?", "Only after written acceptance, final venue confirmation, payment and cancellation terms, legal-readiness confirmation, and explicit travel instructions."),
-      ...booking,
-    ],
+    // December retreat FAQs are rendered at build time from data/december-retreat-faqs.json.
     "/earth-healing-zone": [
       q("What is the Earth Healing Zone?", "It is a community space for shared-time guided spiritual practice and practical stewardship. The current model may use a recorded meditation at a fixed daily time, with live gatherings developing later."),
       q("Do I have to be in China or join from a particular place?", "No. The shared-time practice is designed for remote participation. Each gathering should state its time zone and access method."),
@@ -286,11 +274,11 @@
       ...foundations.slice(1, 5),
     ],
     "/apply": [
-      q("Is this form a booking or an enquiry?", "It is an enquiry and fit request. Public group dates may offer direct registration, while private work, retreats, and some programs require review before scheduling."),
+      q("Is this form a booking or an enquiry?", "For Personal Karma Reconciliation, your details are saved first and Continue to payment opens Stripe for the USD 500 session payment. Our manager arranges the time afterwards. Other pathways use this form for an enquiry or application."),
       q("Why are both email and WhatsApp required?", "Email provides a formal written record and policy links; WhatsApp helps the team follow up promptly across countries. Use an international number you actively monitor."),
       q("What should I write in my message?", "Describe your present situation, what you hope to change or learn, your relevant experience, and any practical timing or accessibility needs. Avoid unnecessary medical records or private information about other people."),
-      q("How will my information be used?", "It is used to review fit and respond to the enquiry under the Privacy Policy. Sensitive photo collection remains disabled until secure handling and retention procedures are confirmed."),
-      q("Does submitting the form guarantee acceptance?", "No. The team may accept, request more information, recommend another pathway, or decline when the scope or timing is not appropriate."),
+      q("How will my information be used?", "It is used to respond to your request and coordinate the selected service under the Privacy Policy. Where a recent headshot is requested, it is stored privately for the request with a 30-day retention period, subject to the stated photo consent."),
+      q("Does submitting the form book an appointment time?", "No. For Personal Karma Reconciliation, complete the separate Stripe payment and our manager will contact you to agree a time. Other applications are reviewed before acceptance or scheduling."),
       q("Can I ask questions without committing to buy?", "Yes. The conversation is for clarification and fit. Prices, format, dates, policies, and expectations should be clear before any payment decision."),
       ...booking.slice(2),
     ],
@@ -324,11 +312,12 @@
   }
 
   function mount() {
-    const file = location.pathname.split("/").pop() || "/";
-    const items = dedupe(pages[file] || []);
-    if (!items.length || document.querySelector("[data-rs-persona-faq]")) return;
     const main = document.querySelector("main");
     if (!main) return;
+    const file = location.pathname.split("/").pop() || "/";
+    const pageKey = main.dataset.rsFaqPage || location.pathname.replace(/\/+$/, "") || "/";
+    const items = dedupe(pages[pageKey] || pages[file] || []);
+    if (!items.length || document.querySelector("[data-rs-persona-faq]")) return;
 
     const section = document.createElement("section");
     section.id = "frequently-asked-questions";
@@ -337,9 +326,11 @@
     section.setAttribute("aria-labelledby", "rs-faq-title");
     section.innerHTML = `<div class="rs-persona-faq__shell"><header class="rs-persona-faq__heading"><span class="rs-persona-faq__eyebrow">Questions people ask before choosing</span><h2 id="rs-faq-title">Clear answers, before you decide.</h2><p class="rs-persona-faq__intro">Your questions are part of discernment—not an obstacle to enrollment. Start with what matters most to you.</p></header><div class="rs-persona-faq__list">${items.map((item) => `<details><summary>${escapeHtml(item.question)}</summary><p>${escapeHtml(item.answer)}</p></details>`).join("")}</div></div>`;
 
+    const slot = main.querySelector("[data-rs-faq-slot]");
     const legacy = main.querySelector("#questions");
     const finalCta = legacy || [...main.children].reverse().find((child) => child.querySelector?.(".rs-offer-cta"));
-    if (finalCta) main.insertBefore(section, finalCta);
+    if (slot) slot.replaceWith(section);
+    else if (finalCta) main.insertBefore(section, finalCta);
     else main.appendChild(section);
 
     if (legacy) {

@@ -1,3 +1,5 @@
+// Legacy v1 artwork only; no longer used by the discovery metadata generator.
+// Current versioned cards and provenance: docs/SOCIAL-SHARING-PREVIEWS.md.
 const fs = require("node:fs");
 const path = require("node:path");
 const sharp = require("sharp");

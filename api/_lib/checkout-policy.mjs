@@ -118,6 +118,9 @@ export function assertAllowedPaymentInviteOrigin(request, environment) {
 }
 
 function policyMessage(offer) {
+  if (offer.policy === "private-session") {
+    return "Personal Karma Reconciliation is USD 500. Complete your private application first and use the same email at checkout. Our manager will contact you to arrange an appointment; payment does not book a time automatically.";
+  }
   return offer.policy === "group-healing"
     ? "This booking is non-refundable and non-transferable. You may request one reschedule to an available Group Healing session by contacting bookings@rainbowsanctuary.life at least 24 hours before the booked session. Mandatory consumer rights and organizer cancellation are unaffected."
     : offer.policy === "regeneration-maintenance"
@@ -166,6 +169,12 @@ function checkoutCustomFields(offer) {
     optional: false,
     type: "text"
   }];
+  if (offer.policy === "private-session") fields.push({
+    key: "whatsapp_number",
+    label: { custom: "WhatsApp number with international country code", type: "custom" },
+    optional: false,
+    type: "text"
+  });
   return fields;
 }
 

@@ -17,6 +17,45 @@
 
   const escapeHtml = (value) => String(value || "").replace(/[&<>'"]/g, (char) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "'":"&#39;", '"':"&quot;" })[char]);
   const sameDate = (left, right) => left.getFullYear() === right.getFullYear() && left.getMonth() === right.getMonth() && left.getDate() === right.getDate();
+  const isoDate = (date) => date.toISOString().slice(0, 10);
+  const sessionFromDate = (schedule, date) => {
+    const dateValue = isoDate(date);
+    return {
+      id: `${prefix}-${dateValue}`,
+      title: schedule.title,
+      category: schedule.category,
+      startDate: dateValue,
+      startDateTime: `${dateValue}T${schedule.time}:00${schedule.timezoneOffset}`,
+      timezone: schedule.timezone,
+      timezoneLabel: schedule.timezoneLabel,
+      location: schedule.location,
+      venue: schedule.venue,
+      summary: schedule.summary,
+      status: schedule.status
+    };
+  };
+  function recurringSessions() {
+    const schedule = window.RAINBOW_SANCTUARY_CONFIG?.events?.supportedSchedules?.[prefix];
+    if (!schedule?.startDate || !schedule?.time || !schedule?.timezoneOffset || !schedule?.sessionCount) return [];
+    const [year, month, day] = schedule.startDate.split("-").map(Number);
+    const start = new Date(Date.UTC(year, month - 1, day, 12));
+    if (schedule.frequency === "weekly") {
+      return Array.from({ length: schedule.sessionCount }, (_, index) => {
+        const date = new Date(start);
+        date.setUTCDate(start.getUTCDate() + (index * 7));
+        return sessionFromDate(schedule, date);
+      });
+    }
+    if (schedule.frequency === "monthly-first-tuesday") {
+      return Array.from({ length: schedule.sessionCount }, (_, index) => {
+        const first = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth() + index, 1, 12));
+        const daysUntilTuesday = (2 - first.getUTCDay() + 7) % 7;
+        first.setUTCDate(1 + daysUntilTuesday);
+        return sessionFromDate(schedule, first);
+      });
+    }
+    return [];
+  }
   const sessionDate = (item) => {
     const instant = new Date(item.startDateTime);
     const parts = new Intl.DateTimeFormat("en-CA", { timeZone: viewerTimeZone, year:"numeric", month:"2-digit", day:"2-digit" }).formatToParts(instant);
@@ -68,7 +107,10 @@
   }
 
   function start(feed) {
-    sessions = (feed?.items || []).filter((item) => item.id?.startsWith(prefix) && item.startDateTime && item.status !== "cancelled" && new Date(item.startDateTime) >= today).sort((a, b) => new Date(a.startDateTime) - new Date(b.startDateTime));
+    const configured = recurringSessions();
+    const published = (feed?.items || []).filter((item) => item.id?.startsWith(prefix));
+    const merged = new Map([...configured, ...published].map((item) => [item.id, item]));
+    sessions = [...merged.values()].filter((item) => item.startDateTime && item.status !== "cancelled" && new Date(item.startDateTime) >= today).sort((a, b) => new Date(a.startDateTime) - new Date(b.startDateTime));
     const first = sessions[0] ? sessionDate(sessions[0]) : today;
     visibleMonth = new Date(first.getFullYear(), first.getMonth(), 1);
     document.getElementById("supported-calendar-prev")?.addEventListener("click", () => { visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1); renderCalendar(); });
