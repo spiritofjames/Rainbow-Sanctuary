@@ -144,8 +144,8 @@ test("Karma application retains the requested fields and no timezone or availabi
   assert.doesNotMatch(page, /schedulingTimezone|schedulingPreferences|scheduling-timezone|scheduling-preferences/);
 });
 
-test("the original peace homepage remains the root experience while Karma stays USD 500", async () => {
-  const home = await readFile(new URL("../Home.dc.html", import.meta.url), "utf8");
+test("the original peace homepage remains available at Explore while Karma stays USD 500", async () => {
+  const home = await readFile(new URL("../Explore.dc.html", import.meta.url), "utf8");
   assert.match(home, /Home is where your heart feels peace/);
   assert.doesNotMatch(home, /home-identity\.(?:css|js)|A sanctuary for a more/);
 });

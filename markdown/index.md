@@ -2,7 +2,8 @@
 
 Text equivalents of public pages. Follow each source URL for current interactive calendars, booking options, and media. These copies do not include form fields, submissions, private records, or unpublished editorial drafts.
 
-- [Rainbow Sanctuary — Find Your Path to Healing, Growth & Service](https://rainbowsanctuary.life/markdown/home.md) — [Web page](https://rainbowsanctuary.life/)
+- [Rainbow Sanctuary | Wholeness, Learning & Co-creation](https://rainbowsanctuary.life/markdown/home.md) — [Web page](https://rainbowsanctuary.life/)
+- [Rainbow Sanctuary — Find Your Path to Healing, Growth & Service](https://rainbowsanctuary.life/markdown/explore.md) — [Web page](https://rainbowsanctuary.life/explore)
 - [About Rainbow Sanctuary | Stephanie Wu, Co-Founder](https://rainbowsanctuary.life/markdown/about.md) — [Web page](https://rainbowsanctuary.life/about)
 - [Private Healing Sessions | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/private-healing.md) — [Web page](https://rainbowsanctuary.life/private-healing)
 - [Accessibility Statement | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/accessibility.md) — [Web page](https://rainbowsanctuary.life/accessibility)

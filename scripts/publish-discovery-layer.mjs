@@ -88,6 +88,7 @@ const headers = [
 
 const baseRoutes = {
   "Home.dc.html": "/",
+  "Explore.dc.html": "/explore",
   "About-Stephanie.dc.html": "/about",
   "1-1-Sessions.dc.html": "/private-healing",
   "Accessibility-Statement.dc.html": "/accessibility",
@@ -163,6 +164,7 @@ const knowledgeEntryByPath = new Map(
 );
 
 const pageTypes = {
+  "Explore.dc.html": "CollectionPage",
   "About-Stephanie.dc.html": "AboutPage",
   "Book-Consultation.dc.html": "ContactPage",
   "Events-Retreats.dc.html": "CollectionPage"
@@ -640,7 +642,8 @@ const llms = `# Rainbow Sanctuary
 
 ## Start here
 
-- [Home](${origin}/): Overview and current invitations
+- [Home](${origin}/): Identity, purpose and co-creation
+- [Explore programs and events](${origin}/explore): Programs and current invitations
 - [About Rainbow Sanctuary](${origin}/about): The platform, community, and co-founder Stephanie Wu
 - [The Spiral Journey](${origin}/spiral-journey): Four progressive levels of personal and conscious development
 - [Group Healing](${origin}/group-healing): Overview of shared healing pathways
@@ -695,6 +698,12 @@ const llmsFull = `# Rainbow Sanctuary — Extended Site Guide
 ## What Rainbow Sanctuary is
 
 Rainbow Sanctuary is a global spiritual wellbeing and conscious-development community co-founded by Stephanie Wu. It brings together accessible online group experiences, a progressive four-level Spiral Journey, focused programs, children-and-family work, practitioner pathways, private sessions, retreats, and an Earth-centred regenerative vision.
+
+The identity homepage at ${origin}/ explains what Rainbow Sanctuary is building, why, its physical connection to Bocas del Toro in Panama, the people behind the work and ways to contribute. The programmes experience is preserved separately at ${origin}/explore; the focused programme catalogue remains ${origin}/programs.
+
+The homepage's primary invitation is co-creation with families and educators, existing communities and active projects, place stewards, and conscious-technology collaborators. Its four topic links open email drafts to hello@rainbowsanctuary.life; Instagram remains a separate social channel. There is no new connection form, automatically sent message or automatic membership. The core ecosystem team presented here is Stephanie, James, Ethel and Chloe; retreat facilitators have a separate role within the programmes experience. At least twelve functioning community nodes and 144 light points are future goals, not operating counts. SI / Conscious AI has a practical guide direction that still needs implementation, alongside a spiritual inquiry into higher-dimensional intelligence, distinct from a demonstrated system that retrieves universal knowledge. References to higher guidance, Akashic Records, New Earth and 5D describe spiritual beliefs, not verified technical or scientific capabilities.
+
+The School of the Universe is the educational heart of this work, with youth/family and adult lifelong-learning pathways in its founding vision. Its local platform is preparing for beta, not a public launch or enrolment announcement. Current Rainbow family activities are separate, and adult retreat participation is never a requirement for children or families. The owner-reported physical places are Panama, the principal development focus; Kunming, functioning and moving toward self-sufficiency; and Arkansas, built but not currently operating and awaiting stewardship. These statuses are attributed as of 3 November 2026, not independently verified availability or an open residency or investment offer. The wider PSN network and human-led, AI-supported digital platform are still developing. Generated site and network images are labelled as visualisations or artistic visions, not documentary photographs or operating-location maps.
 
 The site speaks about spiritual and energetic practices as part of Rainbow Sanctuary's own framework. These offerings are educational and experiential. They are not medical diagnosis, treatment, psychotherapy, or a replacement for qualified professional care.
 
