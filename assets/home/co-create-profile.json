@@ -1,0 +1,158 @@
+{
+  "name": "Rainbow Sanctuary",
+  "url": "https://rainbowsanctuary.life/",
+  "revision": "2026-11-04-pdf-verbatim",
+  "description": "Rainbow Sanctuary is a growing ecosystem that walks with people as they return to their own wholeness, remember their gifts, and bring them into their relationships, their creative work and their care for the Earth.",
+  "purpose": "to walk with people as they return to their wholeness and sovereignty, and to let that awareness become learning, relationship and a regenerative way of living together.",
+  "ecosystem": [
+    {
+      "title": "Rainbow Sanctuary",
+      "role": "the field of lived practice",
+      "body": "Sacred spaces and an emerging network of communities, where teachings become lived practice.",
+      "stage": "Now: physical nodes at different stages"
+    },
+    {
+      "title": "School of the Universe",
+      "role": "the heart of learning",
+      "body": "Centered on the core course Awakening the Original Code, a complete path of online learning, remote co-practice and in-person deepening, for young people and adults.",
+      "stage": "Now: platform preparing for beta"
+    },
+    {
+      "title": "Planetary Symbiosis Network (PSN)",
+      "role": "a network of co-creation",
+      "body": "Connecting people, places and communities through mutual support and shared work.",
+      "stage": "Now: twelve core sanctuaries and 144 light points are future goals"
+    },
+    {
+      "title": "SI / Conscious AI",
+      "role": "intelligence in service of life",
+      "body": "A guide to help people make sense of knowledge, find opportunities and work together. Sovereignty and direction always stay with people. We are also exploring a vision of co-creating with higher-dimensional intelligence.",
+      "stage": "Now: design foundations in place; the guide is still to be built"
+    }
+  ],
+  "school": {
+    "status": "Now: platform preparing for beta",
+    "pathways": [
+      [
+        "Young people and families",
+        "nurturing children's curiosity, intuition and creativity, with the understanding and consent of their parents."
+      ],
+      [
+        "Adults",
+        "loosening old beliefs and habits, remembering our gifts, and reclaiming our sovereignty."
+      ]
+    ],
+    "courses": "Awakening the Original Code · Human-system regeneration and consciousness rejuvenation · 12-strand DNA and 12 energy intelligence centers · Earth healing.",
+    "journey": "Learn online → Practice across distance → Deepen in living places."
+  },
+  "places": {
+    "ownerReportedAsOf": "2026-11-03",
+    "items": [
+      {
+        "name": "Bocas del Toro, Panama",
+        "status": "Developing · 25 hectares",
+        "body": "Our main living prototype, where we learn by doing how shared life, practice and care for the land can come together as a node."
+      },
+      {
+        "name": "Kunming, China",
+        "status": "Functioning · moving toward self-sufficiency",
+        "body": "A place already alive and running, with experience to share in daily operations and local adaptation."
+      },
+      {
+        "name": "Arkansas, United States",
+        "status": "Built · awaiting stewardship",
+        "body": "The place is built, and is waiting for the right stewardship team and a grounded plan."
+      }
+    ]
+  },
+  "currentStage": [
+    "We have a core team, three places, a School platform preparing for beta, and a white paper, a founding preface and philosophical writings. The SI guide, the Symbiotic Trust Fund, and the horizon of twelve sanctuaries and 144 light points are still taking shape, and we would love more partners to help bring them to life."
+  ],
+  "team": [
+    {
+      "name": "Stephanie",
+      "role": "Founder of Rainbow Sanctuary and the School of the Universe · Source Field Coordinator",
+      "body": "Anchors the spiritual vision and blueprint, and supports healing and transformative practice. She brings kindred people together, and fits each piece of the puzzle into place, so this great picture can be completed."
+    },
+    {
+      "name": "James",
+      "role": "Emotional intelligence & architecture",
+      "body": "Translates the vision into practical architecture, tools and infrastructure. He brings emotional intelligence and reflection on states of consciousness into learning, co-creation, and the growing relationship between people and technology."
+    },
+    {
+      "name": "Ethel",
+      "role": "Coordination & operations",
+      "body": "Helps keep the team's operations in balance, coordinates courses and client relationships, and supports the system improvements and practical continuity a sustainable community needs."
+    },
+    {
+      "name": "Chloe",
+      "role": "Team coach & organizational development consultant",
+      "body": "Helps people clarify their roles, goals and communication, so shared intentions can become coordinated work. She connects collaborators and builds relationships with communities and government contacts in mainland China."
+    }
+  ],
+  "offers": [
+    [
+      "Spiritual practice",
+      "guided practice, activation, healing and ceremonial gatherings."
+    ],
+    [
+      "Emotional intelligence",
+      "bringing awareness into how we communicate and work together."
+    ],
+    [
+      "Education",
+      "Awakening the Original Code, and learning pathways for young people and adults."
+    ],
+    [
+      "Places",
+      "stewardship and exchange in Panama, Kunming and Arkansas."
+    ],
+    [
+      "Architecture and technology",
+      "organizing knowledge, and conscious technology."
+    ],
+    [
+      "Co-creation",
+      "helping gifts and needs find each other."
+    ]
+  ],
+  "needs": [
+    [
+      "Stewards and builders for our places",
+      "operations, building, growing food and ecological restoration."
+    ],
+    [
+      "Educators, mentors and families",
+      "shaping the courses with us, and offering feedback during beta."
+    ],
+    [
+      "Engineers and knowledge designers",
+      "building an SI guide with privacy and human judgment at its heart."
+    ],
+    [
+      "People experienced in community systems",
+      "governance, team development and sustainable economics."
+    ]
+  ],
+  "contact": {
+    "email": "hello@rainbowsanctuary.life",
+    "topics": [
+      {
+        "label": "Introduce your community or project",
+        "href": "mailto:hello@rainbowsanctuary.life?subject=Community%20or%20project%20co-creation"
+      },
+      {
+        "label": "Explore the School and learning",
+        "href": "mailto:hello@rainbowsanctuary.life?subject=School%20youth%20or%20adult%20learning"
+      },
+      {
+        "label": "Discuss a place or stewardship",
+        "href": "mailto:hello@rainbowsanctuary.life?subject=Stewardship%20and%20physical%20nodes"
+      },
+      {
+        "label": "Contribute to conscious technology",
+        "href": "mailto:hello@rainbowsanctuary.life?subject=Contributing%20to%20SI%20and%20conscious%20technology"
+      }
+    ]
+  }
+}

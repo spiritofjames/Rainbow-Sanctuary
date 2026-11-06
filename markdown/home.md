@@ -1,201 +1,334 @@
 Source: https://rainbowsanctuary.life/
 
-Healing · Growth · Purpose · Service
+Rainbow Sanctuary · Consciousness into shared life
 
-# Home is where your heart feels peace.
+# Come home to yourself. Co-create our future.
 
-When life feels heavy, growth feels stuck, your child needs support, or your inner work is ready to become service—find a grounded next step for healing, deeper practice, and conscious contribution.
+Rainbow Sanctuary is a growing ecosystem that walks with people as they return to their own wholeness, remember their gifts, and bring them into their relationships, their creative work and their care for the Earth.
 
-[Find your starting point](https://rainbowsanctuary.life/#find-your-path) [Explore Group Healing](https://rainbowsanctuary.life/group-healing)
+From me to we. From awakening to co-creation.
 
-[Read our reviews on **Trustpilot**](https://www.trustpilot.com/review/rainbowsanctuary.life)
+[Discover our purpose ↓](https://rainbowsanctuary.life/#story) [Explore co-creation](https://rainbowsanctuary.life/#connect)
 
-![A collective evening practice for renewal and regeneration](https://rainbowsanctuary.life/assets/editorial/regeneration-maintenance-collective-v1.png)
+![Aerial view of rainforest, a sandy shoreline and turquoise sea in Bocas del Toro, Panama](https://rainbowsanctuary.life/assets/home/coast-1920.webp)
 
-Ongoing collective practice
+Bocas surroundings · photograph
 
-## Regeneration Maintenance
+Purpose:
 
-Live now · began 17 August 2026 For ReGeneration I & II participants
+from wholeness into shared life.
 
-Explore the programme →
+Foundations:
 
-[Visit linked page](https://rainbowsanctuary.life/144-stages-maintenance)
+a core team, three places, and a School platform preparing for beta.
 
-Weekly · live online
+Horizon:
 
-## Join the next Group Healing
+planetary co-creation, with technology in service of life.
 
-Tuesdays · 21:00 Beijing time Next dates shown in your time zone
+Who We Are
 
-Choose your session →
+## A return to wholeness. A foundation for shared life.
 
-[Visit linked page](https://rainbowsanctuary.life/online-group-healing#choose-session)
+As the world grows more technologically powerful, how do we become more conscious of the life we are creating?
 
-![A young adult and parent sharing a calm moment at home](https://rainbowsanctuary.life/assets/editorial/autism-family-support-v1.jpg)
+We understand each person as a holographic microcosm, and life as an expression of Source. Rainbow Sanctuary is a place where this understanding is lived. Co-creators from different cultures gather here, and through listening and working through our differences, we learn to hold unity within them, building a new way of human life, little by little.
 
-Ongoing weekly practice · free to join
+Our purpose:
 
-## Autism & family support
+to walk with people as they return to their wholeness and sovereignty, and to let that awareness become learning, relationship and a regenerative way of living together.
 
-Tuesdays · 23:00 Beijing time Optional contribution
+**Sovereignty and unity**
 
-Explore the pathway →
+**Outer sovereignty:** our time, identity, data and decisions rest in our own hands and in our community's.
 
-[Visit linked page](https://rainbowsanctuary.life/autism-family-support)
+**Inner sovereignty:** recognizing our emotions, beliefs and habits, so we can respond more consciously.
 
-![Two young adults quietly journaling in a warm evening room](https://rainbowsanctuary.life/assets/editorial/young-adult-wellbeing-v1.jpg)
+**Source sovereignty:** knowing we live within illusion, yet choosing our experiences consciously and taking full responsibility for them.
 
-Ongoing monthly pathway · review first
+**From sovereignty to unity:** when we return to our wholeness, we open naturally into unity, and our gifts flow into a greater, shared intelligence.
 
-## Young people’s wellbeing support
+The Ecosystem
 
-Up to age 25 First Tuesday · Beijing time
+## One living whole, in four forms.
 
-Understand the next step →
+![Rainbow Sanctuary](https://rainbowsanctuary.life/assets/home/rainbow-rect-logo-2.png)
 
-[Visit linked page](https://rainbowsanctuary.life/young-people-wellbeing)
+the field of lived practice
 
-In-person at a physical anchor
+### Rainbow Sanctuary:
 
-## Retreat into the living work.
+Sacred spaces and an emerging network of communities, where teachings become lived practice.
 
-Rainbow Sanctuary retreats are held at one of the Planetary Symbiosis Network’s twelve physical anchors in Panama—an in-person setting for deeper practice, connection, and integration.
+Now: physical nodes at different stages
 
-![Rainbow Sanctuary retreat participants gathering in a natural Panama setting](https://rainbowsanctuary.life/assets/editorial/retreat-preparation-panama.jpg)
+![School of the Universe](https://rainbowsanctuary.life/assets/home/shared/brand/school-dark.png)
 
-Featured in-person retreat · December 2026
+the heart of learning
 
-## Awakening Your Inner Light
+### School of the Universe:
 
-3–9 December 2026 Venue details after enquiry 7 days · 6 nights
+Centered on the core course **Awakening the Original Code**, a complete path of online learning, remote co-practice and in-person deepening, for young people and adults.
 
-Explore the retreat
+Now: platform preparing for beta
 
-[Visit linked page](https://rainbowsanctuary.life/awakening-your-inner-light-2026)
+![PSN — Planetary Symbiosis Network](https://rainbowsanctuary.life/assets/home/shared/brand/psn.png)
 
-Find your starting point
+a network of co-creation
 
-## What brings you here?
+### Planetary Symbiosis Network (PSN):
 
-You do not need to know the program names. Start with the situation that feels most true today, and explore at your own pace.
+Connecting people, places and communities through mutual support and shared work.
 
-Relief & renewal
+Now: twelve core sanctuaries and 144 light points are future goals
 
-### You are tired of carrying everything alone.
+![SI / Conscious AI](https://rainbowsanctuary.life/assets/home/shared/brand/si-conscious-ai.svg)
 
-Stress, exhaustion, a life transition, or the same emotional patterns keep returning. Begin with a gentle shared experience—or request private support when your situation needs individual attention.
+intelligence in service of life
 
-[Explore Group Healing](https://rainbowsanctuary.life/group-healing)
+### SI / Conscious AI:
 
-Deeper inner work
+A guide to help people make sense of knowledge, find opportunities and work together. Sovereignty and direction always stay with people. We are also exploring a vision of co-creating with higher-dimensional intelligence.
 
-### You have done the work—and still feel a ceiling.
+Now: design foundations in place; the guide is still to be built
 
-You are not looking for another beginner course. You want a specific framework for integrating old patterns, strengthening intuition, and moving forward with greater clarity.
+Our Approach
 
-[Explore the four-part Spiral Journey](https://rainbowsanctuary.life/spiral-journey)
+## Awareness · Activation · Integration.
 
-Practice & facilitation
+### Reconnection and activation:
 
-### Your personal growth is becoming a call to guide.
+spiritual healing, guided practice and space activation. Stephanie's work includes portal, DNA and blueprint activation.
 
-You want ethical training, mentorship, a serious practitioner community, and a visible pathway from personal integration toward serving others.
+### Emotional awareness and discernment:
 
-[See the practitioner pathway](https://rainbowsanctuary.life/practitioner-certification)
+James brings emotional intelligence into the moments where insight meets relationship.
 
-Children & family
+### Integration and shared responsibility:
 
-### You can see more in your child than struggle.
+letting experience become action, and holding one another in shared life.
 
-Focus, confidence, withdrawal, rebellion, or family tension may be getting in the way. See how our children’s work is structured and hear directly from other parents.
+We call our gatherings Embrace: a welcome for the whole person, and for the gifts of everyone present.
 
-[Explore children & family support](https://rainbowsanctuary.life/children-and-family)
+**Honest layers**
 
-Regenerative vision
+We clearly mark which layer each teaching belongs to: supported by research, still being explored, symbolic and traditional wisdom, or forty years of lived practice. You are always your own teacher. Taking part is always your choice, and you may pause at any time.
 
-### You want inner development to become tangible contribution.
+School of the Universe
 
-You are drawn to healing, education, resilient communities, and a more life-supporting future. Discover the Planetary Symbiosis Network and the practical direction Rainbow Sanctuary is helping to build.
+## A school for coming home to who we are.
 
-[Explore the bigger vision](https://rainbowsanctuary.life/bigger-vision)
+The School of the Universe grows from a system of human science and life-potential development with forty years of practice behind it. Its core course, **Awakening the Original Code**, walks with each student as they reclaim their own power and gifts, and live the original blueprint of their life.
 
-**Real words from four parents and children.** Shared after the Awaken the Supernatural Intelligence workshop, February–March 2025. [Read their stories →](https://rainbowsanctuary.life/community-stories)
+![Illustration of a luminous Noya Rao tree with spreading roots beneath a rainbow](https://rainbowsanctuary.life/assets/home/noya-rao-school-rainbow.webp)
 
-![Adults in a quiet reflective workshop](https://rainbowsanctuary.life/assets/editorial/home-spiral-editorial.jpg)
+### Young people and families:
 
-[The Spiral Journey →](https://rainbowsanctuary.life/spiral-journey)
+nurturing children's curiosity, intuition and creativity, with the understanding and consent of their parents.
 
-![A parent accompanying a child in a creative activity](https://rainbowsanctuary.life/assets/editorial/home-family-editorial.jpg)
+### Adults:
 
-[Children & Family →](https://rainbowsanctuary.life/children-and-family)
+loosening old beliefs and habits, remembering our gifts, and reclaiming our sovereignty.
 
-![Adults sharing tea at a small tropical gathering](https://rainbowsanctuary.life/assets/editorial/home-community-editorial.jpg)
+**Courses and practices**
 
-[Community & Stories →](https://rainbowsanctuary.life/community-stories)
+**Awakening the Original Code** · Human-system regeneration and consciousness rejuvenation · 12-strand DNA and 12 energy intelligence centers · Earth healing.
 
-Grounded by clear boundaries
+**The learning journey**
 
-## Spiritual in language. Practical in application.
+Learn online → Practice across distance → Deepen in living places.
 
-Our work explores the patterns that shape perception, energy, habits, and everyday experience. We do not create fear, promise instant transformation, or ask you to surrender your own discernment.
+Our Places
 
-The Spiral Journey
+## Three places. Three different next steps.
 
-## Start with an experience. Continue when you are ready.
+Nature & gatherings
 
-[START **Online Group Healing** Weekly on Tuesdays · one rotating theme](https://rainbowsanctuary.life/online-group-healing)
+Swipe or scroll to explore
 
-[I Foundations of Wellbeing Physical wellbeing, emotional balance, stress reduction, and energetic awareness.](https://rainbowsanctuary.life/spiral-i) [II Deep Emotional Transformation Emotional conditioning, limiting beliefs, and relationship patterns.](https://rainbowsanctuary.life/spiral-ii) [III Consciousness & Purpose Intuition, life purpose, creativity, and expanded awareness.](https://rainbowsanctuary.life/spiral-iii) [IV Integrated Living & Leadership A coherent way of living, creating, serving, and leading.](https://rainbowsanctuary.life/spiral-iv)
+- ![A boat in turquoise water beside a forested shore](https://rainbowsanctuary.life/assets/home/places-gallery/1-720.webp)
+- ![A long sandy beach running alongside tropical forest](https://rainbowsanctuary.life/assets/home/places-gallery/2-720.webp)
+- ![People resting on cushions beside candles](https://rainbowsanctuary.life/assets/home/places-gallery/3-720.webp)
+- ![Stars above the silhouettes of trees](https://rainbowsanctuary.life/assets/home/places-gallery/4-720.webp)
+- ![Sparks and smoke in front of a gathering](https://rainbowsanctuary.life/assets/home/places-gallery/5-720.webp)
+- ![A sloth among green leaves](https://rainbowsanctuary.life/assets/home/places-gallery/6-720.webp)
+- ![Sunbeams passing through dense forest](https://rainbowsanctuary.life/assets/home/places-gallery/7-720.webp)
+- ![A crescent moon and stars framed by palms](https://rainbowsanctuary.life/assets/home/places-gallery/8-720.webp)
+- ![A toucan perched among green leaves](https://rainbowsanctuary.life/assets/home/places-gallery/9-720.webp)
+- ![Two people holding hands in a seated circle](https://rainbowsanctuary.life/assets/home/places-gallery/10-720.webp)
+- ![Looking up into a canopy of tall palms](https://rainbowsanctuary.life/assets/home/places-gallery/11-720.webp)
+- ![People seated around a fire with a guitar](https://rainbowsanctuary.life/assets/home/places-gallery/12-720.webp)
+- ![Aerial view of a dense forest canopy](https://rainbowsanctuary.life/assets/home/places-gallery/13-720.webp)
+- ![A guitarist and companions beside a beach fire](https://rainbowsanctuary.life/assets/home/places-gallery/14-720.webp)
+- ![Sunlit palms and tall trunks in a tropical forest](https://rainbowsanctuary.life/assets/home/places-gallery/15-720.webp)
+- ![A reptile’s eye at the surface of water among floating leaves](https://rainbowsanctuary.life/assets/home/places-gallery/16-720.webp)
 
-[See the full Spiral Journey →](https://rainbowsanctuary.life/spiral-journey)
+01
 
-Children & Family
+### Bocas del Toro, Panama
 
-## Help your child come alive again
+Developing · 25 hectares
 
-"I noticed a shift in my daughter after she enrolled in the workshop, she's a lot more confident, positive and would often out of the blue says the wisest things that left me speechless for few seconds."
+Our main living prototype, where we learn by doing how shared life, practice and care for the land can come together as a node.
 
-— Madley Pondor, Parent
+02
 
-"My children have become more intune with their bodies and mind. They are happier, more confident, more relaxed."
+### Kunming, China
 
-— Irene, parent of Kalen, Leann, and Jordan
+Functioning · moving toward self-sufficiency
 
-[Explore Children & Family](https://rainbowsanctuary.life/children-and-family) [Read more stories →](https://rainbowsanctuary.life/community-stories)
+A place already alive and running, with experience to share in daily operations and local adaptation.
 
-![A regenerative tropical community with gardens, water systems, solar roofs, and people working together](https://rainbowsanctuary.life/assets/editorial/psn-regenerative-future.jpg)
+03
 
-Planetary Symbiosis Network
+### Arkansas, United States
 
-## Rainbow Sanctuary is part of a larger movement.
+Built · awaiting stewardship
 
-Rainbow Sanctuary cultivates the inner and relational capacity for change. The Planetary Symbiosis Network carries that work outward into regenerative communities, Earth stewardship, and human-governed technology that helps people learn and coordinate.
+The place is built, and is waiting for the right stewardship team and a grounded plan.
 
-[Explore the Bigger Vision](https://rainbowsanctuary.life/bigger-vision)
+Place descriptions are owner-reported, as of 3 November 2026.
 
-Support shared access
+Where We Are Now
 
-## Help keep the door open.
+## Real foundations. An unfolding system.
 
-Rainbow Sanctuary offers selected group practices, community pathways, and thoughtful support so that cost is not the only thing that decides who can take part. Much of this work is freely offered by the team. If you are able, your contribution helps keep that access open for someone else.
+We have a core team, three places, a School platform preparing for beta, and a white paper, a founding preface and philosophical writings. The SI guide, the Symbiotic Trust Fund, and the horizon of twelve sanctuaries and 144 light points are still taking shape, and we would love more partners to help bring them to life.
 
-[Support shared access →](https://rainbowsanctuary.life/contribute) Every contribution is voluntary. Choose your own amount securely through Stripe.
+The Larger Direction
 
-A human next step
+## From personal awakening to a culture of co-creation.
 
-## Still not sure where you belong?
+We long for a civilization that holds human growth, the living Earth and technology together: people returning to their gifts, places learning from one another, and intelligence extending conscious creation. And in the end, becoming citizens of the universe, and co-creators of the universe.
 
-Tell us what you are navigating and what you hope will change. We will point you toward the most suitable starting place—or say honestly if we are not the right fit.
+**Further reading**
 
-[Help me choose my next step](https://rainbowsanctuary.life/apply)
+**Caring for the Earth:** bringing Earth-healing practice together with the hands-on regeneration of soil, water and food.
 
-![People holding hands together in an outdoor circle](https://rainbowsanctuary.life/assets/editorial/trustpilot-review-invitation.jpg)
+**Four directions for SI:** a cosmic digital twin, inquiry into the quantum and consciousness, clear reception and discernment, and connected intelligence with responsibility. See Linking the Universe.
 
-Share your experience
+**The philosophy behind it:** humanity as an interface through which Source manifests, and AI as an amplifier of the consciousness we bring to it. See The Holographic Mirror.
 
-## Have you joined us for a session?
+What We Can Bring
 
-If you feel comfortable, you are welcome to share an honest account of your experience on Trustpilot. There is no expected rating.
+## Bring inner growth into the life you are building.
 
-[Leave an honest review →](https://rainbowsanctuary.life/review)
+### Spiritual practice:
+
+guided practice, activation, healing and ceremonial gatherings.
+
+### Emotional intelligence:
+
+bringing awareness into how we communicate and work together.
+
+### Education:
+
+**Awakening the Original Code**, and learning pathways for young people and adults.
+
+### Places:
+
+stewardship and exchange in Panama, Kunming and Arkansas.
+
+### Architecture and technology:
+
+organizing knowledge, and conscious technology.
+
+### Co-creation:
+
+helping gifts and needs find each other.
+
+What We Need
+
+## Help us turn this foundation into a way of life.
+
+![Illustration of golden paths linking forests and islands beneath a rising sun](https://rainbowsanctuary.life/assets/home/shared-future-1440.webp)
+
+Artistic vision · many places, one shared future.
+
+### Stewards and builders for our places:
+
+operations, building, growing food and ecological restoration.
+
+### Educators, mentors and families:
+
+shaping the courses with us, and offering feedback during beta.
+
+### Engineers and knowledge designers:
+
+building an SI guide with privacy and human judgment at its heart.
+
+### People experienced in community systems:
+
+governance, team development and sustainable economics.
+
+How We Work Together
+
+## Listen deeply. Create, respond and learn.
+
+No one leads everything; together, we accomplish everything. Our collaborations begin in four steps: share the whole picture, find a contribution that serves us both, give the work a clear shape, then practice, listen and adapt together.
+
+The core team · A wider circle of gifts
+
+## Different gifts. A shared responsibility.
+
+Our team holds the thread of this work. Its next form will also be shaped by the people, families, practitioners and communities who choose to join us.
+
+![Stephanie Wu](https://rainbowsanctuary.life/assets/home/team/aligned/stephanie.jpg)
+
+### Stephanie
+
+Founder of Rainbow Sanctuary and the School of the Universe · Source Field Coordinator
+
+Anchors the spiritual vision and blueprint, and supports healing and transformative practice. She brings kindred people together, and fits each piece of the puzzle into place, so this great picture can be completed.
+
+![James Stark](https://rainbowsanctuary.life/assets/home/team/aligned/james.jpg)
+
+### James
+
+Emotional intelligence & architecture
+
+Translates the vision into practical architecture, tools and infrastructure. He brings emotional intelligence and reflection on states of consciousness into learning, co-creation, and the growing relationship between people and technology.
+
+![Ethel](https://rainbowsanctuary.life/assets/home/team/aligned/ethel.jpg)
+
+### Ethel
+
+Coordination & operations
+
+Helps keep the team's operations in balance, coordinates courses and client relationships, and supports the system improvements and practical continuity a sustainable community needs.
+
+![Chloe](https://rainbowsanctuary.life/assets/home/team/aligned/chloe.jpg)
+
+### Chloe
+
+Team coach & organizational development consultant
+
+Helps people clarify their roles, goals and communication, so shared intentions can become coordinated work. She connects collaborators and builds relationships with communities and government contacts in mainland China.
+
+Getting to Know Us
+
+## Understand our piece of the puzzle. Show us yours.
+
+Our project portrait brings our philosophy, ecosystem, current foundations, offers and needs into one account. Share it with your team or your AI assistant, and explore together where our work may meet yours.
+
+[Read the project portrait (Markdown)](https://rainbowsanctuary.life/markdown/home.md) [Get the structured portrait (JSON)](https://rainbowsanctuary.life/assets/home/co-create-profile.json)
+
+![Rainbow Sanctuary](https://rainbowsanctuary.life/assets/home/shared/brand/rainbow-white.png)
+
+An Invitation to Co-Create
+
+## Bring your gifts. Let's discover what can grow.
+
+Tell us what you are building, what is already alive, and where you need support. You might bring a community, a family, a piece of land, a practice, a skill, or a question that matters to you.
+
+We begin by listening, and finding one meaningful way to work together.
+
+![Symbolic illustration of imagined people in different landscapes, connected by colourful flowing light](https://rainbowsanctuary.life/assets/home/connection-living-world-v2.webp)
+
+Artistic vision · imagined people, symbolic connection across places.
+
+[Introduce your community or project](mailto:hello@rainbowsanctuary.life?subject=Community%20or%20project%20co-creation) [Explore the School and learning](mailto:hello@rainbowsanctuary.life?subject=School%20youth%20or%20adult%20learning) [Discuss a place or stewardship](mailto:hello@rainbowsanctuary.life?subject=Stewardship%20and%20physical%20nodes) [Contribute to conscious technology](mailto:hello@rainbowsanctuary.life?subject=Contributing%20to%20SI%20and%20conscious%20technology)
+
+Write to us at [hello@rainbowsanctuary.life](mailto:hello@rainbowsanctuary.life).
+
+**With gratitude, the Rainbow Sanctuary team**
