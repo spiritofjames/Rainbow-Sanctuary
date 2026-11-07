@@ -66,7 +66,7 @@ CHECKS = (
     ),
     (
         "retreat booking route",
-        "https://rainbowsanctuary.life/awakening-your-inner-light-2026",
+        "https://rainbowsanctuary.life/awakening-your-inner-light-Jan-2027",
         {200},
         lambda _status, _location: True,
         "HTTP 200",

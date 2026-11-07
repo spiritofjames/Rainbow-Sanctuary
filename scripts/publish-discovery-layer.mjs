@@ -12,7 +12,7 @@ const retreatFaqs = JSON.parse(fs.readFileSync(path.join(siteDir, "data/december
 const lastmod = "2026-07-31";
 const routeLastmod = new Map([
   ["/", "2026-10-23"],
-  ["/awakening-your-inner-light-2026", "2026-10-23"],
+  ["/awakening-your-inner-light-Jan-2027", "2026-11-06"],
   ["/awakening-your-inner-light-october-2026", "2026-10-23"],
   ["/events", "2026-10-23"],
   ["/online-group-healing", "2026-10-23"],
@@ -94,7 +94,7 @@ const baseRoutes = {
   "Accessibility-Statement.dc.html": "/accessibility",
   "Adult-Potential-Development.dc.html": "/adult-potential-development",
   "Autism-Family-Support.dc.html": "/autism-family-support",
-  "Awakening-Your-Inner-Light-2026.dc.html": "/awakening-your-inner-light-2026",
+  "Awakening-Your-Inner-Light-2026.dc.html": "/awakening-your-inner-light-Jan-2027",
   "Awakening-Your-Inner-Light-October-2026.dc.html": "/awakening-your-inner-light-october-2026",
   "Bigger-Vision.dc.html": "/bigger-vision",
   "Awakening-Academy-Foundation.dc.html": "/awakening-academy-foundation",
@@ -173,22 +173,22 @@ const pageTypes = {
 // Versioned, first-party JPEGs avoid reusing cached, unbranded preview URLs.
 // Keep topic-specific editorial images below; use the general card as fallback.
 const brandShareImage = "/assets/social/rainbow-sanctuary-share-20261023.jpg";
-const decemberShareImage = "/assets/social/awakening-inner-light-december-2026-share-20261023.jpg";
+const januaryShareImage = "/assets/social/awakening-inner-light-january-2027-share-20261106.jpg";
 const brandedSocialImages = {
   [brandShareImage]: {
     width: 1200, height: 630, type: "image/jpeg",
     alt: "Rainbow Sanctuary lotus and luminous rooted tree. We’re building a new world. Together with you. Retreats, online events, healing and learning. Bocas del Toro, Panama — Node 01."
   },
-  [decemberShareImage]: {
+  [januaryShareImage]: {
     width: 1200, height: 630, type: "image/jpeg",
-    alt: "Rainbow Sanctuary: Awakening Your Inner Light. A seven-day plant-medicine retreat, 3–9 December 2026, Bocas del Toro, Panama. Preparation, ceremony and integration, beside a luminous rooted tree."
+    alt: "Rainbow Sanctuary: Awakening Your Inner Light. A seven-day plant-medicine retreat, 18–24 January 2027, Bocas del Toro, Panama. Preparation, ceremony and integration, beside a luminous rooted tree."
   }
 };
 const ogImages = {
   "Home.dc.html": brandShareImage,
   "About-Stephanie.dc.html": "/assets/stephanie-portrait.jpg",
   "1-1-Sessions.dc.html": "/assets/editorial/private-healing-overview.jpg",
-  "Awakening-Your-Inner-Light-2026.dc.html": decemberShareImage,
+  "Awakening-Your-Inner-Light-2026.dc.html": januaryShareImage,
   "Awakening-Your-Inner-Light-October-2026.dc.html": brandShareImage,
   "Bigger-Vision.dc.html": "/assets/editorial/psn-regenerative-future.jpg",
   "Children-Family.dc.html": "/assets/editorial/home-family-editorial.jpg",
@@ -328,11 +328,11 @@ function schemaFor(file, title, description, canonical, image, source) {
     graph.push({
       "@type": "Event",
       "@id": `${canonical}#event`,
-      name: "Awakening Your Inner Light Retreat · December 2026",
+      name: "Awakening Your Inner Light Retreat · January 2027",
       description,
       image,
-      startDate: "2026-12-03",
-      endDate: "2026-12-09",
+      startDate: "2027-01-18",
+      endDate: "2027-01-24",
       eventStatus: "https://schema.org/EventScheduled",
       eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
       organizer: { "@id": `${origin}/#organization` },
@@ -340,7 +340,7 @@ function schemaFor(file, title, description, canonical, image, source) {
         "@type": "Offer",
         price: "3500",
         priceCurrency: "USD",
-        url: `${origin}/apply?reason=events&program=awakening-inner-light-december-2026`
+        url: `${origin}/apply?reason=events&program=awakening-inner-light-january-2027`
       }
     });
     graph.push({
@@ -393,7 +393,7 @@ function schemaFor(file, title, description, canonical, image, source) {
         {
           "@type": "ListItem",
           position: 2,
-          url: `${origin}/awakening-your-inner-light-2026`
+          url: `${origin}/awakening-your-inner-light-Jan-2027`
         }
       ]
     });
@@ -441,7 +441,7 @@ for (const [file, route] of Object.entries(routes)) {
     const faq = `<!-- rs-retreat-faq:start -->
     <section id="frequently-asked-questions" class="rs-persona-faq" data-rs-persona-faq="true" aria-labelledby="rs-faq-title"><div class="rs-persona-faq__shell"><header class="rs-persona-faq__heading"><span class="rs-persona-faq__eyebrow">Questions people ask before choosing</span><h2 id="rs-faq-title">Clear answers, before you decide.</h2><p class="rs-persona-faq__intro">Your questions are part of discernment—not an obstacle to enrollment. Start with what matters most to you.</p></header><div class="rs-persona-faq__list">${retreatFaqs.map(({ question, answer }) => `<details><summary>${escapeAttribute(question)}</summary><p>${escapeAttribute(answer)}</p></details>`).join("\n")}</div></div></section>
     <!-- rs-retreat-faq:end -->`;
-    if (!/<!-- rs-retreat-faq:start -->[\s\S]*?<!-- rs-retreat-faq:end -->/.test(source)) throw new Error("December FAQ publishing markers are missing.");
+    if (!/<!-- rs-retreat-faq:start -->[\s\S]*?<!-- rs-retreat-faq:end -->/.test(source)) throw new Error("January FAQ publishing markers are missing.");
     source = source.replace(/<!-- rs-retreat-faq:start -->[\s\S]*?<!-- rs-retreat-faq:end -->/, faq);
   }
 
@@ -540,6 +540,9 @@ for (const file of fs.readdirSync(siteDir).filter((name) => name.endsWith(".js")
 const paymentRedirects = JSON.parse(fs.readFileSync(path.join(siteDir, "config/payment-redirects.json"), "utf8"));
 
 const legacyCleanRouteRedirects = {
+  "/awakening-your-inner-light-2026": "/awakening-your-inner-light-Jan-2027",
+  "/awakening-your-inner-light-jan-2027": "/awakening-your-inner-light-Jan-2027",
+  "/markdown/awakening-your-inner-light-2026.md": "/markdown/awakening-your-inner-light-Jan-2027.md",
   "/kids-weekly-practice": "/children-weekly-practice"
 };
 
@@ -656,7 +659,7 @@ const llms = `# Rainbow Sanctuary
 
 ## Current event
 
-- [Awakening Your Inner Light · December 2026](${origin}/awakening-your-inner-light-2026): Seven-day, six-night retreat planned for 3–9 December 2026; the investment is USD 3,500 per person, with enquiries open while the final venue and programme are confirmed
+- [Awakening Your Inner Light · January 2027](${origin}/awakening-your-inner-light-Jan-2027): Seven-day, six-night retreat planned for 18–24 January 2027; the investment is USD 3,500 per person, with enquiries open while the final venue and programme are confirmed
 - [Awakening Your Inner Light · October 2026 history](${origin}/awakening-your-inner-light-october-2026): Factual archive of the completed 1–7 October 2026 retreat in Bocas del Toro, Panama
 
 ## Vision and community
@@ -740,7 +743,7 @@ Private sessions are application-led. Current session types include Personal Kar
 
 ### Events and retreats
 
-Current public opportunities are listed at ${origin}/events. Awakening Your Inner Light is planned for 3–9 December 2026 as a seven-day, six-night residential retreat at USD 3,500 per person. The active page accepts expressions of interest while the final venue, programme, safety and booking details are confirmed: ${origin}/awakening-your-inner-light-2026. The completed October 2026 retreat is preserved separately at ${origin}/awakening-your-inner-light-october-2026.
+Current public opportunities are listed at ${origin}/events. Awakening Your Inner Light is planned for 18–24 January 2027 as a seven-day, six-night residential retreat at USD 3,500 per person. The active page accepts expressions of interest while the final venue, programme, safety and booking details are confirmed: ${origin}/awakening-your-inner-light-Jan-2027. The completed October 2026 retreat is preserved separately at ${origin}/awakening-your-inner-light-october-2026.
 
 ## People and community
 

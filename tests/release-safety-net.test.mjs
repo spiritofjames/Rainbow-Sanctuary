@@ -29,7 +29,7 @@ test('production monitoring covers current high-value public journeys and record
     '/144-stages-maintenance',
     '/children-weekly-practice',
     '/autism-family-support',
-    '/awakening-your-inner-light-2026',
+    '/awakening-your-inner-light-Jan-2027',
   ]) {
     assert.match(smokeCheck, new RegExp(path.replace(/[/?]/g, '\\$&')));
   }

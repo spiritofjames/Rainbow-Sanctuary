@@ -126,7 +126,7 @@ test("verified retreat booking gets an option-specific confirmation that preserv
   assert.equal(message.variables.PAYMENT_OPTION, "Early Bird");
   assert.equal(message.variables.RETREAT_DATES, "1–7 October 2026");
   assert.equal(message.variables.RETREAT_LOCATION, "Bocas del Toro, Panama");
-  assert.equal(message.variables.RETREAT_URL, "https://rainbowsanctuary.life/awakening-your-inner-light-2026");
+  assert.equal(message.variables.RETREAT_URL, "https://rainbowsanctuary.life/awakening-your-inner-light-october-2026");
   assert.equal(message.idempotencyKey, "stripe-checkout:cs_test_booking_123:retreat-booking-confirmed");
 });
 

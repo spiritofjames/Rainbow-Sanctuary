@@ -64,15 +64,15 @@ Rainbow Sanctuary retreats are held at one of the Planetary Symbiosis Network’
 
 ![Rainbow Sanctuary retreat participants gathering in a natural Panama setting](https://rainbowsanctuary.life/assets/editorial/retreat-preparation-panama.jpg)
 
-Featured in-person retreat · December 2026
+Featured in-person retreat · January 2027
 
 ## Awakening Your Inner Light
 
-3–9 December 2026 Venue details after enquiry 7 days · 6 nights
+18–24 January 2027 Venue details after enquiry 7 days · 6 nights
 
 Explore the retreat
 
-[Visit linked page](https://rainbowsanctuary.life/awakening-your-inner-light-2026)
+[Visit linked page](https://rainbowsanctuary.life/awakening-your-inner-light-Jan-2027)
 
 Find your starting point
 

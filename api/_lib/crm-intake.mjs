@@ -55,6 +55,11 @@ export function normalizePublicIntake(input, receivedAt = new Date(), options = 
     // contact to HubSpot.
     if (!program && sourceUrl.pathname === "/apply") program = "general-enquiry";
   }
+  // Keep previously shared enquiry links useful after the retreat reschedule.
+  // Existing CRM records and payment history are never migrated here.
+  if (area === "events" && program === "awakening-inner-light-december-2026") {
+    program = "awakening-inner-light-january-2027";
+  }
   const eventId = clean(input.clientEventId);
   const submittedAt = Date.parse(input.submittedAt);
   const receivedTime = receivedAt.getTime();

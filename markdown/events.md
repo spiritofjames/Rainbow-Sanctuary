@@ -42,7 +42,7 @@ Retreat history
 
 ## Previous gatherings remain available as a factual record.
 
-The October 2026 Awakening Your Inner Light retreat is archived separately from the active December enquiry journey. Expired registration and payment links have been removed.
+The October 2026 Awakening Your Inner Light retreat is archived separately from the active January enquiry journey. Expired registration and payment links have been removed.
 
 [View the October 2026 retreat](https://rainbowsanctuary.life/awakening-your-inner-light-october-2026)
 

@@ -7,7 +7,7 @@ import { mirrorHubSpotIntake } from "../api/_lib/hubspot-intake.mjs";
 import { attemptVisitorIntakeReceipt, enquiryOperationsMessage, visitorIntakeReceipt } from "../api/_lib/operations-notification.mjs";
 import intakeHandler from "../api/crm/intake.mjs";
 
-const PROGRAM = "awakening-inner-light-december-2026";
+const PROGRAM = "awakening-inner-light-january-2027";
 const source = readFileSync(new URL("../Book-Consultation.dc.html", import.meta.url), "utf8");
 const logic = source.match(/<script type="text\/x-dc" data-dc-script>([\s\S]*?)<\/script>/)[1];
 const id = "12e9e9fd-367f-4f92-a6d2-bbe8e977d398";
@@ -43,10 +43,10 @@ async function submit(form) {
   await form.renderVals().handleSubmit({ preventDefault() {} });
 }
 
-test("December discovery-call link preselects the request and describes a human-arranged time", () => {
+test("January discovery-call link preselects the request and describes a human-arranged time", () => {
   const { form } = makeForm(`?reason=events&program=${PROGRAM}&intent=discovery-call`);
   assert.equal(form.state.retreatIntent, "discovery-call");
-  assert.equal(form.renderVals().isDecemberRetreat, true);
+  assert.equal(form.renderVals().isRetreat, true);
   assert.equal(form.renderVals().submitLabel, "Request a discovery call");
   assert.match(form.state.message, /private discovery call/);
   assert.match(form.renderVals().acknowledgementSummary, /arrange a suitable time/);
@@ -55,14 +55,25 @@ test("December discovery-call link preselects the request and describes a human-
   assert.match(form.renderVals().closedAcknowledgementSummary, /normally sent shortly/);
 });
 
-test("the visitor can choose discovery or ordinary interest without changing the December programme", async () => {
+test("previously shared December links prefill and submit the rescheduled January enquiry", async () => {
+  const { form, calls } = makeForm("?reason=events&program=awakening-inner-light-december-2026&intent=discovery-call");
+  assert.equal(form.state.program, PROGRAM);
+  assert.equal(form.state.retreatIntent, "discovery-call");
+  assert.match(form.state.message, /18–24 January 2027/);
+  assert.equal(form.renderVals().isRetreat, true);
+  await submit(form);
+  assert.equal(calls[0].payload.program, PROGRAM);
+  assert.match(form.renderVals().acknowledgementSummary, /18–24 January 2027/);
+});
+
+test("the visitor can choose discovery or ordinary interest without changing the January programme", async () => {
   const { form, calls } = makeForm(`?reason=events&program=${PROGRAM}&tracking=discard-me`);
   assert.equal(form.state.retreatIntent, "register-interest");
   form.renderVals().onRetreatIntentChange({ target: { value: "discovery-call" } });
   await submit(form);
   assert.equal(calls[0].payload.program, PROGRAM);
   assert.equal(calls[0].payload.sourcePage, `/apply?reason=events&program=${PROGRAM}&intent=discovery-call`);
-  assert.match(calls[0].payload.message, /^Discovery call requested for the December retreat\./);
+  assert.match(calls[0].payload.message, /^Discovery call requested for the January retreat\./);
   assert.doesNotMatch(calls[0].payload.sourcePage, /tracking/);
   assert.equal(calls[0].payload.clientEventId, id);
   assert.equal(form.state.submitted, true);
@@ -89,16 +100,16 @@ test("changing pathway clears the previous programme and call intent instead of 
   assert.equal(intake.area, "other");
 });
 
-test("unrelated programmes cannot acquire the December discovery-call intent", async () => {
+test("unrelated programmes cannot acquire the January discovery-call intent", async () => {
   const { form, calls } = makeForm("?reason=spiral&program=spiral-i&intent=discovery-call");
   assert.equal(form.state.retreatIntent, "register-interest");
-  assert.equal(form.renderVals().isDecemberRetreat, false);
+  assert.equal(form.renderVals().isRetreat, false);
   await submit(form);
   assert.equal(calls[0].payload.sourcePage, "/apply?reason=spiral&program=spiral-i");
   assert.doesNotMatch(visitorIntakeReceipt(normalizePublicIntake(calls[0].payload)).variables.ENQUIRY_TOPIC, /Discovery/);
 });
 
-test("December call intent reaches HubSpot and both email topics without changing the CRM v2 schema", async () => {
+test("January call intent reaches HubSpot and both email topics without changing the CRM v2 schema", async () => {
   const { form, calls } = makeForm(`?reason=events&program=${PROGRAM}&intent=discovery-call`);
   await submit(form);
   const intake = normalizePublicIntake(calls[0].payload);
@@ -116,14 +127,14 @@ test("December call intent reaches HubSpot and both email topics without changin
     return { ok: true, status: 200, json: async () => ({ results: [{ id: "41003" }] }) };
   });
   assert.equal(requests[0].body.inputs[0].properties.hubspot_owner_id, "12345");
-  assert.match(requests[1].body.properties.hs_note_body, /Discovery call requested for the December retreat/);
+  assert.match(requests[1].body.properties.hs_note_body, /Discovery call requested for the January retreat/);
   assert.match(requests[1].body.properties.hs_note_body, /intent=discovery-call/);
   const notification = enquiryOperationsMessage(intake, hubspot, { RAINBOW_OPERATIONS_EMAIL: "ethel@rainbowsanctuary.life" });
-  assert.match(notification.subject, /3–9 December 2026 · Discovery call requested/);
+  assert.match(notification.subject, /18–24 January 2027 · Discovery call requested/);
   assert.doesNotMatch(notification.text, /I would like a private discovery call/);
   const receipt = visitorIntakeReceipt(intake);
   assert.equal(receipt.alias, "rs-enquiry-received");
-  assert.match(receipt.variables.ENQUIRY_TOPIC, /3–9 December 2026 · Discovery call requested/);
+  assert.match(receipt.variables.ENQUIRY_TOPIC, /18–24 January 2027 · Discovery call requested/);
 
   const sends = [];
   await attemptVisitorIntakeReceipt(intake, {
@@ -146,7 +157,7 @@ test("an uncertain response preserves the submission reference and does not fals
   assert.equal(form.state.submitted, true);
 });
 
-test("the HTTP intake handler carries the December request through all five mocked provider calls", async (t) => {
+test("the HTTP intake handler carries the January request through all five mocked provider calls", async (t) => {
   const { form, calls } = makeForm(`?reason=events&program=${PROGRAM}&intent=discovery-call`);
   await submit(form);
   const environment = {

@@ -22,7 +22,11 @@ test('Shared Pathway contact offers four honest topic-specific email drafts',()=
 test('all homepage fragments exist and programmes content is preserved',()=>{
   const ids=new Set([...home.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]));
   for(const [,fragment]of home.matchAll(/href="#([^"]+)"/g))assert.ok(ids.has(fragment),fragment);
-  const main=read('Explore.dc.html').match(/<main[\s\S]*?<\/main>/)[0];
+  const main=read('Explore.dc.html').match(/<main[\s\S]*?<\/main>/)[0]
+    .replaceAll('/awakening-your-inner-light-Jan-2027','/awakening-your-inner-light-2026')
+    .replaceAll('18 to 24 January 2027','3 to 9 December 2026')
+    .replaceAll('18–24 January 2027','3–9 December 2026')
+    .replaceAll('January 2027','December 2026');
   assert.equal(crypto.createHash('sha256').update(main).digest('hex'),'a185d607eadfb6ac3498b8a97049d87924e1c042dfcc5eaa9e74b99587123841');
 });
 
