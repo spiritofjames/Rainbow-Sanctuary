@@ -1,5 +1,17 @@
 # Release log
 
+## 2026-10-24 — James story layout and full in-page song
+
+- **Release owner:** James; explicitly requested production publication after the corrected recording copy and approved resuming the paused release.
+- **Pull requests:** #176 (story/player staging), #177 (recording copy staging), #178 (production).
+- **Production commit:** `7a7d7e1eeaf313e152d8c126b0952c89054af286`.
+- **Production deployment:** `dpl_CSA7TteHJdKvvf1fbiXQC4PECW6P` (Ready; exact commit and public domain verified).
+- **Previous deployment / rollback:** `dpl_Brv5u2Ph2zrJxSn6HtXweNEqm4fF`, commit `53b950ea4569610c7c7fee925cc095519a44191d`.
+- **Summary:** Align the larger James portrait with a shorter personal account, span the song player beneath both, and play the complete owner-supplied 5:59 recording directly on the page. Preserve a separate Spotify link. Use James's exact ceremony-after-initiation attribution in HTML and generated Markdown; remove the former Spotify loading gate and align privacy text.
+- **Verification:** Fresh 252 tests, 66-page validation, 27 email templates/contracts, release integrity and public packaging; green protected PR and post-merge staging/production checks. Live desktop/mobile layout, exact copy, playback, clean/legacy routes, discovery, source-file 404s and audio range delivery checked. No form, CRM, email, payment or provider writes.
+- **Review boundaries:** Prior owner-accepted missing qualified privacy/legal, accessibility certification and physical-device reviews remain exceptions, not passed reviews. Personal story remains attributed and is not an independent guest review or an outcome promise. See [release evidence](releases/2026-10-24-james-story-player.md).
+- **Rollback required:** No.
+
 ## 2026-10-24 — Public AI discovery, performance and source containment
 
 - **Release owner:** James; explicitly requested “push to production” after the protected staging handoff.

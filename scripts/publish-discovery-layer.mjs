@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { htmlToMarkdown } from "./lib/html-to-markdown.mjs";
 import { reconcileMarkdown } from "./lib/reconcile-markdown.mjs";
-import { knowledgeContributorSchema } from "./knowledge/entities.mjs";
+import { knowledgeContributorSchema, stephanieSchema } from "./knowledge/entities.mjs";
 import { fileURLToPath } from "node:url";
 
 const scriptsDir = path.dirname(fileURLToPath(import.meta.url));
@@ -12,7 +12,7 @@ const retreatFaqs = JSON.parse(fs.readFileSync(path.join(siteDir, "data/december
 const lastmod = "2026-07-31";
 const routeLastmod = new Map([
   ["/", "2026-10-23"],
-  ["/awakening-your-inner-light-2026", "2026-10-23"],
+  ["/awakening-your-inner-light-Jan-2027", "2026-11-06"],
   ["/awakening-your-inner-light-october-2026", "2026-10-23"],
   ["/events", "2026-10-23"],
   ["/online-group-healing", "2026-10-23"],
@@ -88,12 +88,13 @@ const headers = [
 
 const baseRoutes = {
   "Home.dc.html": "/",
+  "Explore.dc.html": "/explore",
   "About-Stephanie.dc.html": "/about",
   "1-1-Sessions.dc.html": "/private-healing",
   "Accessibility-Statement.dc.html": "/accessibility",
   "Adult-Potential-Development.dc.html": "/adult-potential-development",
   "Autism-Family-Support.dc.html": "/autism-family-support",
-  "Awakening-Your-Inner-Light-2026.dc.html": "/awakening-your-inner-light-2026",
+  "Awakening-Your-Inner-Light-2026.dc.html": "/awakening-your-inner-light-Jan-2027",
   "Awakening-Your-Inner-Light-October-2026.dc.html": "/awakening-your-inner-light-october-2026",
   "Bigger-Vision.dc.html": "/bigger-vision",
   "Awakening-Academy-Foundation.dc.html": "/awakening-academy-foundation",
@@ -163,6 +164,7 @@ const knowledgeEntryByPath = new Map(
 );
 
 const pageTypes = {
+  "Explore.dc.html": "CollectionPage",
   "About-Stephanie.dc.html": "AboutPage",
   "Book-Consultation.dc.html": "ContactPage",
   "Events-Retreats.dc.html": "CollectionPage"
@@ -171,26 +173,26 @@ const pageTypes = {
 // Versioned, first-party JPEGs avoid reusing cached, unbranded preview URLs.
 // Keep topic-specific editorial images below; use the general card as fallback.
 const brandShareImage = "/assets/social/rainbow-sanctuary-share-20261023.jpg";
-const decemberShareImage = "/assets/social/awakening-inner-light-december-2026-share-20261023.jpg";
+const januaryShareImage = "/assets/social/awakening-inner-light-january-2027-share-20261106.jpg";
 const brandedSocialImages = {
   [brandShareImage]: {
     width: 1200, height: 630, type: "image/jpeg",
     alt: "Rainbow Sanctuary lotus and luminous rooted tree. We’re building a new world. Together with you. Retreats, online events, healing and learning. Bocas del Toro, Panama — Node 01."
   },
-  [decemberShareImage]: {
+  [januaryShareImage]: {
     width: 1200, height: 630, type: "image/jpeg",
-    alt: "Rainbow Sanctuary: Awakening Your Inner Light. A seven-day plant-medicine retreat, 3–9 December 2026, Bocas del Toro, Panama. Preparation, ceremony and integration, beside a luminous rooted tree."
+    alt: "Rainbow Sanctuary: Awakening Your Inner Light. A seven-day plant-medicine retreat, 18–24 January 2027, Bocas del Toro, Panama. Preparation, ceremony and integration, beside a luminous rooted tree."
   }
 };
 const ogImages = {
   "Home.dc.html": brandShareImage,
   "About-Stephanie.dc.html": "/assets/stephanie-portrait.jpg",
   "1-1-Sessions.dc.html": "/assets/editorial/private-healing-overview.jpg",
-  "Awakening-Your-Inner-Light-2026.dc.html": decemberShareImage,
+  "Awakening-Your-Inner-Light-2026.dc.html": januaryShareImage,
   "Awakening-Your-Inner-Light-October-2026.dc.html": brandShareImage,
   "Bigger-Vision.dc.html": "/assets/editorial/psn-regenerative-future.jpg",
   "Children-Family.dc.html": "/assets/editorial/home-family-editorial.jpg",
-  "Kids-Weekly-Practice.dc.html": "/assets/editorial/children-weekly-practice-preparation.jpg",
+  "Kids-Weekly-Practice.dc.html": "/assets/editorial/family-creative.jpg",
   "Community-Stories.dc.html": "/assets/editorial/home-community-editorial.jpg",
   "Contribute.dc.html": "/assets/editorial/home-community-editorial.jpg",
   "Earth-Healing-Zone.dc.html": "/assets/editorial/earth-healing-stewardship-v1.jpg",
@@ -255,15 +257,17 @@ const organization = {
   "@id": `${origin}/#organization`,
   name: "Rainbow Sanctuary",
   url: `${origin}/`,
+  description: "Rainbow Sanctuary is a healing academy and global community for people seeking steadier wellbeing, deeper self-understanding, conscious practice, and a more connected way of living.",
+  sameAs: [
+    "https://www.instagram.com/rainbowsanctuary.life/",
+    "https://www.trustpilot.com/review/rainbowsanctuary.life"
+  ],
+  knowsAbout: ["Emotional awareness", "Spiritual practice", "Community learning", "Retreat preparation and integration"],
   logo: {
     "@type": "ImageObject",
     url: `${origin}/assets/brand/lotus-planetary-consciousness-original.png`
   },
-  founder: {
-    "@type": "Person",
-    name: "Stephanie Wu",
-    url: `${origin}/about`
-  }
+  founder: { "@id": stephanieSchema["@id"] }
 };
 
 const website = {
@@ -272,12 +276,35 @@ const website = {
   url: `${origin}/`,
   name: "Rainbow Sanctuary",
   publisher: { "@id": `${origin}/#organization` },
-  inLanguage: "en"
+  inLanguage: "en",
+  // Describes the existing Knowledge search, not a promised Google feature.
+  potentialAction: {
+    "@type": "SearchAction",
+    name: "Search the Rainbow Sanctuary knowledge library",
+    target: { "@type": "EntryPoint", urlTemplate: `${origin}/knowledge/search?q={search_term_string}` },
+    "query-input": "required name=search_term_string"
+  }
 };
 
-function schemaFor(file, title, description, canonical, image) {
+function visibleBreadcrumbSchema(source, canonical, title) {
+  const nav = source.match(/<nav\b[^>]*aria-label=["']Breadcrumb["'][^>]*>([\s\S]*?)<\/nav>/i)?.[1];
+  if (!nav) return null;
+  const items = [...nav.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)].map(([, href, text]) => ({
+    name: decodeHtml(text.replace(/<[^>]*>/g, "").trim()),
+    item: new URL(decodeHtml(href), canonical).href
+  }));
+  const currentLabel = nav.match(/<span\b[^>]*>([^<]+)<\/span>\s*$/i)?.[1];
+  if (items.at(-1)?.item !== canonical) items.push({ name: currentLabel && currentLabel.trim() !== "/" ? decodeHtml(currentLabel.trim()) : title.replace(/\s*\|\s*Rainbow Sanctuary$/, ""), item: canonical });
+  return {
+    "@type": "BreadcrumbList", "@id": `${canonical}#breadcrumb`,
+    itemListElement: items.map((item, index) => ({ "@type": "ListItem", position: index + 1, ...item }))
+  };
+}
+
+function schemaFor(file, title, description, canonical, image, source) {
   const graph = [
     organization,
+    stephanieSchema,
     website,
     {
       "@type": pageTypes[file] || "WebPage",
@@ -294,16 +321,18 @@ function schemaFor(file, title, description, canonical, image) {
       inLanguage: "en"
     }
   ];
+  const webpage = graph.find(node => node["@id"] === `${canonical}#webpage`);
+  if (file === "About-Stephanie.dc.html") webpage.mainEntity = { "@id": stephanieSchema["@id"] };
 
   if (file === "Awakening-Your-Inner-Light-2026.dc.html") {
     graph.push({
       "@type": "Event",
       "@id": `${canonical}#event`,
-      name: "Awakening Your Inner Light Retreat · December 2026",
+      name: "Awakening Your Inner Light Retreat · January 2027",
       description,
       image,
-      startDate: "2026-12-03",
-      endDate: "2026-12-09",
+      startDate: "2027-01-18",
+      endDate: "2027-01-24",
       eventStatus: "https://schema.org/EventScheduled",
       eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
       organizer: { "@id": `${origin}/#organization` },
@@ -311,7 +340,7 @@ function schemaFor(file, title, description, canonical, image) {
         "@type": "Offer",
         price: "3500",
         priceCurrency: "USD",
-        url: `${origin}/apply?reason=events&program=awakening-inner-light-december-2026`
+        url: `${origin}/apply?reason=events&program=awakening-inner-light-january-2027`
       }
     });
     graph.push({
@@ -364,7 +393,7 @@ function schemaFor(file, title, description, canonical, image) {
         {
           "@type": "ListItem",
           position: 2,
-          url: `${origin}/awakening-your-inner-light-2026`
+          url: `${origin}/awakening-your-inner-light-Jan-2027`
         }
       ]
     });
@@ -372,6 +401,8 @@ function schemaFor(file, title, description, canonical, image) {
 
   const knowledgeEntry = knowledgeEntryByPath.get(new URL(canonical).pathname);
   if (knowledgeEntry) {
+    webpage.reviewedBy = knowledgeContributorSchema(knowledgeEntry.reviewer);
+    webpage.mainEntity = { "@id": `${canonical}#article` };
     graph.push({
       "@type": "Article",
       "@id": `${canonical}#article`,
@@ -382,17 +413,13 @@ function schemaFor(file, title, description, canonical, image) {
       dateModified: knowledgeEntry.updatedAt,
       inLanguage: knowledgeEntry.locale,
       author: knowledgeContributorSchema(knowledgeEntry.author),
-      reviewedBy: knowledgeContributorSchema(knowledgeEntry.reviewer),
       publisher: { "@id": `${origin}/#organization` }
     });
-    graph.push({
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: `${origin}/` },
-        { "@type": "ListItem", position: 2, name: "Knowledge", item: `${origin}/knowledge` },
-        { "@type": "ListItem", position: 3, name: knowledgeEntry.title, item: canonical }
-      ]
-    });
+  }
+  const breadcrumb = visibleBreadcrumbSchema(source, canonical, knowledgeEntry?.title || title);
+  if (breadcrumb) {
+    graph.push(breadcrumb);
+    webpage.breadcrumb = { "@id": breadcrumb["@id"] };
   }
 
   return {
@@ -414,7 +441,7 @@ for (const [file, route] of Object.entries(routes)) {
     const faq = `<!-- rs-retreat-faq:start -->
     <section id="frequently-asked-questions" class="rs-persona-faq" data-rs-persona-faq="true" aria-labelledby="rs-faq-title"><div class="rs-persona-faq__shell"><header class="rs-persona-faq__heading"><span class="rs-persona-faq__eyebrow">Questions people ask before choosing</span><h2 id="rs-faq-title">Clear answers, before you decide.</h2><p class="rs-persona-faq__intro">Your questions are part of discernment—not an obstacle to enrollment. Start with what matters most to you.</p></header><div class="rs-persona-faq__list">${retreatFaqs.map(({ question, answer }) => `<details><summary>${escapeAttribute(question)}</summary><p>${escapeAttribute(answer)}</p></details>`).join("\n")}</div></div></section>
     <!-- rs-retreat-faq:end -->`;
-    if (!/<!-- rs-retreat-faq:start -->[\s\S]*?<!-- rs-retreat-faq:end -->/.test(source)) throw new Error("December FAQ publishing markers are missing.");
+    if (!/<!-- rs-retreat-faq:start -->[\s\S]*?<!-- rs-retreat-faq:end -->/.test(source)) throw new Error("January FAQ publishing markers are missing.");
     source = source.replace(/<!-- rs-retreat-faq:start -->[\s\S]*?<!-- rs-retreat-faq:end -->/, faq);
   }
 
@@ -433,7 +460,7 @@ for (const [file, route] of Object.entries(routes)) {
   const image = `${origin}${imagePath}`;
   const socialImage = brandedSocialImages[imagePath];
   const imageAlt = socialImage?.alt || title;
-  const schema = schemaFor(file, title, description, canonical, image);
+  const schema = schemaFor(file, title, description, canonical, image, source);
   const indexable = Object.hasOwn(indexableRoutes, file);
   const metadata = [
     "<!-- rs-discovery:start -->",
@@ -510,11 +537,17 @@ for (const file of fs.readdirSync(siteDir).filter((name) => name.endsWith(".js")
   fs.writeFileSync(filePath, source);
 }
 
+const paymentRedirects = JSON.parse(fs.readFileSync(path.join(siteDir, "config/payment-redirects.json"), "utf8"));
+
 const legacyCleanRouteRedirects = {
+  "/awakening-your-inner-light-2026": "/awakening-your-inner-light-Jan-2027",
+  "/awakening-your-inner-light-jan-2027": "/awakening-your-inner-light-Jan-2027",
+  "/markdown/awakening-your-inner-light-2026.md": "/markdown/awakening-your-inner-light-Jan-2027.md",
   "/kids-weekly-practice": "/children-weekly-practice"
 };
 
 const redirects = [
+  ...paymentRedirects.map(({ source, destination }) => ({ source, destination, permanent: false })),
   ...Object.entries(allRoutes).map(([file, route]) => ({
     source: `/${file}`,
     destination: route,
@@ -612,7 +645,8 @@ const llms = `# Rainbow Sanctuary
 
 ## Start here
 
-- [Home](${origin}/): Overview and current invitations
+- [Home](${origin}/): Identity, purpose and co-creation
+- [Explore programs and events](${origin}/explore): Programs and current invitations
 - [About Rainbow Sanctuary](${origin}/about): The platform, community, and co-founder Stephanie Wu
 - [The Spiral Journey](${origin}/spiral-journey): Four progressive levels of personal and conscious development
 - [Group Healing](${origin}/group-healing): Overview of shared healing pathways
@@ -625,7 +659,7 @@ const llms = `# Rainbow Sanctuary
 
 ## Current event
 
-- [Awakening Your Inner Light · December 2026](${origin}/awakening-your-inner-light-2026): Seven-day, six-night retreat planned for 3–9 December 2026; the investment is USD 3,500 per person, with enquiries open while the final venue and programme are confirmed
+- [Awakening Your Inner Light · January 2027](${origin}/awakening-your-inner-light-Jan-2027): Seven-day, six-night retreat planned for 18–24 January 2027; the investment is USD 3,500 per person, with enquiries open while the final venue and programme are confirmed
 - [Awakening Your Inner Light · October 2026 history](${origin}/awakening-your-inner-light-october-2026): Factual archive of the completed 1–7 October 2026 retreat in Bocas del Toro, Panama
 
 ## Vision and community
@@ -668,6 +702,12 @@ const llmsFull = `# Rainbow Sanctuary — Extended Site Guide
 
 Rainbow Sanctuary is a global spiritual wellbeing and conscious-development community co-founded by Stephanie Wu. It brings together accessible online group experiences, a progressive four-level Spiral Journey, focused programs, children-and-family work, practitioner pathways, private sessions, retreats, and an Earth-centred regenerative vision.
 
+The identity homepage at ${origin}/ explains what Rainbow Sanctuary is building, why, its physical connection to Bocas del Toro in Panama, the people behind the work and ways to contribute. The programmes experience is preserved separately at ${origin}/explore; the focused programme catalogue remains ${origin}/programs.
+
+The homepage's primary invitation is co-creation with families and educators, existing communities and active projects, place stewards, and conscious-technology collaborators. Its four topic links open email drafts to hello@rainbowsanctuary.life; Instagram remains a separate social channel. There is no new connection form, automatically sent message or automatic membership. The core ecosystem team presented here is Stephanie, James, Ethel and Chloe; retreat facilitators have a separate role within the programmes experience. At least twelve functioning community nodes and 144 light points are future goals, not operating counts. SI / Conscious AI has a practical guide direction that still needs implementation, alongside a spiritual inquiry into higher-dimensional intelligence, distinct from a demonstrated system that retrieves universal knowledge. References to higher guidance, Akashic Records, New Earth and 5D describe spiritual beliefs, not verified technical or scientific capabilities.
+
+The School of the Universe is the educational heart of this work, with youth/family and adult lifelong-learning pathways in its founding vision. Its local platform is preparing for beta, not a public launch or enrolment announcement. Current Rainbow family activities are separate, and adult retreat participation is never a requirement for children or families. The owner-reported physical places are Panama, the principal development focus; Kunming, functioning and moving toward self-sufficiency; and Arkansas, built but not currently operating and awaiting stewardship. These statuses are attributed as of 3 November 2026, not independently verified availability or an open residency or investment offer. The wider PSN network and human-led, AI-supported digital platform are still developing. Generated site and network images are labelled as visualisations or artistic visions, not documentary photographs or operating-location maps.
+
 The site speaks about spiritual and energetic practices as part of Rainbow Sanctuary's own framework. These offerings are educational and experiential. They are not medical diagnosis, treatment, psychotherapy, or a replacement for qualified professional care.
 
 ${knowledgeLlms}
@@ -703,7 +743,7 @@ Private sessions are application-led. Current session types include Personal Kar
 
 ### Events and retreats
 
-Current public opportunities are listed at ${origin}/events. Awakening Your Inner Light is planned for 3–9 December 2026 as a seven-day, six-night residential retreat at USD 3,500 per person. The active page accepts expressions of interest while the final venue, programme, safety and booking details are confirmed: ${origin}/awakening-your-inner-light-2026. The completed October 2026 retreat is preserved separately at ${origin}/awakening-your-inner-light-october-2026.
+Current public opportunities are listed at ${origin}/events. Awakening Your Inner Light is planned for 18–24 January 2027 as a seven-day, six-night residential retreat at USD 3,500 per person. The active page accepts expressions of interest while the final venue, programme, safety and booking details are confirmed: ${origin}/awakening-your-inner-light-Jan-2027. The completed October 2026 retreat is preserved separately at ${origin}/awakening-your-inner-light-october-2026.
 
 ## People and community
 

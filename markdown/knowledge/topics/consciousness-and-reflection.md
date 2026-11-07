@@ -8,6 +8,22 @@ Thoughtful perspectives on inner life, meaning, attention, and personal reflecti
 
 [Search the library](https://rainbowsanctuary.life/knowledge/search) [Explore all articles](https://rainbowsanctuary.life/knowledge/articles)
 
+Consciousness and reflection · program guide
+
+## [Learning as a practice of returning](https://rainbowsanctuary.life/knowledge/learning-as-a-practice-of-returning)
+
+An introduction to learning as attention, discernment, embodied practice, and a return to one's own questions and responsibilities.
+
+Updated 2026-11-04
+
+Consciousness and reflection · explainer
+
+## [What sovereignty means at Rainbow Sanctuary](https://rainbowsanctuary.life/knowledge/what-sovereignty-means-at-rainbow-sanctuary)
+
+A practical interpretation of sovereignty as personal agency, informed consent, shared responsibility, and respect for each person's inner life.
+
+Updated 2026-11-04
+
 Consciousness and reflection · Long read
 
 ## [Life: From Dust to the Stars](https://rainbowsanctuary.life/knowledge/life-from-dust-to-the-stars)

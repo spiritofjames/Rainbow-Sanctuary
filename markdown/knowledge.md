@@ -14,7 +14,7 @@ Topic
 
 Orientation for exploring the library and deciding what to read next.
 
-1 published article
+2 published articles
 
 [Visit linked page](https://rainbowsanctuary.life/knowledge/topics/getting-started)
 
@@ -24,7 +24,7 @@ Topic
 
 Thoughtful perspectives on inner life, meaning, attention, and personal reflection.
 
-3 published articles
+5 published articles
 
 [Visit linked page](https://rainbowsanctuary.life/knowledge/topics/consciousness-and-reflection)
 
@@ -34,7 +34,7 @@ Topic
 
 Shared principles for contribution, learning, responsibility, and life together.
 
-2 published articles
+3 published articles
 
 [Visit linked page](https://rainbowsanctuary.life/knowledge/topics/co-creation-and-community)
 
@@ -44,9 +44,29 @@ Topic
 
 Vision, care for place, and regenerative ways of relating with the living world.
 
-1 published article
+2 published articles
 
 [Visit linked page](https://rainbowsanctuary.life/knowledge/topics/earth-stewardship)
+
+Topic
+
+### Vision and systems
+
+How Rainbow Sanctuary connects vision, practice, learning, stewardship, and shared responsibility.
+
+1 published article
+
+[Visit linked page](https://rainbowsanctuary.life/knowledge/topics/vision-and-systems)
+
+Topic
+
+### Technology and discernment
+
+Reflections on technology, AI, responsibility, and keeping human judgment at the centre.
+
+2 published articles
+
+[Visit linked page](https://rainbowsanctuary.life/knowledge/topics/technology-and-discernment)
 
 Books & long reads
 
@@ -68,50 +88,50 @@ Latest in the library
 
 [Explore all articles](https://rainbowsanctuary.life/knowledge/articles)
 
-Co-creation and community · explainer
+Technology and discernment · research note
 
-### [A shared practice of life](https://rainbowsanctuary.life/knowledge/shared-practice-of-life)
+### [AI as a question of human responsibility](https://rainbowsanctuary.life/knowledge/ai-as-a-question-of-human-responsibility)
 
-A reflection on equality, shared responsibility, conflict, and the practical work of building a living community together.
+A reflective guide to using AI with human judgment, transparent limits, care for privacy, and responsibility for the outcomes it shapes.
 
-Updated 2026-08-22
+Updated 2026-11-04
 
 Earth stewardship · explainer
 
-### [A living vision for Rainbow Sanctuary](https://rainbowsanctuary.life/knowledge/a-living-vision-for-rainbow-sanctuary)
+### [Ecological care as shared responsibility](https://rainbowsanctuary.life/knowledge/ecological-care-as-shared-responsibility)
 
-Rainbow Sanctuary is an evolving place for learning, relationship, contribution, and care for the living world.
+A grounded approach to ecological stewardship through local attention, reciprocal relationships, practical limits, and accountable action.
 
-Updated 2026-08-18
+Updated 2026-11-04
 
-Co-creation and community · explainer
+Getting started · faq
 
-### [Co-creation principles for Rainbow Sanctuary](https://rainbowsanctuary.life/knowledge/co-creation-principles-for-rainbow-sanctuary)
+### [Evidence, exploration, and symbolic language](https://rainbowsanctuary.life/knowledge/evidence-exploration-and-symbolic-language)
 
-The principles that guide contribution at Rainbow Sanctuary: shared intention, diverse gifts, responsibility, learning, and grounded care for place.
+How Rainbow Sanctuary distinguishes established knowledge, emerging questions, and symbolic or spiritual language in its public learning materials.
 
-Updated 2026-08-18
+Updated 2026-11-04
 
-Consciousness and reflection · practice
+Co-creation and community · practice
 
-### [The game of consciousness](https://rainbowsanctuary.life/knowledge/the-game-of-consciousness)
+### [From me to we: a practice of shared leadership](https://rainbowsanctuary.life/knowledge/from-me-to-we-shared-leadership)
 
-A reflective essay on meeting life with curiosity, compassion, responsibility, and room to grow.
+A reflection on moving from individual control toward transparent, cross-cultural, and mutually supportive forms of leadership.
 
-Updated 2026-08-18
+Updated 2026-11-04
 
-Consciousness and reflection · practice
+Consciousness and reflection · program guide
 
-### [Twelve reflections on collective consciousness](https://rainbowsanctuary.life/knowledge/twelve-reflections-on-collective-consciousness)
+### [Learning as a practice of returning](https://rainbowsanctuary.life/knowledge/learning-as-a-practice-of-returning)
 
-A contemplative framework for noticing separation, fear, scarcity, conflict, and the possibilities of connection and shared responsibility.
+An introduction to learning as attention, discernment, embodied practice, and a return to one's own questions and responsibilities.
 
-Updated 2026-08-18
+Updated 2026-11-04
 
-Getting started · explainer
+Vision and systems · explainer
 
-### [About this knowledge library](https://rainbowsanctuary.life/knowledge/using-the-library)
+### [How Rainbow Sanctuary holds vision in practice](https://rainbowsanctuary.life/knowledge/rainbow-sanctuary-vision-in-practice)
 
-Learn how Rainbow Sanctuary organizes this library and how to use its articles as a starting point for further questions.
+An introduction to Rainbow Sanctuary's vision: connecting personal responsibility, shared learning, ecological care, and practical community life.
 
-Updated 2026-08-18
+Updated 2026-11-04

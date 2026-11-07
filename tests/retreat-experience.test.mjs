@@ -43,7 +43,7 @@ test("curated gallery presents all 22 real photographs in one mixed-ratio collag
   const gallery = page.slice(page.indexOf('id="previous-retreat"'), page.indexOf('id="hanan-perspective"'));
   assert.match(gallery, /aria-labelledby="previous-retreat-title"/);
   assert.match(gallery, /A glimpse of retreat life/);
-  assert.match(gallery, /not a confirmed December venue/);
+  assert.match(gallery, /not a confirmed January venue/);
   assert.match(gallery, /include photographs from the October 2026 gathering and its preparations/);
   assert.match(gallery, /role="list" aria-label="Curated photographs of retreat life and Bocas del Toro surroundings"/);
   assert.doesNotMatch(gallery, /awaiting-approved-content|Photographs coming soon|data-gallery-state/);
@@ -166,7 +166,7 @@ test("a real Playa Bluff aerial photograph bridges the gathering and visitor con
   const bridge = page.slice(page.indexOf('class="rs-retreat-landscape-bridge"'), page.indexOf('id="what-brings-you"'));
   assert.match(bridge, /playa-bluff-aerial\.jpg/);
   assert.match(bridge, /Aerial view of forest meeting the beach and sea along Playa Bluff/);
-  assert.match(bridge, /wider Playa Bluff area, not a confirmed December venue/);
+  assert.match(bridge, /wider Playa Bluff area, not a confirmed January venue/);
   const asset = new URL('../assets/retreats/awakening-inner-light-december-2026/journey/playa-bluff-aerial.jpg', import.meta.url);
   assert.ok(statSync(asset).size > 0 && statSync(asset).size < 1_000_000);
   assert.match(read('retreat-event.css'), /\.rs-retreat-landscape-bridge__inner\{display:grid/);
@@ -228,14 +228,14 @@ test("written testimonials use the six supplied photos with correct participant 
   assert.match(css, /@media\(min-width:1100px\)\{\s*\.rs-retreat-reflection\{[^}]*grid-template-columns:160px minmax\(0,1fr\)/);
 });
 
-test("Mama Gaia section uses selected nature imagery without promising outcomes or the December venue", () => {
+test("Mama Gaia section uses selected nature imagery without promising outcomes or the January venue", () => {
   const section = page.slice(page.indexOf('id="mama-gaia"'), page.indexOf('id="week"'));
   assert.match(section, /Feel the power of Mama Gaia/);
   assert.match(section, /Plant medicine can be powerful in its own right/);
   assert.match(section, /jungle canopy, sea air, and mountains on the horizon/);
   assert.match(section, /James describes his first steps here as an awakening felt through the body/);
   assert.match(section, /Experiences of energy, healing, or activation are personal, not guaranteed outcomes/);
-  assert.match(section, /They do not identify the December venue or promise a particular wildlife encounter/);
+  assert.match(section, /They do not identify the January venue or promise a particular wildlife encounter/);
   assert.doesNotMatch(section, /cellular healing|healing happens|guaranteed activation/i);
   const slides = [...section.matchAll(/<figure class="rs-retreat-mama-slide" data-photo-slide>([\s\S]*?)<\/figure>/g)];
   assert.equal(slides.length, 13);
@@ -271,7 +271,7 @@ test("compact desktop facilitator portraits align with card text without replaci
 test("the four journey stages show the selected responsive visuals with clear provenance", () => {
   const week = page.slice(page.indexOf('id="week"'), page.indexOf('id="integration"'));
   const arc = week.match(/<ol class="rs-retreat-arc rs-retreat-arc--visual"[^>]*>([\s\S]*?)<\/ol>/)?.[1];
-  assert.ok(arc, "December uses the isolated photo-led arc");
+  assert.ok(arc, "January uses the isolated photo-led arc");
   const cards = [...arc.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((match) => match[1]);
   const stages = [
     ["Before arrival", "preparation-call", "Prepare with context", "Illustrative one-to-one video preparation call"],
@@ -297,7 +297,7 @@ test("the four journey stages show the selected responsive visuals with clear pr
   }
   assert.match(week, /aria-describedby="journey-photo-context"/);
   assert.match(week, /id="journey-photo-context"[^>]*>The preparation, arrival, and ritual images illustrate those stages; the reflection photograph is from a past gathering/);
-  assert.match(week, /They do not confirm the December venue or programme/);
+  assert.match(week, /They do not confirm the January venue or programme/);
   assert.doesNotMatch(arc, /arc-(?:prepare|arrival|week|return)-real/);
   assert.doesNotMatch(arc, /https?:|drive\.google/);
   assert.doesNotMatch(read("Awakening-Your-Inner-Light-October-2026.dc.html"), /rs-retreat-arc--visual|journey\//);
@@ -497,9 +497,9 @@ test("hero has one Register Your Interest CTA while discovery-call guidance rema
   const actions = hero.match(/<div class="rs-retreat-actions">([\s\S]*?)<\/div>/)[1];
   assert.equal((actions.match(/<a\b/g) || []).length, 1);
   assert.match(actions, />Register Your Interest<\/a>/);
-  assert.match(actions, /href="\/apply\?reason=events&amp;program=awakening-inner-light-december-2026"/);
+  assert.match(actions, /href="\/apply\?reason=events&amp;program=awakening-inner-light-january-2027"/);
   assert.doesNotMatch(actions, /discovery-call|href="#week"/);
-  assert.match(page.slice(page.indexOf('id="application"')), /href="\/apply\?reason=events&amp;program=awakening-inner-light-december-2026&amp;intent=discovery-call"/);
+  assert.match(page.slice(page.indexOf('id="application"')), /href="\/apply\?reason=events&amp;program=awakening-inner-light-january-2027&amp;intent=discovery-call"/);
   assert.match(page.slice(page.indexOf('<section id="listen"')), /Can I request a discovery call before deciding\?/);
 });
 
@@ -555,15 +555,15 @@ function mountFaq({ pathname, pageKey, explicitSlot = true }) {
 
 test("retreat FAQs are present without JavaScript before the closing application and film", () => {
   const faq = page.slice(page.indexOf('id="frequently-asked-questions"'), page.indexOf('id="application"'));
-  assert.match(faq, /December plan is a seven-day, six-night/);
+  assert.match(faq, /January plan is a seven-day, six-night/);
   assert.doesNotMatch(faq, /three guided plant-medicine ceremonies|three meals daily/);
   assert.match(faq, /What is the price\?/);
   assert.ok(page.indexOf('id="frequently-asked-questions"') < page.indexOf('id="hanan-perspective"'));
-  assert.equal(mountFaq({ pathname: "/awakening-your-inner-light-2026" }).section, undefined);
+  assert.equal(mountFaq({ pathname: "/awakening-your-inner-light-Jan-2027" }).section, undefined);
 });
 
 test("local retreat preview uses the explicit FAQ page key and other clean routes retain default placement", () => {
-  const preview = mountFaq({ pathname: "/Awakening-Your-Inner-Light-2026.dc.html", pageKey: "/awakening-your-inner-light-2026" });
+  const preview = mountFaq({ pathname: "/Awakening-Your-Inner-Light-2026.dc.html", pageKey: "/awakening-your-inner-light-Jan-2027" });
   assert.equal(preview.section, undefined, "the preview already contains the generated static FAQ");
   const other = mountFaq({ pathname: "/apply", explicitSlot: false });
   assert.equal(other.placement, "append");

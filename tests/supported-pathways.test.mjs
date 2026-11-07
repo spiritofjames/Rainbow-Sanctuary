@@ -80,7 +80,7 @@ test("sensitive pathways stay safely gated, while approved direct registration r
 });
 
 test("homepage separates recurring group pathways from the standalone in-person retreat", () => {
-  const home = read("Home.dc.html");
+  const home = read("Explore.dc.html");
   assert.equal((home.match(/class="rs-home-promotions"/g) || []).length, 1);
   assert.match(home, /rs-home-retreat-feature/);
   assert.match(home, /Featured in-person retreat/);
@@ -95,14 +95,14 @@ test("homepage separates recurring group pathways from the standalone in-person 
   assert.match(home, /Tuesdays · 21:00 Beijing time/);
   assert.match(home, /Ongoing weekly practice · free to join/);
   assert.match(home, /Ongoing monthly pathway · review first/);
-  assert.match(home, /3–9 December 2026/);
+  assert.match(home, /18–24 January 2027/);
   assert.match(home, /Venue details after enquiry/);
   assert.doesNotMatch(home, /22 August 2026/);
   assert.doesNotMatch(home, /1–7 October 2026/);
 });
 
 test("homepage has an editorial contribution invitation near its closing content", () => {
-  const home = read("Home.dc.html");
+  const home = read("Explore.dc.html");
   const invitation = home.indexOf('class="rs-home-contribution"');
   const closingCta = home.indexOf("<!-- CLOSING CTA -->");
   assert.ok(invitation > -1);
@@ -114,7 +114,7 @@ test("homepage has an editorial contribution invitation near its closing content
 });
 
 test("homepage offers an optional, neutral route to the Trustpilot review invitation", () => {
-  const home = read("Home.dc.html");
+  const home = read("Explore.dc.html");
   const reviewInvitation = home.indexOf('class="rs-home-review-invitation"');
   const footer = home.indexOf("<!-- FOOTER -->");
   assert.ok(reviewInvitation > -1);
@@ -152,7 +152,7 @@ test("supported session selection separates the date, format and registration ac
 test("the public calendar keeps active recurring programmes visible without presenting their launch dates as upcoming", () => {
   const config = read("site-config.js");
   const calendar = read("events-calendar.js");
-  assert.match(config, /staticGeneratedAt: "2026-10-13T15:00:00\.000Z"/);
+  assert.match(config, /staticGeneratedAt: "2026-11-06T23:50:00\.000Z"/);
   assert.match(config, /scheduleLabel: "Weekly Tuesdays · 9:00 PM Beijing time"/);
   assert.match(config, /scheduleLabel: "Weekly Tuesdays · 11:00 PM Beijing time"/);
   assert.match(config, /scheduleLabel: "First Tuesday monthly · 11:00 PM Beijing time"/);

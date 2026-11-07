@@ -93,6 +93,23 @@
       ]
     },
     {
+      "source": "/markdown/explore.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/explore>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
       "source": "/markdown/about.md",
       "headers": [
         {
@@ -178,7 +195,7 @@
       ]
     },
     {
-      "source": "/markdown/awakening-your-inner-light-2026.md",
+      "source": "/markdown/awakening-your-inner-light-Jan-2027.md",
       "headers": [
         {
           "key": "Content-Type",
@@ -190,7 +207,7 @@
         },
         {
           "key": "Link",
-          "value": "<https://rainbowsanctuary.life/awakening-your-inner-light-2026>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+          "value": "<https://rainbowsanctuary.life/awakening-your-inner-light-Jan-2027>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
         }
       ]
     },
@@ -943,6 +960,176 @@
       ]
     },
     {
+      "source": "/markdown/knowledge/topics/vision-and-systems.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/topics/vision-and-systems>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/topics/technology-and-discernment.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/topics/technology-and-discernment>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/ai-as-a-question-of-human-responsibility.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/ai-as-a-question-of-human-responsibility>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/ecological-care-as-shared-responsibility.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/ecological-care-as-shared-responsibility>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/evidence-exploration-and-symbolic-language.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/evidence-exploration-and-symbolic-language>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/from-me-to-we-shared-leadership.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/from-me-to-we-shared-leadership>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/learning-as-a-practice-of-returning.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/learning-as-a-practice-of-returning>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/rainbow-sanctuary-vision-in-practice.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/rainbow-sanctuary-vision-in-practice>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/technology-as-an-extension-of-human-intention.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/technology-as-an-extension-of-human-intention>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
+      "source": "/markdown/knowledge/what-sovereignty-means-at-rainbow-sanctuary.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Link",
+          "value": "<https://rainbowsanctuary.life/knowledge/what-sovereignty-means-at-rainbow-sanctuary>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+        }
+      ]
+    },
+    {
       "source": "/markdown/knowledge/shared-practice-of-life.md",
       "headers": [
         {
@@ -1077,8 +1264,148 @@
   ],
   "redirects": [
     {
+      "source": "/pay/personal-karma-reconciliation-private-healing",
+      "destination": "https://book.stripe.com/3cIdR9dEd1mdfU15ov3Nm0q",
+      "permanent": false
+    },
+    {
+      "source": "/pay/private-healing",
+      "destination": "https://buy.stripe.com/cNi4gzfMl5Ct8rz18f3Nm0p",
+      "permanent": false
+    },
+    {
+      "source": "/pay/private-healing-installement",
+      "destination": "https://buy.stripe.com/4gM28reIh9SJ0Z7g393Nm0o",
+      "permanent": false
+    },
+    {
+      "source": "/pay/private-healing-2",
+      "destination": "https://buy.stripe.com/aFa7sL2Zz1mdazHeZ53Nm0n",
+      "permanent": false
+    },
+    {
+      "source": "/pay/private-healing-3",
+      "destination": "https://buy.stripe.com/3cI00j1Vv8OF37fdV13Nm0m",
+      "permanent": false
+    },
+    {
+      "source": "/pay/kids-weekly-practice-12-week-cycle",
+      "destination": "https://buy.stripe.com/9B66oHas10i9gY56sz3Nm0l",
+      "permanent": false
+    },
+    {
+      "source": "/pay/kids-weekly-practice-4-week-cycle",
+      "destination": "https://buy.stripe.com/5kQ00j9nX4ypgY54kr3Nm0k",
+      "permanent": false
+    },
+    {
+      "source": "/pay/awakening-your-inner-light-7-day-guided-medicine-retreat-oct-1-7-2026",
+      "destination": "https://book.stripe.com/14A00jbw5gh74bj2cj3Nm0j",
+      "permanent": false
+    },
+    {
+      "source": "/pay/awakening-your-inner-light-7-day-guided-medicine-retreat-oct-1-7-2026-2",
+      "destination": "https://book.stripe.com/5kQ5kD7fPaWN6jrcQX3Nm0i",
+      "permanent": false
+    },
+    {
+      "source": "/pay/online-group-healing",
+      "destination": "https://book.stripe.com/fZu8wP8jTc0RfU17wD3Nm0h",
+      "permanent": false
+    },
+    {
+      "source": "/pay/children-s-potential-coach-certification-programme-payment-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/8x2dR99nXfd3azH9EL3Nm0g",
+      "permanent": false
+    },
+    {
+      "source": "/pay/adult-potential-development-programme-payment-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/6oU3cvas10i99vD4kr3Nm0f",
+      "permanent": false
+    },
+    {
+      "source": "/pay/intuitive-perception-training-programme-payment-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/aFa00j6bL8OFazHcQX3Nm0e",
+      "permanent": false
+    },
+    {
+      "source": "/pay/crystal-healing-programme-payment-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/5kQaEXcA94yp23b3gn3Nm0d",
+      "permanent": false
+    },
+    {
+      "source": "/pay/earth-healer-training-level-ii-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/6oUeVd8jT6GxePXbMT3Nm0c",
+      "permanent": false
+    },
+    {
+      "source": "/pay/earth-healer-training-level-i-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/9B68wP7fP2qh8rz2cj3Nm0b",
+      "permanent": false
+    },
+    {
+      "source": "/pay/regeneration-level-ii-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/cNi7sL8jT1md6jr4kr3Nm0a",
+      "permanent": false
+    },
+    {
+      "source": "/pay/regeneration-level-i-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/9B614n1Vv5Ct4bjeZ53Nm09",
+      "permanent": false
+    },
+    {
+      "source": "/pay/spiral-iv-early-bird-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/fZu8wPcA97KBfU19EL3Nm08",
+      "permanent": false
+    },
+    {
+      "source": "/pay/spiral-iv-standard-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/3cI6oH7fPc0RcHPcQX3Nm07",
+      "permanent": false
+    },
+    {
+      "source": "/pay/spiral-iii-early-bird-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/dRm7sL8jT9SJ5fn8AH3Nm06",
+      "permanent": false
+    },
+    {
+      "source": "/pay/spiral-iii-standard-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/28E7sL57H8OFgY53gn3Nm05",
+      "permanent": false
+    },
+    {
+      "source": "/pay/spiral-ii-early-bird-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/7sYaEXbw5gh737faIP3Nm04",
+      "permanent": false
+    },
+    {
+      "source": "/pay/spiral-ii-standard-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/aFa3cvbw58OFazH3gn3Nm03",
+      "permanent": false
+    },
+    {
+      "source": "/pay/spiral-i-early-bird-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/7sYbJ16bL6GxgY58AH3Nm02",
+      "permanent": false
+    },
+    {
+      "source": "/pay/spiral-i-standard-2026-fee-inclusive",
+      "destination": "https://buy.stripe.com/8x27sL2Zzc0RePXeZ53Nm01",
+      "permanent": false
+    },
+    {
+      "source": "/pay/support-accessible-care",
+      "destination": "https://donate.stripe.com/fZuaEXeIh1mdazHeZ53Nm00",
+      "permanent": false
+    },
+    {
       "source": "/Home.dc.html",
       "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/Explore.dc.html",
+      "destination": "/explore",
       "permanent": true
     },
     {
@@ -1108,7 +1435,7 @@
     },
     {
       "source": "/Awakening-Your-Inner-Light-2026.dc.html",
-      "destination": "/awakening-your-inner-light-2026",
+      "destination": "/awakening-your-inner-light-Jan-2027",
       "permanent": true
     },
     {
@@ -1337,6 +1664,56 @@
       "permanent": true
     },
     {
+      "source": "/Knowledge-Topic-vision-and-systems.dc.html",
+      "destination": "/knowledge/topics/vision-and-systems",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-Topic-technology-and-discernment.dc.html",
+      "destination": "/knowledge/topics/technology-and-discernment",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-ai-as-a-question-of-human-responsibility.dc.html",
+      "destination": "/knowledge/ai-as-a-question-of-human-responsibility",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-ecological-care-as-shared-responsibility.dc.html",
+      "destination": "/knowledge/ecological-care-as-shared-responsibility",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-evidence-exploration-and-symbolic-language.dc.html",
+      "destination": "/knowledge/evidence-exploration-and-symbolic-language",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-from-me-to-we-shared-leadership.dc.html",
+      "destination": "/knowledge/from-me-to-we-shared-leadership",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-learning-as-a-practice-of-returning.dc.html",
+      "destination": "/knowledge/learning-as-a-practice-of-returning",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-rainbow-sanctuary-vision-in-practice.dc.html",
+      "destination": "/knowledge/rainbow-sanctuary-vision-in-practice",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-technology-as-an-extension-of-human-intention.dc.html",
+      "destination": "/knowledge/technology-as-an-extension-of-human-intention",
+      "permanent": true
+    },
+    {
+      "source": "/Knowledge-what-sovereignty-means-at-rainbow-sanctuary.dc.html",
+      "destination": "/knowledge/what-sovereignty-means-at-rainbow-sanctuary",
+      "permanent": true
+    },
+    {
       "source": "/Knowledge-shared-practice-of-life.dc.html",
       "destination": "/knowledge/shared-practice-of-life",
       "permanent": true
@@ -1387,6 +1764,21 @@
       "permanent": true
     },
     {
+      "source": "/awakening-your-inner-light-2026",
+      "destination": "/awakening-your-inner-light-Jan-2027",
+      "permanent": true
+    },
+    {
+      "source": "/awakening-your-inner-light-jan-2027",
+      "destination": "/awakening-your-inner-light-Jan-2027",
+      "permanent": true
+    },
+    {
+      "source": "/markdown/awakening-your-inner-light-2026.md",
+      "destination": "/markdown/awakening-your-inner-light-Jan-2027.md",
+      "permanent": true
+    },
+    {
       "source": "/kids-weekly-practice",
       "destination": "/children-weekly-practice",
       "permanent": true
@@ -1430,6 +1822,10 @@
       "destination": "/Home.dc.html"
     },
     {
+      "source": "/explore",
+      "destination": "/Explore.dc.html"
+    },
+    {
       "source": "/about",
       "destination": "/About-Stephanie.dc.html"
     },
@@ -1450,7 +1846,7 @@
       "destination": "/Autism-Family-Support.dc.html"
     },
     {
-      "source": "/awakening-your-inner-light-2026",
+      "source": "/awakening-your-inner-light-Jan-2027",
       "destination": "/Awakening-Your-Inner-Light-2026.dc.html"
     },
     {
@@ -1632,6 +2028,46 @@
     {
       "source": "/knowledge/topics/earth-stewardship",
       "destination": "/Knowledge-Topic-earth-stewardship.dc.html"
+    },
+    {
+      "source": "/knowledge/topics/vision-and-systems",
+      "destination": "/Knowledge-Topic-vision-and-systems.dc.html"
+    },
+    {
+      "source": "/knowledge/topics/technology-and-discernment",
+      "destination": "/Knowledge-Topic-technology-and-discernment.dc.html"
+    },
+    {
+      "source": "/knowledge/ai-as-a-question-of-human-responsibility",
+      "destination": "/Knowledge-ai-as-a-question-of-human-responsibility.dc.html"
+    },
+    {
+      "source": "/knowledge/ecological-care-as-shared-responsibility",
+      "destination": "/Knowledge-ecological-care-as-shared-responsibility.dc.html"
+    },
+    {
+      "source": "/knowledge/evidence-exploration-and-symbolic-language",
+      "destination": "/Knowledge-evidence-exploration-and-symbolic-language.dc.html"
+    },
+    {
+      "source": "/knowledge/from-me-to-we-shared-leadership",
+      "destination": "/Knowledge-from-me-to-we-shared-leadership.dc.html"
+    },
+    {
+      "source": "/knowledge/learning-as-a-practice-of-returning",
+      "destination": "/Knowledge-learning-as-a-practice-of-returning.dc.html"
+    },
+    {
+      "source": "/knowledge/rainbow-sanctuary-vision-in-practice",
+      "destination": "/Knowledge-rainbow-sanctuary-vision-in-practice.dc.html"
+    },
+    {
+      "source": "/knowledge/technology-as-an-extension-of-human-intention",
+      "destination": "/Knowledge-technology-as-an-extension-of-human-intention.dc.html"
+    },
+    {
+      "source": "/knowledge/what-sovereignty-means-at-rainbow-sanctuary",
+      "destination": "/Knowledge-what-sovereignty-means-at-rainbow-sanctuary.dc.html"
     },
     {
       "source": "/knowledge/shared-practice-of-life",

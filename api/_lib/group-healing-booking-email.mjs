@@ -25,7 +25,7 @@ const AWAKENING_INNER_LIGHT_RETREAT = Object.freeze({
   dates: "1–7 October 2026",
   location: "Bocas del Toro, Panama",
   name: "Awakening Your Inner Light Retreat 2026",
-  url: "https://rainbowsanctuary.life/awakening-your-inner-light-2026"
+  url: "https://rainbowsanctuary.life/awakening-your-inner-light-october-2026"
 });
 
 function googleCalendarUrl(event, accessUrl) {

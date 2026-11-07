@@ -8,6 +8,14 @@ Shared principles for contribution, learning, responsibility, and life together.
 
 [Search the library](https://rainbowsanctuary.life/knowledge/search) [Explore all articles](https://rainbowsanctuary.life/knowledge/articles)
 
+Co-creation and community · practice
+
+## [From me to we: a practice of shared leadership](https://rainbowsanctuary.life/knowledge/from-me-to-we-shared-leadership)
+
+A reflection on moving from individual control toward transparent, cross-cultural, and mutually supportive forms of leadership.
+
+Updated 2026-11-04
+
 Co-creation and community · explainer
 
 ## [A shared practice of life](https://rainbowsanctuary.life/knowledge/shared-practice-of-life)

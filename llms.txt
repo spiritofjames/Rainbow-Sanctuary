@@ -4,7 +4,8 @@
 
 ## Start here
 
-- [Home](https://rainbowsanctuary.life/): Overview and current invitations
+- [Home](https://rainbowsanctuary.life/): Identity, purpose and co-creation
+- [Explore programs and events](https://rainbowsanctuary.life/explore): Programs and current invitations
 - [About Rainbow Sanctuary](https://rainbowsanctuary.life/about): The platform, community, and co-founder Stephanie Wu
 - [The Spiral Journey](https://rainbowsanctuary.life/spiral-journey): Four progressive levels of personal and conscious development
 - [Group Healing](https://rainbowsanctuary.life/group-healing): Overview of shared healing pathways
@@ -17,7 +18,7 @@
 
 ## Current event
 
-- [Awakening Your Inner Light · December 2026](https://rainbowsanctuary.life/awakening-your-inner-light-2026): Seven-day, six-night retreat planned for 3–9 December 2026; the investment is USD 3,500 per person, with enquiries open while the final venue and programme are confirmed
+- [Awakening Your Inner Light · January 2027](https://rainbowsanctuary.life/awakening-your-inner-light-Jan-2027): Seven-day, six-night retreat planned for 18–24 January 2027; the investment is USD 3,500 per person, with enquiries open while the final venue and programme are confirmed
 - [Awakening Your Inner Light · October 2026 history](https://rainbowsanctuary.life/awakening-your-inner-light-october-2026): Factual archive of the completed 1–7 October 2026 retreat in Bocas del Toro, Panama
 
 ## Vision and community
@@ -32,6 +33,14 @@
 
 - [Knowledge home](https://rainbowsanctuary.life/knowledge): Reviewed public knowledge and topic browsing
 - [Knowledge search](https://rainbowsanctuary.life/knowledge/search): Search approved Rainbow Sanctuary articles
+- [AI as a question of human responsibility](https://rainbowsanctuary.life/knowledge/ai-as-a-question-of-human-responsibility): A reflective guide to using AI with human judgment, transparent limits, care for privacy, and responsibility for the outcomes it shapes.
+- [Ecological care as shared responsibility](https://rainbowsanctuary.life/knowledge/ecological-care-as-shared-responsibility): A grounded approach to ecological stewardship through local attention, reciprocal relationships, practical limits, and accountable action.
+- [Evidence, exploration, and symbolic language](https://rainbowsanctuary.life/knowledge/evidence-exploration-and-symbolic-language): How Rainbow Sanctuary distinguishes established knowledge, emerging questions, and symbolic or spiritual language in its public learning materials.
+- [From me to we: a practice of shared leadership](https://rainbowsanctuary.life/knowledge/from-me-to-we-shared-leadership): A reflection on moving from individual control toward transparent, cross-cultural, and mutually supportive forms of leadership.
+- [Learning as a practice of returning](https://rainbowsanctuary.life/knowledge/learning-as-a-practice-of-returning): An introduction to learning as attention, discernment, embodied practice, and a return to one's own questions and responsibilities.
+- [How Rainbow Sanctuary holds vision in practice](https://rainbowsanctuary.life/knowledge/rainbow-sanctuary-vision-in-practice): An introduction to Rainbow Sanctuary's vision: connecting personal responsibility, shared learning, ecological care, and practical community life.
+- [Technology as an extension of human intention](https://rainbowsanctuary.life/knowledge/technology-as-an-extension-of-human-intention): A philosophical reflection on technology as a human-made extension of attention, imagination, relationship, and ethical responsibility.
+- [What sovereignty means at Rainbow Sanctuary](https://rainbowsanctuary.life/knowledge/what-sovereignty-means-at-rainbow-sanctuary): A practical interpretation of sovereignty as personal agency, informed consent, shared responsibility, and respect for each person's inner life.
 - [A shared practice of life](https://rainbowsanctuary.life/knowledge/shared-practice-of-life): A reflection on equality, shared responsibility, conflict, and the practical work of building a living community together.
 - [A living vision for Rainbow Sanctuary](https://rainbowsanctuary.life/knowledge/a-living-vision-for-rainbow-sanctuary): Rainbow Sanctuary is an evolving place for learning, relationship, contribution, and care for the living world.
 - [Co-creation principles for Rainbow Sanctuary](https://rainbowsanctuary.life/knowledge/co-creation-principles-for-rainbow-sanctuary): The principles that guide contribution at Rainbow Sanctuary: shared intention, diverse gifts, responsibility, learning, and grounded care for place.

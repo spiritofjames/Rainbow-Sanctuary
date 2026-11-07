@@ -6,7 +6,7 @@ const root = new URL("../", import.meta.url);
 const read = file => readFileSync(new URL(file, root), "utf8");
 const origin = "https://rainbowsanctuary.life";
 const brandImage = "/assets/social/rainbow-sanctuary-share-20261023.jpg";
-const decemberImage = "/assets/social/awakening-inner-light-december-2026-share-20261023.jpg";
+const januaryImage = "/assets/social/awakening-inner-light-january-2027-share-20261106.jpg";
 const head = file => read(file).split("</head>")[0];
 const meta = (html, key) => {
   const values = [...html.matchAll(/<meta\s+(?:property|name)="([^"]+)"\s+content="([^"]*)"[^>]*>/g)]
@@ -33,18 +33,18 @@ function jpegDimensions(bytes) {
 }
 
 test("branded sharing assets are lightweight 1200 x 630 JPEGs", () => {
-  for (const image of [brandImage, decemberImage]) {
+  for (const image of [brandImage, januaryImage]) {
     const bytes = readFileSync(new URL(image.slice(1), root));
     assert.deepEqual(jpegDimensions(bytes), { width: 1200, height: 630 });
     assert.ok(bytes.length < 400_000, `${image} should stay below 400 KB`);
   }
 });
 
-test("home, events and generic pages share the brand card; December has its own card", () => {
+test("home, events and generic pages share the brand card; January has its own card", () => {
   const expected = {
     "Home.dc.html": brandImage,
     "Events-Retreats.dc.html": brandImage,
-    "Awakening-Your-Inner-Light-2026.dc.html": decemberImage,
+    "Awakening-Your-Inner-Light-2026.dc.html": januaryImage,
     "Awakening-Your-Inner-Light-October-2026.dc.html": brandImage,
     "Book-Consultation.dc.html": brandImage,
     "Knowledge.dc.html": brandImage
@@ -64,9 +64,10 @@ test("home, events and generic pages share the brand card; December has its own 
   }
 });
 
-test("all 59 discoverable pages have static, consistent OG and X metadata", () => {
+test("all discoverable pages have static, consistent OG and X metadata", () => {
   const pages = readdirSync(root).filter(file => file.endsWith(".dc.html") && read(file).includes("<!-- rs-discovery:start -->"));
-  assert.equal(pages.length, 59);
+  const canonicalPages = [...read("sitemap.xml").matchAll(/<loc>([^<]+)<\/loc>/g)].length;
+  assert.equal(pages.length, canonicalPages + 1, "the generated noindex search page also carries social metadata");
   for (const file of pages) {
     const html = head(file);
     assert.equal(meta(html, "twitter:title"), meta(html, "og:title"), file);
@@ -81,18 +82,18 @@ test("all 59 discoverable pages have static, consistent OG and X metadata", () =
   }
 });
 
-test("sharing copy and event dates distinguish December from the October archive", () => {
-  const home = head("Home.dc.html");
+test("sharing copy and event dates distinguish January from the October archive", () => {
+  const home = head("Explore.dc.html");
   assert.equal(meta(home, "og:title"), "Rainbow Sanctuary — A New World, Together");
   assert.match(meta(home, "og:description"), /Retreats, online events, healing and learning/);
   const december = head("Awakening-Your-Inner-Light-2026.dc.html");
-  assert.match(meta(december, "og:title"), /December 2026/);
-  assert.match(meta(december, "og:description"), /3–9 December 2026/);
+  assert.match(meta(december, "og:title"), /January 2027/);
+  assert.match(meta(december, "og:description"), /18–24 January 2027/);
   assert.doesNotMatch(meta(december, "og:description"), /October/);
   const event = graph(december).find(item => item["@type"] === "Event");
-  assert.equal(event.image, origin + decemberImage);
-  assert.equal(event.startDate, "2026-12-03");
-  assert.equal(event.endDate, "2026-12-09");
+  assert.equal(event.image, origin + januaryImage);
+  assert.equal(event.startDate, "2027-01-18");
+  assert.equal(event.endDate, "2027-01-24");
   const archive = head("Awakening-Your-Inner-Light-October-2026.dc.html");
   assert.match(meta(archive, "og:title"), /October 2026/);
   assert.equal(graph(archive).find(item => item["@type"] === "Event").startDate, "2026-10-01");

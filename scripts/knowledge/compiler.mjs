@@ -202,7 +202,8 @@ function articleSchema(article, author, reviewer) {
   return {
     '@context': 'https://schema.org',
     '@graph': [
-      { '@type': 'Article', '@id': `${canonical}#article`, headline: article.title, description: article.summary, mainEntityOfPage: canonical, datePublished: article.first_published_at, dateModified: article.updated_at, inLanguage: article.locale, author: knowledgeContributorSchema(author), reviewedBy: knowledgeContributorSchema(reviewer), publisher: { '@type': 'Organization', '@id': `${origin}/#organization`, name: 'Rainbow Sanctuary', url: origin } },
+      { '@type': 'WebPage', '@id': `${canonical}#webpage`, url: canonical, name: article.title, mainEntity: { '@id': `${canonical}#article` }, reviewedBy: knowledgeContributorSchema(reviewer) },
+      { '@type': 'Article', '@id': `${canonical}#article`, headline: article.title, description: article.summary, mainEntityOfPage: canonical, datePublished: article.first_published_at, dateModified: article.updated_at, inLanguage: article.locale, author: knowledgeContributorSchema(author), publisher: { '@type': 'Organization', '@id': `${origin}/#organization`, name: 'Rainbow Sanctuary', url: origin } },
       breadcrumb([{ name: 'Home', path: '/' }, { name: 'Knowledge', path: '/knowledge' }, { name: article.title, path: article.canonical_path }]),
     ],
   };

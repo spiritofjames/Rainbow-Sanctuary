@@ -85,8 +85,8 @@ window.RAINBOW_SANCTUARY_CONFIG = {
   events: {
     feedUrl: "",
     staticFallbackApproved: true,
-    staticGeneratedAt: "2026-10-13T15:00:00.000Z",
-    staticCacheVersion: "events-2",
+    staticGeneratedAt: "2026-11-06T23:50:00.000Z",
+    staticCacheVersion: "events-3",
     // Beijing is the single authoring time zone for Rainbow Sanctuary's supported group pathways.
     timezone: "Asia/Shanghai",
     groupHealing: {
@@ -232,17 +232,17 @@ window.RAINBOW_SANCTUARY_CONFIG = {
       },
       regenerationMaintenanceProgramme,
       {
-        id: "awakening-inner-light-december-2026",
+        id: "awakening-inner-light-january-2027",
         title: "Awakening Your Inner Light",
         category: "retreat",
-        startDate: "2026-12-03",
-        endDate: "2026-12-09",
+        startDate: "2027-01-18",
+        endDate: "2027-01-24",
         location: "Location to be confirmed",
         venue: "Residential retreat · details shared after enquiry",
         summary: "A seven-day, six-night plant-medicine retreat with preparation, supported ceremonial work, embodied practice, rest, and integration.",
         price: "USD 3,500 per person",
         status: "interest",
-        registrationUrl: "/awakening-your-inner-light-2026"
+        registrationUrl: "/awakening-your-inner-light-Jan-2027"
       }
       /*
       {

@@ -25,12 +25,12 @@ function safeContactUrl(hubspot) {
 function intakePathwayLabel(intake) {
   if (intake.program === "karma" || intake.program === "personal-karma-reconciliation") return "Personal Karma Reconciliation";
   if (intake.program === "general-enquiry") return "General enquiry — main website";
-  if (intake.program === "awakening-inner-light-december-2026") {
+  if (intake.program === "awakening-inner-light-january-2027") {
     let isDiscoveryCall = false;
     try {
       isDiscoveryCall = intake.area === "events" && new URL(intake.sourcePage || "/apply", "https://rainbowsanctuary.life").searchParams.get("intent") === "discovery-call";
     } catch { /* A malformed source cannot create a discovery-call request. */ }
-    return `Awakening Your Inner Light — 3–9 December 2026${isDiscoveryCall ? " · Discovery call requested" : ""}`;
+    return `Awakening Your Inner Light — 18–24 January 2027${isDiscoveryCall ? " · Discovery call requested" : ""}`;
   }
   const source = String(intake.program || intake.area || "Rainbow Sanctuary enquiry").trim();
   return source

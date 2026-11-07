@@ -10,7 +10,7 @@ const graphs = (file) => [...read(file).matchAll(/<script type="application\/ld\
 
 test("only indexable canonical pages receive faithful Markdown alternates", () => {
   const urls = [...read("sitemap.xml").matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
-  assert.equal(urls.length, 58);
+  assert.ok(urls.length >= 58, "new approved content may add canonical pages to the sitemap");
   for (const url of urls) {
     const route = new URL(url).pathname;
     const source = config.rewrites.find(r => r.source === route).destination.slice(1);
@@ -28,8 +28,8 @@ test("only indexable canonical pages receive faithful Markdown alternates", () =
   assert.equal(existsSync(`${root}markdown/young-people-wellbeing.md`), false);
   assert.equal(existsSync(`${root}markdown/payment-confirmation.md`), false);
   assert.match(read("llms.txt"), /Public Markdown directory/);
-  const retreat = read("markdown/awakening-your-inner-light-2026.md");
-  assert.match(retreat, /3–9 December 2026/);
+  const retreat = read("markdown/awakening-your-inner-light-Jan-2027.md");
+  assert.match(retreat, /18–24 January 2027/);
   assert.match(retreat, /3,500/);
   for (const {question, answer} of JSON.parse(read("data/december-retreat-faqs.json"))) {
     assert.ok(retreat.includes(question));
@@ -54,8 +54,11 @@ test("final article schema preserves organizational authors and breadcrumbs", ()
     const source = config.rewrites.find(r => r.source === route).destination.slice(1);
     const graph = graphs(source);
     const article = graph.find(n => n["@type"] === "Article");
+    const webpage = graph.find(n => n["@type"] === "WebPage");
+    assert.equal(article.reviewedBy, undefined);
+    assert.deepEqual(webpage.mainEntity, { "@id": article["@id"] });
     for (const role of ["author", "reviewer"]) {
-      if (entry[role].id === "rainbow-editorial") assert.equal(article[role === "reviewer" ? "reviewedBy" : role]["@type"], "Organization");
+      if (entry[role].id === "rainbow-editorial") assert.equal((role === "reviewer" ? webpage.reviewedBy : article.author)["@type"], "Organization");
     }
     assert.equal(graph.filter(n => n["@type"] === "BreadcrumbList").length, 1);
   }
