@@ -22,7 +22,7 @@ Production main 708aa3ce1affdf6f456a3cc9c65813613ab3d12a was merged into the sta
 
 Owner visual approval and production request recorded. Existing manual Stripe payment verification remains necessary: Ethel verifies payment in Stripe and matches the application before arranging the appointment. Automated paid-event confirmation remains unverified.
 
-Human privacy/legal, screen-reader and physical iOS/Android reviews are not certified by automated checks. Owner direction on carrying these exceptions forward to the expanded release was requested; production remains gated until the decision and deployed staging verification are recorded. This candidate record does not mark the historical Phase4 checklist complete.
+Human privacy/legal, screen-reader and physical iOS/Android reviews are not certified by automated checks. On 7 November James explicitly selected **Publish with those documented exceptions** for this expanded release, including continued manual Stripe payment verification. These are accepted exceptions, not passed reviews. Production remains gated on deployed staging verification and required protected-branch checks. This scope-specific acceptance does not misrepresent the historical Phase4 checklist as fully certified.
 
 ## Rollback
 
