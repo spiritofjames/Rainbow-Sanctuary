@@ -28,8 +28,8 @@ test("only indexable canonical pages receive faithful Markdown alternates", () =
   assert.equal(existsSync(`${root}markdown/young-people-wellbeing.md`), false);
   assert.equal(existsSync(`${root}markdown/payment-confirmation.md`), false);
   assert.match(read("llms.txt"), /Public Markdown directory/);
-  const retreat = read("markdown/awakening-your-inner-light-2026.md");
-  assert.match(retreat, /3–9 December 2026/);
+  const retreat = read("markdown/awakening-your-inner-light-Jan-2027.md");
+  assert.match(retreat, /18–24 January 2027/);
   assert.match(retreat, /3,500/);
   for (const {question, answer} of JSON.parse(read("data/december-retreat-faqs.json"))) {
     assert.ok(retreat.includes(question));

@@ -5,14 +5,14 @@ import vm from "node:vm";
 
 const source = readFileSync(new URL("../events-calendar.js", import.meta.url), "utf8");
 const retreat = {
-  id: "awakening-inner-light-december-2026",
+  id: "awakening-inner-light-january-2027",
   title: "Awakening Your Inner Light",
   category: "retreat",
-  startDate: "2026-12-03",
-  endDate: "2026-12-09",
+  startDate: "2027-01-18",
+  endDate: "2027-01-24",
   status: "interest",
   price: "USD 3,500 per person",
-  registrationUrl: "/awakening-your-inner-light-2026"
+  registrationUrl: "/awakening-your-inner-light-Jan-2027"
 };
 
 function element(dataset = {}) {
@@ -59,25 +59,25 @@ async function mount({ now = "2026-10-22T12:00:00", events = [retreat], search =
   };
 }
 
-test("December retreat occupies all seven calendar days with native links to its landing page", async () => {
+test("January retreat occupies all seven calendar days with native links to its landing page", async () => {
   const page = await mount({ search: "?filter=retreat" });
-  assert.equal(page.ids["events-month-label"].textContent, "December 2026");
+  assert.equal(page.ids["events-month-label"].textContent, "January 2027");
   const cells = page.calendar().split('<div class="rs-calendar-day').slice(1);
-  const linkedDays = cells.filter(cell => cell.includes('href="https://staging.example.test/awakening-your-inner-light-2026"'))
+  const linkedDays = cells.filter(cell => cell.includes('href="https://staging.example.test/awakening-your-inner-light-Jan-2027"'))
     .map(cell => Number(cell.match(/rs-calendar-day__number">(\d+)/)[1]));
-  assert.deepEqual(linkedDays, [3, 4, 5, 6, 7, 8, 9]);
+  assert.deepEqual(linkedDays, [18, 19, 20, 21, 22, 23, 24]);
   assert.equal((page.calendar().match(/<a class="rs-calendar-pill"/g) || []).length, 7);
-  assert.match(page.calendar(), /aria-label="Awakening Your Inner Light · (?:3 Dec|Dec 3) – (?:9 Dec 2026|Dec 9, 2026) — view details"/);
+  assert.match(page.calendar(), /aria-label="Awakening Your Inner Light · (?:18 Jan|Jan 18) – (?:24 Jan 2027|Jan 24, 2027) — view details"/);
   assert.match(page.upcoming(), /USD 3,500 per person/);
 });
 
 test("a residential retreat stays listed throughout its final published day", async () => {
-  for (const now of ["2026-12-03T19:00:00", "2026-12-06T12:00:00", "2026-12-09T23:59:59"]) {
+  for (const now of ["2027-01-18T19:00:00", "2027-01-21T12:00:00", "2027-01-24T23:59:59"]) {
     const page = await mount({ now });
     assert.match(page.upcoming(), /Awakening Your Inner Light/, now);
     assert.equal(page.ids["events-empty"].hidden, true);
   }
-  const finished = await mount({ now: "2026-12-10T00:00:00" });
+  const finished = await mount({ now: "2027-01-25T00:00:00" });
   assert.doesNotMatch(finished.upcoming(), /Awakening Your Inner Light/);
   assert.equal(finished.ids["events-empty"].hidden, false);
 });
@@ -87,13 +87,13 @@ test("retreat filter opens the relevant month while previous and next month cont
   const page = await mount({ events: [group, retreat] });
   assert.equal(page.ids["events-month-label"].textContent, "November 2026");
   page.filter("retreat");
-  assert.equal(page.ids["events-month-label"].textContent, "December 2026");
+  assert.equal(page.ids["events-month-label"].textContent, "January 2027");
   assert.equal(page.filters.find(button => button.dataset.eventFilter === "retreat").attributes["aria-pressed"], "true");
   assert.doesNotMatch(page.upcoming(), /November gathering/);
   page.ids["events-prev-month"].handlers.click();
-  assert.equal(page.ids["events-month-label"].textContent, "November 2026");
-  page.ids["events-next-month"].handlers.click();
   assert.equal(page.ids["events-month-label"].textContent, "December 2026");
+  page.ids["events-next-month"].handlers.click();
+  assert.equal(page.ids["events-month-label"].textContent, "January 2027");
 });
 
 test("cancelled events do not appear in calendar or upcoming cards", async () => {

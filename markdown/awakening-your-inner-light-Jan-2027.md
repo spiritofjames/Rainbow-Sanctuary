@@ -1,6 +1,6 @@
-Source: https://rainbowsanctuary.life/awakening-your-inner-light-2026
+Source: https://rainbowsanctuary.life/awakening-your-inner-light-Jan-2027
 
-[← Events & Retreats](https://rainbowsanctuary.life/events?filter=retreat) Seven-day guided retreat · 3–9 December 2026
+[← Events & Retreats](https://rainbowsanctuary.life/events?filter=retreat) Seven-day guided retreat · 18–24 January 2027
 
 # Awakening Your Inner Light
 
@@ -8,9 +8,9 @@ Step away from the pace and roles of everyday life for a carefully held week of 
 
 Considering your first ceremony? Begin with a private conversation. You do not need to decide before your questions are answered.
 
-[Register Your Interest](https://rainbowsanctuary.life/apply?reason=events&program=awakening-inner-light-december-2026)
+[Register Your Interest](https://rainbowsanctuary.life/apply?reason=events&program=awakening-inner-light-january-2027)
 
-Dates **3–9 December 2026**
+Dates **18–24 January 2027**
 
 Place **Venue details shared after enquiry**
 
@@ -70,7 +70,7 @@ A personal journey, not an experience to match. Some participants described clos
 
 ![Aerial view of forest meeting the beach and sea along Playa Bluff](https://rainbowsanctuary.life/assets/retreats/awakening-inner-light-december-2026/journey/playa-bluff-aerial.jpg)
 
-A wider view · Playa Bluff Step out of the familiar for a moment. The forest and coastline offer space to hear what is asking to change. This photograph shows the wider Playa Bluff area, not a confirmed December venue.
+A wider view · Playa Bluff Step out of the familiar for a moment. The forest and coastline offer space to hear what is asking to change. This photograph shows the wider Playa Bluff area, not a confirmed January venue.
 
 What might bring you here
 
@@ -105,7 +105,7 @@ A forest walk during a past gathering
 
 Ask about preparation, personal limits, and the support available before deciding whether this retreat is right for you. The week includes emotional-awareness practice and reflection; integration is about applying what matters in ordinary life, not chasing a single breakthrough.
 
-[Talk with us about the retreat](https://rainbowsanctuary.life/awakening-your-inner-light-2026#application) [Explore the integration approach](https://rainbowsanctuary.life/awakening-your-inner-light-2026#integration)
+[Talk with us about the retreat](https://rainbowsanctuary.life/awakening-your-inner-light-Jan-2027#application) [Explore the integration approach](https://rainbowsanctuary.life/awakening-your-inner-light-Jan-2027#integration)
 
 Questions about recovery, addiction, or serious illness deserve particular care in the private suitability conversation. This retreat is not medical care or addiction treatment, and an enquiry is not confirmation that plant-medicine participation is appropriate for you.
 
@@ -227,13 +227,13 @@ Life at the water's edge
 
 Photo 1 of 13
 
-These owner-selected images evoke the wider Bocas landscape and natural world. They do not identify the December venue or promise a particular wildlife encounter. Experiences of energy, healing, or activation are personal, not guaranteed outcomes.
+These owner-selected images evoke the wider Bocas landscape and natural world. They do not identify the January venue or promise a particular wildlife encounter. Experiences of energy, healing, or activation are personal, not guaranteed outcomes.
 
 The seven-day arc
 
 ## The ceremony is part of the journey—not the whole of it.
 
-Seven days and six nights give the journey a beginning, space to unfold, and a considered return. The December daily programme is being finalised; you will receive it before deciding to attend.
+Seven days and six nights give the journey a beginning, space to unfold, and a considered return. The January daily programme is being finalised; you will receive it before deciding to attend.
 
 1. ![Illustrative one-to-one video preparation call](https://rainbowsanctuary.life/assets/retreats/awakening-inner-light-december-2026/journey/preparation-call-720.jpg)
 
@@ -264,7 +264,7 @@ Seven days and six nights give the journey a beginning, space to unfold, and a c
 
    The final phase creates space to name what matters, consider practical next steps, and prepare for the transition back into everyday life.
 
-The preparation, arrival, and ritual images illustrate those stages; the reflection photograph is from a past gathering. They do not confirm the December venue or programme, which will be shared before you commit.
+The preparation, arrival, and ritual images illustrate those stages; the reflection photograph is from a past gathering. They do not confirm the January venue or programme, which will be shared before you commit.
 
 Stay **Six nights in residence**
 
@@ -276,7 +276,7 @@ Continuity **Preparation & integration guidance**
 
 ### Beyond the ceremony space.
 
-Past gatherings also made room for these experiences. The final December selection will be confirmed with the programme.
+Past gatherings also made room for these experiences. The final January selection will be confirmed with the programme.
 
 #### Sharing & listening
 
@@ -338,7 +338,7 @@ Stephanie and James bring emotional awareness, reflection, and grounded daily pr
 
 **Ethel** Retreat organiser & caregiver · Personal reflection
 
-Integration is individual and ongoing. The December programme will set out the planned sessions; any support after the retreat, its scope, and any separate cost will be confirmed before commitment.
+Integration is individual and ongoing. The January programme will set out the planned sessions; any support after the retreat, its scope, and any separate cost will be confirmed before commitment.
 
 From the people who were there
 
@@ -403,7 +403,7 @@ Integration is how I carry it into everyday life: how I listen, relate, and meet
 
 This is my experience and spiritual interpretation. Yours may be different. If you are curious and cautious, you can ask questions, take your time, and decide what is right for you.
 
-[Read the first-time questions](https://rainbowsanctuary.life/awakening-your-inner-light-2026#frequently-asked-questions)
+[Read the first-time questions](https://rainbowsanctuary.life/awakening-your-inner-light-Jan-2027#frequently-asked-questions)
 
 A song from my journey
 
@@ -427,7 +427,7 @@ Meet your facilitators
 
 The depth of the gathering comes from the people, their distinct practices, and how they work together—not a promise of the same experience for everyone.
 
-![Stephanie Wu, founder of Rainbow Sanctuary and host of the December retreat](https://rainbowsanctuary.life/assets/retreats/awakening-inner-light-december-2026/facilitators/stephanie-wu-1080x1920.jpg)
+![Stephanie Wu, founder of Rainbow Sanctuary and host of the January retreat](https://rainbowsanctuary.life/assets/retreats/awakening-inner-light-december-2026/facilitators/stephanie-wu-1080x1920.jpg)
 
 Founder · Spiritual practice & integration
 
@@ -481,15 +481,15 @@ When the sky is clear, make time for the stars. Rest, quiet conversation, and si
 
 ### Space to explore, too.
 
-You can ask about local tours, nature exploration, and optional classes alongside the retreat programme. Availability, suitability, and any additional costs will be confirmed individually; these are not all included in the retreat price. December accommodation and arrival details will be shared before commitment.
+You can ask about local tours, nature exploration, and optional classes alongside the retreat programme. Availability, suitability, and any additional costs will be confirmed individually; these are not all included in the retreat price. January accommodation and arrival details will be shared before commitment.
 
-The December invitation
+The January invitation
 
 ## Make space for the whole week.
 
-The land, the place you sleep, and the spaces between sessions are part of how a residential gathering feels. December venue and accommodation details will be shared before you commit.
+The land, the place you sleep, and the spaces between sessions are part of how a residential gathering feels. January venue and accommodation details will be shared before you commit.
 
-3–9 December 2026 Seven days · six nights
+18–24 January 2027 Seven days · six nights
 
 USD 3,500 per person
 
@@ -497,7 +497,7 @@ Enquiries are open. The venue, room arrangements, final programme, inclusions, p
 
 Please wait for written acceptance and travel guidance before booking flights. An enquiry does not reserve a place.
 
-[Register interest for December](https://rainbowsanctuary.life/apply?reason=events&program=awakening-inner-light-december-2026)
+[Register interest for January](https://rainbowsanctuary.life/apply?reason=events&program=awakening-inner-light-january-2027)
 
 Questions people ask before choosing
 
@@ -535,15 +535,15 @@ Informed consent and personal agency matter. You should be able to ask what is e
 
 **When and where is the retreat?**
 
-The next retreat runs from 3–9 December 2026 for seven days and six nights. Venue and arrival details are shared privately after enquiry and confirmation.
+The next retreat runs from 18–24 January 2027 for seven days and six nights. Venue and arrival details are shared privately after enquiry and confirmation.
 
 **What is the price?**
 
-The December retreat investment is USD 3,500 per person. Confirmed inclusions, the payment schedule, cancellation terms, and the authorised payment route are provided in writing before you make any payment.
+The January retreat investment is USD 3,500 per person. Confirmed inclusions, the payment schedule, cancellation terms, and the authorised payment route are provided in writing before you make any payment.
 
 **What is included in the week?**
 
-The December plan is a seven-day, six-night residential retreat built around preparation, ceremonial work, shared reflection, rest, and integration guidance. The final schedule, accommodation arrangements, meal plan, specific practices, and follow-up details are confirmed in writing before payment. Descriptions of October experiences are not a fixed December itinerary.
+The January plan is a seven-day, six-night residential retreat built around preparation, ceremonial work, shared reflection, rest, and integration guidance. The final schedule, accommodation arrangements, meal plan, specific practices, and follow-up details are confirmed in writing before payment. Descriptions of October experiences are not a fixed January itinerary.
 
 **What support is provided before and after?**
 
@@ -573,11 +573,11 @@ Your invitation begins here
 
 ## Begin with a conversation.
 
-Share what draws you to the December retreat and what you need to understand. The investment is USD 3,500 per person; confirmed inclusions, venue details, payment schedule, and cancellation terms are provided in writing before any commitment.
+Share what draws you to the January retreat and what you need to understand. The investment is USD 3,500 per person; confirmed inclusions, venue details, payment schedule, and cancellation terms are provided in writing before any commitment.
 
-[Register interest in December](https://rainbowsanctuary.life/apply?reason=events&program=awakening-inner-light-december-2026)
+[Register interest in January](https://rainbowsanctuary.life/apply?reason=events&program=awakening-inner-light-january-2027)
 
-Prefer to ask questions first? [Request a discovery call](https://rainbowsanctuary.life/apply?reason=events&program=awakening-inner-light-december-2026&intent=discovery-call).
+Prefer to ask questions first? [Request a discovery call](https://rainbowsanctuary.life/apply?reason=events&program=awakening-inner-light-january-2027&intent=discovery-call).
 
 Your enquiry is recorded for team follow-up. We also send an email acknowledgment; if it does not arrive, check your spam folder or contact us. A discovery call is arranged with the team, not booked automatically. Neither request reserves a place or creates a payment obligation.
 
@@ -606,7 +606,7 @@ A glimpse of retreat life
 
 ## The people. The place. The moments between.
 
-A curated window into ceremony, integration, connection, food, and the Bocas del Toro surroundings. These photographs show past retreat moments and the wider area; they do not confirm the December venue or programme.
+A curated window into ceremony, integration, connection, food, and the Bocas del Toro surroundings. These photographs show past retreat moments and the wider area; they do not confirm the January venue or programme.
 
 [Explore an earlier gathering](https://rainbowsanctuary.life/awakening-your-inner-light-october-2026)
 
@@ -744,7 +744,7 @@ The shoreline nearby
 
 A caiman in the waterways
 
-The retreat moments shown include photographs from the October 2026 gathering and its preparations. Surrounding views depict the Bocas del Toro area, not a confirmed December venue.
+The retreat moments shown include photographs from the October 2026 gathering and its preparations. Surrounding views depict the Bocas del Toro area, not a confirmed January venue.
 
 Moments from retreat life
 
@@ -770,4 +770,4 @@ This is an invitation to get to know your guide—not a promise of a particular 
 
 7 minutes 49 seconds · Portrait film · Captions available in the player
 
-[Listen to Hanan’s sacred song](https://rainbowsanctuary.life/awakening-your-inner-light-2026#listen)
+[Listen to Hanan’s sacred song](https://rainbowsanctuary.life/awakening-your-inner-light-Jan-2027#listen)

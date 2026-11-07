@@ -9,7 +9,7 @@ Text equivalents of public pages. Follow each source URL for current interactive
 - [Accessibility Statement | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/accessibility.md) — [Web page](https://rainbowsanctuary.life/accessibility)
 - [Adult Potential Development | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/adult-potential-development.md) — [Web page](https://rainbowsanctuary.life/adult-potential-development)
 - [Autism & Family Support | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/autism-family-support.md) — [Web page](https://rainbowsanctuary.life/autism-family-support)
-- [Awakening Your Inner Light Retreat · December 2026 | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/awakening-your-inner-light-2026.md) — [Web page](https://rainbowsanctuary.life/awakening-your-inner-light-2026)
+- [Awakening Your Inner Light Retreat · January 2027 | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/awakening-your-inner-light-Jan-2027.md) — [Web page](https://rainbowsanctuary.life/awakening-your-inner-light-Jan-2027)
 - [Awakening Your Inner Light · October 2026 Retreat History | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/awakening-your-inner-light-october-2026.md) — [Web page](https://rainbowsanctuary.life/awakening-your-inner-light-october-2026)
 - [Planetary Symbiosis Network | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/bigger-vision.md) — [Web page](https://rainbowsanctuary.life/bigger-vision)
 - [Awakening Academy — 4-Day Foundation Journey | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/awakening-academy-foundation.md) — [Web page](https://rainbowsanctuary.life/awakening-academy-foundation)

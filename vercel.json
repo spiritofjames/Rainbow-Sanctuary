@@ -195,7 +195,7 @@
       ]
     },
     {
-      "source": "/markdown/awakening-your-inner-light-2026.md",
+      "source": "/markdown/awakening-your-inner-light-Jan-2027.md",
       "headers": [
         {
           "key": "Content-Type",
@@ -207,7 +207,7 @@
         },
         {
           "key": "Link",
-          "value": "<https://rainbowsanctuary.life/awakening-your-inner-light-2026>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
+          "value": "<https://rainbowsanctuary.life/awakening-your-inner-light-Jan-2027>; rel=\"canonical\", <https://rainbowsanctuary.life/llms.txt>; rel=\"describedby\""
         }
       ]
     },
@@ -1435,7 +1435,7 @@
     },
     {
       "source": "/Awakening-Your-Inner-Light-2026.dc.html",
-      "destination": "/awakening-your-inner-light-2026",
+      "destination": "/awakening-your-inner-light-Jan-2027",
       "permanent": true
     },
     {
@@ -1764,6 +1764,21 @@
       "permanent": true
     },
     {
+      "source": "/awakening-your-inner-light-2026",
+      "destination": "/awakening-your-inner-light-Jan-2027",
+      "permanent": true
+    },
+    {
+      "source": "/awakening-your-inner-light-jan-2027",
+      "destination": "/awakening-your-inner-light-Jan-2027",
+      "permanent": true
+    },
+    {
+      "source": "/markdown/awakening-your-inner-light-2026.md",
+      "destination": "/markdown/awakening-your-inner-light-Jan-2027.md",
+      "permanent": true
+    },
+    {
       "source": "/kids-weekly-practice",
       "destination": "/children-weekly-practice",
       "permanent": true
@@ -1831,7 +1846,7 @@
       "destination": "/Autism-Family-Support.dc.html"
     },
     {
-      "source": "/awakening-your-inner-light-2026",
+      "source": "/awakening-your-inner-light-Jan-2027",
       "destination": "/Awakening-Your-Inner-Light-2026.dc.html"
     },
     {

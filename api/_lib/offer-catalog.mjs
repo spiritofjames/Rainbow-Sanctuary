@@ -170,7 +170,7 @@ export const OFFER_CATALOG = Object.freeze([
   offer({
     id: "awakening-inner-light-retreat-2026",
     name: "Awakening Your Inner Light Retreat 2026",
-    pagePath: "/awakening-your-inner-light-2026",
+    pagePath: "/awakening-your-inner-light-october-2026",
     priceKey: "awakening-inner-light-retreat-2026",
     variants: [
       variant({

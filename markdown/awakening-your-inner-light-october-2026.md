@@ -1,12 +1,12 @@
 Source: https://rainbowsanctuary.life/awakening-your-inner-light-october-2026
 
-[← Current retreat](https://rainbowsanctuary.life/awakening-your-inner-light-2026) Past retreat · 1–7 October 2026
+[← Current retreat](https://rainbowsanctuary.life/awakening-your-inner-light-Jan-2027) Past retreat · 1–7 October 2026
 
 # Awakening Your Inner Light
 
 This page preserves the factual public record of the October 2026 gathering. Registration and payment for this retreat are closed.
 
-[Explore the December retreat](https://rainbowsanctuary.life/awakening-your-inner-light-2026)
+[Explore the January retreat](https://rainbowsanctuary.life/awakening-your-inner-light-Jan-2027)
 
 Dates **1–7 October 2026**
 
@@ -88,8 +88,8 @@ Future reflections will be attributed and edited only within the permission gran
 
 Next gathering
 
-### Awakening Your Inner Light returns in December.
+### Awakening Your Inner Light returns in January.
 
-The next seven-day, six-night retreat is planned for 3–9 December 2026. The investment is USD 3,500 per person. Venue, programme, inclusions, and payment details will be confirmed in writing before any commitment.
+The next seven-day, six-night retreat is planned for 18–24 January 2027. The investment is USD 3,500 per person. Venue, programme, inclusions, and payment details will be confirmed in writing before any commitment.
 
-[Register interest](https://rainbowsanctuary.life/apply?reason=events&program=awakening-inner-light-december-2026)
+[Register interest](https://rainbowsanctuary.life/apply?reason=events&program=awakening-inner-light-january-2027)

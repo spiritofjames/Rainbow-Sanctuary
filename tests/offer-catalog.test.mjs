@@ -55,7 +55,7 @@ test("Awakening Your Inner Light direct booking options retain their approved pr
   assert.equal(standard.amountMinor, 350_000);
   assert.equal(earlyBird.policy, "retreat-booking");
   assert.equal(standard.policy, "retreat-booking");
-  assert.equal(standard.offer.pagePath, "/awakening-your-inner-light-2026");
+  assert.equal(standard.offer.pagePath, "/awakening-your-inner-light-october-2026");
 });
 
 test("Children’s Weekly Practice has fixed four- and twelve-week enrolment prices", () => {
