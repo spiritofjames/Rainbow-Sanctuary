@@ -1,5 +1,17 @@
 # Release log
 
+## 2026-11-07 — New homepage and January 2027 retreat
+
+- **Release owner:** James; requested all staged work and final hero refinements in production and explicitly accepted the documented human-review/manual-payment exceptions.
+- **Pull requests:** #194 (January retreat), #196 (hero refinements and production baseline reconciliation), #195 (production).
+- **Production commit:** `b4cf436a565d56a22518f35521853bf6bb62bf86`.
+- **Production deployment:** `dpl_FucxWy5k3eEZBStTTPdydyLVPBc2` (READY; exact SHA and rainbowsanctuary.life alias verified).
+- **Rollback target:** `708aa3ce1affdf6f456a3cc9c65813613ab3d12a`, READY deployment `dpl_3cBcandHuvmN4UpWu7dwqdYQspWw`.
+- **Summary:** New initial homepage, original programme homepage preserved at `/explore`, Knowledge-library updates, Karma price presentation, and retreat rescheduled to18–24 January2027 at `/awakening-your-inner-light-Jan-2027`. Hero has increased header clearance, no top rainbow strip, square upper corners and rounded lower corners.
+- **Verification:** 308 tests,28 email templates and28 disabled automation contracts,77 HTML pages,443 public files; exact-head GitHub/Vercel checks passed. Live homepage and CSS, old retreat redirect/new date, required Karma fields and USD500 continue-to-payment action confirmed. Production endpoint smoke suite passed; sitemap/robots/LLM discovery HTTP200 and legacy redirect308; unauthenticated staging remains protected302.
+- **Boundaries:** Human privacy/legal, screen-reader and physical-device reviews are accepted exceptions, not certifications. Ethel continues manual Stripe verification; automated paid-event confirmation remains unverified. No new customer submissions, CRM writes, emails, charges or provider changes in this release.
+- **Rollback required:** No. See [release evidence](releases/2026-11-07-home-january-production.md).
+
 ## 2026-10-24 — James story layout and full in-page song
 
 - **Release owner:** James; explicitly requested production publication after the corrected recording copy and approved resuming the paused release.
