@@ -110,6 +110,17 @@ test('the coastal masthead preserves the current hero and fades away over the se
   assert.match(css,/linear-gradient\(180deg,rgb\(var\(--hero-forest\)\) 0%/);
 });
 
+test('hero gives the floating header room without a fixed content height',()=>{
+  assert.doesNotMatch(read('home-identity.css'),/body::before/,'no decorative rainbow strip above the hero');
+  assert.match(css,/padding-block-start:max\(8\.5rem,calc\(6\.5rem \+ env\(safe-area-inset-top,0px\)\)\)/);
+  const mobile=css.slice(css.indexOf('@media(max-width:54rem)'));
+  assert.match(mobile,/\.coast-hero__copy\{[^}]*padding-block-start:calc\(7\.25rem \+ env\(safe-area-inset-top,0px\)\)/);
+  assert.match(mobile,/\.hero\.coast-hero\{[^}]*min-block-size:0/);
+  assert.match(home,/home-experience\.css\?v=20261107-square-hero-top/);
+  assert.match(css,/border-radius:0 0 2rem 2rem/,'desktop hero has square top and rounded bottom corners');
+  assert.match(mobile,/\.hero\.coast-hero\{[^}]*border-radius:0 0 1\.5rem 1\.5rem/,'mobile retains only bottom rounding');
+});
+
 test('exact source styles, typography and glyphs are locally reproducible',()=>{
   assert.equal(read('home-identity.css'),read('content/home/shared-pathway-style.css'));
   assert.ok(css.startsWith(read('content/home/shared-pathway-visuals.css').trimEnd()));
