@@ -338,8 +338,9 @@ html:has(.coast-masthead){scroll-padding-block-start:6rem}
  position:relative;isolation:isolate;overflow:hidden;
  display:flex;align-items:center;gap:0;min-block-size:clamp(34rem,47vw,50rem);
  padding:clamp(3rem,5.5vw,6rem) clamp(1.5rem,4.6vw,5rem);
- padding-block-start:max(6.5rem,clamp(3rem,5.5vw,6rem));
- margin-block-end:clamp(1.5rem,3vw,3rem);border-radius:2rem;
+ /* Reserve the floating masthead's height plus a generous reading-space gap. */
+ padding-block-start:max(8.5rem,calc(6.5rem + env(safe-area-inset-top,0px)));
+ margin-block-end:clamp(1.5rem,3vw,3rem);border-radius:0 0 2rem 2rem;
  background:rgb(var(--hero-forest));color:var(--hero-white);
 }
 .coast-hero__copy{position:relative;z-index:1;inline-size:min(54%,42.5rem);min-inline-size:0}
@@ -384,8 +385,8 @@ html:has(.coast-masthead){scroll-padding-block-start:6rem}
  .coast-masthead .masthead-website span{display:none}
 }
 @media(max-width:54rem){
- .hero.coast-hero{display:block;min-block-size:0;padding:0;border-radius:1.5rem}
- .coast-hero__copy{inline-size:auto;max-inline-size:42.5rem;padding:5.25rem clamp(1.25rem,5vw,3rem) .75rem}
+ .hero.coast-hero{display:block;min-block-size:0;padding:0;border-radius:0 0 1.5rem 1.5rem}
+ .coast-hero__copy{inline-size:auto;max-inline-size:42.5rem;padding:7.25rem clamp(1.25rem,5vw,3rem) .75rem;padding-block-start:calc(7.25rem + env(safe-area-inset-top,0px))}
  .coast-hero h1{font-size:clamp(2rem,6.8vw,3.75rem);margin-block:.75rem 1rem}
  .coast-hero__photo{position:relative;aspect-ratio:16 / 9;min-block-size:11rem}
  .coast-hero__photo::after{
