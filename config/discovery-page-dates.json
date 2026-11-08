@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "meaning": "Dates of verified significant main-content updates. Fingerprints ignore whitespace and exclude generated head metadata. Unknown or changed content is omitted from sitemap lastmod until a source-backed record is supplied.",
+  "pages": {
+    "/": {
+      "updatedAt": "2026-11-07",
+      "mainContentSha256": "57577bfdafdbae9cc2e3613f13692b17c9eca8c8e4954d28579a45c5b5a8a0ba",
+      "evidence": "97a1b14 and cfdea51: approved homepage headline, spacing and hero refinements on 7 November 2026."
+    },
+    "/awakening-your-inner-light-Jan-2027": {
+      "updatedAt": "2026-11-06",
+      "mainContentSha256": "8f83b9c36181651e929aa593687bc3e8d4f536298680d56b48054a33de223f05",
+      "evidence": "Owner rescheduled retreat to 18-24 January 2027 on 6 November 2026; released by PR194."
+    },
+    "/personal-karma-reconciliation": {
+      "updatedAt": "2026-11-03",
+      "mainContentSha256": "05fd6d4f4cae5b0f2aed63b794f7af697fb74771e96d4fade2abf08bba0a44e2",
+      "evidence": "23e69b2: single-session price-card update on 3 November 2026; a2bf2e8: save details before Stripe."
+    },
+    "/apply": {
+      "updatedAt": "2026-11-03",
+      "mainContentSha256": "0e4b305a0aeef406d6e1189aaad43859a44db40325a5926edebf0c8806cf0a8b",
+      "evidence": "a2bf2e8 and adbce04: Karma application-to-payment and validation messaging on 3 November 2026."
+    }
+  }
+}

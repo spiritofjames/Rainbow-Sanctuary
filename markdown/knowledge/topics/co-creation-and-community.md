@@ -10,6 +10,30 @@ Shared principles for contribution, learning, responsibility, and life together.
 
 Co-creation and community · practice
 
+## [A practical community project collaboration brief](https://rainbowsanctuary.life/knowledge/community-project-collaboration-brief)
+
+Use a community project collaboration brief to clarify purpose, people, contributions, limits and review points before beginning shared work together.
+
+Updated 2026-11-08
+
+Co-creation and community · practice
+
+## [Contributing skills with clear boundaries](https://rainbowsanctuary.life/knowledge/contributing-skills-with-clear-boundaries)
+
+Offer skills to a community project with clear boundaries around capacity, responsibilities, resources and mutual benefit, from introduction through review.
+
+Updated 2026-11-08
+
+Co-creation and community · practice
+
+## [How to start a co-creation conversation](https://rainbowsanctuary.life/knowledge/starting-a-co-creation-conversation)
+
+Start a co-creation conversation with a clear introduction: what is already alive, what you can offer, what you need, and one useful next step together.
+
+Updated 2026-11-08
+
+Co-creation and community · practice
+
 ## [From me to we: a practice of shared leadership](https://rainbowsanctuary.life/knowledge/from-me-to-we-shared-leadership)
 
 A reflection on moving from individual control toward transparent, cross-cultural, and mutually supportive forms of leadership.

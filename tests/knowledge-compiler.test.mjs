@@ -69,7 +69,7 @@ test('Knowledge cards nest below section headings without changing directory hea
   t.after(() => rm(outputDir, { recursive: true, force: true }));
   await compileKnowledge({ sourceDir: path.resolve('content/knowledge'), outputDir });
   const article = await readFile(path.join(outputDir, 'Knowledge-shared-practice-of-life.dc.html'), 'utf8');
-  const related = article.match(/<section class="rs-knowledge-related">([\s\S]*?)<\/section>/)[1];
+  const related = article.match(/<section class="rs-knowledge-related"[^>]*>([\s\S]*?)<\/section>/)[1];
   assert.match(related, /^<h2>Related articles<\/h2>/);
   assert.match(related, /<h3><a/);
   assert.equal([...related.matchAll(/<h2>/g)].length, 1);

@@ -8,6 +8,86 @@ Browse every reviewed Rainbow Sanctuary article. New and updated pieces appear f
 
 [Explore long reads](https://rainbowsanctuary.life/knowledge/long-reads) [Search the library](https://rainbowsanctuary.life/knowledge/search) [Explore topics](https://rainbowsanctuary.life/knowledge)
 
+Co-creation and community · practice
+
+## [A practical community project collaboration brief](https://rainbowsanctuary.life/knowledge/community-project-collaboration-brief)
+
+Use a community project collaboration brief to clarify purpose, people, contributions, limits and review points before beginning shared work together.
+
+Updated 2026-11-08
+
+Technology and discernment · explainer
+
+## [Conscious technology: a guide to discernment](https://rainbowsanctuary.life/knowledge/conscious-technology-discernment-guide)
+
+Explore conscious technology with care: distinguish working tools, proposed systems and spiritual inquiry, while keeping privacy and human judgment central.
+
+Updated 2026-11-08
+
+Co-creation and community · practice
+
+## [Contributing skills with clear boundaries](https://rainbowsanctuary.life/knowledge/contributing-skills-with-clear-boundaries)
+
+Offer skills to a community project with clear boundaries around capacity, responsibilities, resources and mutual benefit, from introduction through review.
+
+Updated 2026-11-08
+
+Getting started · faq
+
+## [Family learning: questions before joining](https://rainbowsanctuary.life/knowledge/family-learning-questions-before-joining)
+
+Use these family learning questions to explore format, guardian involvement, children's choices, privacy and practical expectations before joining an activity.
+
+Updated 2026-11-08
+
+Getting started · program guide
+
+## [January retreat: questions before registering interest](https://rainbowsanctuary.life/knowledge/january-retreat-questions-before-registering)
+
+Questions before registering interest in the January 2027 retreat: dates, price, suitability discussions, consent, programme details and when to plan travel.
+
+Updated 2026-11-08
+
+Earth stewardship · practice
+
+## [Place stewardship: questions before commitment](https://rainbowsanctuary.life/knowledge/place-stewardship-questions-before-commitment)
+
+Explore place stewardship with practical questions about local relationships, responsibilities, resources, ecological care and the limits of any invitation.
+
+Updated 2026-11-08
+
+Getting started · explainer
+
+## [Rainbow Sanctuary, the School and PSN: a guide](https://rainbowsanctuary.life/knowledge/rainbow-sanctuary-school-psn-guide)
+
+Understand Rainbow Sanctuary, the School of the Universe and PSN: what connects them, what exists today, and how to choose a useful next conversation.
+
+Updated 2026-11-08
+
+Consciousness and reflection · safety
+
+## [Spiritual practice and consent: questions to ask](https://rainbowsanctuary.life/knowledge/respectful-spiritual-practice-and-consent)
+
+Explore spiritual practice and consent through practical questions about choice, touch, disclosure, beliefs, privacy and the freedom to pause or decline.
+
+Updated 2026-11-08
+
+Co-creation and community · practice
+
+## [How to start a co-creation conversation](https://rainbowsanctuary.life/knowledge/starting-a-co-creation-conversation)
+
+Start a co-creation conversation with a clear introduction: what is already alive, what you can offer, what you need, and one useful next step together.
+
+Updated 2026-11-08
+
+Consciousness and reflection · practice
+
+## [Turning insight into daily practice](https://rainbowsanctuary.life/knowledge/turning-insight-into-daily-practice)
+
+Turn an insight into daily practice with a small action, a realistic context and a gentle review, without promising transformation or perfect progress.
+
+Updated 2026-11-08
+
 Technology and discernment · research note
 
 ## [AI as a question of human responsibility](https://rainbowsanctuary.life/knowledge/ai-as-a-question-of-human-responsibility)

@@ -8,6 +8,14 @@ Vision, care for place, and regenerative ways of relating with the living world.
 
 [Search the library](https://rainbowsanctuary.life/knowledge/search) [Explore all articles](https://rainbowsanctuary.life/knowledge/articles)
 
+Earth stewardship · practice
+
+## [Place stewardship: questions before commitment](https://rainbowsanctuary.life/knowledge/place-stewardship-questions-before-commitment)
+
+Explore place stewardship with practical questions about local relationships, responsibilities, resources, ecological care and the limits of any invitation.
+
+Updated 2026-11-08
+
 Earth stewardship · explainer
 
 ## [Ecological care as shared responsibility](https://rainbowsanctuary.life/knowledge/ecological-care-as-shared-responsibility)

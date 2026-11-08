@@ -84,7 +84,7 @@ Evidence / findings:
 
 ## 6. SEO and social sharing
 
-- [ ] All 36 clean routes return HTTP 200 with unique titles and descriptions.
+- [ ] All current public clean routes in the build manifest return HTTP 200 with unique titles and descriptions; record the current route count and any bounded live sample separately.
 - [ ] Canonical URLs, robots directives, Open Graph, Twitter cards, and images are
       correct.
 - [ ] Organization, WebSite, WebPage, FAQ, and Event JSON-LD validate where applicable.

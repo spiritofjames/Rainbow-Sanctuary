@@ -38,6 +38,7 @@
 .rs-knowledge-search-page { max-width: 760px; margin: 32px auto; }
 .rs-knowledge-search-status { min-height: 26px; margin-top: 24px; }
 .rs-knowledge-search-results { display: grid; gap: 16px; }
+.rs-knowledge-search-result mark { background: #f1dfad; color: #143f36; border-radius: .16em; padding: .04em .12em; }
 .rs-knowledge-search-result > p:first-child { color: var(--rs-muted); font-size: 13px; text-transform: uppercase; }
 .rs-knowledge-section-heading { align-items: end; display: flex; gap: 20px; justify-content: space-between; margin: 72px 0 24px; }
 .rs-knowledge-section-heading h2 { margin: 4px 0 0; }
