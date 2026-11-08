@@ -346,7 +346,8 @@ html:has(.coast-masthead){scroll-padding-block-start:6rem}
 .coast-hero__copy{position:relative;z-index:1;inline-size:min(54%,42.5rem);min-inline-size:0}
 .coast-hero .eyebrow{color:var(--hero-warm);font-size:.75rem}
 .coast-hero h1{
- margin-block:1rem 1.5rem;font-size:clamp(3rem,4.35vw,4.5rem);line-height:1.1;
+ /* Keep both authored sentences on their own line as the copy column caps. */
+ margin-block:1rem 1.5rem;font-size:clamp(2rem,4.2vw,4rem);line-height:1.1;
  text-wrap:balance;
 }
 .coast-hero .lead{
