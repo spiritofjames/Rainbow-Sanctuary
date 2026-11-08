@@ -29,3 +29,11 @@ Human privacy/legal, screen-reader and physical iOS/Android reviews are not cert
 Pre-release production: main708aa3ce1affdf6f456a3cc9c65813613ab3d12a; READY deployment dpl_3cBcandHuvmN4UpWu7dwqdYQspWw, immutable URL rainbow-sanctuary-website-qsoq257ly.vercel.app.
 
 Release via protected PRs only. No direct main/staging push, no protection bypass, no local production deployment. Capture the exact merged SHA, READY deployment and live smoke evidence before reporting the site live.
+
+## Completed production verification
+
+PR196 merged to staging as558b42c8d386dff9243fe9c85b8113c067caef2f; required checks and deployment dpl_9AxBqg4PDx2GykyJqnbobqKSa7Eo passed. Signed-in staging checks confirmed final hero treatment, January retreat redirect/date, preserved original homepage at /explore and Karma form save-then-pay controls.
+
+PR195 merged normally at2026-11-07T22:52:44Z (17:52 Panama), producing main b4cf436a565d56a22518f35521853bf6bb62bf86. Vercel production dpl_FucxWy5k3eEZBStTTPdydyLVPBc2 is READY on that exact SHA and aliased to rainbowsanctuary.life. Browser confirmed the new homepage, square upper/rounded lower hero corners, no rainbow stripe, no overflow at observed viewport, old retreat route redirecting to the January canonical date, and Karma USD500 continue-to-payment form with headshot and no timezone field. No form was submitted.
+
+The production endpoint smoke suite passed: root, about, events, supported checkout/registration routes, January retreat, sitemap, robots and llms; legacy about redirects308 and www canonical redirects308. Unauthenticated staging retains SSO302. No rollback was required. Live screenshot retained locally at output/hero-spacing/production-live-home.png.
