@@ -116,9 +116,15 @@ test('hero gives the floating header room without a fixed content height',()=>{
   const mobile=css.slice(css.indexOf('@media(max-width:54rem)'));
   assert.match(mobile,/\.coast-hero__copy\{[^}]*padding-block-start:calc\(7\.25rem \+ env\(safe-area-inset-top,0px\)\)/);
   assert.match(mobile,/\.hero\.coast-hero\{[^}]*min-block-size:0/);
-  assert.match(home,/home-experience\.css\?v=20261107-square-hero-top/);
+  assert.match(home,/home-experience\.css\?v=20261107-two-line-hero/);
   assert.match(css,/border-radius:0 0 2rem 2rem/,'desktop hero has square top and rounded bottom corners');
   assert.match(mobile,/\.hero\.coast-hero\{[^}]*border-radius:0 0 1\.5rem 1\.5rem/,'mobile retains only bottom rounding');
+});
+
+test('desktop headline scales within its capped column without changing mobile typography',()=>{
+  assert.match(css,/\.coast-hero h1\{[^}]*font-size:clamp\(2rem,4\.2vw,4rem\)/);
+  const mobile=css.slice(css.indexOf('@media(max-width:54rem)'));
+  assert.match(mobile,/\.coast-hero h1\{font-size:clamp\(2rem,6\.8vw,3\.75rem\)/);
 });
 
 test('exact source styles, typography and glyphs are locally reproducible',()=>{
