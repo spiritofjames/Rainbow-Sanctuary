@@ -4,20 +4,14 @@ import { htmlToMarkdown } from "./lib/html-to-markdown.mjs";
 import { reconcileMarkdown } from "./lib/reconcile-markdown.mjs";
 import { knowledgeContributorSchema, stephanieSchema } from "./knowledge/entities.mjs";
 import { fileURLToPath } from "node:url";
+import { verifiedPageDate, knowledgePageDate } from "./lib/discovery-dates.mjs";
 
 const scriptsDir = path.dirname(fileURLToPath(import.meta.url));
 const siteDir = path.resolve(scriptsDir, "..");
 const origin = "https://rainbowsanctuary.life";
 const retreatFaqs = JSON.parse(fs.readFileSync(path.join(siteDir, "data/december-retreat-faqs.json"), "utf8"));
-const lastmod = "2026-07-31";
-const routeLastmod = new Map([
-  ["/", "2026-10-23"],
-  ["/awakening-your-inner-light-Jan-2027", "2026-11-06"],
-  ["/awakening-your-inner-light-october-2026", "2026-10-23"],
-  ["/events", "2026-10-23"],
-  ["/online-group-healing", "2026-10-23"],
-  ["/apply", "2026-10-22"]
-]);
+const pageDates = JSON.parse(fs.readFileSync(path.join(siteDir, "config/discovery-page-dates.json"), "utf8"));
+const verifiedDateByRoute = new Map();
 // Keep operational jobs in the generated Vercel configuration. Discovery
 // publishing runs as part of every release, so dropping this would silently
 // disable the Monday Maintenance reminder.
@@ -257,7 +251,7 @@ const organization = {
   "@id": `${origin}/#organization`,
   name: "Rainbow Sanctuary",
   url: `${origin}/`,
-  description: "Rainbow Sanctuary is a healing academy and global community for people seeking steadier wellbeing, deeper self-understanding, conscious practice, and a more connected way of living.",
+  description: "Rainbow Sanctuary is a growing ecosystem connecting personal growth, learning, communities and care for the Earth. Rooted in Panama, its work includes present programmes and the School of the Universe preparing for beta.",
   sameAs: [
     "https://www.instagram.com/rainbowsanctuary.life/",
     "https://www.trustpilot.com/review/rainbowsanctuary.life"
@@ -411,6 +405,8 @@ function schemaFor(file, title, description, canonical, image, source) {
       mainEntityOfPage: canonical,
       datePublished: knowledgeEntry.firstPublishedAt,
       dateModified: knowledgeEntry.updatedAt,
+      articleSection: knowledgeEntry.topic.name,
+      isPartOf: { "@type": "CollectionPage", "@id": `${origin}/knowledge#webpage`, url: `${origin}/knowledge` },
       inLanguage: knowledgeEntry.locale,
       author: knowledgeContributorSchema(knowledgeEntry.author),
       publisher: { "@id": `${origin}/#organization` }
@@ -454,13 +450,22 @@ for (const [file, route] of Object.entries(routes)) {
   // Keep intentionally shorter sharing copy consistent across Open Graph and X.
   const socialTitle = extract(source, /<meta\s+property="og:title"\s+content="([^"]*)"[^>]*>/i, title);
   const socialDescription = extract(source, /<meta\s+property="og:description"\s+content="([^"]*)"[^>]*>/i, description);
-  const socialType = extract(source, /<meta\s+property="og:type"\s+content="([^"]*)"[^>]*>/i, "website");
+  const socialType = knowledgeEntryByPath.has(route)
+    ? "article"
+    : extract(source, /<meta\s+property="og:type"\s+content="([^"]*)"[^>]*>/i, "website");
   const canonical = `${origin}${route}`;
   const imagePath = ogImages[file] || brandShareImage;
   const image = `${origin}${imagePath}`;
   const socialImage = brandedSocialImages[imagePath];
   const imageAlt = socialImage?.alt || title;
   const schema = schemaFor(file, title, description, canonical, image, source);
+  const updatedAt = route.startsWith("/knowledge")
+    ? knowledgePageDate(route, knowledgeManifest.entries || [])
+    : verifiedPageDate(source, pageDates.pages?.[route]);
+  if (updatedAt) {
+    verifiedDateByRoute.set(route, updatedAt);
+    schema["@graph"].find(node => node["@id"] === `${canonical}#webpage`).dateModified = updatedAt;
+  }
   const indexable = Object.hasOwn(indexableRoutes, file);
   const metadata = [
     "<!-- rs-discovery:start -->",
@@ -602,8 +607,8 @@ const sitemap = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
   ...Object.values(indexableRoutes).map((route) => {
-    const entry = knowledgeEntryByPath.get(route);
-    return `  <url><loc>${origin}${route}</loc><lastmod>${entry?.updatedAt || routeLastmod.get(route) || lastmod}</lastmod></url>`;
+    const modified = verifiedDateByRoute.get(route);
+    return `  <url><loc>${origin}${route}</loc>${modified ? `<lastmod>${modified}</lastmod>` : ""}</url>`;
   }),
   "</urlset>",
   ""
@@ -641,13 +646,13 @@ const knowledgeLlms = (knowledgeManifest.entries || []).length
 
 const llms = `# Rainbow Sanctuary
 
-> Rainbow Sanctuary is a global community offering spiritual wellbeing experiences, conscious-development programs, family support, practitioner pathways, online gatherings, and in-person retreats. Its work is educational and experiential and does not replace medical or mental-health care.
+> Rainbow Sanctuary is a growing ecosystem connecting personal growth, learning, communities and care for the Earth. Rooted in Panama, it offers programmes and gatherings today while the School of the Universe prepares for beta. Its work is educational and experiential and does not replace medical or mental-health care.
 
 ## Start here
 
 - [Home](${origin}/): Identity, purpose and co-creation
 - [Explore programs and events](${origin}/explore): Programs and current invitations
-- [About Rainbow Sanctuary](${origin}/about): The platform, community, and co-founder Stephanie Wu
+- [About Stephanie Wu](${origin}/about): Rainbow Sanctuary's founder and lead facilitator
 - [The Spiral Journey](${origin}/spiral-journey): Four progressive levels of personal and conscious development
 - [Group Healing](${origin}/group-healing): Overview of shared healing pathways
 - [Online Group Healing](${origin}/online-group-healing): Accessible guided Zoom sessions
@@ -700,7 +705,7 @@ const llmsFull = `# Rainbow Sanctuary — Extended Site Guide
 
 ## What Rainbow Sanctuary is
 
-Rainbow Sanctuary is a global spiritual wellbeing and conscious-development community co-founded by Stephanie Wu. It brings together accessible online group experiences, a progressive four-level Spiral Journey, focused programs, children-and-family work, practitioner pathways, private sessions, retreats, and an Earth-centred regenerative vision.
+Rainbow Sanctuary is a growing ecosystem founded by Stephanie Wu, connecting personal growth, learning, communities and care for the Earth. Rooted in Panama, it offers online group experiences, a progressive four-level Spiral Journey, focused programs, children-and-family work, practitioner pathways, private sessions and retreats today. The School of the Universe is preparing for beta, and the wider regenerative network remains in development.
 
 The identity homepage at ${origin}/ explains what Rainbow Sanctuary is building, why, its physical connection to Bocas del Toro in Panama, the people behind the work and ways to contribute. The programmes experience is preserved separately at ${origin}/explore; the focused programme catalogue remains ${origin}/programs.
 
@@ -747,7 +752,7 @@ Current public opportunities are listed at ${origin}/events. Awakening Your Inne
 
 ## People and community
 
-Rainbow Sanctuary's platform and community are introduced at ${origin}/about, with emphasis on co-founder and lead facilitator Stephanie Wu. Published community stories appear at ${origin}/community-stories.
+Rainbow Sanctuary's platform and community are introduced at ${origin}/about, with emphasis on founder and lead facilitator Stephanie Wu. Published community stories appear at ${origin}/community-stories.
 
 ## Wider vision
 

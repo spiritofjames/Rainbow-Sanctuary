@@ -8,6 +8,22 @@ Thoughtful perspectives on inner life, meaning, attention, and personal reflecti
 
 [Search the library](https://rainbowsanctuary.life/knowledge/search) [Explore all articles](https://rainbowsanctuary.life/knowledge/articles)
 
+Consciousness and reflection · safety
+
+## [Spiritual practice and consent: questions to ask](https://rainbowsanctuary.life/knowledge/respectful-spiritual-practice-and-consent)
+
+Explore spiritual practice and consent through practical questions about choice, touch, disclosure, beliefs, privacy and the freedom to pause or decline.
+
+Updated 2026-11-08
+
+Consciousness and reflection · practice
+
+## [Turning insight into daily practice](https://rainbowsanctuary.life/knowledge/turning-insight-into-daily-practice)
+
+Turn an insight into daily practice with a small action, a realistic context and a gentle review, without promising transformation or perfect progress.
+
+Updated 2026-11-08
+
 Consciousness and reflection · program guide
 
 ## [Learning as a practice of returning](https://rainbowsanctuary.life/knowledge/learning-as-a-practice-of-returning)

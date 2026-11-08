@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
   "sourceCommit": "source-controlled",
-  "generatedAt": "2026-11-04T00:00:00.000Z",
+  "generatedAt": "2026-11-08T00:00:00.000Z",
   "compilerVersion": "1.1.0",
-  "articleCount": 15,
+  "articleCount": 25,
   "longReadCount": 1,
   "excludedDraftCount": 1,
   "routes": {
@@ -17,6 +17,16 @@
     "Knowledge-Topic-earth-stewardship.dc.html": "/knowledge/topics/earth-stewardship",
     "Knowledge-Topic-vision-and-systems.dc.html": "/knowledge/topics/vision-and-systems",
     "Knowledge-Topic-technology-and-discernment.dc.html": "/knowledge/topics/technology-and-discernment",
+    "Knowledge-community-project-collaboration-brief.dc.html": "/knowledge/community-project-collaboration-brief",
+    "Knowledge-conscious-technology-discernment-guide.dc.html": "/knowledge/conscious-technology-discernment-guide",
+    "Knowledge-contributing-skills-with-clear-boundaries.dc.html": "/knowledge/contributing-skills-with-clear-boundaries",
+    "Knowledge-family-learning-questions-before-joining.dc.html": "/knowledge/family-learning-questions-before-joining",
+    "Knowledge-january-retreat-questions-before-registering.dc.html": "/knowledge/january-retreat-questions-before-registering",
+    "Knowledge-place-stewardship-questions-before-commitment.dc.html": "/knowledge/place-stewardship-questions-before-commitment",
+    "Knowledge-rainbow-sanctuary-school-psn-guide.dc.html": "/knowledge/rainbow-sanctuary-school-psn-guide",
+    "Knowledge-respectful-spiritual-practice-and-consent.dc.html": "/knowledge/respectful-spiritual-practice-and-consent",
+    "Knowledge-starting-a-co-creation-conversation.dc.html": "/knowledge/starting-a-co-creation-conversation",
+    "Knowledge-turning-insight-into-daily-practice.dc.html": "/knowledge/turning-insight-into-daily-practice",
     "Knowledge-ai-as-a-question-of-human-responsibility.dc.html": "/knowledge/ai-as-a-question-of-human-responsibility",
     "Knowledge-ecological-care-as-shared-responsibility.dc.html": "/knowledge/ecological-care-as-shared-responsibility",
     "Knowledge-evidence-exploration-and-symbolic-language.dc.html": "/knowledge/evidence-exploration-and-symbolic-language",
@@ -34,6 +44,356 @@
     "Knowledge-using-the-library.dc.html": "/knowledge/using-the-library"
   },
   "entries": [
+    {
+      "id": "community-project-collaboration-brief",
+      "title": "A practical community project collaboration brief",
+      "summary": "Use a community project collaboration brief to clarify purpose, people, contributions, limits and review points before beginning shared work together.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/community-project-collaboration-brief",
+      "topic": {
+        "id": "co-creation-and-community",
+        "name": "Co-creation and community"
+      },
+      "contentType": "practice",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "projects",
+        "collaboration",
+        "planning",
+        "responsibility",
+        "community"
+      ],
+      "author": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-11-08",
+      "updatedAt": "2026-11-08",
+      "reviewDueAt": "2027-05-08",
+      "locale": "en"
+    },
+    {
+      "id": "conscious-technology-discernment-guide",
+      "title": "Conscious technology: a guide to discernment",
+      "summary": "Explore conscious technology with care: distinguish working tools, proposed systems and spiritual inquiry, while keeping privacy and human judgment central.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/conscious-technology-discernment-guide",
+      "topic": {
+        "id": "technology-and-discernment",
+        "name": "Technology and discernment"
+      },
+      "contentType": "explainer",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "technology",
+        "discernment",
+        "ai",
+        "si",
+        "privacy",
+        "responsibility"
+      ],
+      "author": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-11-08",
+      "updatedAt": "2026-11-08",
+      "reviewDueAt": "2027-05-08",
+      "locale": "en"
+    },
+    {
+      "id": "contributing-skills-with-clear-boundaries",
+      "title": "Contributing skills with clear boundaries",
+      "summary": "Offer skills to a community project with clear boundaries around capacity, responsibilities, resources and mutual benefit, from introduction through review.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/contributing-skills-with-clear-boundaries",
+      "topic": {
+        "id": "co-creation-and-community",
+        "name": "Co-creation and community"
+      },
+      "contentType": "practice",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "contribution",
+        "skills",
+        "boundaries",
+        "collaboration",
+        "mutual-support"
+      ],
+      "author": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-11-08",
+      "updatedAt": "2026-11-08",
+      "reviewDueAt": "2027-05-08",
+      "locale": "en"
+    },
+    {
+      "id": "family-learning-questions-before-joining",
+      "title": "Family learning: questions before joining",
+      "summary": "Use these family learning questions to explore format, guardian involvement, children's choices, privacy and practical expectations before joining an activity.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/family-learning-questions-before-joining",
+      "topic": {
+        "id": "getting-started",
+        "name": "Getting started"
+      },
+      "contentType": "faq",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "families",
+        "learning",
+        "children",
+        "consent",
+        "orientation"
+      ],
+      "author": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-11-08",
+      "updatedAt": "2026-11-08",
+      "reviewDueAt": "2027-05-08",
+      "locale": "en"
+    },
+    {
+      "id": "january-retreat-questions-before-registering",
+      "title": "January retreat: questions before registering interest",
+      "summary": "Questions before registering interest in the January 2027 retreat: dates, price, suitability discussions, consent, programme details and when to plan travel.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/january-retreat-questions-before-registering",
+      "topic": {
+        "id": "getting-started",
+        "name": "Getting started"
+      },
+      "contentType": "program-guide",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "retreat",
+        "january-2027",
+        "preparation",
+        "questions",
+        "integration"
+      ],
+      "author": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-11-08",
+      "updatedAt": "2026-11-08",
+      "reviewDueAt": "2027-05-08",
+      "locale": "en"
+    },
+    {
+      "id": "place-stewardship-questions-before-commitment",
+      "title": "Place stewardship: questions before commitment",
+      "summary": "Explore place stewardship with practical questions about local relationships, responsibilities, resources, ecological care and the limits of any invitation.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/place-stewardship-questions-before-commitment",
+      "topic": {
+        "id": "earth-stewardship",
+        "name": "Earth stewardship"
+      },
+      "contentType": "practice",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "stewardship",
+        "places",
+        "ecology",
+        "responsibility",
+        "community"
+      ],
+      "author": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-11-08",
+      "updatedAt": "2026-11-08",
+      "reviewDueAt": "2027-05-08",
+      "locale": "en"
+    },
+    {
+      "id": "rainbow-sanctuary-school-psn-guide",
+      "title": "Rainbow Sanctuary, the School and PSN: a guide",
+      "summary": "Understand Rainbow Sanctuary, the School of the Universe and PSN: what connects them, what exists today, and how to choose a useful next conversation.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/rainbow-sanctuary-school-psn-guide",
+      "topic": {
+        "id": "getting-started",
+        "name": "Getting started"
+      },
+      "contentType": "explainer",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "orientation",
+        "school",
+        "psn",
+        "community",
+        "learning"
+      ],
+      "author": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-11-08",
+      "updatedAt": "2026-11-08",
+      "reviewDueAt": "2027-05-08",
+      "locale": "en"
+    },
+    {
+      "id": "respectful-spiritual-practice-and-consent",
+      "title": "Spiritual practice and consent: questions to ask",
+      "summary": "Explore spiritual practice and consent through practical questions about choice, touch, disclosure, beliefs, privacy and the freedom to pause or decline.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/respectful-spiritual-practice-and-consent",
+      "topic": {
+        "id": "consciousness-and-reflection",
+        "name": "Consciousness and reflection"
+      },
+      "contentType": "safety",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "consent",
+        "spiritual-practice",
+        "autonomy",
+        "discernment",
+        "boundaries"
+      ],
+      "author": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-11-08",
+      "updatedAt": "2026-11-08",
+      "reviewDueAt": "2027-05-08",
+      "locale": "en"
+    },
+    {
+      "id": "starting-a-co-creation-conversation",
+      "title": "How to start a co-creation conversation",
+      "summary": "Start a co-creation conversation with a clear introduction: what is already alive, what you can offer, what you need, and one useful next step together.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/starting-a-co-creation-conversation",
+      "topic": {
+        "id": "co-creation-and-community",
+        "name": "Co-creation and community"
+      },
+      "contentType": "practice",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "co-creation",
+        "conversation",
+        "collaboration",
+        "contribution"
+      ],
+      "author": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-11-08",
+      "updatedAt": "2026-11-08",
+      "reviewDueAt": "2027-05-08",
+      "locale": "en"
+    },
+    {
+      "id": "turning-insight-into-daily-practice",
+      "title": "Turning insight into daily practice",
+      "summary": "Turn an insight into daily practice with a small action, a realistic context and a gentle review, without promising transformation or perfect progress.",
+      "canonicalUrl": "https://rainbowsanctuary.life/knowledge/turning-insight-into-daily-practice",
+      "topic": {
+        "id": "consciousness-and-reflection",
+        "name": "Consciousness and reflection"
+      },
+      "contentType": "practice",
+      "audiences": [
+        "everyone"
+      ],
+      "tags": [
+        "integration",
+        "reflection",
+        "practice",
+        "relationships",
+        "learning"
+      ],
+      "author": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "reviewer": {
+        "id": "rainbow-editorial",
+        "name": "Rainbow Sanctuary Editorial Team",
+        "role": "Website editorial team"
+      },
+      "firstPublishedAt": "2026-11-08",
+      "updatedAt": "2026-11-08",
+      "reviewDueAt": "2027-05-08",
+      "locale": "en"
+    },
     {
       "id": "ai-as-a-question-of-human-responsibility",
       "title": "AI as a question of human responsibility",

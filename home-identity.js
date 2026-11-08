@@ -53,10 +53,22 @@
   const [previous, next] = controls.querySelectorAll('button');
   const status = controls.querySelector('[role="status"]');
   const last = slides.length - 1;
-  const limit = () => track.scrollWidth - track.clientWidth;
-  const start = index => Math.min(limit(), slides[index].offsetLeft - slides[0].offsetLeft);
-  const active = () => slides.reduce((nearest, _, index) =>
-    Math.abs(start(index) - track.scrollLeft) < Math.abs(start(nearest) - track.scrollLeft) ? index : nearest, 0);
+  let limit = 0, positions = [];
+  // Geometry changes on resize, not on every scroll/button/keyboard update.
+  const measure = () => {
+    limit = Math.max(0, track.scrollWidth - track.clientWidth);
+    const origin = slides[0].offsetLeft;
+    positions = slides.map(slide => Math.min(limit, slide.offsetLeft - origin));
+  };
+  const start = index => positions[index];
+  const active = () => {
+    const scrollLeft = track.scrollLeft;
+    // Several final slides may share a clamped snap position. At the end of
+    // the rail report the final image rather than the first tied position.
+    if (limit > 0 && scrollLeft >= limit - 1) return last;
+    return positions.reduce((nearest, position, index) =>
+      Math.abs(position - scrollLeft) < Math.abs(start(nearest) - scrollLeft) ? index : nearest, 0);
+  };
   const sync = () => {
     const index = active();
     const label = (index + 1) + ' / ' + slides.length;
@@ -68,11 +80,16 @@
     left: start(Math.max(0, Math.min(last, index))),
     behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'
   });
-  previous.addEventListener('click', () => go(active() - 1));
-  next.addEventListener('click', () => go(active() + 1));
+  const step = direction => {
+    let index = active() + direction;
+    while (index >= 0 && index <= last && Math.abs(start(index) - track.scrollLeft) < 1) index += direction;
+    return index;
+  };
+  previous.addEventListener('click', () => go(step(-1)));
+  next.addEventListener('click', () => go(step(1)));
   track.addEventListener('keydown', event => {
     if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
-    const keys = { ArrowLeft: () => active() - 1, ArrowRight: () => active() + 1, Home: () => 0, End: () => last };
+    const keys = { ArrowLeft: () => step(-1), ArrowRight: () => step(1), Home: () => 0, End: () => last };
     if (!Object.hasOwn(keys, event.key)) return;
     event.preventDefault();
     go(keys[event.key]());
@@ -82,7 +99,9 @@
     clearTimeout(settle);
     settle = setTimeout(sync, 100);
   }, {passive: true});
-  window.addEventListener('resize', sync);
+  const refresh = () => { measure(); sync(); };
+  window.addEventListener('resize', refresh);
+  window.addEventListener('pageshow', refresh);
   controls.hidden = false;
-  sync();
+  refresh();
 })();

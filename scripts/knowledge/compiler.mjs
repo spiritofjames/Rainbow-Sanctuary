@@ -161,10 +161,10 @@ function pageShell({ title, description, body, canonicalPath, robots = 'index,fo
 <link rel="icon" href="/assets/brand/favicon-lotus-64.png?v=20260717-final1" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png?v=20260717-final1" sizes="180x180">
 <link rel="stylesheet" href="/site.css?v=20260714-spectrum1">
-<link rel="stylesheet" href="/knowledge.css?v=20261023-heading-hierarchy">
-<script src="/site-config.js"></script>
-<script src="/support.js"></script>
-<script src="/knowledge-search.js?v=20260820-knowledge2" defer></script>
+<link rel="stylesheet" href="/knowledge.css?v=20261108-search-highlights">
+<script src="/site-config.js" defer></script>
+<script src="/support.js" defer></script>
+<script src="/knowledge-search.js?v=20261108-search-highlights" defer></script>
 <!-- rs-discovery:start -->
 <link rel="canonical" href="${canonical}">
 <meta name="robots" content="${robots}">
@@ -203,7 +203,7 @@ function articleSchema(article, author, reviewer) {
     '@context': 'https://schema.org',
     '@graph': [
       { '@type': 'WebPage', '@id': `${canonical}#webpage`, url: canonical, name: article.title, mainEntity: { '@id': `${canonical}#article` }, reviewedBy: knowledgeContributorSchema(reviewer) },
-      { '@type': 'Article', '@id': `${canonical}#article`, headline: article.title, description: article.summary, mainEntityOfPage: canonical, datePublished: article.first_published_at, dateModified: article.updated_at, inLanguage: article.locale, author: knowledgeContributorSchema(author), publisher: { '@type': 'Organization', '@id': `${origin}/#organization`, name: 'Rainbow Sanctuary', url: origin } },
+      { '@type': 'Article', '@id': `${canonical}#article`, headline: article.title, description: article.summary, mainEntityOfPage: canonical, datePublished: article.first_published_at, dateModified: article.updated_at, articleSection: article.topic, isPartOf: { '@type': 'CollectionPage', '@id': `${origin}/knowledge#webpage`, url: `${origin}/knowledge` }, inLanguage: article.locale, author: knowledgeContributorSchema(author), publisher: { '@type': 'Organization', '@id': `${origin}/#organization`, name: 'Rainbow Sanctuary', url: origin } },
       breadcrumb([{ name: 'Home', path: '/' }, { name: 'Knowledge', path: '/knowledge' }, { name: article.title, path: article.canonical_path }]),
     ],
   };
@@ -219,11 +219,18 @@ function renderArticleCard(article, topic, headingLevel = 2) {
 
 function renderArticlePage(article, topic, author, reviewer, related) {
   const { html, toc } = renderMarkdown(article.body);
-  const tocMarkup = toc.length ? `<nav class="rs-knowledge-toc" aria-label="On this page"><strong>On this page</strong><ol>${toc.map((item) => `<li class="level-${item.level}"><a href="#${item.id}">${escapeHtml(item.title)}</a></li>`).join('')}</ol></nav>` : '';
+  const tocMarkup = toc.length ? `<nav class="rs-knowledge-toc" data-pagefind-ignore aria-label="On this page"><strong>On this page</strong><ol>${toc.map((item) => `<li class="level-${item.level}"><a href="#${item.id}">${escapeHtml(item.title)}</a></li>`).join('')}</ol></nav>` : '';
   const safety = article.health_claim_level === 'sensitive-health' ? '<aside class="rs-knowledge-safety"><strong>Important:</strong> This article is educational and does not replace medical or mental-health care.</aside>' : '';
-  const relatedMarkup = related.length ? `<section class="rs-knowledge-related"><h2>Related articles</h2><div class="rs-knowledge-card-grid">${related.map(({ article: item, topic: itemTopic }) => renderArticleCard(item, itemTopic, 3)).join('')}</div></section>` : '';
+  const relatedMarkup = related.length ? `<section class="rs-knowledge-related" data-pagefind-ignore><h2>Related articles</h2><div class="rs-knowledge-card-grid">${related.map(({ article: item, topic: itemTopic }) => renderArticleCard(item, itemTopic, 3)).join('')}</div></section>` : '';
   const body = `<main id="main-content" class="rs-knowledge-main" data-pagefind-body data-pagefind-filter="topic:${escapeHtml(topic.id)}" data-pagefind-meta="title:${escapeHtml(article.title)}"><nav class="rs-knowledge-crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/knowledge">Knowledge</a><span>/</span><a href="/knowledge/topics/${topic.id}">${escapeHtml(topic.name)}</a></nav><div class="rs-knowledge-article-layout"><article class="rs-knowledge-article"><p class="rs-knowledge-kicker">${escapeHtml(topic.name)} · ${escapeHtml(article.content_type.replaceAll('-', ' '))}</p><h1>${escapeHtml(article.title)}</h1><p class="rs-knowledge-summary">${escapeHtml(article.summary)}</p><dl class="rs-knowledge-byline"><div><dt>Written by</dt><dd>${escapeHtml(author.name)}, ${escapeHtml(author.role)}</dd></div><div><dt>Reviewed by</dt><dd>${escapeHtml(reviewer.name)}, ${escapeHtml(reviewer.role)}</dd></div><div><dt>Updated</dt><dd>${escapeHtml(article.updated_at)}</dd></div></dl>${safety}<div class="rs-knowledge-prose">${html}</div><p class="rs-knowledge-source-note">This article is part of Rainbow Sanctuary’s reviewed public knowledge library. <a href="/apply">Ask a question or suggest a correction</a>.</p></article>${tocMarkup}</div>${relatedMarkup}</main>`;
-  return pageShell({ title: article.title, description: article.summary, body, canonicalPath: article.canonical_path, schema: articleSchema(article, author, reviewer) });
+  // Keep contextual navigation and attribution visible, but out of search
+  // excerpts. A related article must not make this article match its topic.
+  const searchableBody = body
+    .replace('class="rs-knowledge-crumbs"', 'class="rs-knowledge-crumbs" data-pagefind-ignore')
+    .replace('class="rs-knowledge-kicker"', 'class="rs-knowledge-kicker" data-pagefind-ignore')
+    .replace('class="rs-knowledge-byline"', 'class="rs-knowledge-byline" data-pagefind-ignore')
+    .replace('class="rs-knowledge-source-note"', 'class="rs-knowledge-source-note" data-pagefind-ignore');
+  return pageShell({ title: article.title, description: article.summary, body: searchableBody, canonicalPath: article.canonical_path, schema: articleSchema(article, author, reviewer) });
 }
 
 export async function compileKnowledge({ sourceDir, outputDir, sourceCommit = 'source-controlled', generatedAt }) {
