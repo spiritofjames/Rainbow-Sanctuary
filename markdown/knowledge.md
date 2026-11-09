@@ -14,7 +14,7 @@ Topic
 
 Orientation for exploring the library and deciding what to read next.
 
-2 published articles
+5 published articles
 
 [Visit linked page](https://rainbowsanctuary.life/knowledge/topics/getting-started)
 
@@ -24,7 +24,7 @@ Topic
 
 Thoughtful perspectives on inner life, meaning, attention, and personal reflection.
 
-5 published articles
+7 published articles
 
 [Visit linked page](https://rainbowsanctuary.life/knowledge/topics/consciousness-and-reflection)
 
@@ -34,7 +34,7 @@ Topic
 
 Shared principles for contribution, learning, responsibility, and life together.
 
-3 published articles
+6 published articles
 
 [Visit linked page](https://rainbowsanctuary.life/knowledge/topics/co-creation-and-community)
 
@@ -44,7 +44,7 @@ Topic
 
 Vision, care for place, and regenerative ways of relating with the living world.
 
-2 published articles
+3 published articles
 
 [Visit linked page](https://rainbowsanctuary.life/knowledge/topics/earth-stewardship)
 
@@ -64,7 +64,7 @@ Topic
 
 Reflections on technology, AI, responsibility, and keeping human judgment at the centre.
 
-2 published articles
+3 published articles
 
 [Visit linked page](https://rainbowsanctuary.life/knowledge/topics/technology-and-discernment)
 
@@ -88,50 +88,50 @@ Latest in the library
 
 [Explore all articles](https://rainbowsanctuary.life/knowledge/articles)
 
-Technology and discernment · research note
+Co-creation and community · practice
 
-### [AI as a question of human responsibility](https://rainbowsanctuary.life/knowledge/ai-as-a-question-of-human-responsibility)
+### [A practical community project collaboration brief](https://rainbowsanctuary.life/knowledge/community-project-collaboration-brief)
 
-A reflective guide to using AI with human judgment, transparent limits, care for privacy, and responsibility for the outcomes it shapes.
+Use a community project collaboration brief to clarify purpose, people, contributions, limits and review points before beginning shared work together.
 
-Updated 2026-11-04
+Updated 2026-11-08
 
-Earth stewardship · explainer
+Technology and discernment · explainer
 
-### [Ecological care as shared responsibility](https://rainbowsanctuary.life/knowledge/ecological-care-as-shared-responsibility)
+### [Conscious technology: a guide to discernment](https://rainbowsanctuary.life/knowledge/conscious-technology-discernment-guide)
 
-A grounded approach to ecological stewardship through local attention, reciprocal relationships, practical limits, and accountable action.
+Explore conscious technology with care: distinguish working tools, proposed systems and spiritual inquiry, while keeping privacy and human judgment central.
 
-Updated 2026-11-04
-
-Getting started · faq
-
-### [Evidence, exploration, and symbolic language](https://rainbowsanctuary.life/knowledge/evidence-exploration-and-symbolic-language)
-
-How Rainbow Sanctuary distinguishes established knowledge, emerging questions, and symbolic or spiritual language in its public learning materials.
-
-Updated 2026-11-04
+Updated 2026-11-08
 
 Co-creation and community · practice
 
-### [From me to we: a practice of shared leadership](https://rainbowsanctuary.life/knowledge/from-me-to-we-shared-leadership)
+### [Contributing skills with clear boundaries](https://rainbowsanctuary.life/knowledge/contributing-skills-with-clear-boundaries)
 
-A reflection on moving from individual control toward transparent, cross-cultural, and mutually supportive forms of leadership.
+Offer skills to a community project with clear boundaries around capacity, responsibilities, resources and mutual benefit, from introduction through review.
 
-Updated 2026-11-04
+Updated 2026-11-08
 
-Consciousness and reflection · program guide
+Getting started · faq
 
-### [Learning as a practice of returning](https://rainbowsanctuary.life/knowledge/learning-as-a-practice-of-returning)
+### [Family learning: questions before joining](https://rainbowsanctuary.life/knowledge/family-learning-questions-before-joining)
 
-An introduction to learning as attention, discernment, embodied practice, and a return to one's own questions and responsibilities.
+Use these family learning questions to explore format, guardian involvement, children's choices, privacy and practical expectations before joining an activity.
 
-Updated 2026-11-04
+Updated 2026-11-08
 
-Vision and systems · explainer
+Getting started · program guide
 
-### [How Rainbow Sanctuary holds vision in practice](https://rainbowsanctuary.life/knowledge/rainbow-sanctuary-vision-in-practice)
+### [January retreat: questions before registering interest](https://rainbowsanctuary.life/knowledge/january-retreat-questions-before-registering)
 
-An introduction to Rainbow Sanctuary's vision: connecting personal responsibility, shared learning, ecological care, and practical community life.
+Questions before registering interest in the January 2027 retreat: dates, price, suitability discussions, consent, programme details and when to plan travel.
 
-Updated 2026-11-04
+Updated 2026-11-08
+
+Earth stewardship · practice
+
+### [Place stewardship: questions before commitment](https://rainbowsanctuary.life/knowledge/place-stewardship-questions-before-commitment)
+
+Explore place stewardship with practical questions about local relationships, responsibilities, resources, ecological care and the limits of any invitation.
+
+Updated 2026-11-08

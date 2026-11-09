@@ -36,7 +36,7 @@ protected `main` branch to the public production domain.
 
 `scripts/publish-discovery-layer.mjs` is the source-controlled publishing step for:
 
-- 59 clean canonical routes (58 indexable) and permanent legacy redirects;
+- clean canonical routes and permanent legacy redirects, counted from the current build manifests rather than a fixed historical page total;
 - canonical, robots, Open Graph, Twitter, image, and JSON-LD metadata;
 - `sitemap.xml`, `robots.txt`, `llms.txt`, and `llms-full.txt`;
 - public-page Markdown alternates under `/markdown/` (not raw CMS source);

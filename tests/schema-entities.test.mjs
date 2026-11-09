@@ -16,7 +16,8 @@ test('public pages reuse verified organization and founder identities without in
     const graph = graphFor(sourceFor(url));
     const organization = graph.find(n => n['@id'] === 'https://rainbowsanctuary.life/#organization');
     const stephanie = graph.find(n => n['@id'] === 'https://rainbowsanctuary.life/about#stephanie-wu');
-    assert.match(organization.description, /^Rainbow Sanctuary is a healing academy and global community/);
+    assert.match(organization.description, /^Rainbow Sanctuary is a growing ecosystem/);
+    assert.match(organization.description, /School of the Universe preparing for beta/);
     assert.deepEqual(organization.sameAs, ['https://www.instagram.com/rainbowsanctuary.life/', 'https://www.trustpilot.com/review/rainbowsanctuary.life']);
     assert.ok(organization.knowsAbout.length >= 3);
     assert.deepEqual(organization.founder, { '@id': stephanie['@id'] });

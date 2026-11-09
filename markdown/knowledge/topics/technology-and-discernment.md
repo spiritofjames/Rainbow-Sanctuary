@@ -8,6 +8,14 @@ Reflections on technology, AI, responsibility, and keeping human judgment at the
 
 [Search the library](https://rainbowsanctuary.life/knowledge/search) [Explore all articles](https://rainbowsanctuary.life/knowledge/articles)
 
+Technology and discernment · explainer
+
+## [Conscious technology: a guide to discernment](https://rainbowsanctuary.life/knowledge/conscious-technology-discernment-guide)
+
+Explore conscious technology with care: distinguish working tools, proposed systems and spiritual inquiry, while keeping privacy and human judgment central.
+
+Updated 2026-11-08
+
 Technology and discernment · research note
 
 ## [AI as a question of human responsibility](https://rainbowsanctuary.life/knowledge/ai-as-a-question-of-human-responsibility)
