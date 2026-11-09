@@ -1,5 +1,18 @@
 # Release log
 
+## 2026-11-08 - Optimization sprint and ten practical Knowledge guides
+
+- **Release owner:** James; explicitly authorized production publication after testing, direct source access and three scoped agents.
+- **Pull requests:** #200 (implementation to staging), #201 (staging acceptance evidence), #202 (production).
+- **Production application commit:** `c364785644ddcf26ad6df3199d7f926f54377759`.
+- **Production application deployment:** `dpl_12wJScRhsY5DFC4DGDPWxMVjcje2` (READY, exact SHA and production aliases verified). Subsequent release-record-only commits do not change the public runtime tree.
+- **Previous deployment / rollback:** `dpl_4RLJjeHobdwizssmA6EwukmjtCSb`, commit `34cf85ab73706a74d74620dbea6cf25c369b3b60`.
+- **Summary:** Publish ten practical guides (25 articles total), safer/correct search highlights and clean result links, gallery boundary/per-scroll measurement repair, non-parser-blocking Knowledge support scripts, verified-content sitemap dates, aligned organization/article discovery and a whole-route SEO regression gate. Approved homepage design/copy and booking/provider flows preserved.
+- **Verification:** 321 tests; 28 email templates and 28 disabled automation contracts; 87 HTML files; all 83 public page routes audited and 79 sitemap routes; reproducible generated build. GitHub/Vercel checks and custom protected-staging browser acceptance passed. Production: 50 HTML routes plus discovery/source checks (58 responses), all ten Markdown files match tested build, 14 endpoint smoke checks, live homepage/search review, source URLs HTTP 404; no unexpected sampled noindex header.
+- **Review boundaries:** No ranking, citation or field CWV guarantee. No fresh provider delivery/payment/customer-persistence test; Ethel still verifies Stripe manually. Prior owner-accepted missing human privacy/legal, screen-reader and physical-device reviews remain unresolved, not passed. New AI-assisted guides are informational, not independent clinical/legal review.
+- **Evidence:** [sprint acceptance record](quality/optimization-20261108-release.md) and its technical, performance and editorial records.
+- **Rollback required:** No.
+
 ## 2026-11-07 — New homepage and January 2027 retreat
 
 - **Release owner:** James; requested all staged work and final hero refinements in production and explicitly accepted the documented human-review/manual-payment exceptions.
