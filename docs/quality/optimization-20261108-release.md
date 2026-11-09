@@ -45,7 +45,7 @@ Expected generated Pagefind shards are rebuilt from the exact public article set
 
 ## Environment evidence
 
-- Local: verified as above. Reproducibility recheck required immediately before commit.
-- Feature preview: pending.
-- Custom staging: pending.
+- Local: verified as above. A second full preflight passed and left no generated-file difference before commit `aa95c01cbee962d85dde54d354117b8bf26228e0`.
+- Feature preview: PR [200](https://github.com/spiritofjames/Rainbow-Sanctuary/pull/200), GitHub Site quality and Vercel checks passed. Deployment `dpl_CznV6UmPKSVonEfot6ejHmPiyssV` READY at that exact feature commit; hosted Knowledge directory verified in browser.
+- Custom staging: PR 200 merged as `9437324f2a66eb070de993adf86fe933c65c9acf`; deployment `dpl_J4pwyod4YUYi9hNhC6T9QTxrs4kR` READY with `staging.rainbowsanctuary.life` alias. All ten new articles opened, with single H1, valid JSON-LD and production canonical. Initial early-DOM reads on three routes preceded body completion; visible-heading waits then confirmed all three, so these were test-timing observations rather than missing headings. Narrow 390px guide/search checks show no overflow; desktop search correctly shows 12 of 23 results and mobile stewardship search shows four results with eight actual highlight elements. Gallery reaches 16/16 with `aria-disabled=true` on Next, on mobile and desktop. Legacy retreat URL redirects to the January route, showing 18-24 January 2027 and correct interest-form URLs. Karma form retains the USD 500 Continue to payment flow and unchecked consent; no submission made. Browser console has no warnings/errors on the checked search page. Staged sitemap and llms content include the new articles. Repository-only source URLs show Not found/404. The browser client blocked direct navigation to a downloadable Markdown alternate; no protection bypass or alternate authenticated network request was attempted. Public Markdown is verified in the exact local build and remains a separate post-production HTTP check.
 - Production: pending.
