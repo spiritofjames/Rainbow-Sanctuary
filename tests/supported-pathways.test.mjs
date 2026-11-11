@@ -54,14 +54,14 @@ test("sensitive pathways stay safely gated, while approved direct registration r
   assert.match(read("scripts\/publish-discovery-layer.mjs"), /"Contribute\.dc\.html": "\/contribute"/);
   assert.match(read("api\/stripe\/create-donation-checkout.mjs"), /STRIPE_DONATION_CHECKOUT_APPROVED/);
   assert.match(maintenance, /144-Point Renewal Maintenance/);
-  assert.match(maintenance, /regeneration-maintenance-checkout\.js/);
-  assert.match(maintenance, /<span>\$<\/span>210/);
-  assert.match(maintenance, /<span>\$<\/span>630/);
+  assert.doesNotMatch(maintenance, /regeneration-maintenance-checkout\.js/);
+  assert.match(maintenance, /https:\/\/buy\.stripe\.com\/aFa9AT6bL8OFcHP9EL3Nm0r/);
+  assert.match(maintenance, /<span>\$<\/span>110/);
   assert.match(maintenance, /completed ReGeneration Level I and Level II/i);
   assert.doesNotMatch(maintenance, /data-maintenance-eligibility/);
   assert.doesNotMatch(read("regeneration-maintenance-checkout.js"), /data-maintenance-eligibility/);
   assert.match(maintenance, /twelve-layer, 144-point framework/i);
-  assert.match(maintenance, /A three-part opening cycle/i);
+  assert.match(maintenance, /Carry the practice into everyday life/i);
   assert.match(maintenance, /From weekly rhythm to twice-monthly care/i);
   assert.match(maintenance, /Simple preparation/i);
   assert.match(maintenance, /Clear details before you continue/i);
@@ -91,7 +91,7 @@ test("homepage separates recurring group pathways from the standalone in-person 
   assert.match(home, /rs-home-promo--youth rs-home-promo--wide/);
   assert.match(home, /grid-template-columns: repeat\(3, minmax\(0,1fr\)\)/);
   assert.match(home, /\.rs-home-promo--wide \{ grid-column: span 2; \}/);
-  assert.match(home, /Live now · began 17 August 2026/);
+  assert.match(home, /Two remote sessions per month · USD 110 monthly/);
   assert.match(home, /Tuesdays · 21:00 Beijing time/);
   assert.match(home, /Ongoing weekly practice · free to join/);
   assert.match(home, /Ongoing monthly pathway · review first/);

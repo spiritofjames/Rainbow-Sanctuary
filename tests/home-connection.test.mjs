@@ -27,7 +27,8 @@ test('all homepage fragments exist and programmes content is preserved',()=>{
     .replaceAll('18 to 24 January 2027','3 to 9 December 2026')
     .replaceAll('18–24 January 2027','3–9 December 2026')
     .replaceAll('January 2027','December 2026');
-  assert.equal(crypto.createHash('sha256').update(main).digest('hex'),'a185d607eadfb6ac3498b8a97049d87924e1c042dfcc5eaa9e74b99587123841');
+  // Baseline includes the approved ongoing Maintenance promotion (10 November 2026).
+  assert.equal(crypto.createHash('sha256').update(main).digest('hex'),'3e6d115c0ce63eadd1c84126a1ebec0825c1a68a2b6d199fbccead825780076a');
 });
 
 test('spiritual inquiry and current status boundaries survive discovery generation',()=>{
