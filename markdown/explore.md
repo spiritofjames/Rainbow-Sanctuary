@@ -12,15 +12,15 @@ When life feels heavy, growth feels stuck, your child needs support, or your inn
 
 ![A collective evening practice for renewal and regeneration](https://rainbowsanctuary.life/assets/editorial/regeneration-maintenance-collective-v1.png)
 
-Ongoing collective practice
+Ongoing support · monthly subscription
 
 ## Regeneration Maintenance
 
-Live now · began 17 August 2026 For ReGeneration I & II participants
+Two remote sessions per month · USD 110 monthly After your initial Maintenance cycle
 
-Explore the programme →
+Explore ongoing Maintenance →
 
-[Visit linked page](https://rainbowsanctuary.life/144-stages-maintenance)
+[Visit linked page](https://rainbowsanctuary.life/regeneration-maintenance-ongoing)
 
 Weekly · live online
 

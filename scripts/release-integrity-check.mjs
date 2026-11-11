@@ -17,6 +17,7 @@ const requiredFiles = [
   'Group-Healing.dc.html',
   'Online-Group-Healing.dc.html',
   '144-Stages-Maintenance.dc.html',
+  'ReGeneration-Maintenance-Ongoing.dc.html',
   'Knowledge.dc.html',
   'Knowledge-Articles.dc.html',
   'Knowledge-Search.dc.html',
