@@ -25,7 +25,7 @@ test("sensitive pathways stay safely gated, while approved direct registration r
   const autism = read("Autism-Family-Support.dc.html");
   const youth = read("Young-People-Wellbeing.dc.html");
   const contribution = read("Contribute.dc.html");
-  const maintenance = read("144-Stages-Maintenance.dc.html");
+  const maintenance = read("ReGeneration-Maintenance-Ongoing.dc.html");
   assert.match(autism, /Higher-Dimensional Hospital is a spiritual and consciousness-based framework/i);
   assert.match(autism, /guided audio, focused intention, and an overnight energetic practice/i);
   assert.match(autism, /Wellbeing Disclaimer/i);
@@ -53,7 +53,7 @@ test("sensitive pathways stay safely gated, while approved direct registration r
   assert.doesNotMatch(contribution, /donation-selector\.js/);
   assert.match(read("scripts\/publish-discovery-layer.mjs"), /"Contribute\.dc\.html": "\/contribute"/);
   assert.match(read("api\/stripe\/create-donation-checkout.mjs"), /STRIPE_DONATION_CHECKOUT_APPROVED/);
-  assert.match(maintenance, /144-Point Renewal Maintenance/);
+  assert.match(maintenance, /Ongoing ReGeneration Maintenance/);
   assert.doesNotMatch(maintenance, /regeneration-maintenance-checkout\.js/);
   assert.match(maintenance, /https:\/\/buy\.stripe\.com\/aFa9AT6bL8OFcHP9EL3Nm0r/);
   assert.match(maintenance, /<span>\$<\/span>110/);

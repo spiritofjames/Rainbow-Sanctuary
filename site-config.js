@@ -128,7 +128,9 @@ window.RAINBOW_SANCTUARY_CONFIG = {
       duration: "Overnight restorative practice",
       price: "USD 110 per month",
       checkoutUrl: "https://buy.stripe.com/aFa9AT6bL8OFcHP9EL3Nm0r",
-      billing: "monthly-subscription"
+      billing: "monthly-subscription",
+      overviewUrl: "/144-stages-maintenance",
+      ongoingUrl: "/regeneration-maintenance-ongoing"
     },
     privateSchedules: {
       "144-stages-maintenance": {

@@ -4,7 +4,8 @@ import test from "node:test";
 import vm from "node:vm";
 
 const read = (path) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
-const page = read("144-Stages-Maintenance.dc.html");
+const page = read("ReGeneration-Maintenance-Ongoing.dc.html");
+const overview = read("144-Stages-Maintenance.dc.html");
 const paymentLink = "https://buy.stripe.com/aFa9AT6bL8OFcHP9EL3Nm0r";
 const sandbox = { window: {} };
 // Evaluate the public data declaration without running unrelated DOM initialisers.
@@ -40,6 +41,8 @@ test("public config and programme promotion match the current subscription", () 
   const subscription = config.events.regenerationMaintenance;
   assert.equal(subscription.checkoutUrl, paymentLink);
   assert.equal(subscription.billing, "monthly-subscription");
+  assert.equal(subscription.overviewUrl, "/144-stages-maintenance");
+  assert.equal(subscription.ongoingUrl, "/regeneration-maintenance-ongoing");
   assert.equal(subscription.price, "USD 110 per month");
   assert.match(subscription.frequency, /Two remote collective sessions per month/);
   assert.match(config.pricing["regeneration-maintenance"], /USD 110 per month/);
@@ -47,6 +50,27 @@ test("public config and programme promotion match the current subscription", () 
   assert.match(promotion, /Two remote sessions per month · USD 110 monthly/);
   assert.match(promotion, /After your initial Maintenance cycle/);
   assert.doesNotMatch(promotion, /Live now|17 August|210|630/);
+  assert.match(promotion, /href="\/regeneration-maintenance-ongoing"/);
+});
+
+test("Maintenance overview preserves completed opening cycles and links to ongoing support", () => {
+  assert.match(overview, /4-Monday opening cycle/);
+  assert.match(overview, /12-Monday opening cycle/);
+  assert.match(overview, /<span>\$<\/span>210/);
+  assert.match(overview, /<span>\$<\/span>630/);
+  assert.match(overview, /Completed your cycle\?/);
+  assert.match(overview, /href="\/regeneration-maintenance-ongoing">Explore ongoing support/);
+  assert.match(overview, /Completed cycle · registration closed/);
+  assert.doesNotMatch(overview, /data-maintenance-offer|data-maintenance-checkout|regeneration-maintenance-checkout\.js|opening cycle is live/i);
+  assert.match(page, /href="\/144-stages-maintenance">← View the Maintenance overview/);
+});
+
+test("the new ongoing route is packaged with a legacy redirect and existing noindex policy", () => {
+  const routes = JSON.parse(read("vercel.json"));
+  assert.ok(routes.rewrites.some(r => r.source === "/regeneration-maintenance-ongoing" && r.destination === "/ReGeneration-Maintenance-Ongoing.dc.html"));
+  assert.ok(routes.redirects.some(r => r.source === "/ReGeneration-Maintenance-Ongoing.dc.html" && r.destination === "/regeneration-maintenance-ongoing" && r.permanent));
+  assert.doesNotMatch(read("sitemap.xml"), /<loc>https:\/\/rainbowsanctuary\.life\/regeneration-maintenance-ongoing<\/loc>/);
+  assert.match(page, /rel="canonical" href="https:\/\/rainbowsanctuary.life\/regeneration-maintenance-ongoing"/);
 });
 
 test("completed opening cycle and private schedule retain their historical dates", () => {

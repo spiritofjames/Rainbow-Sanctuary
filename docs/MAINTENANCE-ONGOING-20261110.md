@@ -1,6 +1,18 @@
 # Ongoing ReGeneration Maintenance update
 
-Date: 10 November 2026. Status: verified review candidate; James requested a pull request. Not merged to staging or production.
+Date: 10 November 2026; revised 11 November. Status: split-page candidate under verification. Not yet merged to staging or production.
+
+## 11 November revision: overview and continuation are separate
+
+James requested a visible route from the original Maintenance page, protected staging checks, then public publication after testing. This supersedes the original ongoing-only replacement described below.
+
+- `/144-stages-maintenance` retains the initial 4-Monday and 12-Monday pathway. The August–November 2026 cycles are clearly completed, with no expired purchase controls.
+- Its “Completed your cycle?” panel links prominently to `/regeneration-maintenance-ongoing`.
+- `ReGeneration-Maintenance-Ongoing.dc.html` contains the USD 110/month offer, two remote collective sessions per month, the approved Stripe link, and a backlink to the overview.
+- Programs & Events links directly to ongoing support. Both Maintenance pages preserve the existing noindex policy; no private/sensitive route was added to discovery.
+- No provider settings, customer records, payment or messaging actions are included. New subscription automation remains unverified. Human review gaps and manual operational checks require an explicit release decision before public promotion.
+
+The earlier verification below applies to the 10 November candidate, not this revised split-page build. Current evidence is recorded separately in `docs/quality/maintenance-split-20261111-release.md`.
 
 ## Approved scope
 

@@ -1984,6 +1984,11 @@
       "permanent": true
     },
     {
+      "source": "/ReGeneration-Maintenance-Ongoing.dc.html",
+      "destination": "/regeneration-maintenance-ongoing",
+      "permanent": true
+    },
+    {
       "source": "/awakening-your-inner-light-2026",
       "destination": "/awakening-your-inner-light-Jan-2027",
       "permanent": true
@@ -2368,6 +2373,10 @@
     {
       "source": "/144-stages-maintenance",
       "destination": "/144-Stages-Maintenance.dc.html"
+    },
+    {
+      "source": "/regeneration-maintenance-ongoing",
+      "destination": "/ReGeneration-Maintenance-Ongoing.dc.html"
     }
   ]
 }

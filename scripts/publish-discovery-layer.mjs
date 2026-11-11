@@ -149,7 +149,8 @@ reconcileMarkdown(path.join(siteDir, "markdown"), [
 const privateRoutes = {
   "Payment-Confirmation.dc.html": "/payment-confirmation",
   "Young-People-Wellbeing.dc.html": "/young-people-wellbeing",
-  "144-Stages-Maintenance.dc.html": "/144-stages-maintenance"
+  "144-Stages-Maintenance.dc.html": "/144-stages-maintenance",
+  "ReGeneration-Maintenance-Ongoing.dc.html": "/regeneration-maintenance-ongoing"
 };
 const allRoutes = { ...routes, ...privateRoutes };
 

@@ -20,7 +20,7 @@ Two remote sessions per month · USD 110 monthly After your initial Maintenance 
 
 Explore ongoing Maintenance →
 
-[Visit linked page](https://rainbowsanctuary.life/144-stages-maintenance)
+[Visit linked page](https://rainbowsanctuary.life/regeneration-maintenance-ongoing)
 
 Weekly · live online
 
