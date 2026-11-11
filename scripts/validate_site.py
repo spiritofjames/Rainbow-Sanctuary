@@ -32,9 +32,9 @@ REQUIRED_SECURITY_HEADERS = {
     "X-Content-Type-Options",
     "X-Frame-Options",
 }
-# Transaction-return pages are reachable only from a completed Checkout session.
-# They are deliberately routable, but must not become discovery/sitemap content.
-PRIVATE_ROUTES = {"/payment-confirmation", "/young-people-wellbeing", "/144-stages-maintenance"}
+# These routes deliberately remain noindex and outside discovery/sitemap content.
+# This classification does not itself provide authentication or access control.
+PRIVATE_ROUTES = {"/payment-confirmation", "/young-people-wellbeing", "/144-stages-maintenance", "/regeneration-maintenance-ongoing"}
 
 
 class DocumentParser(HTMLParser):

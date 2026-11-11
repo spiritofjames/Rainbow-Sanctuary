@@ -8,12 +8,12 @@ const regenerationMaintenanceProgramme = {
   timezoneLabel: "Beijing time",
   location: "Remote practice",
   venue: "No live attendance required",
-  summary: "A fixed-start maintenance practice for people who have completed ReGeneration Levels I and II.",
+  summary: "The completed opening Maintenance cycle for graduates of ReGeneration Levels I and II. Ongoing twice-monthly support is available separately.",
   price: "USD 210 one month · USD 630 first three months",
-  status: "open",
-  ongoing: true,
+  status: "scheduled",
+  ongoing: false,
   activeThrough: "2026-11-02",
-  scheduleLabel: "Live now · began 17 August 2026 · weekly through 2 November",
+  scheduleLabel: "Opening cycle completed 2 November 2026",
   registrationUrl: "/144-stages-maintenance#choose-commitment"
 };
 
@@ -57,7 +57,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
   },
   pricing: {
     "group-healing": "USD 22 total · payment processing included",
-    "regeneration-maintenance": "USD 210 one month · USD 630 first three months",
+    "regeneration-maintenance": "USD 110 per month · two remote sessions monthly",
     "spiral-i": "USD 1,460 · Early Bird USD 1,045 · processing included",
     "spiral-ii": "USD 1,670 · Early Bird USD 1,355 · processing included",
     "spiral-iii": "USD 1,670 · Early Bird USD 1,460 · processing included",
@@ -124,10 +124,13 @@ window.RAINBOW_SANCTUARY_CONFIG = {
       }
     },
     regenerationMaintenance: {
-      frequency: "Fixed start 17 August 2026 · 12 weekly dates through 2 November 2026",
+      frequency: "Two remote collective sessions per month after the initial cycle",
       duration: "Overnight restorative practice",
-      price: "USD 210 one month · USD 630 first three months",
-      checkoutEndpoint: "/api/stripe/create-checkout-session"
+      price: "USD 110 per month",
+      checkoutUrl: "https://buy.stripe.com/aFa9AT6bL8OFcHP9EL3Nm0r",
+      billing: "monthly-subscription",
+      overviewUrl: "/144-stages-maintenance",
+      ongoingUrl: "/regeneration-maintenance-ongoing"
     },
     privateSchedules: {
       "144-stages-maintenance": {
