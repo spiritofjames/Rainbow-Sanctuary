@@ -20,11 +20,11 @@ test("experience narrative preserves music, genuine guest voices and separate ho
   assert.match(page.slice(previous, page.indexOf("</main>")), /Why we gather/);
   assert.doesNotMatch(page.slice(previous, page.indexOf("</main>")), /<section\b/);
   const voices = page.slice(page.indexOf('id="guest-reflections"'), page.indexOf('id="week"'));
-  const attributedQuotes = [...voices.matchAll(/<blockquote><p>(.*?)<\/p><\/blockquote><figcaption><strong>(.*?)<\/strong><span>Retreat participant<\/span><\/figcaption>/g)]
+  const attributedQuotes = [...voices.matchAll(/<blockquote><p>(.*?)<\/p><\/blockquote><figcaption><strong>(.*?)<\/strong><span>Retreat participant<\/span>(?:<small>.*?<\/small>)?<\/figcaption>/g)]
     .map((match) => [match[2], match[1]]);
   assert.deepEqual(attributedQuotes, [
     ["Jan", "“So last night the theme was unity, and I really felt we are one family. … It was so much love but contained. It was like embodied. … In every cell in the body, I was feeling held and contained.”"],
-    ["Ivan", "“It felt more introspective. I felt like I was looking inside myself a lot more. … I connected within myself and then connected with you all. … It’s just a really special group of people. I think I’m really glad I connected with everyone.”"],
+    ["Alex", "“It felt more introspective. I felt like I was looking inside myself a lot more. … I connected within myself and then connected with you all. … It’s just a really special group of people. I think I’m really glad I connected with everyone.”"],
     ["Chloe", "“Last night’s session was beautiful. … It’s like you’re not efforting at all. The mat, the floor, Mother Earth is supporting the whole body, so I didn’t have to do anything. … Thank you for your music. That really helped.”"],
     ["Rachel", "“I want to say thank you to both of you. … It felt very safe. It felt like there was something holding me, and the also the attention that you are giving to us. When I started to freak out, I came to you, and you gave me a reassurance.”"],
     ["Garlon", "“Forgave myself for anything, whatever last night. I think it, you know, it literally happened. Versus you just thinking to yourself, I forgive myself. … The medicine responds to you and opens it all up to you and say, let me show you something.”"],
@@ -196,21 +196,24 @@ test("visitor concerns are empathetic editorial invitations, not invented testim
   assert.match(read("retreat-event.css"), /@media\(min-width:720px\)[^\n]*\.rs-retreat-questions\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
 });
 
-test("written testimonials use the six supplied photos with correct participant mapping", () => {
+test("written testimonials preserve mapping and disclose the privacy illustration", () => {
   const voices = page.slice(page.indexOf('id="guest-reflections"'), page.indexOf('id="week"'));
   const cards = [...voices.matchAll(/<figure class="rs-retreat-reflection">(.*?)<\/figure>/g)];
   assert.equal(cards.length, 6);
-  const heights = { Jan: 1058, Ivan: 853, Chloe: 853, Rachel: 853, Garlon: 853, Ryan: 1055 };
+  const heights = { Jan: 1058, Alex: 853, Chloe: 853, Rachel: 853, Garlon: 853, Ryan: 1055 };
   assert.deepEqual(cards.map(([, card]) => card.match(/<figcaption><strong>(.*?)<\/strong>/)[1]), Object.keys(heights));
   for (const [, card] of cards) {
     const name = card.match(/<figcaption><strong>(.*?)<\/strong>/)[1];
     const slug = name.toLowerCase();
     const src = `./assets/retreats/awakening-inner-light-december-2026/testimonials/${slug}.jpg`;
-    assert.ok(card.includes(`class="rs-retreat-reflection__portrait" data-portrait-for="${slug}" data-media-status="approved-photo">`));
+    const status = name === "Alex" ? "privacy-illustration" : "approved-photo";
+    assert.ok(card.includes(`class="rs-retreat-reflection__portrait" data-portrait-for="${slug}" data-media-status="${status}">`));
     const images = [...card.matchAll(/<img\b[^>]*>/g)];
     assert.equal(images.length, 1, `${name} has exactly one portrait`);
     assert.ok(images[0][0].includes(`src="${src}"`));
-    assert.ok(images[0][0].includes(`alt="${name}, retreat participant"`));
+    const alt = name === "Alex" ? "Fictional portrait used to protect a retreat participant’s privacy" : `${name}, retreat participant`;
+    assert.ok(images[0][0].includes(`alt="${alt}"`));
+    if (name === "Alex") assert.match(card, /Name changed for privacy\. AI-generated portrait; not the participant’s likeness\./);
     assert.ok(images[0][0].includes(`width="480" height="${heights[name]}"`));
     assert.match(images[0][0], /loading="lazy" decoding="async"/);
     assert.doesNotMatch(card, /aria-hidden|awaiting-approved-photo|photo coming|picture here|upload photo/i);
@@ -276,7 +279,7 @@ test("the four journey stages show the selected responsive visuals with clear pr
   const stages = [
     ["Before arrival", "preparation-call", "Prepare with context", "Illustrative one-to-one video preparation call"],
     ["Arrival", "arrival-pavilion", "Settle into place and relationship", "Illustrative scene of guests arriving"],
-    ["During the week", "herb-ritual", "Ceremony, practice, and rest", "Illustrative portrait of a participant holding herbs"],
+    ["During the week", "herb-ritual-privacy", "Ceremony, practice, and rest", "Illustrative portrait of a fictional person holding herbs"],
     ["Before returning home", "reflect-integrate", "Reflect and integrate", "Retreat participants reflecting together"],
   ];
   assert.equal(cards.length, stages.length);
@@ -510,7 +513,7 @@ test("application discovery-call link stays white and recognizable on the dark s
   assert.match(linkRule, /color:#fff;/);
   assert.match(linkRule, /text-decoration:underline;/);
   assert.match(css, /\.rs-retreat-application__reassurance a:focus-visible\{[^}]*outline:2px solid #fff;[^}]*outline-offset:4px/);
-  assert.match(page, /retreat-event\.css\?v=20261024-host-story/);
+  assert.match(page, /retreat-event\.css\?v=20261114-participant-privacy/);
 });
 
 test("setting features the supplied shoreline photo without cropping and with responsive lazy loading", () => {

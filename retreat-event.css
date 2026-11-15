@@ -280,7 +280,7 @@
 .rs-retreat-reflection__portrait{flex:none;width:min(100%,160px);aspect-ratio:1;margin-block-end:24px;overflow:hidden;border:1px solid #425a49;border-radius:20px;background:#294234}
 .rs-retreat-reflection__portrait img{display:block;width:100%;height:100%;object-fit:cover}
 .rs-retreat-reflection__portrait[data-portrait-for="jan"] img{object-position:center 20%}
-.rs-retreat-reflection__portrait[data-portrait-for="ivan"] img{object-position:center 10%}
+.rs-retreat-reflection__portrait[data-portrait-for="alex"] img{object-position:center 10%}
 .rs-retreat-reflection__portrait[data-portrait-for="chloe"] img{object-position:center 28%}
 .rs-retreat-reflection__portrait[data-portrait-for="rachel"] img{object-position:center 15%}
 .rs-retreat-reflection__portrait[data-portrait-for="garlon"] img{object-position:center 5%}
@@ -292,6 +292,7 @@
 .rs-retreat-reflection figcaption strong,.rs-retreat-reflection figcaption span{display:block}
 .rs-retreat-reflection figcaption strong{font-weight:500;color:#f2eadc}
 .rs-retreat-reflection figcaption span{font-size:11px;color:#bac6bc}
+.rs-retreat-reflection figcaption small{display:block;max-width:44em;margin-top:8px;font-size:12px;line-height:1.5;color:#bac6bc}
 .rs-retreat-section--mama-gaia{background:linear-gradient(150deg,#e5ebe1,#f2f0e7 65%,#e9eadc)}
 .rs-retreat-section--mama-gaia .rs-retreat-kicker{color:#516b53}
 .rs-retreat-mama-intro{display:grid;gap:24px;align-items:start;margin-bottom:clamp(28px,5vw,50px)}
