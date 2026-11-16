@@ -1,5 +1,18 @@
 # Release log
 
+## 2026-11-11 — Maintenance overview and ongoing support
+
+- **Release owner:** James; renewed publication after the human-review/manual Stripe disclosure.
+- **Pull requests:** #205 protected staging, #206 production.
+- **Production commit:** `ae25aecb149f8d9c1f97406a695453153fd0da9c`.
+- **Production deployment:** `dpl_Ce9WFQppM6FdFfQCok94z9n2QCha` Ready; exact SHA and public aliases verified.
+- **Rollback target:** `2524d995579df9d89ff78814ddc11b28976e9300`, Ready deployment `dpl_9V3wZcbHNVyanThwX7coNmy3Lp4k`.
+- **Summary:** Preserve initial4/12-Monday overview with completed cycles closed. Link prominently to `/regeneration-maintenance-ongoing`: two remote collective sessions/month for USD110 recurring monthly, separate opt-in and approved Stripe link. Programs & Events links to ongoing support; existing noindex policy retained.
+- **Verification:** Fresh328tests,28emailtemplates/contracts,88HTMLpages,84metadata-auditroutes/79sitemapentries,475publicfiles. Site quality/Vercel pass; staging/live browser journey checked. All14production smoke checks pass; overview/ongoing/Explore public200 source matches, new legacy308, source-only404s, staging remains protected302.
+- **Boundaries:** Missing human privacy/legal, screen-reader and physical-device reviews remain disclosed owner-accepted exceptions. Manager/Ethel manually verifies subscriptions; ongoing webhook/HubSpot/email automation unverified. Existing internal Knowledge release-metadata capture failure remains separate/unrepaired. No provider settings, customer submissions, emails, CRM writes, charges or audience sends.
+- **Evidence:** [Maintenance acceptance](quality/maintenance-split-20261111-release.md).
+- **Rollback required:** No. Release-record follow-up changes documentation only; verified public runtime identical.
+
 ## 2026-11-08 - Optimization sprint and ten practical Knowledge guides
 
 - **Release owner:** James; explicitly authorized production publication after testing, direct source access and three scoped agents.
