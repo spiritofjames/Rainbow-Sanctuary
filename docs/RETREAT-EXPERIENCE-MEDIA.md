@@ -2,6 +2,14 @@
 
 Local revision: 19 October 2026. Publication is a separate release step.
 
+## Current privacy override — 14 November 2026
+
+At the participant's request relayed by James, the written reflection now uses **Alex**, a pseudonym, and a visibly disclosed AI-generated fictional portrait. The same fictional appearance replaces the person in the seven-day arc ritual illustration. These are not photographs of the speaker. The quotation and all other guest attributions are unchanged. This overrides the historical portrait mapping and identity-preserving ritual edit below.
+
+Public delivery: `testimonials/alex.jpg` (480×853) and `journey/herb-ritual-privacy-{360,720}.jpg` (4:3), under the existing retreat asset directory. The superseded portrait and ritual filenames are absent from the new public build; new filenames also avoid reusing cached image URLs. Updated HTML, alt text, CSS identifiers and generated Markdown use the pseudonym or describe the fictional imagery. Original private source files and Git history are not rewritten. This is a local candidate only; publication requires the normal review/release gate.
+
+Built-in image generation produced both replacements. The ritual prompt requested an entirely unrelated fictional adult with a shaved head, full short salt-and-pepper beard, different face and build, no glasses, and sage linen clothing; it preserved the pavilion, herbs, seated pose and objects. The portrait edit used that generated appearance as its identity reference while preserving the hammock scene. Exact prompts, saved masters and verification are recorded in `docs/quality/participant-privacy-20261114.md`.
+
 ## Content boundaries
 
 - Keep the existing hero, December dates, USD 3,500 price, remastered song, and programme-specific enquiry route.
