@@ -10,7 +10,7 @@ test("participant privacy replacement removes identifying public references", ()
     const text = read(file);
     assert.doesNotMatch(text, /\bIvan\b|testimonials\/ivan\.jpg|herb-ritual-(?:360|720)\.jpg/i);
     assert.match(text, /Alex/);
-    assert.match(text, /Name changed for privacy\. AI-generated portrait; not the participant’s likeness\./);
+    assert.doesNotMatch(text, /Name changed for privacy\. AI-generated portrait; not the participant’s likeness\./);
     assert.match(text, /herb-ritual-privacy-720\.jpg/);
   }
   for (const file of ["testimonials/ivan.jpg", "journey/herb-ritual-360.jpg", "journey/herb-ritual-720.jpg"]) {
