@@ -213,7 +213,7 @@ test("written testimonials preserve mapping and disclose the privacy illustratio
     assert.ok(images[0][0].includes(`src="${src}"`));
     const alt = name === "Alex" ? "Fictional portrait used to protect a retreat participant’s privacy" : `${name}, retreat participant`;
     assert.ok(images[0][0].includes(`alt="${alt}"`));
-    if (name === "Alex") assert.match(card, /Name changed for privacy\. AI-generated portrait; not the participant’s likeness\./);
+    if (name === "Alex") assert.doesNotMatch(card, /<small>Name changed for privacy/);
     assert.ok(images[0][0].includes(`width="480" height="${heights[name]}"`));
     assert.match(images[0][0], /loading="lazy" decoding="async"/);
     assert.doesNotMatch(card, /aria-hidden|awaiting-approved-photo|photo coming|picture here|upload photo/i);

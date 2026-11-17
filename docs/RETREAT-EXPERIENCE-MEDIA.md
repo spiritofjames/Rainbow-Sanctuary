@@ -2,7 +2,11 @@
 
 Local revision: 19 October 2026. Publication is a separate release step.
 
-## Current privacy override — 14 November 2026
+## Caption revision — 16 November 2026
+
+James requested removal of the visible name-change and AI-portrait caption. The local revision removes that sentence from the reflection and generated Markdown, retaining Alex, the fictional replacement images, `privacy-illustration` media status, descriptive alt text and the provenance below. This revision has not been deployed.
+
+## Privacy replacement — 14 November 2026 (historical)
 
 At the participant's request relayed by James, the written reflection now uses **Alex**, a pseudonym, and a visibly disclosed AI-generated fictional portrait. The same fictional appearance replaces the person in the seven-day arc ritual illustration. These are not photographs of the speaker. The quotation and all other guest attributions are unchanged. This overrides the historical portrait mapping and identity-preserving ritual edit below.
 
