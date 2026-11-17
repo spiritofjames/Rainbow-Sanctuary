@@ -123,13 +123,13 @@ Six people, six different reflections: feeling held, meeting an emotion, reconne
 
 **Jan** Retreat participant
 
-![Ivan, retreat participant](https://rainbowsanctuary.life/assets/retreats/awakening-inner-light-december-2026/testimonials/ivan.jpg)
+![Fictional portrait used to protect a retreat participant’s privacy](https://rainbowsanctuary.life/assets/retreats/awakening-inner-light-december-2026/testimonials/alex.jpg)
 
 ### Looking inward, connecting outward
 
 > “It felt more introspective. I felt like I was looking inside myself a lot more. … I connected within myself and then connected with you all. … It’s just a really special group of people. I think I’m really glad I connected with everyone.”
 
-**Ivan** Retreat participant
+**Alex** Retreat participant
 
 ![Chloe, retreat participant](https://rainbowsanctuary.life/assets/retreats/awakening-inner-light-december-2026/testimonials/chloe.jpg)
 
@@ -249,7 +249,7 @@ Seven days and six nights give the journey a beginning, space to unfold, and a c
    ### Settle into place and relationship
 
    Orientation, shared meals, gentle embodied practice, and time to meet the group establish the rhythm of the retreat.
-3. ![Illustrative portrait of a participant holding herbs in a warm pavilion](https://rainbowsanctuary.life/assets/retreats/awakening-inner-light-december-2026/journey/herb-ritual-720.jpg)
+3. ![Illustrative portrait of a fictional person holding herbs in a warm pavilion](https://rainbowsanctuary.life/assets/retreats/awakening-inner-light-december-2026/journey/herb-ritual-privacy-720.jpg)
 
    During the week
 
