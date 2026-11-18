@@ -57,7 +57,7 @@ window.RAINBOW_SANCTUARY_CONFIG = {
   },
   pricing: {
     "group-healing": "USD 22 total · payment processing included",
-    "regeneration-maintenance": "USD 110 per month · two remote sessions monthly",
+    "regeneration-maintenance": "USD 110 one-off · two remote sessions in one month",
     "spiral-i": "USD 1,460 · Early Bird USD 1,045 · processing included",
     "spiral-ii": "USD 1,670 · Early Bird USD 1,355 · processing included",
     "spiral-iii": "USD 1,670 · Early Bird USD 1,460 · processing included",
@@ -126,9 +126,9 @@ window.RAINBOW_SANCTUARY_CONFIG = {
     regenerationMaintenance: {
       frequency: "Two remote collective sessions per month after the initial cycle",
       duration: "Overnight restorative practice",
-      price: "USD 110 per month",
-      checkoutUrl: "https://buy.stripe.com/aFa9AT6bL8OFcHP9EL3Nm0r",
-      billing: "monthly-subscription",
+      price: "USD 110 one-off",
+      checkoutUrl: "https://buy.stripe.com/14A8wP43Dc0R7nv6sz3Nm0v",
+      billing: "one-time",
       overviewUrl: "/144-stages-maintenance",
       ongoingUrl: "/regeneration-maintenance-ongoing"
     },

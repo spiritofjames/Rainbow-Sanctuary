@@ -12,11 +12,11 @@ When life feels heavy, growth feels stuck, your child needs support, or your inn
 
 ![A collective evening practice for renewal and regeneration](https://rainbowsanctuary.life/assets/editorial/regeneration-maintenance-collective-v1.png)
 
-Ongoing support · monthly subscription
+Ongoing support · one-off payment
 
 ## Regeneration Maintenance
 
-Two remote sessions per month · USD 110 monthly After your initial Maintenance cycle
+Two remote sessions in one month · USD 110 one-off After your initial Maintenance cycle
 
 Explore ongoing Maintenance →
 
