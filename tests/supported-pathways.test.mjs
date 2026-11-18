@@ -55,7 +55,7 @@ test("sensitive pathways stay safely gated, while approved direct registration r
   assert.match(read("api\/stripe\/create-donation-checkout.mjs"), /STRIPE_DONATION_CHECKOUT_APPROVED/);
   assert.match(maintenance, /Ongoing ReGeneration Maintenance/);
   assert.doesNotMatch(maintenance, /regeneration-maintenance-checkout\.js/);
-  assert.match(maintenance, /https:\/\/buy\.stripe\.com\/aFa9AT6bL8OFcHP9EL3Nm0r/);
+  assert.match(maintenance, /https:\/\/buy\.stripe\.com\/14A8wP43Dc0R7nv6sz3Nm0v/);
   assert.match(maintenance, /<span>\$<\/span>110/);
   assert.match(maintenance, /completed ReGeneration Level I and Level II/i);
   assert.doesNotMatch(maintenance, /data-maintenance-eligibility/);
@@ -91,7 +91,7 @@ test("homepage separates recurring group pathways from the standalone in-person 
   assert.match(home, /rs-home-promo--youth rs-home-promo--wide/);
   assert.match(home, /grid-template-columns: repeat\(3, minmax\(0,1fr\)\)/);
   assert.match(home, /\.rs-home-promo--wide \{ grid-column: span 2; \}/);
-  assert.match(home, /Two remote sessions per month · USD 110 monthly/);
+  assert.match(home, /Two remote sessions in one month · USD 110 one-off/);
   assert.match(home, /Tuesdays · 21:00 Beijing time/);
   assert.match(home, /Ongoing weekly practice · free to join/);
   assert.match(home, /Ongoing monthly pathway · review first/);
