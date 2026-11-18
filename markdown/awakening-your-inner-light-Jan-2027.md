@@ -129,7 +129,7 @@ Six people, six different reflections: feeling held, meeting an emotion, reconne
 
 > “It felt more introspective. I felt like I was looking inside myself a lot more. … I connected within myself and then connected with you all. … It’s just a really special group of people. I think I’m really glad I connected with everyone.”
 
-**Alex** Retreat participant Name changed for privacy. AI-generated portrait; not the participant’s likeness.
+**Alex** Retreat participant
 
 ![Chloe, retreat participant](https://rainbowsanctuary.life/assets/retreats/awakening-inner-light-december-2026/testimonials/chloe.jpg)
 
