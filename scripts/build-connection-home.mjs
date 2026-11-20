@@ -12,11 +12,12 @@ if (!main) throw new Error('Reference main missing.');
 main = simplifyHome(main,copy);
 const sourceHero = main.match(/<section class="hero neutral-hero" aria-labelledby="hero-title">[\s\S]*?<\/section>/)?.[0];
 if (!sourceHero?.includes('<figure class="hero-photo">')) throw new Error('Reference hero missing.');
-const coastalPhoto = '<figure class="coast-hero__photo"><img src="/assets/home/coast-1920.webp" srcset="/assets/home/coast-960.webp 960w, /assets/home/coast-1920.webp 1920w" sizes="(min-width: 112rem) 108rem, 96vw" width="1920" height="1079" alt="Aerial view of rainforest, a sandy shoreline and turquoise sea in Bocas del Toro, Panama" fetchpriority="high" decoding="async"><figcaption>Bocas surroundings · photograph</figcaption></figure>';
+const coastalPhoto = '<figure class="coast-hero__photo"><img src="/assets/home/coast-1920.webp" srcset="/assets/home/coast-960.webp 960w, /assets/home/coast-1920.webp 1920w" sizes="100vw" width="1920" height="1079" alt="Aerial view of rainforest, a sandy shoreline and turquoise sea in Bocas del Toro, Panama" fetchpriority="high" decoding="async"><figcaption>Bocas surroundings · photograph</figcaption></figure>';
 main = main.replace(sourceHero, sourceHero
   .replace('<section class="hero neutral-hero" aria-labelledby="hero-title"><div>',
     '<section class="hero coast-hero" aria-labelledby="hero-title"><div class="coast-hero__copy">')
-  .replace(/<figure class="hero-photo">[\s\S]*?<\/figure>/, coastalPhoto));
+  .replace(/<figure class="hero-photo">[\s\S]*?<\/figure>/, coastalPhoto) + '<div class="wrap">')
+  .replace('</main>', '</div></main>');
 const edit = (id, fn) => {
   const re = new RegExp('<section[^>]*id="'+id+'"[\\s\\S]*?<\\/section>');
   if (!re.test(main)) throw new Error('Missing reference section '+id);
@@ -92,7 +93,7 @@ const header = '<header class="coast-masthead"><div class="coast-masthead__inner
  + '<a class="masthead-website" href="/explore">Programs &amp; Events <span aria-hidden="true">→</span></a></nav></div></header>';
 const footerLinks=[['/explore','Programmes & events'],['/knowledge','Knowledge library'],['/privacy-policy','Privacy'],['/terms','Terms'],['/wellbeing-disclaimer','Wellbeing scope'],['/children-safeguarding','Children & safeguarding'],['/accessibility','Accessibility']];
 const footer='<footer><div>'+escape(copy.footer)+'<br>'+escape(copy.values)+'</div><nav aria-label="Footer navigation">'+footerLinks.map(([href,label])=>'<a href="'+href+'">'+escape(label)+'</a>').join('')+'</nav></footer>';
-const html=read('content/home/page-head.html')+'\n<body class="shared-page exact-shared-style"><a class="skip" href="#main">Skip to content</a><div class="wrap">'+header+main+footer+'</div></body></html>\n';
+const html=read('content/home/page-head.html')+'\n<body class="shared-page exact-shared-style"><a class="skip" href="#main">Skip to content</a>'+header+main+'<div class="wrap">'+footer+'</div></body></html>\n';
 if((html.match(/<h1\b/g)||[]).length!==1)throw new Error('Homepage needs one h1.');
 fs.writeFileSync('Home.dc.html',html);
 const profile={name:'Rainbow Sanctuary',url:'https://rainbowsanctuary.life/',revision:copy.revision,description:copy.hero.body,purpose:copy.story.purpose,ecosystem:copy.ecosystem.cards,school:{status:copy.ecosystem.cards[1].stage,pathways:copy.school.pathways,courses:copy.school.courses,journey:copy.school.journey},places:{ownerReportedAsOf:'2026-11-03',items:copy.places.items},currentStage:copy.foundations.paragraphs,team:copy.people.members,offers:copy.offers.cards,needs:copy.needs.cards,contact:{email:'hello@rainbowsanctuary.life',topics:topics.map(([id,subject],i)=>({label:copy.connect.buttons[i],href:'mailto:hello@rainbowsanctuary.life?subject='+subject}))}};

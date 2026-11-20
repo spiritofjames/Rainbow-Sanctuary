@@ -29,18 +29,34 @@
     },{rootMargin:'-15% 0px -60% 0px',threshold:0});
     for(const chapter of chapters)observer.observe(chapter);
   }
-  for(const button of document.querySelectorAll('[data-copy-message]')){
-    const title=button.closest('article').querySelector('h3').textContent;
-    button.setAttribute('aria-label','Copy message starter for '+title.toLowerCase());
-    button.addEventListener('click',async()=>{
-      const starter=button.closest('article').querySelector('.message-starter');
-      const message=[...starter.childNodes].filter(node=>node.nodeType===Node.TEXT_NODE).map(node=>node.textContent).join('').trim();
-      const status=document.querySelector('.copy-status');
-      try{await navigator.clipboard.writeText(message);button.querySelector('span').textContent='Copied';status.textContent='Message starter copied. You can paste it into your own Instagram message.';}
-      catch{status.textContent='Copy is unavailable here. Select the message starter above and copy it manually.';}
-    });
-    button.hidden=false;
-  }
+})();
+
+// Wait for the photo to be ready and in view. Never move the text or caption.
+(() => {
+  const photo = document.querySelector('.coast-hero__photo');
+  const image = photo?.querySelector('img');
+  if (!image || !('IntersectionObserver' in window)) return;
+  const motion = window.matchMedia('(prefers-reduced-motion: no-preference)');
+  if (!motion.matches) return;
+
+  const observer = new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting) photo.setAttribute('data-coast-motion', '');
+    photo.toggleAttribute('data-coast-in-view', entry.isIntersecting);
+  }, {rootMargin: '0px 0px -24px 0px'});
+  let stopped = false;
+  const stop = () => {
+    stopped = true;
+    observer.disconnect();
+    photo.removeAttribute('data-coast-motion');
+    photo.removeAttribute('data-coast-in-view');
+    image.removeEventListener('animationend', stop);
+    motion.removeEventListener('change', stop);
+  };
+  image.addEventListener('animationend', stop, {once: true});
+  motion.addEventListener('change', stop, {once: true});
+  image.decode().then(() => {
+    if (!stopped) observer.observe(photo);
+  }, stop);
 })();
 
 // Keep native swipe and trackpad momentum; enhance the same rail with buttons.
