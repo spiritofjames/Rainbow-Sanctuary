@@ -277,14 +277,6 @@ footer nav{max-width:590px;line-height:1.8}
 @media(prefers-contrast:more){:root{--soft:#284b40;--line:#728e7c}a:focus-visible,summary:focus-visible{outline-width:4px}}
 
 /* The coastline is untouched. Shade the reading area, then fade to clear water. */
-.hero.coast-hero{
- --masthead-gutter:clamp(1rem,2vw,2.5rem);
- --masthead-width:min(108rem,calc(100vw - 2 * var(--masthead-gutter)));
- --masthead-iris:#5140db;
- --masthead-iris-hover:#4131bd;
- inline-size:var(--masthead-width);
- margin-inline:calc((100% - var(--masthead-width)) / 2);
-}
 @font-face{font-family:SanctuaryMastheadSerif;src:url('/assets/home/rainbow-serif.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:SanctuaryMastheadSans;src:url('/assets/home/rainbow-sans.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
 .coast-masthead{
@@ -332,6 +324,8 @@ html:has(.coast-masthead){scroll-padding-block-start:6rem}
 }
 @media(prefers-reduced-motion:reduce){.coast-masthead__inner{transition:none}}
 .hero.coast-hero{
+ --masthead-iris:#5140db;
+ --masthead-iris-hover:#4131bd;
  --hero-forest:10 29 21;
  --hero-white:#fffdf6;
  --hero-warm:#f1dfb5;
@@ -361,6 +355,18 @@ html:has(.coast-masthead){scroll-padding-block-start:6rem}
 .coast-hero .actions .button:focus-visible{outline-color:var(--hero-warm);outline-offset:4px}
 .coast-hero__photo{position:absolute;inset:0;margin:0}
 .coast-hero__photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 56%}
+/* One aerial drift; the gradient, caption and copy stay on stationary layers. */
+@media(prefers-reduced-motion:no-preference){
+ .coast-hero__photo[data-coast-motion] img{
+  transform-origin:60% 56%;animation:coast-drift 4.6s cubic-bezier(.22,.61,.36,1) both;
+  animation-play-state:paused;
+ }
+ .coast-hero__photo[data-coast-motion][data-coast-in-view] img{animation-play-state:running}
+ @keyframes coast-drift{
+  from{transform:translate3d(-.6%,.5%,0) scale(1.075)}
+  to{transform:none}
+ }
+}
 .coast-hero__photo::after{
  content:"";position:absolute;inset:0;pointer-events:none;
  background:linear-gradient(90deg,

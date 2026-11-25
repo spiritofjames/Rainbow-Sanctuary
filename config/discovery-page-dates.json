@@ -3,9 +3,9 @@
   "meaning": "Dates of verified significant main-content updates. Fingerprints ignore whitespace and exclude generated head metadata. Unknown or changed content is omitted from sitemap lastmod until a source-backed record is supplied.",
   "pages": {
     "/": {
-      "updatedAt": "2026-11-07",
-      "mainContentSha256": "57577bfdafdbae9cc2e3613f13692b17c9eca8c8e4954d28579a45c5b5a8a0ba",
-      "evidence": "97a1b14 and cfdea51: approved homepage headline, spacing and hero refinements on 7 November 2026."
+      "updatedAt": "2026-11-19",
+      "mainContentSha256": "6d480779bad41599164fa86bc1fd588d44fbc07d114114eaaf651a11621922a0",
+      "evidence": "19 November 2026: full-width coastal hero and updated homepage search metadata; the approved homepage copy and canonical URL are unchanged."
     },
     "/awakening-your-inner-light-Jan-2027": {
       "updatedAt": "2026-11-16",

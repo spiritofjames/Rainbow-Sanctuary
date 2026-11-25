@@ -116,7 +116,7 @@ test('hero gives the floating header room without a fixed content height',()=>{
   const mobile=css.slice(css.indexOf('@media(max-width:54rem)'));
   assert.match(mobile,/\.coast-hero__copy\{[^}]*padding-block-start:calc\(7\.25rem \+ env\(safe-area-inset-top,0px\)\)/);
   assert.match(mobile,/\.hero\.coast-hero\{[^}]*min-block-size:0/);
-  assert.match(home,/home-experience\.css\?v=20261107-two-line-hero/);
+  assert.match(home,/home-experience\.css\?v=20261119-full-width-hero/);
   assert.match(css,/border-radius:0 0 2rem 2rem/,'desktop hero has square top and rounded bottom corners');
   assert.match(mobile,/\.hero\.coast-hero\{[^}]*border-radius:0 0 1\.5rem 1\.5rem/,'mobile retains only bottom rounding');
 });
@@ -125,6 +125,26 @@ test('desktop headline scales within its capped column without changing mobile t
   assert.match(css,/\.coast-hero h1\{[^}]*font-size:clamp\(2rem,4\.2vw,4rem\)/);
   const mobile=css.slice(css.indexOf('@media(max-width:54rem)'));
   assert.match(mobile,/\.coast-hero h1\{font-size:clamp\(2rem,6\.8vw,3\.75rem\)/);
+});
+
+test('coastline is full bleed while the following content stays inside its wrap',()=>{
+  assert.match(home,/<main id="main">\s*<section class="hero coast-hero"[\s\S]*?<\/section><div class="wrap">\s*<div class="status-strip"/);
+  assert.match(home,/<\/div><\/main><div class="wrap"><footer>/);
+  assert.doesNotMatch(css,/--masthead-(?:width|gutter)/);
+  assert.match(home,/imagesizes="100vw"/);
+  assert.match(home,/<img src="\/assets\/home\/coast-1920\.webp"[^>]* sizes="100vw"/);
+});
+
+test('coastal drift is one transform-only pass, gated by motion preference and visibility',()=>{
+  const motion=css.match(/@media\(prefers-reduced-motion:no-preference\)\{\s*\.coast-hero__photo\[data-coast-motion\][\s\S]*?\n\}/)?.[0];
+  assert.ok(motion);
+  assert.match(motion,/animation:coast-drift 4\.6s/);
+  assert.match(motion,/animation-play-state:paused/);
+  assert.match(motion,/\[data-coast-in-view\] img\{animation-play-state:running\}/);
+  assert.doesNotMatch(motion,/infinite|animation-iteration-count|\.coast-hero__copy|figcaption/);
+  assert.match(js,/if \(!motion\.matches\) return/);
+  assert.match(js,/photo\.toggleAttribute\('data-coast-in-view', entry\.isIntersecting\)/);
+  assert.match(js,/image\.addEventListener\('animationend', stop, \{once: true\}\)/);
 });
 
 test('exact source styles, typography and glyphs are locally reproducible',()=>{
