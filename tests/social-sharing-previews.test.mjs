@@ -84,8 +84,8 @@ test("all discoverable pages have static, consistent OG and X metadata", () => {
 
 test("sharing copy and event dates distinguish January from the October archive", () => {
   const home = head("Explore.dc.html");
-  assert.equal(meta(home, "og:title"), "Rainbow Sanctuary — A New World, Together");
-  assert.match(meta(home, "og:description"), /Retreats, online events, healing and learning/);
+  assert.equal(meta(home, "og:title"), "Programs &amp; Events | Rainbow Sanctuary");
+  assert.match(meta(home, "og:description"), /programs, online gatherings and in-person retreats/);
   const december = head("Awakening-Your-Inner-Light-2026.dc.html");
   assert.match(meta(december, "og:title"), /January 2027/);
   assert.match(meta(december, "og:description"), /18–24 January 2027/);

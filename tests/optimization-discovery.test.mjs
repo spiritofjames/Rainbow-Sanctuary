@@ -45,9 +45,9 @@ test('sitemap dates are source-backed and exclude build-time fallbacks', () => {
     const route = new URL(url).pathname;
     const file = config.rewrites.find(rewrite => rewrite.source === route)?.destination.slice(1);
     assert.ok(file, route);
-    const expected = route.startsWith('/knowledge')
-      ? knowledgePageDate(route, manifest.entries)
-      : verifiedPageDate(read(file), records[route]);
+    const candidates = [verifiedPageDate(read(file), records[route])];
+    if (route.startsWith('/knowledge')) candidates.push(knowledgePageDate(route, manifest.entries));
+    const expected = candidates.sort().at(-1);
     assert.equal(modified, expected, route);
   }
   assert.doesNotMatch(read('scripts/publish-discovery-layer.mjs'), /const lastmod\s*=|new Date\(\)\.toISOString\(\).*lastmod/);
@@ -73,5 +73,6 @@ test('published identity and article schema match current content without made-u
     assert.match(source, /property="og:type" content="article"/);
   }
   assert.match(read('llms.txt'), /School of the Universe prepares for beta/);
-  assert.doesNotMatch(read('llms-full.txt'), /co-founded by Stephanie/);
+  assert.match(read('llms-full.txt'), /co-founded by Stephanie Wu/);
+  assert.doesNotMatch(read('llms-full.txt'), /ecosystem founded by Stephanie Wu/);
 });

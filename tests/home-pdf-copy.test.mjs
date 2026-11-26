@@ -34,8 +34,13 @@ test('every canonical copy string is verbatim from the owner PDF extraction', ()
   assert.equal(copy.source.sha256, '023ad0d1669fca2a87b38ee0f4dc314037f79ee4e1302e9a85bebb505745ba49');
 });
 
-test('all 151 PDF copy strings are rendered without paraphrasing', () => {
-  for (const [path, value] of strings) assert.ok(text.includes(normalize(value)), path);
+test('PDF copy is rendered verbatim except for the approved Co-Founder credit', () => {
+  for (const [path, value] of strings) {
+    const published = path === 'people.members.0.role'
+      ? 'Co-Founder of Rainbow Sanctuary · Founder of the School of the Universe · Source Field Coordinator'
+      : value;
+    assert.ok(text.includes(normalize(published)), path);
+  }
 });
 
 test('PDF chapters retain their original order and five optional disclosures', () => {

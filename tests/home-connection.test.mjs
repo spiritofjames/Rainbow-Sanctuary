@@ -27,8 +27,8 @@ test('all homepage fragments exist and programmes content is preserved',()=>{
     .replaceAll('18 to 24 January 2027','3 to 9 December 2026')
     .replaceAll('18–24 January 2027','3–9 December 2026')
     .replaceAll('January 2027','December 2026');
-  // Baseline includes the owner-approved USD 110 one-off Maintenance promotion (18 November 2026).
-  assert.equal(crypto.createHash('sha256').update(main).digest('hex'),'355f159afd19ba1cf1a88fb72a964bd07fb8ac159bd92eff84cc57e359c5947a');
+  // Baseline includes the USD 110 Maintenance promotion and the approved Programs & Events introduction.
+  assert.equal(crypto.createHash('sha256').update(main).digest('hex'),'b9894667bd09ce713b775a8b407e38cfc54825e1a5a956fdea57cdaccc7f0c36');
 });
 
 test('spiritual inquiry and current status boundaries survive discovery generation',()=>{
