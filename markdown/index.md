@@ -3,7 +3,7 @@
 Text equivalents of public pages. Follow each source URL for current interactive calendars, booking options, and media. These copies do not include form fields, submissions, private records, or unpublished editorial drafts.
 
 - [Rainbow Sanctuary Panama | Learning, Growth & Co-creation](https://rainbowsanctuary.life/markdown/home.md) — [Web page](https://rainbowsanctuary.life/)
-- [Rainbow Sanctuary — Find Your Path to Healing, Growth & Service](https://rainbowsanctuary.life/markdown/explore.md) — [Web page](https://rainbowsanctuary.life/explore)
+- [Programs & Events | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/explore.md) — [Web page](https://rainbowsanctuary.life/explore)
 - [About Rainbow Sanctuary | Stephanie Wu, Co-Founder](https://rainbowsanctuary.life/markdown/about.md) — [Web page](https://rainbowsanctuary.life/about)
 - [Private Healing Sessions | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/private-healing.md) — [Web page](https://rainbowsanctuary.life/private-healing)
 - [Accessibility Statement | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/accessibility.md) — [Web page](https://rainbowsanctuary.life/accessibility)
@@ -47,7 +47,7 @@ Text equivalents of public pages. Follow each source URL for current interactive
 - [The Awakening Academy | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/unlock-the-potential.md) — [Web page](https://rainbowsanctuary.life/unlock-the-potential)
 - [Wellbeing Disclaimer | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/wellbeing-disclaimer.md) — [Web page](https://rainbowsanctuary.life/wellbeing-disclaimer)
 - [Programs | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/programs.md) — [Web page](https://rainbowsanctuary.life/programs)
-- [Knowledge | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/knowledge.md) — [Web page](https://rainbowsanctuary.life/knowledge)
+- [Knowledge Library | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/knowledge.md) — [Web page](https://rainbowsanctuary.life/knowledge)
 - [All knowledge articles | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/knowledge/articles.md) — [Web page](https://rainbowsanctuary.life/knowledge/articles)
 - [Long reads | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/knowledge/long-reads.md) — [Web page](https://rainbowsanctuary.life/knowledge/long-reads)
 - [Getting started | Rainbow Sanctuary](https://rainbowsanctuary.life/markdown/knowledge/topics/getting-started.md) — [Web page](https://rainbowsanctuary.life/knowledge/topics/getting-started)

@@ -4,7 +4,7 @@ Rainbow Sanctuary knowledge
 
 # A thoughtful place to begin.
 
-Find reviewed articles, practical orientation, and clear next steps from Rainbow Sanctuary.
+The Rainbow Sanctuary Knowledge Library brings together reviewed articles, practical guides and longer readings. Start with [Getting Started](https://rainbowsanctuary.life/knowledge/topics/getting-started) or browse topics such as personal reflection, co-creation, Earth stewardship and technology. The library offers perspectives and practices for reflection, not medical or mental-health advice.
 
 ## Explore by topic
 

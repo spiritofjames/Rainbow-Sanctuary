@@ -1,20 +1,19 @@
 Source: https://rainbowsanctuary.life/children-weekly-practice
 
-For Children’s Workshop I & II graduates
+For Children’s Workshop I or II graduates
 
 # Children’s Weekly Practice.
 
 A steady weekly Zoom space for children to revisit what they have learned, practise with guidance, and bring questions from practice and everyday life.
 
-[Choose a cycle](https://rainbowsanctuary.life/children-weekly-practice#join) [Questions & answers](https://rainbowsanctuary.life/children-weekly-practice#questions)
+[Ask about the next cycle](https://rainbowsanctuary.life/children-weekly-practice#join) [Questions & answers](https://rainbowsanctuary.life/children-weekly-practice#questions)
 
 Weekly live Zoom
 
-## Starts Saturday 29 August.
+## Ongoing weekly practice.
 
-- 8:00 PM · UTC+8
-- 60 minutes each Saturday
-- Parent or guardian enrols
+- 60-minute sessions
+- Parent or guardian enquires
 - For prior workshop participants
 
 A rhythm to return to
@@ -53,29 +52,13 @@ Prepare simply
 
 Please have a blindfold, water, and the child’s home-practice set ready before the session begins.
 
-Choose a commitment
+For parents and guardians
 
-## Join the next weekly cycle.
+## Ask about the next weekly cycle.
 
-Classes begin Saturday, 29 August 2026 at 8:00 PM Singapore / Kuala Lumpur / China time (UTC+8). A parent or guardian completes the booking and enters the child’s name at checkout.
+Weekly practice is ongoing. If your child has completed Children’s Workshop I or II, contact us to confirm the next available start date, session time and enrolment options before committing. Please leave your child’s personal details out of the initial enquiry.
 
-Four weekly sessions
-
-USD **80**
-
-### First monthly cycle
-
-29 August, 5 September, 12 September, and 19 September 2026. Renewal is due after each four-session cycle.
-
-Twelve weekly sessions
-
-USD **240**
-
-### Full opening cycle
-
-Every Saturday from 29 August through 14 November 2026: twelve live weekly sessions.
-
-Payment is completed securely through Stripe. Your confirmation includes the Zoom link and practical details for the first session.
+[Email us about Weekly Practice](mailto:hello@rainbowsanctuary.life?subject=Children%27s%20Weekly%20Practice)
 
 Questions & answers
 
@@ -85,13 +68,13 @@ Questions & answers
 
 It is exclusively for children who have already completed Children’s Workshop I or Children’s Workshop II with Rainbow Sanctuary.
 
-**02 What time is the session? +**
+**02 When can my child join? +**
 
-Sessions run each Saturday at 8:00 PM UTC+8: 7:00 PM in Thailand, Jakarta, and Vietnam; 8:00 AM Panama; and 9:00 AM New York during daylight saving time.
+Ask us about the next available cycle to confirm dates and times in your time zone.
 
-**03 What happens after payment? +**
+**03 How do we enrol? +**
 
-The guardian receives an email immediately with the Zoom link, the included dates, and simple preparation. A one-hour reminder is also sent before each included session.
+A parent or guardian contacts Rainbow Sanctuary first. The team will explain the schedule and enrolment options.
 
 **04 What should my child prepare? +**
 

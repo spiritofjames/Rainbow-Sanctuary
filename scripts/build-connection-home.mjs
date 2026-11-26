@@ -6,6 +6,9 @@ const read = name => fs.readFileSync(name, 'utf8');
 const escape = value => String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const reference = read('content/home/shared-pathway-style-reference.html');
 const copy = JSON.parse(read('content/home/co-create-verbatim.json'));
+// Keep the archived PDF transcription intact; this title is owner-approved for the live site.
+const stephanie = copy.people.members.find(person => person.name === 'Stephanie');
+stephanie.role = 'Co-Founder of Rainbow Sanctuary · Founder of the School of the Universe · Source Field Coordinator';
 if (/<script\b|<iframe\b|<form\b|\son[a-z]+\s*=|javascript:/i.test(reference)) throw new Error('Unexpected active content in reference.');
 let main = reference.match(/<main\b[\s\S]*?<\/main>/)?.[0];
 if (!main) throw new Error('Reference main missing.');
@@ -24,7 +27,8 @@ const edit = (id, fn) => {
   main = main.replace(re,fn);
 };
 const alias = (section,id) => section.replace(/(<h2\b)/,'<span id="'+id+'" class="anchor-alias" aria-hidden="true"></span>$1');
-edit('story',s=>alias(s,'vision'));
+edit('story',s=>alias(s,'vision').replace('</h2>', '</h2>'
+  + '<p class="muted">Rainbow Sanctuary is a community rooted in Bocas del Toro, Panama. We bring people together through guided practice, retreats and learning, and work with families and collaborators on projects that connect personal growth with care for the Earth. Explore our <a href="/explore">Programs &amp; Events</a>, or learn about the <a href="/#school">School of the Universe</a>, which is preparing for beta.</p>'));
 edit('school',s=>s
   .replace('<div class="section-intro">','<div class="school-intro-with-symbol"><div class="section-intro">')
   .replace('<div class="story-columns learning-pathways">',

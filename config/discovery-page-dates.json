@@ -3,9 +3,29 @@
   "meaning": "Dates of verified significant main-content updates. Fingerprints ignore whitespace and exclude generated head metadata. Unknown or changed content is omitted from sitemap lastmod until a source-backed record is supplied.",
   "pages": {
     "/": {
-      "updatedAt": "2026-11-19",
-      "mainContentSha256": "6d480779bad41599164fa86bc1fd588d44fbc07d114114eaaf651a11621922a0",
-      "evidence": "19 November 2026: full-width coastal hero and updated homepage search metadata; the approved homepage copy and canonical URL are unchanged."
+      "updatedAt": "2026-11-26",
+      "mainContentSha256": "dc9a6176542557640ee3c340d3b4bea3cb59c50a00604ebd5bfae6fb64469ead",
+      "evidence": "Owner-approved introduction and Co-Founder credit correction."
+    },
+    "/explore": {
+      "updatedAt": "2026-11-26",
+      "mainContentSha256": "b48609b138f7c44034c842877dd3f36508e3a6bd69f8e30257e8e88be16df565",
+      "evidence": "Programs & Events introduction with a direct calendar link."
+    },
+    "/knowledge": {
+      "updatedAt": "2026-11-26",
+      "mainContentSha256": "c57543f21bd4ce56cfb3ea5fbb04596c3b96f84b6bbf37a72b1fcb6e0d6843f5",
+      "evidence": "Knowledge Library introduction and Getting Started link."
+    },
+    "/children-and-family": {
+      "updatedAt": "2026-11-26",
+      "mainContentSha256": "85cc2d14e7191f84c33a54fdbaea5cdaf37ad4f64c6729d51ebe308c355a2e66",
+      "evidence": "Ongoing Weekly Practice section and descriptive link for returning families."
+    },
+    "/children-weekly-practice": {
+      "updatedAt": "2026-11-26",
+      "mainContentSha256": "82db8b94cd94e0b10ba4ed8ae3bfc9534dbd42243f9b3c1a64ca1fb67e1d8751",
+      "evidence": "Owner confirmed practice is ongoing; contact path replaces the expired opening-cycle checkout on the public page."
     },
     "/awakening-your-inner-light-Jan-2027": {
       "updatedAt": "2026-11-16",
