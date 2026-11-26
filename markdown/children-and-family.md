@@ -42,6 +42,14 @@ Grounding, personal space, rest, and care are practised within Rainbow Sanctuary
 
 Later, eligible children may be invited to advanced experimental practices; these are always optional and never a measure of worth.
 
+For returning families
+
+## Children’s Weekly Practice
+
+Children who have completed Children’s Workshop I or II can continue practising in a guided weekly Zoom group. Parents and guardians can ask about the next available cycle.
+
+[Explore Children’s Weekly Practice](https://rainbowsanctuary.life/children-weekly-practice)
+
 Family-centred and safeguard-aware
 
 ## Guardians remain part of the circle of care.

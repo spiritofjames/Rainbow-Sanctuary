@@ -71,12 +71,13 @@ test('simplified content has no stale FAQ schema and has aligned public project 
   const copy=JSON.parse(read('content/home/co-create-verbatim.json'));
   const profile=JSON.parse(read('assets/home/co-create-profile.json'));
   assert.equal(profile.description,copy.hero.body);
-  assert.deepEqual(profile.team,copy.people.members);
-  assert.match(profile.team[0].role,/Founder/);
+  assert.deepEqual(profile.team,copy.people.members.map(person=>person.name==='Stephanie'
+    ? {...person,role:'Co-Founder of Rainbow Sanctuary · Founder of the School of the Universe · Source Field Coordinator'}
+    : person));
   assert.match(home,/href="\/assets\/home\/co-create-profile.json"/);
   assert.doesNotMatch(JSON.stringify(profile),/\/Volumes\/|\/Users\//);
   const main=home.match(/<main\b[\s\S]*?<\/main>/)[0];
-  assert.ok(htmlToMarkdown(main,'https://rainbowsanctuary.life/').split(/\s+/).filter(Boolean).length<2600,'PDF copy stays concise without editorial additions');
+  assert.ok(htmlToMarkdown(main,'https://rainbowsanctuary.life/').split(/\s+/).filter(Boolean).length<2600,'Home copy stays concise after the approved short introduction');
   assert.match(read('markdown/home.md'), /Aerial view of rainforest, a sandy shoreline and turquoise sea in Bocas del Toro, Panama/);
   assert.match(read('markdown/explore.md'), /Awakening Your Inner Light/);
   assert.match(read('llms.txt'), /https:\/\/rainbowsanctuary.life\/explore/);

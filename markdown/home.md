@@ -30,6 +30,8 @@ Who We Are
 
 ## A return to wholeness. A foundation for shared life.
 
+Rainbow Sanctuary is a community rooted in Bocas del Toro, Panama. We bring people together through guided practice, retreats and learning, and work with families and collaborators on projects that connect personal growth with care for the Earth. Explore our [Programs & Events](https://rainbowsanctuary.life/explore), or learn about the [School of the Universe](https://rainbowsanctuary.life/#school), which is preparing for beta.
+
 As the world grows more technologically powerful, how do we become more conscious of the life we are creating?
 
 We understand each person as a holographic microcosm, and life as an expression of Source. Rainbow Sanctuary is a place where this understanding is lived. Co-creators from different cultures gather here, and through listening and working through our differences, we learn to hold unity within them, building a new way of human life, little by little.
@@ -277,7 +279,7 @@ Our team holds the thread of this work. Its next form will also be shaped by the
 
 ### Stephanie
 
-Founder of Rainbow Sanctuary and the School of the Universe · Source Field Coordinator
+Co-Founder of Rainbow Sanctuary · Founder of the School of the Universe · Source Field Coordinator
 
 Anchors the spiritual vision and blueprint, and supports healing and transformative practice. She brings kindred people together, and fits each piece of the puzzle into place, so this great picture can be completed.
 

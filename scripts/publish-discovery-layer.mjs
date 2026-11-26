@@ -449,8 +449,9 @@ for (const [file, route] of Object.entries(routes)) {
     "Rainbow Sanctuary is a global community for spiritual wellbeing, conscious development, and regenerative service."
   );
   // Keep intentionally shorter sharing copy consistent across Open Graph and X.
-  const socialTitle = extract(source, /<meta\s+property="og:title"\s+content="([^"]*)"[^>]*>/i, title);
-  const socialDescription = extract(source, /<meta\s+property="og:description"\s+content="([^"]*)"[^>]*>/i, description);
+  const usePageMetadataForSharing = ["/explore", "/children-weekly-practice"].includes(route);
+  const socialTitle = usePageMetadataForSharing ? title : extract(source, /<meta\s+property="og:title"\s+content="([^"]*)"[^>]*>/i, title);
+  const socialDescription = usePageMetadataForSharing ? description : extract(source, /<meta\s+property="og:description"\s+content="([^"]*)"[^>]*>/i, description);
   const socialType = knowledgeEntryByPath.has(route)
     ? "article"
     : extract(source, /<meta\s+property="og:type"\s+content="([^"]*)"[^>]*>/i, "website");
@@ -460,9 +461,11 @@ for (const [file, route] of Object.entries(routes)) {
   const socialImage = brandedSocialImages[imagePath];
   const imageAlt = socialImage?.alt || title;
   const schema = schemaFor(file, title, description, canonical, image, source);
-  const updatedAt = route.startsWith("/knowledge")
+  const authoredDate = verifiedPageDate(source, pageDates.pages?.[route]);
+  const libraryDate = route.startsWith("/knowledge")
     ? knowledgePageDate(route, knowledgeManifest.entries || [])
-    : verifiedPageDate(source, pageDates.pages?.[route]);
+    : "";
+  const updatedAt = authoredDate > libraryDate ? authoredDate : libraryDate;
   if (updatedAt) {
     verifiedDateByRoute.set(route, updatedAt);
     schema["@graph"].find(node => node["@id"] === `${canonical}#webpage`).dateModified = updatedAt;
@@ -653,7 +656,7 @@ const llms = `# Rainbow Sanctuary
 
 - [Home](${origin}/): Identity, purpose and co-creation
 - [Explore programs and events](${origin}/explore): Programs and current invitations
-- [About Stephanie Wu](${origin}/about): Rainbow Sanctuary's founder and lead facilitator
+- [About Stephanie Wu](${origin}/about): Rainbow Sanctuary's co-founder and lead facilitator
 - [The Spiral Journey](${origin}/spiral-journey): Four progressive levels of personal and conscious development
 - [Group Healing](${origin}/group-healing): Overview of shared healing pathways
 - [Online Group Healing](${origin}/online-group-healing): Accessible guided Zoom sessions
@@ -662,6 +665,7 @@ const llms = `# Rainbow Sanctuary
 - [Practitioner Certification](${origin}/practitioner-certification): Responsible practitioner pathways
 - [Private Healing](${origin}/private-healing): Application-led private spiritual wellbeing sessions
 - [Events](${origin}/events): Upcoming online sessions, gatherings, and retreats
+- [Children’s Weekly Practice](${origin}/children-weekly-practice): Ongoing guided practice for Children’s Workshop I or II graduates; parents and guardians can ask about the next cycle
 
 ## Current event
 
@@ -706,7 +710,7 @@ const llmsFull = `# Rainbow Sanctuary — Extended Site Guide
 
 ## What Rainbow Sanctuary is
 
-Rainbow Sanctuary is a growing ecosystem founded by Stephanie Wu, connecting personal growth, learning, communities and care for the Earth. Rooted in Panama, it offers online group experiences, a progressive four-level Spiral Journey, focused programs, children-and-family work, practitioner pathways, private sessions and retreats today. The School of the Universe is preparing for beta, and the wider regenerative network remains in development.
+Rainbow Sanctuary is a growing ecosystem co-founded by Stephanie Wu, connecting personal growth, learning, communities and care for the Earth. Rooted in Panama, it offers online group experiences, a progressive four-level Spiral Journey, focused programs, children-and-family work, practitioner pathways, private sessions and retreats today. The School of the Universe is preparing for beta, and the wider regenerative network remains in development.
 
 The identity homepage at ${origin}/ explains what Rainbow Sanctuary is building, why, its physical connection to Bocas del Toro in Panama, the people behind the work and ways to contribute. The programmes experience is preserved separately at ${origin}/explore; the focused programme catalogue remains ${origin}/programs.
 
@@ -753,7 +757,7 @@ Current public opportunities are listed at ${origin}/events. Awakening Your Inne
 
 ## People and community
 
-Rainbow Sanctuary's platform and community are introduced at ${origin}/about, with emphasis on founder and lead facilitator Stephanie Wu. Published community stories appear at ${origin}/community-stories.
+Rainbow Sanctuary's platform and community are introduced at ${origin}/about, with emphasis on co-founder and lead facilitator Stephanie Wu. Published community stories appear at ${origin}/community-stories.
 
 ## Wider vision
 

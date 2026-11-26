@@ -4,7 +4,7 @@ Healing · Growth · Purpose · Service
 
 # Home is where your heart feels peace.
 
-When life feels heavy, growth feels stuck, your child needs support, or your inner work is ready to become service—find a grounded next step for healing, deeper practice, and conscious contribution.
+Looking for something you can join now? Browse Rainbow Sanctuary’s programs, online gatherings and in-person retreats. For a dated session or retreat, check the [Events & Retreats calendar](https://rainbowsanctuary.life/events) and follow the registration details on the event page.
 
 [Find your starting point](https://rainbowsanctuary.life/explore#find-your-path) [Explore Group Healing](https://rainbowsanctuary.life/group-healing)
 
