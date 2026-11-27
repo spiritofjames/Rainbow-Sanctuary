@@ -5,7 +5,7 @@ import { sendPurchaseConfirmation } from "../_lib/group-healing-booking-email.mj
 import { mirrorHubSpotPurchase } from "../_lib/hubspot-payment.mjs";
 import { attemptPurchaseOperationsNotification } from "../_lib/operations-notification.mjs";
 import { isOptionalContributionSession } from "../_lib/optional-contribution.mjs";
-import { hydrateStaffPaymentLinkEvent } from "../_lib/staff-payment-links.mjs";
+import { hydrateStaffPaymentLinkEvent, isPrivateHealingWebhookPayment } from "../_lib/staff-payment-links.mjs";
 import { addKidsWeeklyPracticeGuardian } from "../_lib/kids-weekly-practice-calendar.mjs";
 
 export const config = {
@@ -37,17 +37,18 @@ export default async function handler(request, response) {
   }
 
   try {
-    const governedEvent = hydrateStaffPaymentLinkEvent(event, process.env);
+    const governedEvent = hydrateStaffPaymentLinkEvent(event, process.env, { privateHealingWebhook: true });
+    const privateHealingPayment = isPrivateHealingWebhookPayment(governedEvent);
     let delivery = { forwarded: false, ignored: true, reason: "not-applicable" };
     let bookingEmail = { sent: false, reason: "not-applicable" };
     let calendarEnrolment = { enabled: false, reason: "not-applicable" };
     if (
       ["checkout.session.completed", "checkout.session.async_payment_succeeded"].includes(event.type) &&
       !isInternalPaymentTest(governedEvent) &&
-      !isOptionalContributionSession(governedEvent?.data?.object, process.env)
+      (privateHealingPayment || !isOptionalContributionSession(governedEvent?.data?.object, process.env))
     ) {
       const hubspot = await mirrorHubSpotPurchase(governedEvent, process.env);
-      if (governedEvent.data?.object?.metadata?.offer_key === "personal-karma-reconciliation" && hubspot.enabled !== true) {
+      if ((privateHealingPayment || governedEvent.data?.object?.metadata?.offer_key === "personal-karma-reconciliation") && hubspot.enabled !== true) {
         throw new Error("The private-session HubSpot payment handoff is not enabled.");
       }
       await attemptPurchaseOperationsNotification(governedEvent, hubspot, process.env);
@@ -72,29 +73,38 @@ export default async function handler(request, response) {
           calendarEnrolment = { enabled: true, added: false, reason: "failed" };
         }
       }
-      try {
-        bookingEmail = await sendPurchaseConfirmation(governedEvent, process.env);
-      } catch (emailError) {
-        // Payment, CRM state and the Stripe receipt must never depend on email delivery.
-        // Do not log the recipient or other customer information.
-        console.error("stripe_booking_confirmation_error", {
-          eventId: event.id,
-          message: emailError.message
-        });
-        bookingEmail = { sent: false, reason: "failed" };
+      if (privateHealingPayment) {
+        bookingEmail = { sent: false, reason: "manual-private-healing-follow-up" };
+      } else {
+        try {
+          bookingEmail = await sendPurchaseConfirmation(governedEvent, process.env);
+        } catch (emailError) {
+          // Payment, CRM state and the Stripe receipt must never depend on email delivery.
+          // Do not log the recipient or other customer information.
+          console.error("stripe_booking_confirmation_error", {
+            eventId: event.id,
+            message: emailError.message
+          });
+          bookingEmail = { sent: false, reason: "failed" };
+        }
       }
     }
-    try {
-      // The legacy gateway is a secondary mirror. HubSpot has already received
-      // the verified purchase above, so its temporary absence cannot strand a
-      // paid participant or make Stripe repeatedly charge/retry a completed sale.
-      delivery = await forwardStripeEvent(governedEvent, process.env);
-    } catch (crmError) {
-      console.error("stripe_legacy_crm_mirror_error", {
-        eventId: event.id,
-        message: crmError.message
-      });
-      delivery = { forwarded: false, ignored: false, reason: "legacy-crm-failed" };
+    if (privateHealingPayment) {
+      // This staff-only payment is not in the legacy gateway's public catalogue.
+      delivery = { forwarded: false, ignored: true, reason: "private-healing-hubspot-only" };
+    } else {
+      try {
+        // The legacy gateway is a secondary mirror. HubSpot has already received
+        // the verified purchase above, so its temporary absence cannot strand a
+        // paid participant or make Stripe repeatedly charge/retry a completed sale.
+        delivery = await forwardStripeEvent(governedEvent, process.env);
+      } catch (crmError) {
+        console.error("stripe_legacy_crm_mirror_error", {
+          eventId: event.id,
+          message: crmError.message
+        });
+        delivery = { forwarded: false, ignored: false, reason: "legacy-crm-failed" };
+      }
     }
     console.info("stripe_event_received", {
       eventId: event.id,

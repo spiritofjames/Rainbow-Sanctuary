@@ -1,5 +1,5 @@
 import { checkoutAmountMatchesApprovedPrice, crmPaymentHandoff, isInternalPaymentTest, livePaymentProcessingAllowed } from "./webhook-delivery.mjs";
-import { resolveOfferVariant } from "./offer-catalog.mjs";
+import { isPrivateHealingWebhookPayment, resolvePaymentHandoffOffer } from "./staff-payment-links.mjs";
 import { karmaApplicationReference } from "./karma-booking.mjs";
 
 const HUBSPOT_API_ORIGIN = "https://api.hubapi.com";
@@ -65,7 +65,7 @@ async function upsertContact(properties, stripeEventId, token, fetchImplementati
 
 export function toHubSpotPurchaseProperties(stripeEvent, ownerId, { allowLive = false } = {}) {
   const handoff = crmPaymentHandoff(stripeEvent, { allowLive });
-  const variant = resolveOfferVariant(handoff.offerId);
+  const variant = resolvePaymentHandoffOffer(stripeEvent, handoff.offerId);
   const allowsSelectedEvent = variant.policy === "group-healing";
   if (
     !checkoutAmountMatchesApprovedPrice(handoff, variant.amountMinor) ||
@@ -106,9 +106,15 @@ export async function mirrorHubSpotPurchase(stripeEvent, environment, fetchImple
   try {
     contactId = await upsertContact(properties, stripeEvent.id, token, fetchImplementation);
   } catch (error) {
+    if (isPrivateHealingWebhookPayment(stripeEvent)) throw error;
     // Portal-specific fields can be missing or differently typed. A paid
     // participant must still be captured using only HubSpot native fields.
     fallbackUsed = true;
+  }
+  // A native-fields-only contact would lose the Private Healing payment
+  // classification and manual scheduling instruction. Keep this case retryable.
+  if (!contactId && isPrivateHealingWebhookPayment(stripeEvent)) {
+    throw new Error("Private Healing payment was not recorded on a HubSpot contact.");
   }
   if (!contactId) {
     fallbackUsed = true;
