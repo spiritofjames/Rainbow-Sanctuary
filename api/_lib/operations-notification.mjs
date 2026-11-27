@@ -1,7 +1,7 @@
 import { emailHtml, emailText, escapeHtml } from "../../emails/layout.mjs";
 import { sendOperationalEmail, sendTransactionalEmail } from "./email-service.mjs";
 import { crmPaymentHandoff, isInternalPaymentTest, livePaymentProcessingAllowed } from "./webhook-delivery.mjs";
-import { resolveOfferVariant } from "./offer-catalog.mjs";
+import { resolvePaymentHandoffOffer } from "./staff-payment-links.mjs";
 import { isKarmaBooking, karmaPaymentUrl, karmaApplicationReference } from "./karma-booking.mjs";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -228,7 +228,7 @@ export function purchaseOperationsMessage(stripeEvent, hubspot, environment) {
   const handoff = crmPaymentHandoff(stripeEvent, {
     allowLive: livePaymentProcessingAllowed(environment)
   });
-  const offer = resolveOfferVariant(handoff.offerId);
+  const offer = resolvePaymentHandoffOffer(stripeEvent, handoff.offerId);
   const content = {
     preheader: "A verified Rainbow Sanctuary payment is ready for follow-up.",
     eyebrow: "Operations · Payment received",
