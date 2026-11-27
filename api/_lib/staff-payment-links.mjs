@@ -1,6 +1,40 @@
 import { resolveOfferVariant } from "./offer-catalog.mjs";
 
 const PAYMENT_LINK_ID_PATTERN = /^plink_[A-Za-z0-9]+$/;
+// Stripe Workbench identified this exact $500 staff link as Private Healing.
+// It is not the separately offered Personal Karma Reconciliation purchase.
+const PRIVATE_HEALING_LINK_ID = "plink_1UIJ2kHrqlaOfUb7aRYSFyju";
+const PRIVATE_HEALING_WEBHOOK_OFFER = Object.freeze({
+  id: "staff-private-healing-payment",
+  name: "Private Healing",
+  sessionId: "private-healing-staff-follow-up",
+  amountMinor: 50000,
+  policy: "private-session",
+  offer: Object.freeze({ name: "Private Healing" })
+});
+
+function privateHealingWebhookOffer(session) {
+  const offer = PRIVATE_HEALING_WEBHOOK_OFFER;
+  if (
+    session?.payment_link !== PRIVATE_HEALING_LINK_ID ||
+    session.mode !== "payment" ||
+    session.payment_status !== "paid" ||
+    session.currency !== "usd" ||
+    session.amount_total !== offer.amountMinor ||
+    (session.amount_subtotal ?? session.amount_total) !== offer.amountMinor
+  ) throw new Error("Private Healing checkout does not match the approved staff payment link and amount.");
+  return offer;
+}
+
+export function isPrivateHealingWebhookPayment(event) {
+  return event?.data?.object?.metadata?.offer_key === PRIVATE_HEALING_WEBHOOK_OFFER.id;
+}
+
+export function resolvePaymentHandoffOffer(event, offerId) {
+  return offerId === PRIVATE_HEALING_WEBHOOK_OFFER.id
+    ? privateHealingWebhookOffer(event?.data?.object)
+    : resolveOfferVariant(offerId);
+}
 
 /**
  * Maps Stripe Dashboard Payment Link IDs to server-owned offer variants.
@@ -46,9 +80,24 @@ export function staffPaymentLinkContext(session, environment = {}) {
   };
 }
 
-export function hydrateStaffPaymentLinkEvent(event, environment = {}) {
+export function hydrateStaffPaymentLinkEvent(event, environment = {}, { privateHealingWebhook = false } = {}) {
   const session = event?.data?.object;
-  const context = staffPaymentLinkContext(session, environment);
+  let context;
+  if (privateHealingWebhook && session?.payment_link === PRIVATE_HEALING_LINK_ID &&
+    ["checkout.session.completed", "checkout.session.async_payment_succeeded"].includes(event.type)) {
+    const offer = privateHealingWebhookOffer(session);
+    if (session.metadata?.offer_key && session.metadata.offer_key !== offer.id) {
+      throw new Error("Private Healing checkout carries a conflicting offer.");
+    }
+    context = {
+      eventId: offer.sessionId,
+      offerId: offer.id,
+      policyKey: offer.policy,
+      source: "rainbow-sanctuary-staff-payment-link"
+    };
+  } else {
+    context = staffPaymentLinkContext(session, environment);
+  }
   if (!context) return event;
   return {
     ...event,
