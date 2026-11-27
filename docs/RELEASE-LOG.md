@@ -1,5 +1,16 @@
 # Release log
 
+## 2026-11-27 — Private Healing Stripe webhook emergency fix
+
+- **Release owner:** James explicitly requested live publication of this isolated hotfix.
+- **Pull request:** #219, emergency PR from `main`; no staged SEO or homepage changes.
+- **Production commit:** `2c3bf5f11a20582d23549ce1e5b234c87bd6fc80`.
+- **Production deployment:** `dpl_5L8gEtiEFo6itSQ32K4gzRYb8PKA` Ready; verified at the live `rainbowsanctuary.life` alias.
+- **Previous deployment / rollback:** `dpl_4Z3qSZBouWJJp1nbiaNV25fpUadE`, commit `33d74032c1428d48c77a4734330e40ebf5f10510`.
+- **Summary:** Recover the confirmed signed, paid USD 500 Private Healing staff Checkout without treating it as Personal Karma Reconciliation or booking an appointment. Require a labeled HubSpot record before acknowledgment. Keep other links and installment behavior unchanged.
+- **Verification:** 334 tests and full preflight, green required GitHub check and Vercel preview, preview method guard, and 11 live read-only route checks. Production webhook GET returned expected HTTP 405 with Allow: POST. A real paid delivery and downstream fulfillment are not yet verified. No manual replays, charges, external settings, or customer submissions were performed as part of deployment.
+- **Rollback required:** No.
+
 ## 2026-11-11 — Maintenance overview and ongoing support
 
 - **Release owner:** James; renewed publication after the human-review/manual Stripe disclosure.
